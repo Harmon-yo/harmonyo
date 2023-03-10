@@ -22,12 +22,12 @@ body {
 .nav-bar {
     font-family: Montserrat;
     margin: 0;
-    /* position: fixed;
+    position: fixed;
     overflow: hidden;
-    top: 0; */
+    top: 0;
     display: flex;
     align-items: center;
-    height: 6.7%;
+    height: 64px;
     width: 100%;
     justify-content: center;
     flex-direction: row;
@@ -46,7 +46,7 @@ body {
 }
 
 .nav-bar-menu label {
-    font-size: 1.5rem;
+    font-size: 24px;
     color: white;
 }
 
@@ -67,7 +67,7 @@ body {
 
 #botaoLogin {
     display: flex;
-    font-size: 24px;
+    font-size: 24px.;
     background-color: white;
     border-radius: 50px;
     width: 40%;
@@ -93,7 +93,9 @@ body {
     justify-content: center;
     align-items: center;
 } 
-
+.home-metade-1 {
+    margin-top: 64px;
+}
 .home-metade-1, .home-metade-2 {
     display: flex;
     flex-direction: row;
@@ -107,13 +109,19 @@ body {
     background-color: var(--green-color-backgroud);
 }
 
-.home-conteiner-metades {
+.home-conteiner-metade1 {
     display: flex;
     width: 80%;
     height: 80%;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(240, 255, 255, 0.51);
+}
+.home-conteiner-metade2 {
+    display: flex;
+    width: 80%;
+    height: 80%;
+    align-items: center;
+    justify-content: space-between;
 }
 .div-img1-home {
     display: flex;
@@ -122,6 +130,17 @@ body {
 }
 
 .div-img1-home img {
+    width: 100%;
+}
+
+.div-img2-home {
+    display: flex;
+    width: 30%;
+    height: 100%;
+    margin-right: 5%;
+}
+
+.div-img2-home img {
     width: 100%;
 }
 
@@ -134,8 +153,16 @@ body {
     flex-direction: column;
     justify-content: space-around; 
 }
+.div-ensinar-pessoas {
+    display: flex;
+    width: 60%;
+    height: 100%;
+    align-items: first baseline;
+    flex-direction: column;
+    justify-content: space-around;
+}
 
-.div-aprender-instrumento label {
+.div-aprender-instrumento, .div-ensinar-pessoas label {
     font-size: 32px;
     font-weight: bold;
 }
@@ -152,6 +179,17 @@ body {
     align-items: center;
 }
 
+#botaoCadastroProfessor {
+    display: flex;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #ffffff;;
+    border-radius: 50px;
+    width: 48%;
+    height: 13%;
+    justify-content: center;
+    align-items: center;
+}
 
 
 ::-webkit-scrollbar-track {
