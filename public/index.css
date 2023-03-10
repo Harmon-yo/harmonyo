@@ -1,0 +1,144 @@
+:root {
+    --dark-color-backgroud: #1f1f1f;
+    --green-color-backgroud: rgba(29, 185, 84, 0.25);
+}
+
+body {
+    font-family: 'Montserrat';
+    background-color: var(--dark-color-backgroud);
+    margin: 0;
+}
+
+.nav-bar {
+    font-family: Montserrat;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    height: 64px;
+    border-bottom: 4px solid rgba(17, 176, 94, 0.7);
+}
+
+.nav-bar-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-left: 128px;
+    margin-right: 128px;
+    justify-content: space-between;
+}
+
+.nav-bar-menu label {
+    font-size: 24px;
+    color: white;
+}
+
+.nav-bar-menu label:hover {
+    color: #1db954;
+    cursor: pointer;
+}
+
+
+.menu-login-cadastro {
+    display: flex;
+    width: 264px;
+    justify-content: space-between;
+}
+
+
+#botaoLogin {
+    display: flex;
+    font-size: 24px;
+    background-color: white;
+    border-radius: 50px;
+    width: 112px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+}
+
+.separador-login-cadastro {
+    display: flex;
+    width: 2px;
+    height: 32px;
+    background-color: #1db954;
+}
+
+#botaoCadastro {
+    display: flex;
+    font-size: 24px;
+    background-color: #1db954;;
+    border-radius: 50px;
+    width: 136px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-metade-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 480px;
+    width: 100%;
+}
+
+.home-conteiner-metade1 {
+    display: flex;
+    width: 1664px;
+    justify-content: space-evenly;
+}
+.div-img1-home {
+    display: flex;
+}
+
+.div-img1-home img {
+    width: 360px;
+    height: 360px;
+}
+
+.div-aprender-instrumento {
+    display: flex;
+    height: 360px;
+    margin-left: 40px;
+    flex-direction: column;
+    justify-content: space-around;
+    /* background-color: var(--green-color-backgroud); */
+    
+}
+
+.div-aprender-instrumento label {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+#botaoCadastroAluno {
+    display: flex;
+    font-size: 32px;
+    font-weight: bold;
+    background-color: #1db954;;
+    border-radius: 50px;
+    width: 480px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-metade-2 {
+    display: flex;
+    background-color: var(--green-color-backgroud);
+    height: 480px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1db954;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--dark-color-backgroud);
+}
