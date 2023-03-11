@@ -11,12 +11,20 @@ body {
     font-family: 'Montserrat';
     background-color: var(--dark-color-backgroud);
     margin: 0;
+    
 }
-
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 64px;
+  }
 
 .main{
     height: 100vh;
     max-width: 100vw;
+}
+.main-contato {
+    height: calc(100vh - 64px);
+    max-width: 100vw; 
 }
 
 .nav-bar {
@@ -45,12 +53,13 @@ body {
     justify-content: space-between;
 }
 
-.nav-bar-menu label {
+.nav-bar-menu a {
     font-size: 24px;
+    text-decoration: none;
     color: white;
 }
 
-.nav-bar-menu label:hover {
+.nav-bar-menu a:hover {
     color: #1db954;
     cursor: pointer;
 }
@@ -93,9 +102,7 @@ body {
     justify-content: center;
     align-items: center;
 } 
-.home-metade-1 {
-    margin-top: 64px;
-}
+
 .home-metade-1, .home-metade-2 {
     display: flex;
     flex-direction: row;
@@ -126,7 +133,7 @@ body {
 .div-img1-home {
     display: flex;
     width: 25%;
-    height: 100%;
+   
 }
 
 .div-img1-home img {
@@ -162,7 +169,7 @@ body {
     justify-content: space-around;
 }
 
-.div-aprender-instrumento, .div-ensinar-pessoas label {
+.div-aprender-instrumento, .div-ensinar-pessoas {
     font-size: 32px;
     font-weight: bold;
 }
@@ -191,9 +198,97 @@ body {
     align-items: center;
 }
 
+.container-quem-somos{
+    background-color: var(--green-color-backgroud);
+    height: 249px;
+    width: 80%;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.container-quem-somos .title{
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.container-quem-somos .text{
+    font-size: 16px;
+    width: 80%;
+    line-height: 1.5;
+    color: white;
+}
+
+.valores{
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.divisao{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.principal{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    width: 100%;
+    height: 70%;
+    margin: 20px;
+    background-color: var(--green-color-backgroud);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.card img{
+    width: 80px;
+    height: 80px;
+}
+.principal .card{
+    height: 70%;
+    width: 90%;
+    
+}
+.card .title{
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
+
+.card .text{
+    font-size: 16px;
+    width: 90%;
+    line-height: 1.5;
+    color: white;
+}
+
+.principal .title{
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+}
 
 
-.main-contato {
+.main-contato2 {
     display: flex;
     margin-top: 64px;
     height: 80%;
@@ -241,13 +336,6 @@ body {
     margin-top: 16px;
 }
 
-.conteiner-footer{
-    display: flex;
-    background-color: var(--dark-color-backgroud);
-    width: 100%;
-    height: 20%;
-}
-
 #botaoEnviarMsg {
     color: white;
     display: flex;
@@ -276,6 +364,13 @@ body {
     color: white;
 }
 
+.conteiner-footer{
+    display: flex;
+    background-color: var(--dark-color-backgroud);
+    width: 100%;
+    height: calc(20% - 64px);
+}
+
 .div-img-contato img {
     width: 70%;
 }
@@ -291,3 +386,5 @@ body {
 ::-webkit-scrollbar-thumb {
     background: #1db954;
 }
+
+
