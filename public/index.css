@@ -192,6 +192,94 @@ body {
 }
 
 
+
+.main-contato {
+    display: flex;
+    margin-top: 64px;
+    height: 80%;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 4px solid rgba(17, 176, 94, 0.7);
+}
+
+.conteiner-contato {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 75%;
+    justify-content: space-between;
+}
+
+.campos-contato {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    justify-content: space-between;
+}
+
+.campos-contato label {
+    font-size: 32px;
+    color: white;
+}
+
+.campos-contato input, textarea {
+    font-size: 32px;
+    border-radius: 10px;
+}
+
+.campos-contato-login,
+.campos-contato-email,
+.campos-contato-msg {
+    display: flex;
+    flex-direction: column;
+}
+.campos-contato-login, .campos-contato-email input {
+    margin-top: 16px;
+}
+
+.campos-contato-msg textarea {
+    margin-top: 16px;
+}
+
+.conteiner-footer{
+    display: flex;
+    background-color: var(--dark-color-backgroud);
+    width: 100%;
+    height: 20%;
+}
+
+#botaoEnviarMsg {
+    color: white;
+    display: flex;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgba(29, 185, 84, 0.3);;
+    border-radius: 50px;
+    width: 170px;
+    height: 48px;
+    justify-content: center;
+    align-items: center; 
+    margin-bottom: 16px;
+}
+
+
+.div-img-contato {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.div-img-contato label{
+    font-size: 32px;
+    font-weight: bolder;
+    color: white;
+}
+
+.div-img-contato img {
+    width: 70%;
+}
+
 ::-webkit-scrollbar-track {
     background-color: var(--dark-color-backgroud);
 }
