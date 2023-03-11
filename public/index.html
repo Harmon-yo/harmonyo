@@ -8,15 +8,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harmonyo</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="script.js"></script>
     <link href='//fonts.googleapis.com/css?family=Montserrat:thin,extra-light,light,100,200,300,400,500,600,700,800'
         rel='stylesheet' type='text/css'>
 </head>
 
 <body>
     <div class="main" id="inicio">
+                  <!-- RESPONSIVO MENU  -->
+                  <div class="menuResponsivo"  style="display: none;">
+                    <div class="overlay" id="myNav">
+                        <button class="btFecha" onclick="fecharMenu()">
+                            <i class="fechaMenu fa-solid fa-x fa-2x" onclick="fecharMenu()"> </i>
+                        </button>
+                        <div class="overlayContent">
+                            <a href="#inicio" onclick="fecharMenu()">Início</a>
+                            <a href="#sobre-nos" onclick="fecharMenu()">Sobre Nós</a>
+                            <a href="#contato" onclick="fecharMenu()">Contato</a>
+                            <div class="menu-login-cadastro" >
+                                <div id="botaoLogin">Login</div>
+                                <div id="botaoCadastro">Cadastro</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ACABA AQUI -->
         <div class="nav-bar">
+
             <div class="nav-bar-menu">
                 <img src="imgs/Logo-Harmonyo.png" alt="" width="15%">
+                <div class="navButton">
+                    <button onclick="abrirMenu()">
+                        <i class="fas fa-bars fa-fw fa-xl fa-2x"> </i>
+                    </button>
+                </div>
                 <a href="#inicio">Início</a>
                 <a href="#sobre-nos">Sobre Nós</a>
                 <a href="#contato">Contato</a>
@@ -43,7 +71,9 @@
                         <label>os melhores professores.</label>
                     </div>
 
-                    <div id="botaoCadastroAluno">Faça seu Cadastro</div>
+                    <div id="botaoCadastroAluno">
+                        <p> Faça seu Cadastro </p>
+                    </div>
 
                 </div>
             </div>
@@ -61,7 +91,9 @@
                         <label>outras pessoas.</label>
                     </div>
 
-                    <div id="botaoCadastroProfessor">Torne-se Professor</div>
+                    <div id="botaoCadastroProfessor">
+                        <p> Torne-se Professor </p>
+                    </div>
 
                 </div>
                 <div class="div-img2-home">
@@ -90,33 +122,72 @@
             </div>
         </div>
         <div class="home-metade-1" style="height: 57%;">
-            
-                <div class="valores">
-                    <div class="divisao">
-                        <div class="card">
+
+            <div class="valores">
+                <div class="divisao">
+                    <div class="card">
+                        <img src="./imgs/missao.png" alt="">
+                        <p class="title">Missão</p>
+                        <p class="text">Conectar alunos e professores de música experientes, oferecendo uma plataforma
+                            online fácil de usar.</p>
+                    </div>
+                </div>
+                <div class="principal">
+                    <p class="title">Nossos valores</p>
+                    <div class="card">
+                        <img src="./imgs/visao.png" alt="">
+                        <p class="title">Visão</p>
+                        <p class="text"> Transformar a forma como as pessoas aprendem música, através de uma plataforma
+                            online inovadora.</p>
+                    </div>
+                </div>
+                <div class="divisao">
+                    <div class="card">
+                        <img src="./imgs/valores.png" alt="">
+                        <p class="title">Valores</p>
+                        <p class="text"> Nossos valores incluem a paixão pela música, a inovação tecnológica e a conexão
+                            com a comunidade.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none" class="valoresMobile">
+                <p>
+                    Nossos valores
+                </p>
+                <div class="divisao">
+                    <div class="card">
+                        <div>
                             <img src="./imgs/missao.png" alt="">
                             <p class="title">Missão</p>
-                            <p class="text">Conectar alunos e professores de música experientes, oferecendo uma plataforma online fácil de usar.</p>
                         </div>
+                        <p class="text">Conectar alunos e professores de música experientes, oferecendo uma plataforma
+                            online fácil de usar.</p>
                     </div>
-                    <div class="principal">
-                        <p class="title">Nossos valores</p>
-                        <div class="card">
+                </div>
+
+                <div class="divisao">
+                    <div class="card">
+                        <div>
                             <img src="./imgs/visao.png" alt="">
                             <p class="title">Visão</p>
-                            <p class="text"> Transformar a forma como as pessoas aprendem música, através de uma plataforma online inovadora.</p>
                         </div>
+                        <p class="text"> Transformar a forma como as pessoas aprendem música, através de uma plataforma
+                            online inovadora.</p>
                     </div>
-                    <div class="divisao">
-                        <div class="card">
+                </div>
+                <div class="divisao">
+                    <div class="card">
+                        <div>
                             <img src="./imgs/valores.png" alt="">
                             <p class="title">Valores</p>
-                            <p class="text"> Nossos valores incluem a paixão pela música, a inovação tecnológica e a conexão com a comunidade.</p>
                         </div>
+                        <p class="text"> Nossos valores incluem a paixão pela música, a inovação tecnológica e a conexão
+                            com a comunidade.</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <div class="main-contato" id="contato">
         <div class="main-contato2">
@@ -124,7 +195,7 @@
                 <div class="campos-contato">
                     <div class="campos-contato-login">
                         <label>Seu Nome:</label>
-                        <input type="text" >
+                        <input type="text">
                     </div>
 
                     <div class="campos-contato-email">
@@ -133,7 +204,7 @@
                     </div>
                     <div class="campos-contato-msg">
                         <label>Envie Sua Mensagem:</label>
-                        <textarea name="" id="" cols="30" rows="5"></textarea>
+                        <textarea name="" id="" cols="20" rows="2"></textarea>
                     </div>
                     <div style="display: flex;justify-content: center;">
                         <div id="botaoEnviarMsg">Enviar</div>

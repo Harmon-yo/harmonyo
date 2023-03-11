@@ -1,390 +1,661 @@
 :root {
-    --dark-color-backgroud: #1f1f1f;
-    --green-color-backgroud: rgba(29, 185, 84, 0.25);
+  --dark-color-backgroud: #1f1f1f;
+  --green-color-backgroud: rgba(29, 185, 84, 0.25);
 }
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 body {
-    font-family: 'Montserrat';
-    background-color: var(--dark-color-backgroud);
-    margin: 0;
-    
+  font-family: "Montserrat";
+  background-color: var(--dark-color-backgroud);
+  margin: 0;
 }
 html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 64px;
-  }
+  scroll-behavior: smooth;
+  scroll-padding-top: 64px;
+}
 
-.main{
-    height: 100vh;
-    max-width: 100vw;
+.main {
+  height: 100vh;
+  max-width: 100vw;
 }
 .main-contato {
-    height: calc(100vh - 64px);
-    max-width: 100vw; 
+  height: calc(100vh - 64px);
+  max-width: 100vw;
 }
 
 .nav-bar {
-    font-family: Montserrat;
-    margin: 0;
-    position: fixed;
-    overflow: hidden;
-    top: 0;
-    display: flex;
-    align-items: center;
-    height: 64px;
-    width: 100%;
-    justify-content: center;
-    flex-direction: row;
-    border-bottom: 4px solid rgba(17, 176, 94, 0.7);
-    background-color: var(--dark-color-backgroud);
+  font-family: Montserrat;
+  margin: 0;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  width: 100%;
+  justify-content: center;
+  flex-direction: row;
+  border-bottom: 4px solid rgba(17, 176, 94, 0.7);
+  background-color: var(--dark-color-backgroud);
 }
 
- 
 .nav-bar-menu {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    width: 80%;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  width: 80%;
+  justify-content: space-between;
 }
 
 .nav-bar-menu a {
-    font-size: 24px;
-    text-decoration: none;
-    color: white;
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
 }
 
 .nav-bar-menu a:hover {
-    color: #1db954;
-    cursor: pointer;
+  color: #1db954;
+  cursor: pointer;
 }
-
 
 .menu-login-cadastro {
-    display: flex;
-    width: 22%;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 22%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
-
 #botaoLogin {
-    display: flex;
-    font-size: 24px;
-    background-color: white;
-    border-radius: 50px;
-    width: 40%;
-    height: 50%;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  font-size: 20px;
+  background-color: white;
+  border-radius: 50px;
+  width: 40%;
+  height: 50%;
+  justify-content: center;
+  align-items: center;
 }
 
 .separador-login-cadastro {
-    display: flex;
-    width: 1%;
-    height: 56%;
-    background-color: #1db954;
+  display: flex;
+  width: 1%;
+  height: 56%;
+  background-color: #1db954;
 }
 
 #botaoCadastro {
-    display: flex;
-    font-size: 24px;
-    background-color: #1db954;;
-    border-radius: 50px;
-    width: 48%;
-    height: 50%;
-    justify-content: center;
-    align-items: center;
-} 
+  display: flex;
+  font-size: 20px;
+  background-color: #1db954;
+  border-radius: 50px;
+  width: 48%;
+  height: 50%;
+  justify-content: center;
+  align-items: center;
+}
 
-.home-metade-1, .home-metade-2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 46.65%;
-    width: 100%;
+.home-metade-1,
+.home-metade-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 46.65%;
+  width: 100%;
 }
 
 .home-metade-2 {
-    background-color: var(--green-color-backgroud);
+  background-color: var(--green-color-backgroud);
 }
 
 .home-conteiner-metade1 {
-    display: flex;
-    width: 80%;
-    height: 80%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 80%;
+  height: 80%;
+  align-items: center;
+  justify-content: space-between;
 }
 .home-conteiner-metade2 {
-    display: flex;
-    width: 80%;
-    height: 80%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  width: 80%;
+  height: 80%;
+  align-items: center;
+  justify-content: space-between;
 }
 .div-img1-home {
-    display: flex;
-    width: 25%;
-   
+  display: flex;
+  width: 25%;
 }
 
 .div-img1-home img {
-    width: 100%;
+  width: 100%;
 }
 
 .div-img2-home {
-    display: flex;
-    width: 30%;
-    height: 100%;
-    margin-right: 5%;
+  display: flex;
+  width: 30%;
+  height: 100%;
+  margin-right: 5%;
 }
 
 .div-img2-home img {
-    width: 100%;
+  width: 100%;
 }
 
 .div-aprender-instrumento {
-    display: flex;
-    width: 60%;
-    height: 100%;
-    align-items: first baseline;
-    margin-left: 40px;
-    flex-direction: column;
-    justify-content: space-around; 
+  display: flex;
+  width: 60%;
+  height: 100%;
+  align-items: first baseline;
+  margin-left: 40px;
+  flex-direction: column;
+  justify-content: space-around;
 }
 .div-ensinar-pessoas {
-    display: flex;
-    width: 60%;
-    height: 100%;
-    align-items: first baseline;
-    flex-direction: column;
-    justify-content: space-around;
+  display: flex;
+  width: 60%;
+  height: 100%;
+  align-items: first baseline;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.div-aprender-instrumento, .div-ensinar-pessoas {
-    font-size: 32px;
-    font-weight: bold;
+.div-aprender-instrumento,
+.div-ensinar-pessoas {
+  font-size: 24px;
+  font-weight: bold;
 }
 
 #botaoCadastroAluno {
-    display: flex;
-    font-size: 32px;
-    font-weight: bold;
-    background-color: #1db954;;
-    border-radius: 50px;
-    width: 48%;
-    height: 13%;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #1db954;
+  border-radius: 50px;
+  width: 48%;
+  height: 13%;
+  justify-content: center;
+  align-items: center;
 }
 
 #botaoCadastroProfessor {
-    display: flex;
-    font-size: 24px;
-    font-weight: bold;
-    background-color: #ffffff;;
-    border-radius: 50px;
-    width: 48%;
-    height: 13%;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #ffffff;
+  border-radius: 50px;
+  width: 48%;
+  height: 13%;
+  justify-content: center;
+  align-items: center;
 }
 
-.container-quem-somos{
-    background-color: var(--green-color-backgroud);
-    height: 249px;
-    width: 80%;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-evenly;
+.container-quem-somos {
+  background-color: var(--green-color-backgroud);
+  height: 249px;
+  width: 80%;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
-.container-quem-somos .title{
-    font-size: 24px;
-    font-weight: 700;
-    color: white;
+.container-quem-somos .title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
 }
 
-.container-quem-somos .text{
-    font-size: 16px;
-    width: 80%;
-    line-height: 1.5;
-    color: white;
+.container-quem-somos .text {
+  font-size: 16px;
+  width: 80%;
+  line-height: 1.5;
+  color: white;
 }
 
-.valores{
-    height: 100%;
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
+.valores {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.divisao{
-    height: 100%;
-    width: 30%;
-    display: flex;
-    align-items: flex-start;
+.divisao {
+  height: 100%;
+  width: 30%;
+  display: flex;
+  align-items: flex-start;
 }
 
-.principal{
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    justify-content: center;
-    align-items: center;
+.principal {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
-.card{
-    width: 100%;
-    height: 70%;
-    margin: 20px;
-    background-color: var(--green-color-backgroud);
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+.card {
+  width: 100%;
+  height: 300px;
+  margin: 20px;
+  background-color: var(--green-color-backgroud);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
-.card img{
-    width: 80px;
-    height: 80px;
+.card img {
+  width: 80px;
+  height: 80px;
 }
-.principal .card{
-    height: 70%;
-    width: 90%;
-    
+.principal .card {
+  height: 70%;
+  width: 90%;
 }
-.card .title{
-    font-size: 24px;
-    font-weight: 700;
-    color: white;
-}
-
-.card .text{
-    font-size: 16px;
-    width: 90%;
-    line-height: 1.5;
-    color: white;
+.card .title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
 }
 
-.principal .title{
-    font-size: 24px;
-    font-weight: 700;
-    color: white;
+.card .text {
+  font-size: 16px;
+  width: 90%;
+  line-height: 1.5;
+  color: white;
 }
 
+.principal .title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+}
 
 .main-contato2 {
-    display: flex;
-    margin-top: 64px;
-    height: 80%;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 4px solid rgba(17, 176, 94, 0.7);
+  display: flex;
+  margin-top: 64px;
+  height: 80%;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid rgba(17, 176, 94, 0.7);
 }
 
 .conteiner-contato {
-    display: flex;
-    flex-direction: row;
-    width: 80%;
-    height: 75%;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .campos-contato {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .campos-contato label {
-    font-size: 32px;
-    color: white;
+  font-size: 24px;
+  color: white;
 }
 
-.campos-contato input, textarea {
-    font-size: 32px;
-    border-radius: 10px;
+.campos-contato input,
+textarea {
+  font-size: 24px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .campos-contato-login,
 .campos-contato-email,
 .campos-contato-msg {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-.campos-contato-login, .campos-contato-email input {
-    margin-top: 16px;
+.campos-contato-login input,
+.campos-contato-email input,
+.campos-contato-msg textarea {
+  margin-top: 16px;
+  height: 40px;
+  font-size: 16px;
+  font-family: "Montserrat";
+  font-weight: 400;
 }
 
 .campos-contato-msg textarea {
-    margin-top: 16px;
+  margin-top: 16px;
+  font-family: "Montserrat";
+  font-weight: 400;
+  height: 150px;
 }
 
 #botaoEnviarMsg {
-    color: white;
-    display: flex;
-    font-size: 24px;
-    font-weight: bold;
-    background-color: rgba(29, 185, 84, 0.3);;
-    border-radius: 50px;
-    width: 170px;
-    height: 48px;
-    justify-content: center;
-    align-items: center; 
-    margin-bottom: 16px;
+  color: white;
+  display: flex;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: rgba(29, 185, 84, 0.3);
+  border-radius: 50px;
+  width: 170px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
 }
-
 
 .div-img-contato {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    justify-content: space-evenly;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.div-img-contato label{
-    font-size: 32px;
-    font-weight: bolder;
-    color: white;
+.div-img-contato label {
+  font-size: 32px;
+  font-weight: bolder;
+  color: white;
 }
 
-.conteiner-footer{
-    display: flex;
-    background-color: var(--dark-color-backgroud);
-    width: 100%;
-    height: calc(20% - 64px);
+.conteiner-footer {
+  display: flex;
+  background-color: var(--dark-color-backgroud);
+  width: 100%;
+  height: calc(20% - 64px);
 }
 
 .div-img-contato img {
-    width: 70%;
+  width: 70%;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: var(--dark-color-backgroud);
+  background-color: var(--dark-color-backgroud);
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1db954;
+  background: #1db954;
 }
 
+@media screen and (max-width: 1000px) {
+  .nav-bar-menu a {
+    font-size: 18px;
+  }
+  #botaoCadastro,
+  #botaoLogin {
+    font-size: 18px;
+  }
 
+  #botaoCadastroProfessor {
+    font-size: 18px;
+  }
+
+  #botaoCadastroAluno {
+    font-size: 18px;
+  }
+  .div-aprender-instrumento,
+  .div-ensinar-pessoas {
+    font-size: 24px;
+  }
+  .container-quem-somos .title {
+    font-size: 18px;
+  }
+
+  .container-quem-somos .text {
+    font-size: 12px;
+  }
+
+  .card .title,
+  .principal .title {
+    font-size: 18px;
+  }
+
+  .card .text {
+    font-size: 12px;
+  }
+
+  .div-img-contato label {
+    font-size: 24px;
+  }
+  #botaoEnviarMsg {
+    font-size: 18px;
+  }
+  .campos-contato input,
+  textarea {
+    font-size: 18px;
+  }
+  .campos-contato label {
+    font-size: 18px;
+  }
+
+  #botaoEnviarMsg {
+    font-size: 18px;
+    height: 40px;
+  }
+  .conteiner-contato {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 500px){
+   
+    .nav-bar-menu a {
+        display: none;
+    }
+    .nav-bar-menu img{
+        width: 45%;
+    }
+    .nav-bar-menu .menu-login-cadastro{
+        display: none;
+    }
+    .menu-login-cadastro{
+        width: 45%;
+    }
+    .menuResponsivo{
+        display: inline !important;
+      
+    }
+    .navButton button,
+    .overlay button{
+       color: #1DB954;
+       border: 0;
+       background-color: var(--dark-color-backgroud);
+    }
+
+    .overlayContent{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+    }
+
+    .overlayContent a{
+        text-decoration: none;
+        color: white;
+        padding: 10px;
+    }
+    .menu-login-cadastro{
+        height: min-content;
+    }
+    .overlayContent .menu-login-cadastro #botaoLogin,
+    .overlayContent .menu-login-cadastro #botaoCadastro{
+        height: 50px;
+    }
+    .overlay{
+        height: 100%;
+        width:0vw;
+        background-color: rgba(0,0,0,0.9);
+        z-index: 9;
+        position: fixed;
+        top: 0;
+        right: 0;
+        overflow-x: hidden;
+        transition: all 0.5s;
+    }
+    .btFecha{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0,0,0,0.9)!important;
+    }
+   
+    
+    #botaoLogin{
+        width: 40%;
+        font-size: 16px;
+    }
+    #botaoCadastro{
+        width: 55%;
+        font-size: 16px;
+    }
+    .div-aprender-instrumento{
+        font-size: 18px;
+    }
+    #botaoCadastroProfessor, #botaoCadastroAluno{
+        width: 100%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+
+    #botaoCadastroProfessor p, 
+    #botaoCadastroAluno p{
+       font-size: 14px;
+       width: fit-content;
+    }
+
+    .div-img1-home{
+        width: 40%;
+    }
+
+    .div-img2-home{
+        width: 40%;
+        height: 40%;
+    }
+
+    .div-ensinar-pessoas label{
+        font-size: 18px;
+    }
+    .container-quem-somos{
+        height: 90%;
+        margin-top: 0;
+    }
+
+    .container-quem-somos .title{
+        font-size: 12px;
+    }
+    .container-quem-somos .text{
+        font-size: 9px;
+    }
+    .valores{
+        display: none;
+    }
+    .valoresMobile{
+        height: 100%;
+        width: 80%;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .valoresMobile p{
+        color: #ffffff;
+    }
+
+    .divisao, .principal{
+        width: 100%;
+        height: 100px;
+    }
+    .card div{
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .card{
+        flex-direction: row;
+        float: left;
+        width: 100%;
+        height: 100px;  
+        padding: 10px;     
+    }
+    .principal{
+        display: none;
+    }
+    .card img{
+        width: 50px;
+        height: 50px;
+    }
+    .card .title{
+        display: block;
+        font-size: 12px;
+    }
+    .card .text{
+        font-size: 11px;
+    }
+
+    .conteiner-contato{
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .campos-contato-login{
+        height: min-content;
+        justify-content: flex-start;
+        
+    }
+    .campos-contato-login label,
+    .campos-contato-email label,
+    .campos-contato-msg label{
+        font-size: 16px;
+    }
+    .campos-contato-login input,
+    .campos-contato-email input,
+    .campos-contato-msg textarea{
+        margin-top: 5px;
+        margin-bottom: 8px;
+    }
+
+    .div-img-contato img{
+        display: none;
+    }
+    .campos-contato{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    textarea{
+        width: 245px;
+        height: 80px;
+    }
+   
+}
