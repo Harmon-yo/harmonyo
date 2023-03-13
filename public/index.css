@@ -485,7 +485,7 @@ textarea {
   background: #1db954;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1366px) {
   .nav-bar-menu a {
     font-size: 18px;
   }
@@ -543,6 +543,32 @@ textarea {
   .conteiner-contato {
     height: 100%;
   }
+
+  
+  .footer-empresa h3,
+  .footer-contato h3,
+  .footer-midias h3,
+  .footer-localizacao h3,
+  .footer-endereco h3{
+    font-size: 16px;
+  }
+.metade1-footer{
+  justify-content: space-between;
+}
+ .footer-empresa label,
+ .footer-contato label,
+ .footer-endereco  label,
+ .footer-localizacao label
+{
+    font-size: 12px;
+ }
+ .footer-midias-icons{
+  margin-top: 8px;
+ }
+ .footer-midias-icons img{
+  height: 24px;
+  width: 24px;
+ }
 }
 
 @media screen and (max-width: 500px){
@@ -749,7 +775,39 @@ textarea {
         width: 245px;
         height: 80px;
     }
+    .metade1-footer{
+      flex-direction: row;
+      width: 90%;
+    }
+
     .navButton {
         display: block;
+      }
+      .footer-midias{
+        display: none;
+      }
+      .footer-localizacao h3,
+      .footer-contato h3,
+      .footer-empresa h3{
+        font-size: 12px;
+      }
+      .footer-localizacao label,
+      .footer-contato label,
+      .footer-empresa label{
+        font-size: 10px;
+      }
+      
+      .footer-localizacao{
+        width: 39%;
+      }
+      .footer-contato{
+        width: 35%;
+        float: right;
+      }
+      .metade2-footer{
+        height: auto;
+      }
+      .metade2-footer h5{
+        font-size: 8px;
       }
 }
