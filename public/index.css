@@ -372,16 +372,106 @@ textarea {
   color: white;
 }
 
-.conteiner-footer {
-  display: flex;
-  background-color: var(--dark-color-backgroud);
-  width: 100%;
-  height: calc(20% - 64px);
-}
-
 .div-img-contato img {
   width: 70%;
 }
+
+.conteiner-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: #a4f6c0; */
+  width: 100%;
+  height: 20%;
+}
+
+.metade1-footer {
+  display: flex;
+  height: 60%;
+  width: 80%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.metade2-footer {
+  display: flex;
+  height: 10%;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  color: white;
+}
+
+.footer-empresa{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: space-between;
+  width: 20%;
+  border: 2px solid #1f1f1f;
+}
+
+.footer-contato {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.footer-contato-divisao1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60%;
+}
+.footer-contato-divisao2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40%;
+}
+
+.footer-midias {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  width: 20%;
+}
+
+.footer-midias-icons {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.footer-midias-icons img{
+  height: 32px;
+  width: 32px;
+}
+
+.footer-localizacao {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.footer-endereco {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: space-between;
+  width: 20%;
+}
+
+.footer-empresa, .footer-contato, .footer-contato label {
+  font-size: 16px;
+}
+
 
 ::-webkit-scrollbar-track {
   background-color: var(--dark-color-backgroud);
@@ -519,8 +609,8 @@ textarea {
         height: 50px;
         background-color: rgba(0,0,0,0.9)!important;
     }
-   
     
+  
     #botaoLogin{
         width: 40%;
         font-size: 16px;
