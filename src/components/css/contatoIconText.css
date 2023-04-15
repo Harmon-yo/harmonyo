@@ -1,0 +1,12 @@
+.div-icone-texto-contato{
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.div-icone-texto-contato img{
+    margin-right: 24px;
+    height: 40px;
+}

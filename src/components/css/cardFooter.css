@@ -1,0 +1,10 @@
+.card-footer{
+    display: flex;
+    color: white;
+    font-size: 20px;
+}
+
+.card-footer-titulo {
+    font-size: 24px;
+    font-weight: bolder;
+}

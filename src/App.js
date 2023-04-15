@@ -1,11 +1,11 @@
-import Banner from './componentes/Banner/Index.js';
+import Index from './pages/Index';
 
 
 function App() {
   return (
-    <div className="App">
-      <Banner/>
-    </div>
+  <>
+  <Index />
+  </>
   );
 }
 
