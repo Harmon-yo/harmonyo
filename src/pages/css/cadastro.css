@@ -1,0 +1,57 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/public/imgs/background-login-cadastro-v2.png");
+}
+
+.div-voltar{
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    height: 60px;
+    width: 100%;
+    align-items: center;
+    padding-left: 5%;
+}
+.div-voltar a {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.form-cadastro{
+    height: 80% !important;
+    justify-content: space-around;
+}
+.ipt-dados {
+        background: none;
+        width: 70% !important;
+        height: 30px !important;
+        font-size: 24px; 
+}
+.form-div-sexo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+    height: 16%;
+    font-size: 24px;
+}
+
+.form-div-sexo-options {
+    margin-left: 5%;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+
+.form-div-sexo-options label{
+    margin-left: 5%;
+    font-size: 20px;
+}
+

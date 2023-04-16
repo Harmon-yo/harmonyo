@@ -4,8 +4,8 @@ import Botao from "./Botao";
 import Logo from "./Logo";
 import "./css/botao.css"
 
-function Navbar() {
 
+function Navbar() {
     return (
 
         <>

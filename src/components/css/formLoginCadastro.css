@@ -1,0 +1,40 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fcfcfc;
+    border-radius: 5px;
+    box-shadow: 4px 5px 12px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    height: 70%;
+}
+
+.logo-harmonyo {
+    width: 60%;
+}
+
+.btn-cadastrar {
+    background-color: #29c760;
+    height: 60px;
+    width: 40%;
+    font-size: 24px;
+    font-weight: bolder;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn-cadastrar:hover{
+    background-color: white !important;
+    color: black !important;
+    border: 3px solid #29c760 !important;
+}
+
+.form label {
+    font-size: 24px;
+}
+
+.txt-ahref {
+     font-size: 24px;
+     font-weight: bold;
+     color: black;
+}

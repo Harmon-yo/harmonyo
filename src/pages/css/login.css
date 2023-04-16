@@ -1,0 +1,41 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/public/imgs/background-login-cadastro-v2.png");
+}
+
+.div-voltar{
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    height: 60px;
+    width: 100%;
+    align-items: center;
+    padding-left: 5%;
+}
+.div-voltar a {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.form-login{
+    height: 50% !important;
+    justify-content: space-around;
+}
+
+.txt-redefinir-senha{
+    font-size: 16px !important; 
+    color: red;
+}
+
+.ipt-login, .ipt-senha {
+    background: none;
+    width: 70% !important;
+    height: 10% !important;
+    font-size: 24px; 
+}
