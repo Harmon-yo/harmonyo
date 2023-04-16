@@ -2,6 +2,7 @@ import React from "react";
 import "./css/cadastro.css"
 import FormLoginCadastro from "../components/FormLoginCadastro";
 import InputText from "../components/InputText"
+import { Link } from "react-router-dom";
 
 function Cadastro(props) {
 
@@ -31,12 +32,12 @@ function Cadastro(props) {
     return (
         <>
         <div className="div-voltar">
-        <a href="/">{txtVoltar}</a>       
+        <Link to="/" className="link-voltar">{txtVoltar}</Link>      
         </div>
         <div className="background">
             <FormLoginCadastro classFrom = "form-cadastro" 
                                 txtPossuiConta = "Já Possui Conta? " 
-                                txtFazerLogin = "Fazer Login"
+                                txtFazerLogin = {<Link to="/login" className="link-login">Fazer Login</Link>}
                                 txtButton = "Cadastrar"
                                 href = "">
             <InputText classInput = "ipt-dados" type = "Text" placeholder = "Nome"/>    

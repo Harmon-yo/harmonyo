@@ -16,8 +16,12 @@
     width: 100%;
     align-items: center;
     padding-left: 5%;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
 }
-.div-voltar a {
+
+.link-login, .link-voltar {
     font-size: 24px;
     font-weight: bold;
     color: black;

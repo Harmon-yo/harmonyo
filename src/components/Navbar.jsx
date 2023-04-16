@@ -3,9 +3,19 @@ import "./css/navBar.css"
 import Botao from "./Botao";
 import Logo from "./Logo";
 import "./css/botao.css"
+import { Link, } from "react-router-dom";
 
 
 function Navbar() {
+
+    function chamaTelaLogin() {
+        window.location = "/login"
+    }
+
+    function chamaTelaCadastro() {
+        window.location = "/cadastro"
+    }
+
     return (
 
         <>
@@ -18,8 +28,8 @@ function Navbar() {
                         <label>Contato</label>
                     </div>
                     <div className="nav-bar-menu-buttons">
-                        <Botao texto = "Login" classButton ="btn-login"/>
-                        <Botao texto = "Cadastro" classButton ="btn-cadastro"/>
+                        <Botao texto = "Login" classButton ="btn-login" onClick = {chamaTelaLogin}/>
+                        <Botao texto = "Cadastro" classButton ="btn-cadastro" onClick = {chamaTelaCadastro}/>
                     </div>
                 </div>
             </nav>

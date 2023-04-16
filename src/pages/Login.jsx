@@ -2,6 +2,7 @@ import React from "react";
 import "./css/login.css"
 import FormLoginCadastro from "../components/FormLoginCadastro";
 import InputText from "../components/InputText"
+import { Link } from "react-router-dom";
 
 function Login(props) {
 
@@ -10,12 +11,12 @@ function Login(props) {
     return (
         <>
         <div className="div-voltar">
-        <a href="">{txtVoltar}</a>       
+        <Link to="/" className="link-voltar">{txtVoltar}</Link>     
         </div>
         <div className="background">
             <FormLoginCadastro classFrom = "form-login" 
                                 txtPossuiConta = "Não Possui Conta? " 
-                                txtFazerLogin = "Fazer Cadastro"
+                                txtFazerLogin = {<Link to="/cadastro" className="link-cadastro">Fazer Cadastro</Link>}
                                 txtButton = "Login"
                                 href = "">
             <InputText classInput = "ipt-login" type = "Email" placeholder = "Email"/>                            

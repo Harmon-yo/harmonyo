@@ -16,13 +16,19 @@
     width: 100%;
     align-items: center;
     padding-left: 5%;
+
 }
-.div-voltar a {
+.link-cadastro, .link-voltar {
     font-size: 24px;
     font-weight: bold;
     color: black;
 }
 
+.div-volta label {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
 .form-login{
     height: 50% !important;
     justify-content: space-around;
