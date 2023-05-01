@@ -1,4 +1,5 @@
-import React from "react";
+/* import React from "react";
+import "./css/main.css"
 import "./css/login.css"
 import FormLoginCadastro from "../components/FormLoginCadastro";
 import InputText from "../components/InputText"
@@ -28,4 +29,4 @@ function Login(props) {
     );
 }
 
-export default Login;
+export default Login; */

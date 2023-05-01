@@ -8,7 +8,7 @@
     background-image: url("/public/imgs/background-login-cadastro-v2.png");
 }
 
-.div-voltar{
+.div-voltar {
     display: flex;
     position: absolute;
     flex-direction: row;
@@ -21,23 +21,26 @@
     color: black;
 }
 
-.link-login, .link-voltar {
+.link-login,
+.link-voltar {
     font-size: 24px;
     font-weight: bold;
     color: black;
 }
 
-.form-cadastro{
+.form-cadastro {
     height: 80% !important;
     justify-content: space-around;
 }
+
 .ipt-dados {
-        background: none;
-        width: 70% !important;
-        height: 30px !important;
-        font-size: 24px; 
+    background: none;
+    width: 70% !important;
+    height: 30px !important;
+    font-size: 24px;
 }
-.form-div-sexo{
+
+.form-div-sexo {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -54,8 +57,7 @@
     font-size: 20px;
 }
 
-.form-div-sexo-options label{
+.form-div-sexo-options label {
     margin-left: 5%;
     font-size: 20px;
 }
-

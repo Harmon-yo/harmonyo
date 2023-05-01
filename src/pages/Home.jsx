@@ -1,30 +1,49 @@
 import React from "react";
-import Navbar from '../components/Navbar';
+import Navbar from "../components/organisms/Navbar/index.jsx";
 import './css/index.css'
+/* 
 import Wave from './Wave.svg'
 import Botao from "../components/Botao";
 import Card from "../components/Card";
 import InputText from "../components/InputText";
 import TextArea from "../components/TextArea";
 import ContatoIconText from "../components/ContatoIconText";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer"; */
 
 function Index() {
 
-    const titulosCard = ["Pagamento Seguro",
-     "Chat entre professor e aluno",
-      "Empréstimo de instrumento por parte do professor"]
+    const titulos = {
+        inicio: "Descubra sua harmonia com a música",
+        comoFunciona: "Como Funciona ?",
+        vantagens: "Vantagens",
+        duvidas: "Dúvidas",
+    }
 
-    const textosCard = [
-        "Com nossa plataforma segura e confiável, concentre-se no aprendizado, enquanto cuidamos da segurança do seu pagamento. Nós garantimos um processo de pagamento transparente e protegido, para que tenha tranquilidade ao investir em sua educação musical",
-        "Com nosso recurso de chat integrado, você pode se comunicar facilmente com seu professor de música em tempo real. Tire dúvidas, receba feedback e obtenha orientação personalizada para maximizar sua aprendizagem musical.",
-        "Além de fornecer as melhores lições de música, nossos professores também podem ajudá-lo a dar os primeiros passos no mundo musical, oferecendo instrumentos para empréstimo. Experimente diferentes instrumentos e encontre o que é certo para você, sem gastar uma fortuna em um novo instrumento."
-    ]
+    const paragrafos = {
+        inicio: "Quer seja um novato ou um músico experiente, nossa plataforma conecta você com os melhores professores de música da nossa plataforma para desbloquear todo o seu potencial musical.",
+        comoFunciona: "Nossa plataforma é simples e fácil de usar. Basta seguir os passos abaixo para começar a aprender música hoje mesmo.",
+        vantagens: "Com nossa plataforma fácil de usar, encontrar um professor de música qualificado nunca foi tão simples. Conectamos você com professores apaixonados e experientes que compartilham sua paixão pela música, tornando o aprendizado de um instrumento divertido e inspirador.",
+    }
+
+    const cards = {
+        pagamentoSeguro: {
+            titulo: "Pagamento Seguro",
+            texto: "Com nossa plataforma segura e confiável, concentre-se no aprendizado, enquanto cuidamos da segurança do seu pagamento. Nós garantimos um processo de pagamento transparente e protegido, para que tenha tranquilidade ao investir em sua educação musical.",
+        },
+        chatEntreProfessorEAluno: {
+            titulo: "Chat entre professor e aluno",
+            texto: "Com nosso recurso de chat integrado, você pode se comunicar facilmente com seu professor de música em tempo real. Tire dúvidas, receba feedback e obtenha orientação personalizada para maximizar sua aprendizagem musical.",
+        },
+        emprestimoDeInstrumento: {
+            titulo: "Empréstimo de instrumento por parte do professor",
+            texto: "Além de fornecer as melhores lições de música, nossos professores também podem ajudá-lo a dar os primeiros passos no mundo musical, oferecendo instrumentos para empréstimo. Experimente diferentes instrumentos e encontre o que é certo para você, sem gastar uma fortuna em um novo instrumento.",
+        }
+    }
 
     return (
         <>
-            <Navbar  class = ""/>
-            <div className="container-inicio">
+            <Navbar/>
+            {/* <div className="container-inicio">
                 <div className="container-inicio-itens">
                     <div className="container-inicio-itens-titulo">
                         <label>Descubra sua harmonia com a música</label>
@@ -86,7 +105,7 @@ function Index() {
                     </div>
                 </div>
             </div>
-        <Footer />
+            <Footer /> */}
         </>
     )
 

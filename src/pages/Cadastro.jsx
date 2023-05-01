@@ -1,5 +1,6 @@
-import React from "react";
+/* import React from "react";
 import "./css/cadastro.css"
+import "./css/main.css"
 import FormLoginCadastro from "../components/FormLoginCadastro";
 import InputText from "../components/InputText"
 import { Link } from "react-router-dom";
@@ -66,4 +67,4 @@ function Cadastro(props) {
     );
 }
 
-export default Cadastro;
+export default Cadastro; */
