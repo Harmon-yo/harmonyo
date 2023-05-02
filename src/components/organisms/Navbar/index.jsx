@@ -47,17 +47,20 @@ function Navbar() {
                     }}>
                         <Button
                             variant="contained"
+                            href={"/Login"}
                             sx={{
                                 backgroundColor: "#F0F0F0 !important",
                                 color: "#000 !important",
                                 fontWeight: "bold",
                                 fontFamily: "Nunito"
                             }}>Login</Button>
-                        <Button variant="contained" sx={{
-                            backgroundColor: "#000 !important",
-                            fontWeight: "bold",
-                            fontFamily: "Nunito"
-                        }}>Cadastro</Button>
+                        <Button variant="contained" 
+                                href={"/cadastro"}
+                                sx={{
+                                backgroundColor: "#000 !important",
+                                fontWeight: "bold",
+                                fontFamily: "Nunito"
+                            }}>Cadastro</Button>
                     </Box>
                 </Container>
             </Box>

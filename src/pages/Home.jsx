@@ -4,6 +4,7 @@ import './css/index.css'
 import Footer from "../components/organisms/Footer/index.jsx";
 import { Box, Container, Typography, Button } from "@mui/material";
 import Wave from './Wave.svg'
+import { Link } from "react-router-dom";
 /* 
 import Wave from './Wave.svg'
 import Botao from "../components/Botao";
@@ -83,7 +84,7 @@ function Index() {
                         <Button
                                     variant="contained"
                                     disableElevation = {true}
-                                    
+                                    href={"/cadastro"}
                                     sx={{
                                         width:'25%',
                                         backgroundColor: "#F0F0F0 !important",
