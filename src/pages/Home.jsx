@@ -46,7 +46,7 @@ function Index() {
     return (
         <>
             <Navbar/>
-            {/* <Pagex main/> */}
+            <Pagex main/>
             <Footer/>
 
             {/*

@@ -34,7 +34,7 @@ function Cadastro(props) {
     const [helperTextCep, setHelperTextCep] = useState("");
 
 
-    function validarCamposEmBranco(params) {        
+    function validarCamposEmBranco() {        
 
         if (nome === "" || nome === null) {
             setErrorNome(true);
@@ -152,37 +152,52 @@ function Cadastro(props) {
                         backgroundColor: '#fcfcfc',
                         borderRadius: '5px',
                         boxShadow: '4px 5px 12px rgba(0, 0, 0, 0.25)',
-                        width: '30%',
-                        height: '90%'
+                        width: '60%',
+                        height: '70%'
             }}>
                 <Box sx={{  display: 'flex',
-                            flexDirection: 'column',
+                            flexDirection: 'row',
                             alignItems: 'left',
-                            justifyContent: 'space-evenly',
-                            width: '70%',
-                            height: '80%'}}>
+                            justifyContent: 'space-around',
+                            width: '90%',
+                            height: '70%'}}>
 
-                    <TextField id="ipt-nome" onChange={(e)=> setNome(e.target.value)}  label="Nome" variant="standard" error={errorNome} helperText = {helperTextNome}/>
-                    <TextField id="ipt-email" onChange={(e)=> setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText = {helperTextEmail}/>
-                    <TextField id="ipt-cpf" onChange={(e)=> setEmail(e.target.value)} label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
-                    <TextField id="ipt-cep" onChange={(e)=> setCep(e.target.value)} label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
-                    <FormControl sx={{marginTop: '5%'}} error ={errorSexo}>
-                    <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
-                    <RadioGroup 
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="male"
-                        name="radio-buttons-group" onChange={(e)=> {setSexo(e.target.value); console.log(e.target.value)}}>
-                        <FormControlLabel value="Masculino"  control={<Radio size="small"/>} label="Masculino" />
-                        <FormControlLabel value="Feminino" control={<Radio size="small"/>} label="Feminino" />
-                        <FormControlLabel value="Outros" control={<Radio size="small"/>} label="Outros" />
-                    </RadioGroup>
-                    {errorSexo? <Typography sx={{
-                                    fontSize: '12px',
-                                    color: '#d32f2f'}} >{helperTextSexo}</Typography> : null }
-                    </FormControl>
-                    <InputSenha id = "ipt-senha" onChange={(e)=> {setSenha(e.target.value)}} error = {errorSenha} helperText = {helperTextSenha} label = {'Senha'}/>
-                    <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha} label = {'Confirmar Senha'}/>
-  
+                    <Box sx={{  display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-around',
+                            width: '45%',
+                            height: '100%'}}>
+
+                        <TextField id="ipt-nome" onChange={(e)=> setNome(e.target.value)}  label="Nome" variant="standard" error={errorNome} helperText = {helperTextNome} />
+                        <TextField id="ipt-email" onChange={(e)=> setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText = {helperTextEmail}/>
+                        <InputSenha id = "ipt-senha" onChange={(e)=> {setSenha(e.target.value)}} error = {errorSenha} helperText = {helperTextSenha} label = {'Senha'}/>
+                        <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha} label = {'Confirmar Senha'}/>
+                    </Box>
+
+                    <Box sx={{  display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-around',
+                            width: '45%',
+                            height: '100%'}}>
+                        
+                        <TextField id="ipt-cpf" onChange={(e)=> setEmail(e.target.value)} label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
+                        <TextField id="ipt-cep" onChange={(e)=> setCep(e.target.value)} label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
+
+                        <FormControl error ={errorSexo} >
+                            <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
+                            <RadioGroup sx={{paddingLeft: '2%'}}
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="male"
+                                name="radio-buttons-group" onChange={(e)=> {setSexo(e.target.value); console.log(e.target.value)}}>
+                                <FormControlLabel value="Masculino"  control={<Radio size="16px"/>} label="Masculino" />
+                                <FormControlLabel value="Feminino" control={<Radio size="16px"/>} label="Feminino" />
+                                <FormControlLabel value="Outros" control={<Radio size="16px"/>} label="Outros" />
+                            </RadioGroup>
+                            {errorSexo? <Typography sx={{
+                                            fontSize: '12px',
+                                            color: '#d32f2f'}} >{helperTextSexo}</Typography> : null }
+                        </FormControl>
+                    </Box>      
                 </Box>
                 <Button variant="contained"
                         onClick={validarCamposEmBranco}
@@ -195,7 +210,7 @@ function Cadastro(props) {
                         }}>
                             Cadastrar
                 </Button>  
-                <label>Já Possui Conta? <Link to="/login" style={{color: 'black', fontWeight: 'bold'}}> Fazer Login</Link></label>    
+                <label>Já Possui Conta? <Link to="/login" style={{color: 'black', fontWeight: 'bold'}}> Fazer Login</Link></label>                       
             </Box>    
         </div>
         {/* <div className="div-voltar">
