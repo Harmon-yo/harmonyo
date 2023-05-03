@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/organisms/Navbar/index.jsx";
+import Header from "../components/organisms/Header/index.jsx";
 import './css/index.css'
 import Pagex from "../components/organisms/Pagex/index.jsx";
 import Footer from "../components/organisms/Footer/index.jsx";
@@ -45,7 +45,7 @@ function Index() {
 
     return (
         <>
-            <Navbar/>
+            <Header/>
             <Pagex main/>
             <Footer/>
 

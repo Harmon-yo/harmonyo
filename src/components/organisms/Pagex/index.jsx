@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Container, Typography, Button } from "@mui/material";
 import Wave from '../../../pages/Wave.svg'
-import "./style.css"
+import style from"./style.css"
 
 
 /* Mudar de nome depois */

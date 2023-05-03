@@ -6,51 +6,53 @@ import FooterCard from "../../molecules/FooterCard/index.jsx";
 import LogoRedeSocial from "../../atoms/RedeSocial/Index.jsx";
 import "./style.css"
 
+const cards = [
+    {
+        title: "Empresa",
+        items: [
+            {
+                label: "Sobre",
+                href: "#",
+            },
+            {
+                label: "Diretrizes",
+                href: "#",
+            },
+            {
+                label: "Termos de Politicas e Privacidade",
+                href: "#",
+            },
+        ],
+    }, 
+    {
+        title: "Midias Sociais",
+        items: [
+            {
+                alt: "Linkedin",
+                src: "/imgs/linkedin32px-icon.png",
+                href: "#",
+            },
+            {
+                alt: "Facebook",
+                src: "/imgs/facebook32px-icon.png",
+                href: "#",
+            },  
+            {
+                alt: "Instagram",
+                src: "/imgs/instagram32px-icon.png",
+                href: "#",
+            },
+            {
+                alt: "Whatsapp",
+                src: "/imgs/whatsapp32px-icon.png",
+                href: "#",
+            },
+        ],
+    }
+]
+
 function Footer(props) {
-    const cards = [
-        {
-            title: "Empresa",
-            items: [
-                {
-                    label: "Sobre",
-                    href: "#",
-                },
-                {
-                    label: "Diretrizes",
-                    href: "#",
-                },
-                {
-                    label: "Termos de Politicas e Privacidade",
-                    href: "#",
-                },
-            ],
-        }, 
-        {
-            title: "Midias Sociais",
-            items: [
-                {
-                    alt: "Linkedin",
-                    src: "/imgs/linkedin32px-icon.png",
-                    href: "#",
-                },
-                {
-                    alt: "Facebook",
-                    src: "/imgs/facebook32px-icon.png",
-                    href: "#",
-                },  
-                {
-                    alt: "Instagram",
-                    src: "/imgs/instagram32px-icon.png",
-                    href: "#",
-                },
-                {
-                    alt: "Whatsapp",
-                    src: "/imgs/whatsapp32px-icon.png",
-                    href: "#",
-                },
-            ],
-        }
-    ]
+    
     return (
         <>
             <Box className="footer">
