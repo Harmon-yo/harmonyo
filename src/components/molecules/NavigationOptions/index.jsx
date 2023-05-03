@@ -6,14 +6,7 @@ function NavigationOptions(props) {
 
     return (
         <>
-            <Box className="nav-bar-menu-options"
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "40%",
-                    justifyContent: "space-evenly"
-                }}
-            >
+            <Box className={props.className}>
                 <NavigationOption content="Inicio" underline="always" fontWeight={"bold"} />
                 <NavigationOption content="Como Funciona" goToElement="#" underline="none" /> {/* colocar #Id para ir */}
                 <NavigationOption content="Vantagens" goToElement="#" underline="none" />

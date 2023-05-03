@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 7vh;
+    border-bottom: 0.1px solid black;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.navbar-container {
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    flex-direction: row;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-navigation-options {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    justify-content: space-evenly;
+}
+
+.navbar-container-button {
+    width: 17%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-button-login, .navbar-button-cadastro {
+    font-weight: bold;
+}
+
+.navbar-button-login {
+    background-color: #F0F0F0 !important;
+    color: #000 !important;
+    
+}
+
+.navbar-button-cadastro {
+    background-color: #000 !important;
+}

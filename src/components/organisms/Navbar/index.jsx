@@ -4,6 +4,7 @@ import Logo from "../../atoms/Logo";
 import Box from "@mui/material/Box";
 import NavigationOptions from "../../molecules/NavigationOptions";
 import Button from "@mui/material/Button";
+import "./style.css";
 
 
 
@@ -18,49 +19,19 @@ function Navbar() {
     }
 
     return (
-
         <>
-            <Box className="navbar" sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100vw",
-                height: "7vh",
-                borderBottom: "0.1px solid black"
-            }}>
-                <Container sx={{
-                    width: "95%",
-                    backgroundColor: "#fff",
-                    height: 1,
-                    p: "0 !important",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                }}>
+            <Box className="navbar">
+                <Container className="navbar-container">
                     <Logo height="50%" />
-                    <NavigationOptions />
-                    <Box sx={{
-                        width: "17%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                    }}>
+                    <NavigationOptions className="navbar-navigation-options"/>
+                    <Box className="navbar-container-button">
                         <Button
                             variant="contained"
                             href={"/Login"}
-                            sx={{
-                                backgroundColor: "#F0F0F0 !important",
-                                color: "#000 !important",
-                                fontWeight: "bold",
-                                fontFamily: "Nunito"
-                            }}>Login</Button>
+                            className="navbar-button-login">Login</Button>
                         <Button variant="contained" 
                                 href={"/cadastro"}
-                                sx={{
-                                backgroundColor: "#000 !important",
-                                fontWeight: "bold",
-                                fontFamily: "Nunito"
-                            }}>Cadastro</Button>
+                                className="navbar-button-cadastro">Cadastro</Button>
                     </Box>
                 </Container>
             </Box>

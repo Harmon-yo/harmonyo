@@ -1,6 +1,7 @@
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
+import "./index.css"
 import {  Route, BrowserRouter, Routes  } from "react-router-dom";
 
 function App() {

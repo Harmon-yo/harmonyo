@@ -1,9 +1,8 @@
 import React from "react";
 import Navbar from "../components/organisms/Navbar/index.jsx";
 import './css/index.css'
+import Pagex from "../components/organisms/Pagex/index.jsx";
 import Footer from "../components/organisms/Footer/index.jsx";
-import { Box, Container, Typography, Button } from "@mui/material";
-import Wave from './Wave.svg'
 import { Link } from "react-router-dom";
 /* 
 import Wave from './Wave.svg'
@@ -47,72 +46,10 @@ function Index() {
     return (
         <>
             <Navbar/>
-            <Box sx={{  display: 'flex',
-                        width: '100%',
-                        position: 'relative',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        height: '80vh',
-                        background: 'linear-gradient(100.23deg, #03B441 -0.6%, #00A239 -0.59%, #27CC61 48.13%, #51FA8C 100%)'}}>
-
-                <img src={Wave} alt="" style={{  position: 'absolute', bottom: '0'}}/>
-
-                <Container sx={{    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    height: '70%',
-                                }}>
-
-                    <Box sx={{  display: 'flex',
-                                flexDirection: 'column',
-                                textAlign: 'center',
-                                alignItems:'center',
-                                width: '70%',
-                                height:'100%',
-                                justifyContent: 'space-evenly'}}>
-
-                        <Typography variant="h3" sx={{fontWeight: 800,letterSpacing: '5px'}}>
-                                    Descubra sua harmonia com a música
-                        </Typography>
-
-                        <Typography variant="subtitle1" >
-                        Quer seja um novato ou um músico experiente, nossa plataforma
-                                    conecta você com os melhores professores de música da nossa
-                                    plataforma para desbloquear todo o seu potencial musical.
-                        </Typography>
-                        
-                        <Button
-                                    variant="contained"
-                                    disableElevation = {true}
-                                    href={"/cadastro"}
-                                    sx={{
-                                        width:'25%',
-                                        backgroundColor: "#F0F0F0 !important",
-                                        color: "#000 !important",
-                                        fontWeight: '800',
-                                        fontSize:'20px',
-                                        border: '2px solid black',
-                                        
-                                    }}>Criar Conta</Button>                                
-                    </Box>                            
-                </Container>
-            </Box>
+            {/* <Pagex main/> */}
             <Footer/>
 
-            {/* <div className="container-inicio">
-                <div className="container-inicio-itens">
-                    <div className="container-inicio-itens-titulo">
-                        <label>Descubra sua harmonia com a música</label>
-                    </div>
-                    <div className="container-inicio-itens-paragrafo">
-                        <p>Quer seja um novato ou um músico experiente, nossa plataforma
-                            conecta você com os melhores professores de música da nossa
-                            plataforma para desbloquear todo o seu potencial musical.</p>
-                    </div>
-                    <Botao texto = "Começar" classButton ="container-inicio-itens-btn-comecar"/>
-                </div>
-                <img src={Wave} alt="" />
-            </div>
+            {/*
             <div className="container">
                 <div className="container-como-funciona">
                     <div className="container-como-funciona-parte1">

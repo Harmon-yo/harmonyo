@@ -1,0 +1,52 @@
+.teste,
+.main {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    height: 80vh;
+}
+
+.main {
+    position: relative;
+    background: linear-gradient(100.23deg, #03B441 -0.6%, #00A239 -0.59%, #27CC61 48.13%, #51FA8C 100%);
+}
+
+.teste-container {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.img-wave {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+}
+
+.title, .subtitle, .button-criar-conta {
+    margin: 2% !important;
+}
+
+.title {
+    width: 70%;
+    font-weight: bold !important;
+    letter-spacing: 2px !important;
+}
+
+.subtitle {
+    width: 45%;
+    font-weight: normal;
+}
+
+.button-criar-conta {
+    padding: 1% 5% !important;
+    background-color: #F0F0F0 !important;
+    color: #000 !important;
+    font-weight: bolder !important;
+    font-size: 16px !important;
+    border: 2px solid black !important;
+}
