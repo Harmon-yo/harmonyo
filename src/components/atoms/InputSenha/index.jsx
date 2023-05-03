@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Typography } from "@mui/material";
 
 function InputSenha(props) {
 
@@ -25,9 +26,10 @@ function InputSenha(props) {
     return (
         <>
             <FormControl sx={{ m: 0, width: '100%' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password" error = {props.error}>Senha</InputLabel>
+                <InputLabel htmlFor="standard-adornment-password" error = {props.error}>{props.label}</InputLabel>
                     <Input error = {props.error}
                         id={props.id}
+                        onChange={props.onChange}
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
                         <InputAdornment position="end">
@@ -41,6 +43,10 @@ function InputSenha(props) {
                         </InputAdornment>
                         }
                     />
+                    {props.error? <Typography sx={{
+                                    fontSize: '12px',
+                                    color: '#d32f2f'}} >{props.helperText}</Typography> : null }
+                   
             </FormControl>
         </>
     )

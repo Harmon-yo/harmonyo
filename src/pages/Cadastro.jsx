@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./css/cadastro.css"
 import { Link } from "react-router-dom";
-import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio } from "@mui/material";
+import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography } from "@mui/material";
 import request from "../api";
 import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
@@ -34,35 +34,50 @@ function Cadastro(props) {
     const [helperTextCep, setHelperTextCep] = useState("");
 
 
-    
-    function validarCamposEmBranco(params) {
-        if (nome == "" || nome == null) {
+    function validarCamposEmBranco(params) {        
+
+        if (nome === "" || nome === null) {
             setErrorNome(true);
-            setHelperTextNome("Este Campo Deve ser Preenchido !")
+            setHelperTextNome("Campo Obrigatório !")
         }
-        if (email == "" || email == null) {
+        else if (nome.length < 4) {
+            setErrorNome(true);
+            setHelperTextNome("Deve Conter Pelo Menos 4 Caractéres")
+        }
+        if (email === "" || email === null) {
             setErrorEmail(true);
-            setHelperTextEmail("Este Campo Deve ser Preenchido !")
+            setHelperTextEmail("Campo Obrigatório !")
         }
-        if (cpf == "" || cpf == null) {
+        if (cpf === "" || cpf === null) {
             setErrorCpf(true);
-            setHelperTextCpf("Este Campo Deve ser Preenchido !")
+            setHelperTextCpf("Campo Obrigatório !")
         }
-        if (cep == "" || cep == null) {
+        if (cep === "" || cep === null) {
             setErrorCep(true);
-            setHelperTextCep("Este Campo Deve ser Preenchido !")
+            setHelperTextCep("Campo Obrigatório !")
         }
-        if (sexo == "" || sexo == null) {
+        if (sexo === "" || sexo === null) {
             setErrorSexo(true);
             setHelperTextSexo("Selecione Uma Opção !")
         }
-        if (senha == "" || senha == null) {
+        if (senha === "" || senha === null) {
             setErrorSenha(true);
-            setHelperTextSenha("Este Campo Deve ser Preenchido !")
+            console.log(senha)
+            setHelperTextSenha("Campo Obrigatório !")
         }
-        if (confirmarSenha == "" || confirmarSenha == null) {
+        else if (senha.length < 3) {
+            setErrorSenha(true);
+            setHelperTextSenha("Deve Conter Pelo Menos 3 Caractéres")
+        }
+        else if (senha != confirmarSenha) {
+            setErrorSenha(true);
+            setHelperTextSenha("As senhas devem ser iguais !")
             setErrorConfirmarSenha(true);
-            setHelperTextConfirmarSenha("Este Campo Deve ser Preenchido !")
+            setHelperTextConfirmarSenha("As senhas devem ser iguais !")
+        }
+        if (confirmarSenha === "" || confirmarSenha === null) {
+            setErrorConfirmarSenha(true);
+            setHelperTextConfirmarSenha("Campo Obrigatório !")
         }
     }
 
@@ -149,9 +164,9 @@ function Cadastro(props) {
 
                     <TextField id="ipt-nome" onChange={(e)=> setNome(e.target.value)}  label="Nome" variant="standard" error={errorNome} helperText = {helperTextNome}/>
                     <TextField id="ipt-email" onChange={(e)=> setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText = {helperTextEmail}/>
-                    <TextField id="ipt-cpf" onChange={(e)=> setCpf(e.target.value)} label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
+                    <TextField id="ipt-cpf" onChange={(e)=> setEmail(e.target.value)} label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
                     <TextField id="ipt-cep" onChange={(e)=> setCep(e.target.value)} label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
-                    <FormControl sx={{marginTop: '5%'}}>
+                    <FormControl sx={{marginTop: '5%'}} error ={errorSexo}>
                     <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
                     <RadioGroup 
                         aria-labelledby="demo-radio-buttons-group-label"
@@ -161,9 +176,12 @@ function Cadastro(props) {
                         <FormControlLabel value="Feminino" control={<Radio size="small"/>} label="Feminino" />
                         <FormControlLabel value="Outros" control={<Radio size="small"/>} label="Outros" />
                     </RadioGroup>
+                    {errorSexo? <Typography sx={{
+                                    fontSize: '12px',
+                                    color: '#d32f2f'}} >{helperTextSexo}</Typography> : null }
                     </FormControl>
-                    <InputSenha id = "ipt-senha" onChange={(e)=> setSenha(e.target.value)} error = {errorSenha} helperText = {helperTextSenha}/>
-                    <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha}/>
+                    <InputSenha id = "ipt-senha" onChange={(e)=> {setSenha(e.target.value)}} error = {errorSenha} helperText = {helperTextSenha} label = {'Senha'}/>
+                    <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha} label = {'Confirmar Senha'}/>
   
                 </Box>
                 <Button variant="contained"
@@ -214,5 +232,6 @@ function Cadastro(props) {
         </>
     );
 }
+
 
 export default Cadastro;
