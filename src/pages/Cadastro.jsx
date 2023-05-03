@@ -1,15 +1,72 @@
 import React from "react";
+import { useState } from "react";
 import "./css/cadastro.css"
 import { Link } from "react-router-dom";
-import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio  } from "@mui/material";
+import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio } from "@mui/material";
 import request from "../api";
 import axios from "axios";
+import InputSenha from "../components/atoms/InputSenha/index.jsx";
 
 function Cadastro(props) {
-    
-    async function cadastrar() {
 
-        let cep = document.getElementById('ipt-cep').value;
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [sexo, setSexo] = useState("");
+    const [senha, setSenha] = useState("");
+    const [confirmarSenha, setConfirmarSenha] = useState("");
+    const [cep, setCep] = useState("");
+
+    const [errorNome, setErrorNome] = useState(false);
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [errorCpf, setErrorCpf] = useState(false);
+    const [errorSexo, setErrorSexo] = useState(false);
+    const [errorSenha, setErrorSenha] = useState(false);
+    const [errorConfirmarSenha, setErrorConfirmarSenha] = useState(false);
+    const [errorCep, setErrorCep] = useState(false);
+
+    const [helperTextNome, setHelperTextNome] = useState("");
+    const [helperTextEmail, setHelperTextEmail] = useState("");
+    const [helperTextCpf, setHelperTextCpf] = useState("");
+    const [helperTextSexo, setHelperTextSexo] = useState("");
+    const [helperTextSenha, setHelperTextSenha] = useState("");
+    const [helperTextConfirmarSenha, setHelperTextConfirmarSenha] = useState("");
+    const [helperTextCep, setHelperTextCep] = useState("");
+
+
+    
+    function validarCamposEmBranco(params) {
+        if (nome == "" || nome == null) {
+            setErrorNome(true);
+            setHelperTextNome("Este Campo Deve ser Preenchido !")
+        }
+        if (email == "" || email == null) {
+            setErrorEmail(true);
+            setHelperTextEmail("Este Campo Deve ser Preenchido !")
+        }
+        if (cpf == "" || cpf == null) {
+            setErrorCpf(true);
+            setHelperTextCpf("Este Campo Deve ser Preenchido !")
+        }
+        if (cep == "" || cep == null) {
+            setErrorCep(true);
+            setHelperTextCep("Este Campo Deve ser Preenchido !")
+        }
+        if (sexo == "" || sexo == null) {
+            setErrorSexo(true);
+            setHelperTextSexo("Selecione Uma Opção !")
+        }
+        if (senha == "" || senha == null) {
+            setErrorSenha(true);
+            setHelperTextSenha("Este Campo Deve ser Preenchido !")
+        }
+        if (confirmarSenha == "" || confirmarSenha == null) {
+            setErrorConfirmarSenha(true);
+            setHelperTextConfirmarSenha("Este Campo Deve ser Preenchido !")
+        }
+    }
+
+    async function cadastrar() {
 
         let urlViaCep = "https://viacep.com.br/ws/" + cep + "/json/";
 
@@ -23,12 +80,6 @@ function Cadastro(props) {
                                 console.log(erro);
                             });
 
-                            
-        let nome = document.getElementById('ipt-nome').value;
-        let email = document.getElementById('ipt-email').value;
-        let cpf = document.getElementById('ipt-cpf').value;
-        let sexo = 'Masculino'
-        let senha = document.getElementById('ipt-senha').value;
 
         let url = 'http://localhost:8080/alunos/cadastro'
 
@@ -92,29 +143,31 @@ function Cadastro(props) {
                 <Box sx={{  display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'left',
-                            width: '60%'}}>
+                            justifyContent: 'space-evenly',
+                            width: '70%',
+                            height: '80%'}}>
 
-                    <TextField id="ipt-nome" label="Nome" variant="standard" />
-                    <TextField id="ipt-email" label="Email" variant="standard" />
-                    <TextField id="ipt-cpf" label="CPF" variant="standard" />
-                    <TextField id="ipt-cep" label="CEP" variant="standard" />
+                    <TextField id="ipt-nome" onChange={(e)=> setNome(e.target.value)}  label="Nome" variant="standard" error={errorNome} helperText = {helperTextNome}/>
+                    <TextField id="ipt-email" onChange={(e)=> setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText = {helperTextEmail}/>
+                    <TextField id="ipt-cpf" onChange={(e)=> setCpf(e.target.value)} label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
+                    <TextField id="ipt-cep" onChange={(e)=> setCep(e.target.value)} label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
                     <FormControl sx={{marginTop: '5%'}}>
                     <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
                     <RadioGroup 
                         aria-labelledby="demo-radio-buttons-group-label"
                         defaultValue="male"
-                        name="radio-buttons-group">
-                        <FormControlLabel value="male" control={<Radio size="string"/>} label="Masculino" />
-                        <FormControlLabel value="female" control={<Radio size="string"/>} label="Feminino" />
-                        <FormControlLabel value="other" control={<Radio size="string"/>} label="Outros" />
+                        name="radio-buttons-group" onChange={(e)=> {setSexo(e.target.value); console.log(e.target.value)}}>
+                        <FormControlLabel value="Masculino"  control={<Radio size="small"/>} label="Masculino" />
+                        <FormControlLabel value="Feminino" control={<Radio size="small"/>} label="Feminino" />
+                        <FormControlLabel value="Outros" control={<Radio size="small"/>} label="Outros" />
                     </RadioGroup>
                     </FormControl>
-                    <TextField id="ipt-senha" label="Senha" variant="standard" />  
-                    <TextField id="ipt-confirmar-senha" label="Confirmar Senha" variant="standard" /> 
+                    <InputSenha id = "ipt-senha" onChange={(e)=> setSenha(e.target.value)} error = {errorSenha} helperText = {helperTextSenha}/>
+                    <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha}/>
   
                 </Box>
                 <Button variant="contained"
-                        onClick={cadastrar}
+                        onClick={validarCamposEmBranco}
                         sx={{
                              width:'40%',
                              backgroundColor: "#29c760 !important",
