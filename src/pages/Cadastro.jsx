@@ -6,6 +6,7 @@ import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, Radio
 import request from "../api";
 import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
+import InputMask from 'react-input-mask';
 
 function Cadastro(props) {
 
@@ -32,7 +33,6 @@ function Cadastro(props) {
     const [helperTextSenha, setHelperTextSenha] = useState("");
     const [helperTextConfirmarSenha, setHelperTextConfirmarSenha] = useState("");
     const [helperTextCep, setHelperTextCep] = useState("");
-
 
     function validarCamposEmBranco() {        
 
@@ -69,7 +69,7 @@ function Cadastro(props) {
             setErrorSenha(true);
             setHelperTextSenha("Deve Conter Pelo Menos 3 Caractéres")
         }
-        else if (senha != confirmarSenha) {
+        else if (senha !== confirmarSenha) {
             setErrorSenha(true);
             setHelperTextSenha("As senhas devem ser iguais !")
             setErrorConfirmarSenha(true);
@@ -131,7 +131,7 @@ function Cadastro(props) {
 
     return (
         <>
-        <div className="div-voltar">
+        <div className={'div-voltar'}>
         <Link to="/" style={{color: 'black', fontWeight: 'bold', fontSize: '20px'}}>{'< Voltar'}</Link>    
         </div>
         <Box 
@@ -179,9 +179,18 @@ function Cadastro(props) {
                             justifyContent: 'space-around',
                             width: '45%',
                             height: '100%'}}>
-                        
-                        <TextField id="ipt-cpf" onChange={(e)=> setEmail(e.target.value)} label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
-                        <TextField id="ipt-cep" onChange={(e)=> setCep(e.target.value)} label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
+
+                        <InputMask mask= '999.999.999-99' value={cpf} onChange={(e)=> setCpf(e.target.value)}>
+                            {() => (
+                                <TextField id="ipt-cpf" label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
+                            )}
+                        </InputMask>
+
+                        <InputMask mask= '99999-99' value={cep} onChange={(e)=> setCep(e.target.value)}>
+                            {() => (
+                                <TextField id="ipt-cep" label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
+                            )}
+                        </InputMask>
 
                         <FormControl error ={errorSexo} >
                             <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>

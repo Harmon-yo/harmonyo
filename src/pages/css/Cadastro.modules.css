@@ -5,8 +5,9 @@
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    background-image: url("@/imgs/background-login-cadastro-v2.png");
+    background-image: url("/public/imgs/background-login-cadastro-v2.svg");
 }
+
 
 .div-voltar {
     display: flex;
