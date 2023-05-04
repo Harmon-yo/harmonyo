@@ -1,3 +1,4 @@
+/* Antigo */
 .container-inicio {
   display: flex;
   position: relative;
@@ -7,12 +8,6 @@
   background: linear-gradient(100.23deg, #03B441 -0.6%, #00A239 -0.59%, #27CC61 48.13%, #51FA8C 100%);
   ;
   /* border-bottom: 3px solid black; */
-}
-
-
-.container-inicio img {
-  position: absolute;
-  bottom: 0;
 }
 
 .container-inicio-itens {
@@ -193,3 +188,5 @@
   width: 100%;
   height: auto;
 }
+
+/* Novo */

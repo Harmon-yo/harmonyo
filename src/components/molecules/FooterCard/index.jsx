@@ -16,7 +16,8 @@ function FooterCard(props) {
                     props.title != "Midias Sociais" ?
                     props.items.map((item) => (
                         <Typography>{item.label}</Typography>
-                    )) : props.items.map((item) => (
+                    )) 
+                    : props.items.map((item) => (
                         <LogoRedeSocial className="footer-item-img" id={item.alt} src={item.src} alt={item.alt} href={item.href} height="32px"/>
                     ))
                 }

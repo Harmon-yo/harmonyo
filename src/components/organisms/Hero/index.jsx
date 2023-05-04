@@ -1,23 +1,28 @@
 import React from 'react';
 import { Box, Container, Typography, Button } from "@mui/material";
 import Wave from '../../../pages/Wave.svg'
-import style from"./style.css"
+import style from "./style.css"
+import BoxWithContainer from '../../atoms/BoxWithContainer';
 
 
 /* Mudar de nome depois */
-function Pagex(props) {
+function Hero(props) {
   return (
-    <Box className={props.main ? "main" : "teste"}>
-      {
-        props.main &&
-        <img src={Wave} className="img-wave" />
-      }
-      <Container className="teste-container">
-        <Typography variant="h2" className="title">
+    <>
+      <BoxWithContainer
+        boxClassName={`home-${props.className}`}
+        containerClassName="home-content-container">
+
+        {
+          props.main &&
+          <img src={Wave} className="img-wave" />
+        }
+
+        <Typography variant="h2" className="titulo">
           Descubra sua harmonia com a música
         </Typography>
 
-        <Typography variant="subtitle1" className='subtitle'>
+        <Typography variant="subtitle1" className='subtitulo'>
           Quer seja um novato ou um músico experiente, nossa plataforma
           conecta você com os melhores professores de música da nossa
           plataforma para desbloquear todo o seu potencial musical.
@@ -27,12 +32,12 @@ function Pagex(props) {
           variant="contained"
           disableElevation={true}
           href={"/cadastro"}
-          className="button-criar-conta">
+          className="botao-criar-conta">
           Criar Conta
         </Button>
-      </Container>
-    </Box>
+      </BoxWithContainer>
+    </>
   );
 }
 
-export default Pagex;
+export default Hero;

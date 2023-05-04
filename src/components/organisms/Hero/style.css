@@ -1,5 +1,5 @@
-.teste,
-.main {
+.home-second,
+.home-main {
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -7,12 +7,12 @@
     height: 80vh;
 }
 
-.main {
+.home-main {
     position: relative;
     background: linear-gradient(100.23deg, #03B441 -0.6%, #00A239 -0.59%, #27CC61 48.13%, #51FA8C 100%);
 }
 
-.teste-container {
+.home-content-container {
     display: flex !important;
     flex-direction: column;
     align-items: center;
@@ -27,22 +27,22 @@
     bottom: 0;
 }
 
-.title, .subtitle, .button-criar-conta {
+.titulo, .subtitulo, .botao-criar-conta {
     margin: 2% !important;
 }
 
-.title {
+.titulo {
     width: 70%;
     font-weight: bold !important;
     letter-spacing: 2px !important;
 }
 
-.subtitle {
+.subtitulo {
     width: 45%;
     font-weight: normal;
 }
 
-.button-criar-conta {
+.botao-criar-conta {
     padding: 1% 5% !important;
     background-color: #F0F0F0 !important;
     color: #000 !important;

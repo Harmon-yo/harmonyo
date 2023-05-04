@@ -1,9 +1,8 @@
 import React from "react";
+import BoxWithContainer from "../../atoms/BoxWithContainer";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import FooterCard from "../../molecules/FooterCard/index.jsx";
-import LogoRedeSocial from "../../atoms/RedeSocial/Index.jsx";
 import "./style.css"
 
 const cards = [
@@ -52,13 +51,13 @@ const cards = [
 ]
 
 function Footer(props) {
-    
     return (
         <>
-            <Box className="footer">
-
-                <Container className="footer-container">
-                    <Box className="items">
+        <BoxWithContainer
+            boxClassName="footer"
+            containerClassName="footer-container"
+            >
+                <Box className="items">
                         {
                             cards.map((card) => (
                                 <FooterCard title={card.title} items={card.items} />
@@ -71,8 +70,7 @@ function Footer(props) {
                             Copyright © 2023, Harmonyo. Todos os direitos reservados. Desenvolvido por Harmonyo Inc.
                         </Typography>
                     </Box>
-                </Container>
-            </Box>
+        </BoxWithContainer>
         </>
     );
 
