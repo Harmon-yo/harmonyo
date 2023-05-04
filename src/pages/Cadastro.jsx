@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "./css/cadastro.css"
+import "./css/Cadastro.modules.css"
 import { Link } from "react-router-dom";
 import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography } from "@mui/material";
 import request from "../api";
@@ -134,8 +134,8 @@ function Cadastro(props) {
         <div className="div-voltar">
         <Link to="/" style={{color: 'black', fontWeight: 'bold', fontSize: '20px'}}>{'< Voltar'}</Link>    
         </div>
-        <div 
-            style={{
+        <Box 
+            sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -212,7 +212,7 @@ function Cadastro(props) {
                 </Button>  
                 <label>Já Possui Conta? <Link to="/login" style={{color: 'black', fontWeight: 'bold'}}> Fazer Login</Link></label>                       
             </Box>    
-        </div>
+        </Box>
         {/* <div className="div-voltar">
         <Link to="/" className="link-voltar">{txtVoltar}</Link>      
         </div>
