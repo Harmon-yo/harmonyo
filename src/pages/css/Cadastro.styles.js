@@ -130,3 +130,43 @@ export const txtPossuiConta= {
         xl: 'auto'
     }
 }
+
+// const makeStyles = () => {
+//     return(
+//         {
+//     boxVoltar: {
+//         display: 'flex',
+//         position: 'absolute',
+//         flexDirection: 'row',
+//         height: {
+//             xs: '45px',
+//             lg: '60px',
+//             xl: '60px'},
+//         width: '100%',
+//         alignItems: 'center',
+//         paddingLeft: '5%',
+//         fontSize: {
+//             xs:'16px',
+//             lg:'20px',
+//             xl:'20px'},
+    
+//     },
+//     background: {
+//         display: 'flex',
+//         flexDirection: 'column',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         width: '100vw',
+//         height: {
+//             xs: '1000px',
+//             sm: '100vh',
+//             lg: '100vh',
+//             xl: '100vh'
+//         },
+    
+//         backgroundImage: 'url("/imgs/background-login-cadastro-v2.png")'}
+//     }
+//     )
+// }
+
+// export const useStyles = () => makeStyles();
