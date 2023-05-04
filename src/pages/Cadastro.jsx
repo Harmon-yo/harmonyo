@@ -7,6 +7,8 @@ import request from "../api";
 import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
 import InputMask from 'react-input-mask';
+import { background, boxForm, boxFormInputs, boxInputs, boxVoltar, btnCadastrar, txtPossuiConta } from "./css/Cadastro.styles";
+
 
 function Cadastro(props) {
 
@@ -131,42 +133,15 @@ function Cadastro(props) {
 
     return (
         <>
-        <div className={'div-voltar'}>
-        <Link to="/" style={{color: 'black', fontWeight: 'bold', fontSize: '20px'}}>{'< Voltar'}</Link>    
-        </div>
-        <Box 
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100vw',
-                height: '100vh',
-                backgroundImage: 'url("/imgs/background-login-cadastro-v2.png")'
-            }}>
+        <Box sx = {boxVoltar}>
+        <Link to="/" style={{color: 'black', fontWeight: 'bold'}}>{'< Voltar'}</Link>    
+        </Box>
+        <Box sx = {background}>
 
-            <Box sx={{  display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'space-around',
-                        backgroundColor: '#fcfcfc',
-                        borderRadius: '5px',
-                        boxShadow: '4px 5px 12px rgba(0, 0, 0, 0.25)',
-                        width: '60%',
-                        height: '70%'
-            }}>
-                <Box sx={{  display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'left',
-                            justifyContent: 'space-around',
-                            width: '90%',
-                            height: '70%'}}>
+            <Box sx={boxForm}>
+                <Box sx={ boxFormInputs}>
 
-                    <Box sx={{  display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-around',
-                            width: '45%',
-                            height: '100%'}}>
+                    <Box sx={boxInputs}>
 
                         <TextField id="ipt-nome" onChange={(e)=> setNome(e.target.value)}  label="Nome" variant="standard" error={errorNome} helperText = {helperTextNome} />
                         <TextField id="ipt-email" onChange={(e)=> setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText = {helperTextEmail}/>
@@ -174,11 +149,7 @@ function Cadastro(props) {
                         <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha} label = {'Confirmar Senha'}/>
                     </Box>
 
-                    <Box sx={{  display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-around',
-                            width: '45%',
-                            height: '100%'}}>
+                    <Box sx={boxInputs}>
 
                         <InputMask mask= '999.999.999-99' value={cpf} onChange={(e)=> setCpf(e.target.value)}>
                             {() => (
@@ -210,16 +181,10 @@ function Cadastro(props) {
                 </Box>
                 <Button variant="contained"
                         onClick={validarCamposEmBranco}
-                        sx={{
-                             width:'40%',
-                             backgroundColor: "#29c760 !important",
-                             color: "#fff !important",
-                             fontWeight: 'bold',
-                             fontSize:'16px'
-                        }}>
+                        sx={btnCadastrar}>
                             Cadastrar
                 </Button>  
-                <label>Já Possui Conta? <Link to="/login" style={{color: 'black', fontWeight: 'bold'}}> Fazer Login</Link></label>                       
+                <Typography sx={txtPossuiConta}>Já Possui Conta? <Link to="/login" style={{color: 'black', fontWeight: 'bold'}}> Fazer Login</Link></Typography>                       
             </Box>    
         </Box>
         {/* <div className="div-voltar">
