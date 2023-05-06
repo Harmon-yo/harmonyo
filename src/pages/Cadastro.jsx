@@ -8,6 +8,7 @@ import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
 import InputMask from 'react-input-mask';
 import { useStyles } from "./styles/Cadastro.styles";
+import Logo from "../components/atoms/Logo"
 
 function Cadastro(props) {
 
@@ -36,7 +37,7 @@ function Cadastro(props) {
     const [helperTextCep, setHelperTextCep] = useState("");
 
     function limparMsgErros() {
-        
+
         setErrorNome("")
         setErrorEmail("")
         setErrorCpf("")
@@ -44,7 +45,7 @@ function Cadastro(props) {
         setErrorSenha("")
         setErrorConfirmarSenha("")
         setErrorCep("")
-    
+
         setHelperTextNome("")
         setHelperTextEmail("")
         setHelperTextCpf("")
@@ -55,7 +56,7 @@ function Cadastro(props) {
 
     }
 
-    function validarCampos() {        
+    function validarCampos() {
 
         limparMsgErros()
 
@@ -118,27 +119,27 @@ function Cadastro(props) {
     }
 
     async function buscarDadosEndereco() {
-               
+
         let urlViaCep = "https://viacep.com.br/ws/" + cep + "/json/"
 
         let dadosViaCep = {}
 
         await request(urlViaCep).get()
-                            .then((res) => {
+            .then((res) => {
 
-                                if (res.data.erro) {
-                                    dadosViaCep = null;
-                                }
-                                else {
-                                    dadosViaCep = res.data;
-                                }
+                if (res.data.erro) {
+                    dadosViaCep = null;
+                }
+                else {
+                    dadosViaCep = res.data;
+                }
 
-                            })
-                            .catch((error) => {
-                                console.log(error);
+            })
+            .catch((error) => {
+                console.log(error);
 
-                            })
-        return dadosViaCep;                    
+            })
+        return dadosViaCep;
     }
 
     async function cadastrar() {
@@ -152,9 +153,9 @@ function Cadastro(props) {
                 setHelperTextCep("CEP Inválido !")
             }
             else {
-                
+
                 let url = 'http://localhost:8080/alunos/cadastro'
-        
+
                 let dadosUsuario = {
                     nome: nome,
                     email: email,
@@ -173,134 +174,155 @@ function Cadastro(props) {
                 }
 
                 await axios.post(url, dadosUsuario)
-                            .then((res) => {
-                                console.log(res.data)
+                    .then((res) => {
+                        console.log(res.data)
+                    })
+                    .catch((error) => {
+
+                        if (error.response.status === 409) {
+
+                            let msgError = error.response.data.message
+
+                            msgError = msgError.toUpperCase()
+
+                            if (msgError.includes("EMAIL")) {
+                                setErrorEmail(true);
+                                setHelperTextEmail("Email já em uso !")
+                            }
+
+                            else if (msgError.includes("CPF")) {
+                                setErrorCpf(true);
+                                setHelperTextCpf("CPF já em uso !")
+                            }
+
+                        }
+                        else if (error.response.status === 400) {
+
+                            let listaErros = error.response.data.errors
+
+                            console.log(listaErros)
+
+                            listaErros.map((erro) => {
+
+                                if (erro.codes[1] === "Size.nome") {
+
+                                    console.log(erro.codes[1])
+                                    console.log(erro.defaultMessage)
+
+                                    setErrorNome(true);
+                                    setHelperTextNome("Deve conter pelo menos 4 caractéres !")
+                                }
+
+                                if (erro.code === "Email") {
+
+                                    console.log(erro.code)
+                                    console.log(erro.defaultMessage)
+
+                                    setErrorEmail(true);
+                                    setHelperTextEmail("Email Inválido !")
+                                }
+
+                                if (erro.codes[1] === "Size.senha") {
+
+                                    console.log(erro.codes[1])
+                                    console.log(erro.defaultMessage)
+
+                                    setErrorSenha(true);
+                                    setHelperTextSenha("Deve Conter Pelo Menos 3 Caractéres !")
+                                }
+
+                                if (erro.code === "CPF") {
+
+                                    console.log(erro.code)
+                                    console.log(erro.defaultMessage)
+
+                                    setErrorCpf(true);
+                                    setHelperTextCpf("CPF Inválido !")
+                                }
+
+                                if (erro.code === "CEP") {
+
+                                    console.log(erro.code)
+                                    console.log(erro.defaultMessage)
+
+                                    setErrorCep(true);
+                                    setHelperTextCep("CEP Inválido !")
+                                }
+
+                                if (erro.code === "Sexo") {
+
+                                    console.log(erro.code)
+                                    console.log(erro.defaultMessage)
+
+                                    setErrorSexo(true);
+                                    setHelperTextSexo("Sexo Inválido! Selecione Uma Opção !")
+                                }
+
                             })
-                            .catch((error) => {
-
-                                let listaErros = error.response.data.errors
-
-                                console.log(listaErros)
-                                
-                                listaErros.map((erro) => {
-
-                                    if (erro.codes[1] === "Size.nome") {
-
-                                            console.log(erro.codes[1])
-                                            console.log(erro.defaultMessage)
-
-                                            setErrorNome(true);
-                                            setHelperTextNome("Deve conter pelo menos 4 caractéres !")
-                                    }
-
-                                    if (erro.code === "Email") {
-
-                                        console.log(erro.code)
-                                        console.log(erro.defaultMessage)
-
-                                        setErrorEmail(true);
-                                        setHelperTextEmail("Email Inválido !")
-                                    }
-
-                                    if (erro.codes[1] === "Size.senha") {
-
-                                        console.log(erro.codes[1])
-                                        console.log(erro.defaultMessage)
-
-                                        setErrorSenha(true);
-                                        setHelperTextSenha("Deve Conter Pelo Menos 3 Caractéres !")
-                                    }
-
-                                    if (erro.code === "CPF") {
-
-                                        console.log(erro.code)
-                                        console.log(erro.defaultMessage)
-
-                                        setErrorCpf(true);
-                                        setHelperTextCpf("CPF Inválido !")
-                                    }
-
-                                    if (erro.code === "CEP") {
-
-                                        console.log(erro.code)
-                                        console.log(erro.defaultMessage)
-
-                                        setErrorCep(true);
-                                        setHelperTextCep("CEP Inválido !")
-                                    }
-                                    
-                                    if (erro.code === "Sexo") {
-
-                                        console.log(erro.code)
-                                        console.log(erro.defaultMessage)
-
-                                        setErrorSexo(true);
-                                        setHelperTextSexo("Sexo Inválido! Selecione Uma Opção !")
-                                    }
-
-                                })
-                            })
+                        }
+                    })
             }
         }
     }
 
     return (
         <>
-        <Box sx = {useStyles().boxVoltar}>
-        <Link to="/" style={{color: 'black', fontWeight: 'bold'}}>{'< Voltar'}</Link>    
-        </Box>
-        <Box sx = {useStyles().background}>
+            <Box sx={useStyles().boxVoltar}>
+                <Link to="/" style={{ color: 'black', fontWeight: 'bold' }}>{'< Voltar'}</Link>
+            </Box>
+            <Box sx={useStyles().background}>
 
-            <Box sx = {useStyles().boxForm}>
+                <Box sx={useStyles().boxForm}>
+                    <Logo height={{ xs: '30px', sm: '40px', xl: '40px' }} />
+                    <Box sx={useStyles().boxFormInputs}>
 
-                <Box sx = {useStyles().boxFormInputs}>
+                        <Box sx={useStyles().boxInputs}>
 
-                    <Box sx = {useStyles().boxInputs}>
+                            <TextField id="ipt-nome" onChange={(e) => setNome(e.target.value)} label="Nome" variant="standard" error={errorNome} helperText={helperTextNome} />
+                            <TextField id="ipt-email" onChange={(e) => setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText={helperTextEmail} />
+                            <InputSenha id="ipt-senha" onChange={(e) => { setSenha(e.target.value) }} error={errorSenha} helperText={helperTextSenha} label={'Senha'} />
+                            <InputSenha id="ipt-confirmar-senha" onChange={(e) => setConfirmarSenha(e.target.value)} error={errorConfirmarSenha} helperText={helperTextConfirmarSenha} label={'Confirmar Senha'} />
+                        </Box>
 
-                        <TextField id="ipt-nome" onChange={(e)=> setNome(e.target.value)}  label="Nome" variant="standard" error={errorNome} helperText = {helperTextNome} />
-                        <TextField id="ipt-email" onChange={(e)=> setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText = {helperTextEmail}/>
-                        <InputSenha id = "ipt-senha" onChange={(e)=> {setSenha(e.target.value)}} error = {errorSenha} helperText = {helperTextSenha} label = {'Senha'}/>
-                        <InputSenha id = "ipt-confirmar-senha" onChange={(e)=> setConfirmarSenha(e.target.value)} error = {errorConfirmarSenha} helperText = {helperTextConfirmarSenha} label = {'Confirmar Senha'}/>
+                        <Box sx={useStyles().boxInputs}>
+
+                            <InputMask mask='999.999.999-99' value={cpf} onChange={(e) => setCpf(e.target.value)}>
+                                {() => (
+                                    <TextField id="ipt-cpf" label="CPF" variant="standard" error={errorCpf} helperText={helperTextCpf} />
+                                )}
+                            </InputMask>
+
+                            <InputMask mask='99999-999' value={cep} onChange={(e) => setCep(e.target.value)}>
+                                {() => (
+                                    <TextField id="ipt-cep" label="CEP" variant="standard" error={errorCep} helperText={helperTextCep} />
+                                )}
+                            </InputMask>
+
+                            <FormControl error={errorSexo} >
+                                <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
+                                <RadioGroup sx={{ paddingLeft: '2%' }}
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue="male"
+                                    name="radio-buttons-group" onChange={(e) => setSexo(e.target.value)}>
+                                    <FormControlLabel value="Masculino" control={<Radio size="16px" />} label="Masculino" />
+                                    <FormControlLabel value="Feminino" control={<Radio size="16px" />} label="Feminino" />
+                                    <FormControlLabel value="Outros" control={<Radio size="16px" />} label="Outros" />
+                                </RadioGroup>
+                                {errorSexo ? <Typography sx={{
+                                    fontSize: '12px',
+                                    color: '#d32f2f'
+                                }} >{helperTextSexo}</Typography> : null}
+                            </FormControl>
+                        </Box>
                     </Box>
-
-                    <Box sx={useStyles().boxInputs}>
-
-                        <InputMask mask= '999.999.999-99' value={cpf} onChange={(e)=> setCpf(e.target.value)}>
-                            {() => (
-                                <TextField id="ipt-cpf" label="CPF" variant="standard" error={errorCpf} helperText = {helperTextCpf}/>
-                            )}
-                        </InputMask>
-
-                        <InputMask mask= '99999-999' value={cep} onChange={(e)=> setCep(e.target.value)}>
-                            {() => (
-                                <TextField id="ipt-cep" label="CEP" variant="standard" error={errorCep} helperText = {helperTextCep}/>
-                            )}
-                        </InputMask>
-
-                        <FormControl error ={errorSexo} >
-                            <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
-                            <RadioGroup sx={{paddingLeft: '2%'}}
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                defaultValue="male"
-                                name="radio-buttons-group" onChange={(e)=> setSexo(e.target.value)}>
-                                <FormControlLabel value="Masculino"  control={<Radio size="16px"/>} label="Masculino" />
-                                <FormControlLabel value="Feminino" control={<Radio size="16px"/>} label="Feminino" />
-                                <FormControlLabel value="Outros" control={<Radio size="16px"/>} label="Outros" />
-                            </RadioGroup>
-                            {errorSexo? <Typography sx={{
-                                            fontSize: '12px',
-                                            color: '#d32f2f'}} >{helperTextSexo}</Typography> : null }
-                        </FormControl>
-                    </Box>      
-                </Box>
-                <Button variant="contained"
+                    <Button variant="contained"
                         onClick={cadastrar}
-                        sx = {useStyles().btnCadastrar}>
-                            Cadastrar
-                </Button>  
-                <Typography sx={useStyles().txtPossuiConta}>Já Possui Conta? <Link to="/login" style={{color: 'black', fontWeight: 'bold'}}> Fazer Login</Link></Typography>                       
-            </Box>    
-        </Box>
+                        sx={useStyles().btnCadastrar}>
+                        Cadastrar
+                    </Button>
+                    <Typography sx={useStyles().txtPossuiConta}>Já Possui Conta? <Link to="/login" style={{ color: 'black', fontWeight: 'bold' }}> Fazer Login</Link></Typography>
+                </Box>
+            </Box>
         </>
     );
 }

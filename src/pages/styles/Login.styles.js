@@ -5,7 +5,7 @@
 // xl: -> Tela Maior que 1536px
 
 const makeStyles = () => {
-    
+
     return (
         {
             boxVoltar: {
@@ -27,22 +27,15 @@ const makeStyles = () => {
                 },
 
             },
-
             background: {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
                 width: '100vw',
-                height: {
-                    xs: '1100px',
-                    sm: '100vh',
-                    lg: '100vh',
-                    xl: '100vh'
-                },
+                height: '100vh',
                 backgroundImage: 'url("/imgs/background-login-cadastro-v2.png")'
             },
-
             boxForm: {
                 display: 'flex',
                 flexDirection: 'column',
@@ -53,59 +46,33 @@ const makeStyles = () => {
                 boxShadow: '4px 5px 12px rgba(0, 0, 0, 0.25)',
                 width: {
                     xs: '80%',
+                    sm: '60%',
+                    md: '50%',
+                    lg: '40%',
+                    xl: '30%'
+                },
+                height: {
+                    xs: '55%',
+                    sm: '60%',
+                    md: '60%',
                     lg: '70%',
                     xl: '60%'
-                },
-                height: {
-                    xs: '90%',
-                    lg: '75%',
-                    xl: '75%'
                 }
             },
-
             boxFormInputs: {
-                display: 'flex',
-                flexDirection: {
-                    xs: 'column',
-                    lg: 'row',
-                    xl: 'row'
-                },
-                alignItems: {
-                    xs: 'center',
-                    lg: 'left',
-                    xl: 'left'
-                },
-                justifyContent: 'space-around',
-                width: {
-                    xs: '100%',
-                    lg: '90%',
-                    xl: '90%'
-                },
-
-                height: {
-                    xs: '80%',
-                    lg: '70%',
-                    xl: '65%'
-                }
-            },
-
-            boxInputs: {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-around',
-                width: {
-                    xs: '80%',
-                    lg: '45%',
-                    xl: '45%',
-                },
+                width: '80%',
                 height: {
-                    xs: '50%',
-                    lg: '100%',
-                    xl: '100%',
+                    xs: '40%',
+                    sm: '45%',
+                    md: '45%',
+                    lg: '50%',
+                    xl: '40%',
                 },
             },
-
-            btnCadastrar: {
+            btnLogin: {
                 width: {
                     xs: '60%',
                     lg: '40%',
@@ -116,7 +83,6 @@ const makeStyles = () => {
                 fontWeight: 'bold',
                 fontSize: '16px'
             },
-
             txtPossuiConta: {
                 display: 'flex',
                 flexDirection: {
@@ -127,7 +93,7 @@ const makeStyles = () => {
                 fontSize: '16px',
                 alignItems: 'center',
                 width: {
-                    xs: '60%',
+                    xs: '70%',
                     sm: 'auto',
                     xl: 'auto'
                 }
