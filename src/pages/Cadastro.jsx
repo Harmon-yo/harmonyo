@@ -175,7 +175,15 @@ function Cadastro(props) {
 
                 await axios.post(url, dadosUsuario)
                     .then((res) => {
-                        console.log(res.data)
+
+                        console.log(res.data);
+
+                        sessionStorage.EMAIL = res.data.email;
+
+                        alert("Cadastro Realizado com Sucesso !");
+
+                        window.location = "/login";
+
                     })
                     .catch((error) => {
 
