@@ -1,18 +1,24 @@
 import React from 'react';
 import { Box, Container, Typography, Button } from "@mui/material";
 import Wave from '../../../pages/Wave.svg'
-import style from "./style.css"
+import "./style.css"
 import BoxWithContainer from '../../atoms/BoxWithContainer';
 
 
 /* Mudar de nome depois */
-function Hero(props) {
+function Hero2(props) {
   return (
     <>
-      <section>
+      <section className="section-hero">
         <BoxWithContainer
           boxClassName={`home-${props.className}`}
           containerClassName="home-content-container">
+
+          {
+            props.main &&
+            <img src={Wave} className="img-wave" />
+          }
+
 
           <Typography variant="h2" className="titulo">
             Descubra sua harmonia com a música
@@ -38,4 +44,4 @@ function Hero(props) {
   );
 }
 
-export default Hero;
+export default Hero2;

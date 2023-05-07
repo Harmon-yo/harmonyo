@@ -14,12 +14,12 @@ const pages = [
         fontWeight: "bold",
     },
     {
-        name: "Como Funciona",
-        href: "#",
+        name: "Vantagens",
+        href: "#vantagens",
         underline: "none",
     },
     {
-        name: "Vantagens",
+        name: "Como Funciona",
         href: "#",
         underline: "none",
     },

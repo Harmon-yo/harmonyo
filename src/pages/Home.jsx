@@ -1,9 +1,10 @@
 import React from "react";
 import Navbar from "../components/organisms/Navbar/index.jsx";
 /* import './css/index.css' */
-import Hero from "../components/organisms/Hero/index.jsx";
-import Hero2 from "../components/organisms/Hero2/index.jsx";
+/* import Hero from "../components/organisms/Hero_Antigo/index.jsx"; */
+import Hero from "../components/organisms/Hero2/index.jsx";
 import Estatisticas from "../components/organisms/Estatisticas/index.jsx";
+import Vantagens from "../components/organisms/Vantagens/index.jsx";
 import Footer from "../components/organisms/Footer/index.jsx";
 import { Link } from "react-router-dom";
 /* 
@@ -49,12 +50,14 @@ function Index() {
         <>
             <Navbar/>
             <Hero main className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio}/>
+            <Estatisticas/>
+            <Vantagens/>
             {/* 
 
                 Testes
 
                 <Hero2 main className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio}/>
-                <Estatisticas/>
+                
             
             */}
             <Footer/>

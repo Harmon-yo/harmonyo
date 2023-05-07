@@ -10,6 +10,17 @@
 .home-main {
     position: relative;
     background: linear-gradient(100.23deg, #03B441 -0.6%, #00A239 -0.59%, #27CC61 48.13%, #51FA8C 100%);
+    background-size: 500% 100%;
+    animation: degrade-animado 10s ease infinite alternate;
+}
+
+@keyframes degrade-animado {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
 }
 
 .home-content-container {

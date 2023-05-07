@@ -49,7 +49,7 @@
 }
 
 .navbar-button-login, .navbar-button-cadastro {
-    font-weight: bold;
+    font-weight: 800 !important;
 }
 
 .navbar-button-login {
@@ -59,5 +59,5 @@
 }
 
 .navbar-button-cadastro {
-    background-color: #000 !important;
+    background-color: #00a239 !important
 }

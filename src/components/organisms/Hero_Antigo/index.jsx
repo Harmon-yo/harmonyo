@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Container, Typography, Button } from "@mui/material";
 import Wave from '../../../pages/Wave.svg'
-import style from "./style.css"
+import "./style.css"
 import BoxWithContainer from '../../atoms/BoxWithContainer';
 
 
