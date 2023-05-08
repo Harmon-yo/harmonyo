@@ -53,11 +53,13 @@ const makeStyles = () => {
                 boxShadow: '4px 5px 12px rgba(0, 0, 0, 0.25)',
                 width: {
                     xs: '80%',
+                    md: '85%',
                     lg: '70%',
                     xl: '60%'
                 },
                 height: {
                     xs: '90%',
+                    md: '80%',
                     lg: '75%',
                     xl: '75%'
                 }
@@ -67,23 +69,27 @@ const makeStyles = () => {
                 display: 'flex',
                 flexDirection: {
                     xs: 'column',
+                    md: 'row',
                     lg: 'row',
                     xl: 'row'
                 },
                 alignItems: {
                     xs: 'center',
+                    md: 'left',
                     lg: 'left',
                     xl: 'left'
                 },
                 justifyContent: 'space-around',
                 width: {
                     xs: '100%',
+                    md: '90%',
                     lg: '90%',
                     xl: '90%'
                 },
 
                 height: {
                     xs: '80%',
+                    md: '70%',
                     lg: '70%',
                     xl: '65%'
                 }
@@ -95,11 +101,13 @@ const makeStyles = () => {
                 justifyContent: 'space-around',
                 width: {
                     xs: '80%',
+                    md: '45%',
                     lg: '45%',
                     xl: '45%',
                 },
                 height: {
                     xs: '50%',
+                    md: '100%',
                     lg: '100%',
                     xl: '100%',
                 },
@@ -108,8 +116,13 @@ const makeStyles = () => {
             btnCadastrar: {
                 width: {
                     xs: '60%',
+                    md: '40%',
                     lg: '40%',
                     xl: '40%'
+                },
+                height: {
+                    md: '7%',
+                    xl: 'auto'
                 },
                 backgroundColor: "#29c760 !important",
                 color: "#fff !important",

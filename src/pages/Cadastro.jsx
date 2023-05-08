@@ -278,7 +278,7 @@ function Cadastro(props) {
             <Box sx={useStyles().boxVoltar}>
                 <Link to="/" style={{ color: 'black', fontWeight: 'bold' }}>{'< Voltar'}</Link>
             </Box>
-            <Box className={styles["background"]}>
+            <Box sx={useStyles().background}>
 
                 <Box sx={useStyles().boxForm}>
                     <Logo height={{ xs: '30px', sm: '40px', xl: '40px' }} />
