@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import "./css/Cadastro.modules.css"
 import { Link } from "react-router-dom";
 import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography } from "@mui/material";
 import request from "../api";
@@ -8,7 +7,8 @@ import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
 import InputMask from 'react-input-mask';
 import { useStyles } from "./styles/Cadastro.styles";
-import Logo from "../components/atoms/Logo"
+import styles from "./css/Cadastro.module.css";
+import Logo from "../components/atoms/Logo";
 
 function Cadastro(props) {
 
@@ -278,7 +278,7 @@ function Cadastro(props) {
             <Box sx={useStyles().boxVoltar}>
                 <Link to="/" style={{ color: 'black', fontWeight: 'bold' }}>{'< Voltar'}</Link>
             </Box>
-            <Box sx={useStyles().background}>
+            <Box className={styles["background"]}>
 
                 <Box sx={useStyles().boxForm}>
                     <Logo height={{ xs: '30px', sm: '40px', xl: '40px' }} />
