@@ -3,6 +3,10 @@ import BoxWithContainer from "../../atoms/BoxWithContainer";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import FooterCard from "../../molecules/FooterCard/index.jsx";
+import linkedinImg from "../../../imgs/linkedin32px-icon.png";
+import whatsappImg from "../../../imgs/whatsapp32px-icon.png";
+import facebookImg from "../../../imgs/facebook32px-icon.png";
+import instagramImg from "../../../imgs/instagram32px-icon.png";
 import "./style.css"
 
 const cards = [
@@ -28,22 +32,22 @@ const cards = [
         items: [
             {
                 alt: "Linkedin",
-                src: "/imgs/linkedin32px-icon.png",
+                src: linkedinImg,
                 href: "#",
             },
             {
                 alt: "Facebook",
-                src: "/imgs/facebook32px-icon.png",
+                src: facebookImg,
                 href: "#",
             },  
             {
                 alt: "Instagram",
-                src: "/imgs/instagram32px-icon.png",
+                src: instagramImg,
                 href: "#",
             },
             {
                 alt: "Whatsapp",
-                src: "/imgs/whatsapp32px-icon.png",
+                src: whatsappImg,
                 href: "#",
             },
         ],

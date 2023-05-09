@@ -4,6 +4,8 @@
 // lg: -> Tela Maior que 1200px
 // xl: -> Tela Maior que 1536px
 
+import backgroundImg from '../../imgs/background-login-cadastro-v2.png';
+
 const makeStyles = () => {
 
     return (
@@ -34,7 +36,7 @@ const makeStyles = () => {
                 justifyContent: 'center',
                 width: '100vw',
                 height: '100vh',
-                backgroundImage: 'url("/imgs/background-login-cadastro-v2.png")'
+                backgroundImage: `url("${backgroundImg}")`
             },
             boxForm: {
                 display: 'flex',

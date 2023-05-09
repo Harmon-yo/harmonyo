@@ -6,10 +6,13 @@ import "./style.css";
 function VantagemCard(props) {
   return (
     <Card className="vantagem-card">
+        <Box className="vantagem-card-img-container">
         <Box
+            className="vantagem-card-img"
             component="img"
             src={props.src}
-            className="vantagem-card-img" />
+            alt={props.alt}/>
+        </Box>
       <h1 className="vantagem-card-title">{props.title}</h1>
       <p className="vantagem-card-description">{props.description}</p>
     </Card>

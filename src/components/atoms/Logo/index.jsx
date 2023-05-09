@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import logoImg from "../../../imgs/Logo-Harmonyo.png";
 
 
 function Logo(props) {
@@ -7,7 +8,7 @@ function Logo(props) {
         <Box 
             className={props.className}
             component="img"
-            src="/imgs/Logo-Harmonyo.png" 
+            src={logoImg} 
             alt={props.alt}
             sx={{
                 ...(props.height !== undefined && { height: props.height }),
