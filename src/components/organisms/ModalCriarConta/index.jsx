@@ -1,54 +1,77 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
+import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import { useStyles } from './modal.styles.js';
+import Slide from '@mui/material/Slide';
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '50%',
-    bgcolor: 'white',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
+
 
 function ModalCriarConta(props) {
     
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+      });
+
     return (
         <>
             <Modal
             open={props.open}
             onClose={props.closeModal}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            Transition={Transition}
             >
-            <Box sx={style}>
-            <IconButton
-                aria-label="close"
-                onClick={props.closeModal}
-                sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-                }}
-            >
-                <CloseIcon />
-            </IconButton>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
-            <Button variant="contained" >Contained</Button>
-            </Box>
-        </Modal>
+                <Box sx={useStyles().background}>
+                    <IconButton
+                        aria-label="close"
+                        onClick={props.closeModal}
+                        sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography sx = {useStyles().titulo}>
+                        Como você gostaria de se cadastrar ?
+                    </Typography>
+                    <Typography sx = {useStyles().subtitulo}>
+                        Para fazer o cadastro, é necessário saber o que você é
+                    </Typography>
+                    <Box sx={useStyles().boxCards}>
+
+                        <Button sx={useStyles().card}>
+                            <Typography sx = {useStyles().tituloCard}>
+                                Sou Professor
+                            </Typography>
+                            <Typography sx = {useStyles().subtituloCard}>
+                                Quero ensinar a tocar
+                            </Typography>
+                        </Button>
+                        
+                        <Typography sx = {useStyles().titulo}>
+                            ou
+                        </Typography>
+
+                        <Button sx={useStyles().card}>
+                            <Typography sx = {useStyles().tituloCard}>
+                                Sou Aluno
+                            </Typography>
+                            <Typography sx = {useStyles().subtituloCard}>
+                                Quero aprender a tocar
+                            </Typography>
+                        </Button>
+                    </Box>
+                    <Typography sx = {useStyles().subtitulo}>
+                        Já possuo uma conta. <Link to="/login" style={{fontWeight: 'bold' }}> Fazer Login</Link>  
+                    </Typography>
+                </Box>
+            </Modal>
         </>
     )
 }
