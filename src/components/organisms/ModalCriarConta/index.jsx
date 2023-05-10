@@ -17,6 +17,13 @@ function ModalCriarConta(props) {
         return <Slide direction="up" ref={ref} {...props} />;
       });
 
+      function redirecionarProfessor() {
+        window.location.href = `/cadastro?categoria=Professor`;
+      }
+      function redirecionarAluno() {
+        window.location.href = `/cadastro?categoria=Aluno`;
+      }
+
     return (
         <>
             <Modal
@@ -45,7 +52,7 @@ function ModalCriarConta(props) {
                     </Typography>
                     <Box sx={useStyles().boxCards}>
 
-                        <Button sx={useStyles().card}>
+                        <Button sx={useStyles().card} onClick={redirecionarProfessor}>
                             <Typography sx = {useStyles().tituloCard}>
                                 Sou Professor
                             </Typography>
@@ -58,7 +65,7 @@ function ModalCriarConta(props) {
                             ou
                         </Typography>
 
-                        <Button sx={useStyles().card}>
+                        <Button sx={useStyles().card} onClick={redirecionarAluno}>
                             <Typography sx = {useStyles().tituloCard}>
                                 Sou Aluno
                             </Typography>

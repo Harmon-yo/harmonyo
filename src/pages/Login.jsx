@@ -68,6 +68,7 @@ function Login() {
                     sessionStorage.CATEGORIA = res.data.categoria;
                     sessionStorage.TOKEN = res.data.token;
 
+
                     if (res.data.categoria === "Aluno") {
                         window.location = "/alunos/encontrar-professor"
                     }

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 function DashboardProfessor() {
-
+    
     useEffect(() => {
         validarToken()
     },[])
 
     function validarToken() {
+        
         let token = sessionStorage.TOKEN;
-        if (token === null || token === "" || token.length < 188) {
+        
+        if (token === null || token === "" || token.length < 186) {            
             sessionStorage.TOKEN = ""
             window.location = "/login"
         }

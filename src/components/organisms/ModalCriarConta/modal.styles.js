@@ -59,7 +59,7 @@ const makeStyles = () => {
 
               subtituloCard: {
                 fontWeight: 'bolder',
-                fontSize: '24px',
+                fontSize: '20px',
                 textTransform: 'none',
                 color: '#848484'
               },

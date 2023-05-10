@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography } from "@mui/material";
@@ -11,7 +11,19 @@ import styles from "./css/Cadastro.module.css";
 import Logo from "../components/atoms/Logo";
 
 
-function Cadastro(props) {
+function Cadastro() {
+
+    const[categoria, setCategoria] = useState(new URLSearchParams(window.location.search).get('categoria'));
+
+    useEffect(() => {
+        
+        if (categoria !== "Aluno" && categoria !== "Professor") {
+            window.location = "/";
+        }
+
+    },[])
+
+
 
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
@@ -36,6 +48,7 @@ function Cadastro(props) {
     const [helperTextSenha, setHelperTextSenha] = useState("");
     const [helperTextConfirmarSenha, setHelperTextConfirmarSenha] = useState("");
     const [helperTextCep, setHelperTextCep] = useState("");
+    
 
     function limparMsgErros() {
 
@@ -155,8 +168,6 @@ function Cadastro(props) {
             }
             else {
 
-                let url = 'http://localhost:8080/alunos/cadastro'
-
                 let dadosUsuario = {
                     nome: nome,
                     email: email,
@@ -173,6 +184,17 @@ function Cadastro(props) {
                         cep: dadosViaCep.cep
                     },
                 }
+
+                
+                let url = "";
+
+                if (categoria === "Aluno") {
+                    url = 'http://localhost:8080/alunos/cadastro';
+                }
+                else if(categoria === "Professor"){
+                    url = 'http://localhost:8080/professores/cadastro';
+                }
+
 
                 await axios.post(url, dadosUsuario)
                     .then((res) => {
