@@ -8,6 +8,7 @@ import { useStyles } from "./styles/Login.styles";
 import Logo from "../components/atoms/Logo"
 import axios from "axios";
 import request from "../api";
+import ModalCriarConta from "../components/organisms/ModalCriarConta/index.jsx"
 
 function Login() {
 
@@ -18,6 +19,10 @@ function Login() {
     useEffect(() => {
         setEmail(sessionStorage.EMAIL)
     },[])
+
+    const [open, setOpen] = useState(false);
+    const abrirModalCriarConta = () => setOpen(true);
+    const fecharModalCriarConta = () => setOpen(false);
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -99,7 +104,8 @@ function Login() {
 
 
     return (
-        <>
+        <>  
+            <ModalCriarConta open = {open} closeModal = {fecharModalCriarConta} onClickInTelaLogin = {() => window.location.reload()}/>
             <Box sx={useStyles().boxVoltar}>
                 <Link to="/" style={{ color: 'black', fontWeight: 'bold' }}>{'< Voltar'}</Link>
             </Box>
@@ -115,7 +121,7 @@ function Login() {
                         sx={useStyles().btnLogin}>
                         Logar
                     </Button>
-                    <Typography sx={useStyles().txtPossuiConta}>Não Possui Conta? <Link to="/cadastro" style={{ marginLeft: '5px', color: 'black', fontWeight: 'bold' }}> Fazer Cadastro</Link></Typography>
+                    <Typography sx={useStyles().txtPossuiConta}>Não Possui Conta? <Link onClick = {abrirModalCriarConta} style={{ marginLeft: '5px', color: 'black', fontWeight: 'bold' }}> Fazer Cadastro</Link></Typography>
                 </Box>
 
             </Box>

@@ -75,7 +75,7 @@ function ModalCriarConta(props) {
                         </Button>
                     </Box>
                     <Typography sx = {useStyles().subtitulo}>
-                        Já possuo uma conta. <Link to="/login" style={{fontWeight: 'bold' }}> Fazer Login</Link>  
+                        Já possuo uma conta. <Link to="/login" onClick={props.onClickInTelaLogin} style={{fontWeight: 'bold' }}> Fazer Login</Link>  
                     </Typography>
                 </Box>
             </Modal>

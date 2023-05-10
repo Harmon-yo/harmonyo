@@ -5,7 +5,10 @@ import Hero from "../components/organisms/Hero2/index.jsx";
 import Estatisticas from "../components/organisms/Estatisticas/index.jsx";
 import Vantagens from "../components/organisms/Vantagens/index.jsx";
 import ComoFunciona from "../components/organisms/ComoFunciona/index.jsx";
+import Duvidas from "../components/organisms/Duvidas/index.jsx";
 import Footer from "../components/organisms/Footer/index.jsx";
+import ModalCriarConta from "../components/organisms/ModalCriarConta/index.jsx"
+import { useState } from 'react';
 
 /* 
 import Wave from './Wave.svg'
@@ -31,15 +34,19 @@ function Index() {
         vantagens: "Com nossa plataforma fácil de usar, encontrar um professor de música qualificado nunca foi tão simples. Conectamos você com professores apaixonados e experientes que compartilham sua paixão pela música, tornando o aprendizado de um instrumento divertido e inspirador.",
     }
 
-    
+    const [open, setOpen] = useState(false);
+    const abrirModalCriarConta = () => setOpen(true);
+    const fecharModalCriarConta = () => setOpen(false);
 
     return (
         <>
-            <Navbar/>
-            <Hero className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio}/>
+            <Navbar onClickCadastro = {abrirModalCriarConta}/>
+            <ModalCriarConta open = {open} closeModal = {fecharModalCriarConta}/>
+            <Hero className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio} onClickCriarConta = {abrirModalCriarConta}/>
             <Estatisticas/>
             <Vantagens/>
             <ComoFunciona/>
+            <Duvidas/>
             {/* 
 
                 Testes

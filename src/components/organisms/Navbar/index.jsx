@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import BoxWithContainer from "../../atoms/BoxWithContainer";
 import Logo from "../../atoms/Logo";
 import Box from "@mui/material/Box";
@@ -30,7 +31,11 @@ const pages = [
     }
 ]
 
-function Navbar() {
+function Navbar(props) {
+
+    const [open, setOpen] = useState(false);
+    const abrirModalCriarConta = () => setOpen(true);
+    const fecharModalCriarConta = () => setOpen(false);
 
     return (
         <>
@@ -61,7 +66,7 @@ function Navbar() {
                         href={"/Login"}
                         className="navbar-button-login">Login</Button>
                     <Button variant="contained"
-                        href={"/cadastro"}
+                        onClick = {props.onClickCadastro}
                         className="navbar-button-cadastro">Cadastro</Button>
                 </Box>
             </BoxWithContainer>

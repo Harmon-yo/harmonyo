@@ -4,14 +4,10 @@ import { useState } from 'react';
 import Wave from '../../../pages/Wave.svg'
 import "./style.css"
 import BoxWithContainer from '../../atoms/BoxWithContainer';
-import ModalCriarConta from "../ModalCriarConta/index.jsx"
 
 
 /* Mudar de nome depois */
 function Hero2(props) {
-  const [open, setOpen] = useState(false);
-  const abrirModalCriarConta = () => setOpen(true);
-  const fecharModalCriarConta = () => setOpen(false);
 
   return (
     <>
@@ -35,13 +31,12 @@ function Hero2(props) {
 
           <Button
             variant="contained"
-            onClick={abrirModalCriarConta}
+            onClick={props.onClickCriarConta}
             disableElevation={true}
             href={""}
             className="botao-criar-conta">
             Criar Conta
           </Button>
-          <ModalCriarConta open = {open} closeModal = {fecharModalCriarConta}/>
         </BoxWithContainer>
       </section>
 

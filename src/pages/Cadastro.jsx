@@ -20,7 +20,6 @@ function Cadastro() {
         if (categoria !== "Aluno" && categoria !== "Professor") {
             window.location = "/";
         }
-
     },[])
 
 
