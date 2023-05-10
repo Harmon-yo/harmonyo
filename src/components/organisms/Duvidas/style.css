@@ -1,0 +1,35 @@
+.duvidas-box {
+    width: 100%;
+    height: 80vh;
+}
+
+.duvidas-container {
+    width: 100%;
+    height: 100%;
+}
+
+.duvidas-input {
+    width: 25%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: calc(var(--espaco-padrao) * 2);
+}
+
+.duvidas-title {
+    font-weight: 900;
+}
+
+#ipt-nome, #ipt-email, #ipt-duvida {
+    width: 75% !important;
+}
+
+.duvidas-button {
+    width: 25%;
+    font-weight: 800 !important;
+    color: black !important;
+    background-color: white !important;
+    border: 3px solid var(--cor-padrao) !important;
+    font-family: "Nunito" !important;
+}
