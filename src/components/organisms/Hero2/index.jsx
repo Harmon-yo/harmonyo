@@ -1,12 +1,18 @@
 import React from 'react';
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
+import { useState } from 'react';
 import Wave from '../../../pages/Wave.svg'
 import "./style.css"
 import BoxWithContainer from '../../atoms/BoxWithContainer';
+import ModalCriarConta from "../ModalCriarConta/index.jsx"
 
 
 /* Mudar de nome depois */
 function Hero2(props) {
+  const [open, setOpen] = useState(false);
+  const abrirModalCriarConta = () => setOpen(true);
+  const fecharModalCriarConta = () => setOpen(false);
+
   return (
     <>
       <section className="section-hero">
@@ -14,10 +20,7 @@ function Hero2(props) {
           boxClassName={`home-${props.className}`}
           containerClassName="home-content-container">
 
-          {
-            props.main &&
-            <img src={Wave} className="img-wave" />
-          }
+          <img src={Wave} className="img-wave" />
 
 
           <Typography variant="h2" className="titulo">
@@ -32,11 +35,13 @@ function Hero2(props) {
 
           <Button
             variant="contained"
+            onClick={abrirModalCriarConta}
             disableElevation={true}
-            href={"/cadastro"}
+            href={""}
             className="botao-criar-conta">
             Criar Conta
           </Button>
+          <ModalCriarConta open = {open} closeModal = {fecharModalCriarConta}/>
         </BoxWithContainer>
       </section>
 

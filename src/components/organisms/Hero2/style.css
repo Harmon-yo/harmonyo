@@ -27,7 +27,7 @@ section {
     width: 100%;
     flex-direction: column;
     align-items: center;
-    height: auto;
+    height: 90vh; /* Isso em uma tema 1366 x 768 */
     padding: calc(var(--espaco-padrao) * 10) 0 calc(var(--espaco-padrao) * 30) 0 ;
 }
 
@@ -56,7 +56,7 @@ section {
 
 .subtitulo {
     width: 70%;
-    font-size: 1.1rem !important;
+    font-size: 1rem !important;
     font-weight: 500 !important;
     margin-top: calc(var(--espaco-padrao) * 6) !important;
 }

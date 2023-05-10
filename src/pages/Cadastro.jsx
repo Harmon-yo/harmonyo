@@ -10,6 +10,7 @@ import { useStyles } from "./styles/Cadastro.styles";
 import styles from "./css/Cadastro.module.css";
 import Logo from "../components/atoms/Logo";
 
+
 function Cadastro(props) {
 
     const [nome, setNome] = useState("");

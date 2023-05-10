@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "../components/organisms/Navbar/index.jsx";
-/* import './css/index.css' */
 /* import Hero from "../components/organisms/Hero_Antigo/index.jsx"; */
 import Hero from "../components/organisms/Hero2/index.jsx";
 import Estatisticas from "../components/organisms/Estatisticas/index.jsx";
 import Vantagens from "../components/organisms/Vantagens/index.jsx";
+import ComoFunciona from "../components/organisms/ComoFunciona/index.jsx";
 import Footer from "../components/organisms/Footer/index.jsx";
-import { Link } from "react-router-dom";
+
 /* 
 import Wave from './Wave.svg'
 import Botao from "../components/Botao";
@@ -31,27 +31,15 @@ function Index() {
         vantagens: "Com nossa plataforma fácil de usar, encontrar um professor de música qualificado nunca foi tão simples. Conectamos você com professores apaixonados e experientes que compartilham sua paixão pela música, tornando o aprendizado de um instrumento divertido e inspirador.",
     }
 
-    const cards = {
-        pagamentoSeguro: {
-            titulo: "Pagamento Seguro",
-            texto: "Com nossa plataforma segura e confiável, concentre-se no aprendizado, enquanto cuidamos da segurança do seu pagamento. Nós garantimos um processo de pagamento transparente e protegido, para que tenha tranquilidade ao investir em sua educação musical.",
-        },
-        chatEntreProfessorEAluno: {
-            titulo: "Chat entre professor e aluno",
-            texto: "Com nosso recurso de chat integrado, você pode se comunicar facilmente com seu professor de música em tempo real. Tire dúvidas, receba feedback e obtenha orientação personalizada para maximizar sua aprendizagem musical.",
-        },
-        emprestimoDeInstrumento: {
-            titulo: "Empréstimo de instrumento por parte do professor",
-            texto: "Além de fornecer as melhores lições de música, nossos professores também podem ajudá-lo a dar os primeiros passos no mundo musical, oferecendo instrumentos para empréstimo. Experimente diferentes instrumentos e encontre o que é certo para você, sem gastar uma fortuna em um novo instrumento.",
-        }
-    }
+    
 
     return (
         <>
             <Navbar/>
-            <Hero main className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio}/>
+            <Hero className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio}/>
             <Estatisticas/>
             <Vantagens/>
+            <ComoFunciona/>
             {/* 
 
                 Testes

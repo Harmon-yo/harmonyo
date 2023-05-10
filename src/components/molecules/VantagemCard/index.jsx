@@ -13,7 +13,10 @@ function VantagemCard(props) {
             src={props.src}
             alt={props.alt}/>
         </Box>
-      <h1 className="vantagem-card-title">{props.title}</h1>
+      <Box
+        className="vantagens-card-title-container">
+        <h3 className="vantagem-card-title">{props.title}</h3>
+      </Box>
       <p className="vantagem-card-description">{props.description}</p>
     </Card>
   );
