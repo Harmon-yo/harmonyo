@@ -21,19 +21,6 @@ import Footer from "../components/Footer"; */
 
 function Index() {
 
-    const titulos = {
-        inicio: "Descubra sua harmonia com a música",
-        comoFunciona: "Como Funciona ?",
-        vantagens: "Vantagens",
-        duvidas: "Dúvidas",
-    }
-
-    const paragrafos = {
-        inicio: "Quer seja um novato ou um músico experiente, nossa plataforma conecta você com os melhores professores de música da nossa plataforma para desbloquear todo o seu potencial musical.",
-        comoFunciona: "Nossa plataforma é simples e fácil de usar. Basta seguir os passos abaixo para começar a aprender música hoje mesmo.",
-        vantagens: "Com nossa plataforma fácil de usar, encontrar um professor de música qualificado nunca foi tão simples. Conectamos você com professores apaixonados e experientes que compartilham sua paixão pela música, tornando o aprendizado de um instrumento divertido e inspirador.",
-    }
-
     const [open, setOpen] = useState(false);
     const abrirModalCriarConta = () => setOpen(true);
     const fecharModalCriarConta = () => setOpen(false);
@@ -42,7 +29,7 @@ function Index() {
         <>
             <Navbar onClickCadastro = {abrirModalCriarConta}/>
             <ModalCriarConta open = {open} closeModal = {fecharModalCriarConta}/>
-            <Hero className="main" titulo={titulos.inicio} subtitulo={paragrafos.inicio} onClickCriarConta = {abrirModalCriarConta}/>
+            <Hero onClickCriarConta = {abrirModalCriarConta}/>
             <Estatisticas/>
             <Vantagens/>
             <ComoFunciona/>

@@ -1,7 +1,7 @@
 import React from 'react';
 import BoxWithContainer from '../../atoms/BoxWithContainer';
 import Box from "@mui/material/Box"
-import VantagemCard from '../../molecules/VantagemCard';
+import Card from "../../atoms/Card";
 import vantagensPagamentoSeguro from "../../../imgs/vantagens-pagamento-seguro.png";
 import vantagensChat from "../../../imgs/vantagens-chat.png";
 import "./style.css";
@@ -25,27 +25,34 @@ const cards = {
 
 function Vantagens(props) {
     return (
-        	<section id="vantagens">
-                <BoxWithContainer
-                    boxClassName="box-vantagens"
-                    containerClassName="vantagens-container">
-                    <h1 className="title vantagens-title">Vantagens</h1>
-                    <Box className="vantagens-container-cards">
-                        {
-                            Object.keys(cards).map((key, index) => (
-                                <VantagemCard
-                                    key={index}
-                                    src={cards[key].img}
-                                    title={cards[key].titulo}
-                                    description={cards[key].texto}
-                                    className={`vantagem${index + 1}`}
-                                />
-                            ))
-                                
-                        }
-                    </Box>
-                </BoxWithContainer>
-            </section>
+        <section id="vantagens">
+            <BoxWithContainer
+                boxClassName="vantagens-box"
+                containerClassName="vantagens-container">
+                <h1 className="title vantagens-title">Vantagens</h1>
+                <Box className="vantagens-container-cards">
+                    {
+                        Object.keys(cards).map((key, index) => (
+                            <Card className="vantagem-card">
+                                <Box className="vantagem-card-img-container">
+                                    <Box
+                                        className="vantagem-card-img"
+                                        component="img"
+                                        src={cards[key].img}
+                                        alt={props.alt} />
+                                </Box>
+                                <Box
+                                    className="vantagens-card-title-container">
+                                    <h3 className="vantagem-card-title">{cards[key].titulo}</h3>
+                                </Box>
+                                <p className="vantagem-card-description">{cards[key].texto}</p>
+                            </Card>
+                        ))
+
+                    }
+                </Box>
+            </BoxWithContainer>
+        </section>
     );
 }
 

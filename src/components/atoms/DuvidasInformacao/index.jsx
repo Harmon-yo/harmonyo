@@ -8,9 +8,9 @@ function DuvidasInformacao(props) {
             <Box
                 component="img"
                 src={props.src}
-                className="duvidas-informacao-location"
+                className={props.className}
             />
-            <p className='duvidas-informacao-location-text'>
+            <p className={`${props.className}-text`}>
                 {props.text}
             </p>
         </Box>

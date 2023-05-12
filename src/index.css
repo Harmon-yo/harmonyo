@@ -9,6 +9,10 @@
   --cor-padrao: #00a239;
 }
 
+section {
+  width: 100%;
+}
+
 * {
     margin: 0;
     padding: 0;

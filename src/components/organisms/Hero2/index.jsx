@@ -11,19 +11,19 @@ function Hero2(props) {
 
   return (
     <>
-      <section className="section-hero">
+      <section className="hero-section">
         <BoxWithContainer
-          boxClassName={`home-${props.className}`}
-          containerClassName="home-content-container">
+          boxClassName="hero-box"
+          containerClassName="hero-container">
 
-          <img src={Wave} className="img-wave" />
+          <img src={Wave} className="hero-img-wave" />
 
 
-          <Typography variant="h2" className="titulo">
+          <Typography variant="h2" className="hero-titulo">
             Descubra sua harmonia com a música
           </Typography>
 
-          <Typography variant="subtitle1" className='subtitulo'>
+          <Typography variant="subtitle1" className='hero-subtitulo'>
             Quer seja um novato ou um músico experiente, nossa plataforma
             conecta você com os melhores professores de música da nossa
             plataforma para desbloquear todo o seu potencial musical.

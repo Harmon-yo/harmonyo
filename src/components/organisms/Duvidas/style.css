@@ -1,19 +1,7 @@
-.duvidas-box {
-    width: 100%;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .duvidas-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 .duvidas-title {
@@ -25,14 +13,16 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: flex-end
+    align-items: flex-start;
+    margin-bottom: calc(var(--espaco-padrao) * 2);
 }
-
+ 
 .duvidas-input {
     width: 45%;
     height: auto;
     display: flex;
     flex-direction: column;
+    margin-right: calc(var(--espaco-padrao) * 5);
 }
 
 .duvidas-ipt-nome-container, .duvidas-ipt-email-container {
@@ -42,15 +32,39 @@
     font-weight: 600 !important;
 }
 
-/* .duvidas-ipt-duvida-container {
-    margin-bottom: calc(var(--espaco-padrao) * 5) !important;
+.duvidas-informacoes {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end
+}
 
-} */
+.duvidas-informacao {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.duvidas-informacao:not(:last-child) {
+    margin-bottom: calc(var(--espaco-padrao) * 2);
+}
+
+.duvidas-informacao-location, .duvidas-informacao-phone, .duvidas-informacao-email {
+    width: 8%;
+    margin-right: calc(var(--espaco-padrao) * 2);
+}
+
+.duvidas-informacao-location-text, .duvidas-informacao-phone-text, .duvidas-informacao-email-text {
+    width: 80%;
+}
 
 .duvidas-button-container {
     width: 100%;
     display: flex;
-    padding-top: calc(var(--espaco-padrao) * 5);
 }
 
 .duvidas-button {
@@ -61,30 +75,4 @@
     border: 3px solid #1DB954 !important;
     font-family: "Nunito" !important;
     box-shadow: none !important;
-}
-
-.duvidas-informacoes {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.duvidas-informacao {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: calc(var(--espaco-padrao) * 2);
-}
-
-.duvidas-informacao-location {
-    width: 8%;
-    margin-right: calc(var(--espaco-padrao) * 2);
-}
-
-.duvidas-informacao-location-text {
-    width: 80%;
-
 }

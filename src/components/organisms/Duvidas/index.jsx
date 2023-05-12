@@ -4,21 +4,26 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Locationimg from '../../../imgs/location.png';
+import Phoneimg from '../../../imgs/telephone.png';
+import Emailimg from '../../../imgs/mail.png';
 import DuvidasInformacao from '../../atoms/DuvidasInformacao';
 import './style.css';
 
 const informacoes = [
     {
-        'src': Locationimg,
-        'text': 'Rua Haddock Lobo, 595 - Cerqueira César, São Paulo - SP, 01414-001'
+        src: Locationimg,
+        conteudo: 'Rua Haddock Lobo, 595 - Cerqueira César, São Paulo - SP, 01414-001',
+        className: 'duvidas-informacao-location'
     },
     {
-        'src': Locationimg,
-        'text': '(11) 99999-9999'
+        src: Phoneimg,
+        conteudo: '(11) 99999-9999',
+        className: 'duvidas-informacao-phone'
     },
     {
-        'src': Locationimg,
-        'text': 'contato@harmonyo.com',
+        src: Emailimg,
+        conteudo: 'contato@harmonyo.com',
+        className: 'duvidas-informacao-email'
     }
 ]
 
@@ -88,7 +93,7 @@ function Duvidas() {
                     </Box>
                     <Box className="duvidas-ipt-duvida-container">
                         <TextField id="ipt-duvida" onChange={(e) => setDuvida(e.target.value)}
-                            label="Duvida" variant="filled"
+                            label="Dúvida" variant="filled"
                             error={errorDuvida} helperText={helperTextDuvida}
                             placeholder='Sua Dúvida' multiline
                             rows={5} maxRows={20} fullWidth required />
@@ -99,7 +104,7 @@ function Duvidas() {
                 <Box className="duvidas-informacoes">
                     {
                         informacoes.map((info, index) => (
-                            <DuvidasInformacao key={index} src={info.src} text={info.text} />
+                            <DuvidasInformacao className={info.className} key={index} src={info.src} text={info.conteudo} />
                         ))
                     }
                 </Box>
