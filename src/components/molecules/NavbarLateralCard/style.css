@@ -1,0 +1,50 @@
+.navbar-lateral-card-container {
+    width: 100%;
+    height: 10%;
+}
+
+.navbar-lateral-card {
+    background-color: green;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: calc(var(--espaco-padrao) * 1);
+    color: black;
+}
+
+.navbar-lateral:not(:hover) .navbar-lateral-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-lateral-card-img, .navbar-lateral-card-img-hover {
+    height: 50%;
+}
+
+.navbar-lateral-card-img-hover {
+    margin-right: 5%;
+}
+
+.navbar-lateral-cards .active {
+    background-color: #F3F4FD;
+    border-radius: 5px;
+}
+
+
+.navbar-lateral-cards .not-active {
+    background-color: transparent;
+}
+
+.navbar-lateral-card-texto{
+    font-weight: 700 !important;
+    word-wrap: normal;
+}
+
+.not-active .navbar-lateral-card-texto {
+    font-weight: normal !important;
+    color: #8A8A8A !important;
+}
