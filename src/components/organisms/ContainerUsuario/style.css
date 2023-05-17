@@ -1,8 +1,14 @@
 .container-usuario {
-    background-color: blue;
+    background-color: transparent;
     width: 100%;
     height: 8vh;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     padding: 5px 5vw 5px 0 
+}
+
+.container-usuario-notificacao {
+    font-size: 2.0rem !important;
+    margin-right: calc(var(--espaco-padrao) * 4);
 }

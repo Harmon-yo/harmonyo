@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
 import NavbarLateral from "../components/organisms/NavbarLateral/index.jsx";
 import ContainerUsuario from "../components/organisms/ContainerUsuario/index.jsx";
-import Box from "@mui/material/Box";
+import EncontrarProfessorConteudo from "../components/organisms/EncontrarProfessorConteudo/index.jsx";
 
 
 function EncontrarProfessor() {
@@ -36,7 +37,9 @@ function EncontrarProfessor() {
                 width: '95vw',
             }}>
                 <ContainerUsuario/>
-                <h1>Olá teste(a) teste - Encontrar Professores</h1>
+                <EncontrarProfessorConteudo>
+                    <h1>Olá teste(a) teste - Encontrar Professores</h1>
+                </EncontrarProfessorConteudo>
             </Box>
         </Box>
     )
