@@ -11,41 +11,50 @@ import "./style.css"
 
 const cards = [
     {
+        key: "footer-empresa",
         title: "Empresa",
         items: [
             {
+                key: "footer-item-sobre",
                 label: "Sobre",
                 href: "#",
             },
             {
+                key: "footer-item-diretrizes",
                 label: "Diretrizes",
                 href: "#",
             },
             {
+                key: "footer-item-termos",
                 label: "Termos de Politicas e Privacidade",
                 href: "#",
             },
         ],
     },
     {
+        key: "footer-midias",
         title: "Midias Sociais",
         items: [
             {
+                key: "footer-item-linkedin",
                 alt: "Linkedin",
                 src: linkedinImg,
                 href: "#",
             },
             {
+                key: "footer-item-facebook",
                 alt: "Facebook",
                 src: facebookImg,
                 href: "#",
             },
             {
+                key: "footer-item-instagram",
                 alt: "Instagram",
                 src: instagramImg,
                 href: "#",
             },
             {
+                key: "footer-item-whatsapp",
                 alt: "Whatsapp",
                 src: whatsappImg,
                 href: "#",
@@ -64,7 +73,7 @@ function Footer(props) {
                 <Box className="items">
                     {
                         cards.map((card) => (
-                            <Box className="footer-card">
+                            <Box key={card.key} className="footer-card">
                                 <Typography variant="h6"
                                     className="footer-title">{card.title}
                                 </Typography>
@@ -73,10 +82,10 @@ function Footer(props) {
                                     {
                                         card.title != "Midias Sociais" ?
                                             card.items.map((item) => (
-                                                <Typography>{item.label}</Typography>
+                                                <Typography key={item.key}>{item.label}</Typography>
                                             ))
                                             : card.items.map((item) => (
-                                                <LogoRedeSocial className="footer-item-img" id={item.alt} src={item.src} alt={item.alt} href={item.href} height="32px" />
+                                                <LogoRedeSocial key={item.key}className="footer-item-img" id={item.alt} src={item.src} alt={item.alt} href={item.href} height="32px" />
                                             ))
                                     }
                                 </Box>

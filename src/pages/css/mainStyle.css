@@ -1,0 +1,31 @@
+:root {
+
+        /* || Cores */
+        --corPadrao: #03B441;
+        --gradient-home-antigo: linear-gradient(135deg,
+                        #03B441 -0.6%,
+                        #00A239 -0.59%,
+                        #27CC61 48.13%,
+                        #51FA8C 100%);
+        --gradient-home: linear-gradient(135deg,
+                        #03B441 25%,
+                        #009EA4 50%,
+                        #008EC5 75%,
+                        #0061C5 100%);
+        --dark-font: #1d1d1f;
+        --light-font: #f5f5f7;
+        --link-font: #0061C5;
+        --notificacao-lida: #F5F5F5;
+        --notificacao-nao-lida: #edecec;
+        --tempo-notificacao: #4D4D4D;
+        --notificacao-marcar-lido: #3075DD;
+
+        /* || Tipografia */
+
+        --font-padrao: "Nunito";
+
+        /* || Espaço */
+
+        --espaco-padrao: 8px;
+
+}

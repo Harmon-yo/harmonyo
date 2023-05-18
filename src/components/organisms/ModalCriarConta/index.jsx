@@ -1,81 +1,88 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import IconButton from '@mui/material/IconButton';
+import {
+    Box, Button,
+    Typography, Modal,
+    IconButton, Slide
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useStyles } from './modal.styles.js';
-import Slide from '@mui/material/Slide';
 
 
 
 function ModalCriarConta(props) {
-    
+
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
-      });
+    });
 
-      function redirecionarProfessor() {
+    function redirecionarProfessor() {
         window.location.href = `/cadastro?categoria=Professor`;
-      }
-      function redirecionarAluno() {
+    }
+    function redirecionarAluno() {
         window.location.href = `/cadastro?categoria=Aluno`;
-      }
+    }
 
     return (
         <>
             <Modal
-            open={props.open}
-            onClose={props.closeModal}
-            Transition={Transition}
+                open={props.open}
+                onClose={props.closeModal}
+                Transition={Transition}
             >
                 <Box sx={useStyles().background}>
-                    <IconButton
-                        aria-label="close"
-                        onClick={props.closeModal}
-                        sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                        }}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <Typography sx = {useStyles().titulo}>
+                    <Box sx={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                    }}>
+                        <IconButton
+                            aria-label="close"
+                            onClick={props.closeModal}
+                            sx={{
+                                color: "var(--dark-font)",
+                            }}
+                        >
+                            <CloseIcon sx={{ fontSize: '2rem !important' }} />
+                        </IconButton>
+                    </Box>
+                    <Typography sx={useStyles().titulo} variant="h4">
                         Como você gostaria de se cadastrar ?
                     </Typography>
-                    <Typography sx = {useStyles().subtitulo}>
+                    <Typography sx={useStyles().subtitulo} variant="subtitle1">
                         Para fazer o cadastro, é necessário saber o que você é
                     </Typography>
                     <Box sx={useStyles().boxCards}>
 
                         <Button sx={useStyles().card} onClick={redirecionarProfessor}>
-                            <Typography sx = {useStyles().tituloCard}>
+                            <Typography sx={useStyles().tituloCard} variant="h5">
                                 Sou Professor
                             </Typography>
-                            <Typography sx = {useStyles().subtituloCard}>
+                            <Typography sx={useStyles().subtituloCard} variant="subtitle1">
                                 Quero ensinar a tocar
                             </Typography>
                         </Button>
-                        
-                        <Typography sx = {useStyles().titulo}>
+
+                        <Typography sx={useStyles().ouText} variant="h5">
                             ou
                         </Typography>
 
                         <Button sx={useStyles().card} onClick={redirecionarAluno}>
-                            <Typography sx = {useStyles().tituloCard}>
+                            <Typography sx={useStyles().tituloCard} variant="h5">
                                 Sou Aluno
                             </Typography>
-                            <Typography sx = {useStyles().subtituloCard}>
+                            <Typography sx={useStyles().subtituloCard} variant="subtitle1">
                                 Quero aprender a tocar
                             </Typography>
                         </Button>
                     </Box>
-                    <Typography sx = {useStyles().subtitulo}>
-                        Já possuo uma conta. <Link to="/login" onClick={props.onClickInTelaLogin} style={{fontWeight: 'bold' }}> Fazer Login</Link>  
+                    <Typography sx={useStyles().loginTexto}>
+                        Já possuo uma conta. 
+                        <Link to="/login" onClick={props.onClickInTelaLogin}> 
+                            <Typography sx={useStyles().loginLink}>
+                                Fazer Login
+                            </Typography>
+                        </Link>
                     </Typography>
                 </Box>
             </Modal>

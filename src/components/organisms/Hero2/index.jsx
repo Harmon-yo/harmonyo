@@ -3,6 +3,7 @@ import { Typography, Button } from "@mui/material";
 import { useState } from 'react';
 import Wave from '../../../pages/Wave.svg'
 import "./style.css"
+import "../../../pages/css/mainStyle.css"
 import BoxWithContainer from '../../atoms/BoxWithContainer';
 
 
@@ -11,7 +12,7 @@ function Hero2(props) {
 
   return (
     <>
-      <section className="hero-section">
+      <section id="secao-hero" className="hero-section">
         <BoxWithContainer
           boxClassName="hero-box"
           containerClassName="hero-container">
@@ -35,7 +36,7 @@ function Hero2(props) {
             disableElevation={true}
             href={""}
             className="botao-criar-conta">
-            Criar Conta
+            <Typography variant="inherit">Criar Conta</Typography>
           </Button>
         </BoxWithContainer>
       </section>

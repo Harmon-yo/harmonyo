@@ -1,5 +1,5 @@
 .hero-section {
-    background: linear-gradient(100.23deg, #03B441 -0.6%, #00A239 -0.59%, #27CC61 48.13%, #51FA8C 100%);
+    background: var(--gradient-home);
     background-size: 500% 100%;
     animation: hero-degrade-animado 10s ease infinite alternate;
 }
@@ -17,6 +17,7 @@
     position: relative;
     display: flex;
     width: 100%;
+    height: 90vh;
     flex-direction: column;
     align-items: center;
     padding-top: calc(var(--espaco-padrao) * 4);
@@ -32,36 +33,37 @@
     display: flex !important;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     width: 100%;
     height: 100%;
-    text-align: center;
+    padding-top: calc(var(--espaco-padrao) * 5);
+    padding-bottom: calc(var(--espaco-padrao) * 5);
 }
 
 .hero-titulo {
     width: 80%;
     font-weight: 900 !important;
     letter-spacing: 2px !important;
-    font-size: 4.75rem;
-    margin-bottom: calc(var(--espaco-padrao) * 2) !important;
+    margin-bottom: calc(var(--espaco-padrao) * 3) !important;
+    color: var(--light-font)
 }
 
 .hero-subtitulo {
     width: 70%;
-    font-size: 1rem !important;
     font-weight: 500 !important;
     margin-bottom: calc(var(--espaco-padrao) * 4) !important;
+    color: var(--light-font);
 }
 
 .botao-criar-conta {
     padding: 0.8% 4% !important;
-    background-color: #fff !important;
+    background-color: var(--light-font) !important;
     font-weight: 700 !important;
-    font-size: 20px !important;
-    color: black !important;
     transition: all 1s ease-in-out;
+    color: var(--dark-font) !important;
 }
 
 .botao-criar-conta:hover {
-    background-color: rgb(39, 39, 39) !important;
-    color: white !important;
+    /* background-color: var(--dark-font) !important;
+    color: var(--light-font) !important; */
 }

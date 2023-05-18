@@ -2,13 +2,13 @@ import React from "react";
 import {
     Box
 } from "@mui/material";
+import ProfessorEmAlta from "../../molecules/ProfessoresAlta/index.jsx";
 import "./style.css"
 
 function EncontrarProfessorConteudo(props) {
     return (
-        <Box className="pagina-principal-container">
-                {props.children}
-        </Box>
+        
+        <ProfessorEmAlta/>
     );
 }
 

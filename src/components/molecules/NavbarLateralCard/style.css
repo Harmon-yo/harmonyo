@@ -11,7 +11,7 @@
     flex-direction: row;
     align-items: center;
     padding: calc(var(--espaco-padrao) * 1);
-    color: black;
+    color: var(--dark-font)
 }
 
 .navbar-lateral:not(:hover) .navbar-lateral-card{

@@ -13,6 +13,9 @@
 
 .avatar-usuario-img {
     border-radius: 50%;
+}
+
+.MuiMenu-paper .avatar-usuario-img {
     margin-right: calc(var(--espaco-padrao) * 2);
 }
 

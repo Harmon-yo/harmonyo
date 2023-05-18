@@ -3,7 +3,6 @@ import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
 import EncontrarProfessor from './pages/EncontrarProfessores';
 import DashboardProfessor from './pages/DashboardProfessor';
-import "./index.css";
 import {  Route, BrowserRouter, Routes  } from "react-router-dom";
 
 function App() {

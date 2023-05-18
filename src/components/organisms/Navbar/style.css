@@ -29,7 +29,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 60%;
 }
 
 .navbar-navigation-options-item {
@@ -44,19 +44,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-grow: 0.05;
+    flex-grow: 0.3;
 }
 
 .navbar-button-login, .navbar-button-cadastro {
-    font-weight: 800 !important;
+    font-weight: 700 !important;
 }
 
-.navbar-button-login {
-    background-color: #F0F0F0 !important;
-    color: #000 !important;
-    
+.navbar-button-login{
+    background-color: var(--cor-padrao) !important;
+    color: var(--light-font) !important;
+    padding-right: 10% !important;
+    padding-left: 10% !important;
+
 }
 
 .navbar-button-cadastro {
-    background-color: #00a239 !important
+    color: var(--cor-padrao) !important;
+    border: 1.5px solid var(--cor-padrao) !important;
 }

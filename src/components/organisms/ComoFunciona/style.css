@@ -1,14 +1,19 @@
 .como-funciona-box {
-    background-color: rgb(247, 247, 247);
+    background-color: var(--cor-padrao);
+    height: auto;
 }
 
 .como-funciona-title {
+    width: 100%;
     text-align: center;
+    color: var(--light-font);
     margin-bottom: calc(var(--espaco-padrao) * 2);
+    letter-spacing: 5px !important;
+
 }
 
 .como-funciona-img {
     width: 100%;
-    height: 85%;
-    background-color: gray;
+    height: 400px !important;
+    background-color: var(--light-font);
 }

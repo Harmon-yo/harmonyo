@@ -1,5 +1,6 @@
-.pagina-principal-container {
+.pagina-padrao-container {
     background-color: orange;
     width: 100%;
     height: 92vh;
+    padding: 5vh 5vw 5vh 5vw 
 }

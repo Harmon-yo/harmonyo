@@ -61,11 +61,11 @@ function Notificacao(props) {
                         (notificacao) => (
                             <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={handleClose}
                             sx={{
-                                backgroundColor: notificacao.lido ? "#F5F5F5" : "#d7d7d7"
+                                backgroundColor: notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
                             }}>
                                 <Box className="notificacao-menu-item-info-container">
                                     <img src={notificacao.src} className="notificacao-menu-item-img" />
-                                    <Typography>{notificacao.titulo}</Typography>
+                                    <Typography className="notificacao-menu-item-titulo">{notificacao.titulo}</Typography>
                                 </Box>
                                 <Box className="notificacao-menu-item-container-tempo">
                                     <Typography className="notificacao-menu-item-tempo">{notificacao.tempo}</Typography>

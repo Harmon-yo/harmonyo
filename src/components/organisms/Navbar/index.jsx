@@ -2,29 +2,36 @@ import React from "react";
 import { useState } from "react";
 import BoxWithContainer from "../../atoms/BoxWithContainer";
 import Logo from "../../atoms/Logo";
-import Box from "@mui/material/Box";
+import {
+    Typography,
+    Box,
+    Button
+} from "@mui/material";
 import NavigationOption from "../../atoms/NavigationOption";
-import Button from "@mui/material/Button";
 import "./style.css";
 
 
 const pages = [
     {
+        key: "navbar-inicio",
         name: "Inicio",
         underline: "always",
         fontWeight: "bold",
     },
     {
+        key: "navbar-vantagens",
         name: "Vantagens",
         href: "#vantagens",
         underline: "none",
     },
     {
+        key: "navbar-como-funciona",
         name: "Como Funciona",
         href: "#",
         underline: "none",
     },
     {
+        key: "navbar-duvidas",
         name: "Dúvidas",
         href: "#",
         underline: "none",
@@ -49,6 +56,7 @@ function Navbar(props) {
                         pages.map((page) => {
                             return (
                                 <NavigationOption
+                                    key={page.key}
                                     content={page.name}
                                     href={page.href ? page.href : "#"}
                                     underline={page.underline}
@@ -62,12 +70,14 @@ function Navbar(props) {
                 </Box>
                 <Box className="navbar-container-button">
                     <Button
-                        variant="contained"
+                    variant="text"
+                        key="botao-login"
                         href={"/Login"}
-                        className="navbar-button-login">Login</Button>
-                    <Button variant="contained"
+                        className="navbar-button-login"><Typography variant="inherit">LOGIN</Typography></Button>
+                    <Button variant="text"
+                        key="botao-cadastro"
                         onClick = {props.onClickCadastro}
-                        className="navbar-button-cadastro">Cadastro</Button>
+                        className="navbar-button-cadastro"><Typography variant="inherit">CADASTRO</Typography></Button>
                 </Box>
             </BoxWithContainer>
         </>

@@ -26,14 +26,14 @@
 }
 
 .notificacao-menu-title {
-    font-size: 1.5rem !important;
+    font-size: 1.3rem !important;
     font-weight: bold !important;
-    color: black
+    color: var(--dark-font)
 }
 
 .notificacao-menu-lido {
     font-weight: 500 !important;
-    color: #3075DD !important;
+    color: var(--notificacao-marcar-lido) !important;
 }
 
 
@@ -58,6 +58,11 @@
     margin-right: calc(var(--espaco-padrao) * 2);
 }
 
+.notificacao-menu-item-titulo {
+    color: var(--dark-font);
+    font-weight: 600 !important;
+}
+
 .notificacao-menu-item-container-tempo {
     height: 100%;
     display: flex;
@@ -67,6 +72,6 @@
 
 .notificacao-menu-item-tempo {
     font-size: 0.8rem !important;
-    color: #4D4D4D !important;
+    color: var(--notificacao-tempo) !important;
 
 }

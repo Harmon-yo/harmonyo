@@ -2,8 +2,44 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import NavbarLateral from "../components/organisms/NavbarLateral/index.jsx";
 import ContainerUsuario from "../components/organisms/ContainerUsuario/index.jsx";
-import EncontrarProfessorConteudo from "../components/organisms/EncontrarProfessorConteudo/index.jsx";
+import EncontrarProfessorConteudo from "../components/templates/EncontrarProfessorConteudo/index.jsx";
+import PaginaPadraoUsuario from "../components/templates/PaginaPadraoUsuario/index.jsx";
 
+/* ================= Navbar =================== */
+import LupaImg from "../imgs/search.png";
+import AgendaImg from "../imgs/calendar.png";
+import PedidosImg from "../imgs/request.png";
+import ChatImg from "../imgs/chat.png";
+import FeedbacksImg from "../imgs/feedback.png";
+
+const opcoesNavbar = [
+    {
+        titulo: "Encontrar",
+        src: LupaImg,
+        active: true,
+    }, 
+    {
+        titulo: "Agenda",
+        src: AgendaImg,
+        active: false,
+        href: "/agenda"
+    }, 
+    {
+        titulo: "Pedidos",
+        src: PedidosImg,
+        active: false
+    }, 
+    {
+        titulo: "Chat",
+        src: ChatImg,
+        active: false
+    },
+    {
+        titulo: "Feedbacks",
+        src: FeedbacksImg,
+        active: false
+    }
+];
 
 function EncontrarProfessor() {
 
@@ -23,25 +59,9 @@ function EncontrarProfessor() {
     }
 
     return (
-        <Box sx={{
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-        }}>
-            <NavbarLateral/>
-            {/* <h1>Olá {sessionStorage.CATEGORIA}(a) {sessionStorage.NOME} - Encontrar Professores</h1> */}
-            <Box sx={{
-                backgroundColor: "#F5F4F7",
-                width: '95vw',
-            }}>
-                <ContainerUsuario/>
-                <EncontrarProfessorConteudo>
-                    <h1>Olá teste(a) teste - Encontrar Professores</h1>
-                </EncontrarProfessorConteudo>
-            </Box>
-        </Box>
+        <PaginaPadraoUsuario opcoesNavbar={opcoesNavbar}>
+            <EncontrarProfessorConteudo/>
+        </PaginaPadraoUsuario>
     )
 }
 

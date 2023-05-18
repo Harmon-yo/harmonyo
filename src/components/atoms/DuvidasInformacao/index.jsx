@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+import { Typography, Box } from '@mui/material';
 
 
 function DuvidasInformacao(props) {
@@ -10,9 +10,9 @@ function DuvidasInformacao(props) {
                 src={props.src}
                 className={props.className}
             />
-            <p className={`${props.className}-text`}>
+            <Typography className={`${props.className}-text`} variant="inherit">
                 {props.text}
-            </p>
+            </Typography>
         </Box>
     );
 }

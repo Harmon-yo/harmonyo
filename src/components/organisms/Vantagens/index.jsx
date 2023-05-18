@@ -5,23 +5,27 @@ import Card from "../../atoms/Card";
 import vantagensPagamentoSeguro from "../../../imgs/vantagens-pagamento-seguro.png";
 import vantagensChat from "../../../imgs/vantagens-chat.png";
 import "./style.css";
+import { Typography } from '@mui/material';
 
-const cards = {
-    pagamentoSeguro: {
+const cards = [
+    {
+        key: "vantagens-pagamento-seguro",
         titulo: "Pagamento Seguro",
         texto: "A plataforma oferece segurança no pagamento para investir em educação musical com tranquilidade.",
         img: vantagensPagamentoSeguro,
     },
-    chatEntreProfessorEAluno: {
+    {
+        key: "vantagens-chat",
         titulo: "Chat entre professor e aluno",
         texto: "Nosso chat integrado permite comunicação em tempo real entre aluno e professor, para realizar feedbacks e orientações personalizadas na aprendizagem musical",
         img: vantagensChat,
     },
-    emprestimoDeInstrumento: {
-        titulo: "Empréstimo de instrumento por parte do professor",
+    {
+        key: "vantagens-emprestimo-de-instrumento",
+        titulo: "Empréstimo de instrumento do professor",
         texto: "Professores oferecem instrumentos para empréstimo, permitindo que alunos experimentem diferentes opções sem gastar muito dinheiro em um novo instrumento.",
     }
-}
+];
 
 function Vantagens(props) {
     return (
@@ -32,20 +36,21 @@ function Vantagens(props) {
                 <h1 className="title vantagens-title">Vantagens</h1>
                 <Box className="vantagens-container-cards">
                     {
-                        Object.keys(cards).map((key, index) => (
-                            <Card className="vantagem-card">
+
+                        cards.map((card) => (
+                            <Card key={card.key} className="vantagem-card">
                                 <Box className="vantagem-card-img-container">
                                     <Box
                                         className="vantagem-card-img"
                                         component="img"
-                                        src={cards[key].img}
-                                        alt={props.alt} />
+                                        src={card.img}
+                                        alt={card.alt} />
                                 </Box>
                                 <Box
                                     className="vantagens-card-title-container">
-                                    <h3 className="vantagem-card-title">{cards[key].titulo}</h3>
+                                    <Typography variant="h6" className="vantagem-card-title">{card.titulo}</Typography>
                                 </Box>
-                                <p className="vantagem-card-description">{cards[key].texto}</p>
+                                <Typography variant="subtitle" className="vantagem-card-description">{card.texto}</Typography>
                             </Card>
                         ))
 

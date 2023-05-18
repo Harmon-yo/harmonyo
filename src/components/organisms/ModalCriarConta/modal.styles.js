@@ -1,69 +1,88 @@
 
 const makeStyles = () => {
 
-    return (
-        {
-            background: {
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-evenly',
-                position: 'absolute',
-                alignItems: 'center',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '70%',
-                height: '70%',
-                bgcolor: 'white',
-                border: '1px solid #000',
-                boxShadow: 24,
-              },
+  return (
+    {
+      background: {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
+        alignItems: 'center',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '70%',
+        height: '70%',
+        bgcolor: "rgba(255, 255, 255, 0.73)",
+        borderRadius: "16px",
+        boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+        backdropFilter: "blur(6.9px)",
+        webkitBackdropFilter: "blur(6.9px)",
+        border: "1px solid rgba(255, 255, 255, 0.3)",
+        padding: "8px",
+        outline: "none !important",
+      },
 
-              titulo: {
-                fontWeight: 'bolder',
-                fontSize: '50px'
-              },
+      titulo: {
+        fontWeight: '700',
+        marginBottom: 'calc(var(--espaco-padrao) * 2)',
+      },
 
-              subtitulo: {
-                fontSize: '24px'
-              },
+      subtitulo: {
+        fontWeight: '500',
+        marginBottom: 'calc(var(--espaco-padrao) * 5)',
+      },
 
-              boxCards: {
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '60%',
-                height: '40%',
-              },
+      boxCards: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '60%',
+        height: '40%',
+        marginBottom: 'calc(var(--espaco-padrao) * 5)',
+      },
 
-              card: {
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'start',
-                alignItems: 'start',
-                width: '41%',
-                height:'100%',
-                p: '2%',
-                background: '#FFFFFF',
-                border: '2px solid #1DB954',
-                boxShadow: '4px 2px 10px 4px rgba(0, 0, 0, 0.25)',
-                borderRadius: '10px'
-              },
+      card: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        width: '50%',
+        height: '100%',
+        p: 'var(--espaco-padrao)',
+        background: '#FFFFFF',
+        border: '2px solid #1DB954',
+        boxShadow: '4px 2px 10px 4px rgba(0, 0, 0, 0.25)',
+        borderRadius: '10px'
+      },
 
-              tituloCard: {
-                fontWeight: 'bolder',
-                fontSize: '32px',
-                textTransform: 'none',
-                color: '#1DB954'
-              },
+      tituloCard: {
+        fontWeight: 800,
+        textTransform: 'none',
+        color: '#1DB954'
+      },
 
-              subtituloCard: {
-                fontWeight: 'bolder',
-                fontSize: '20px',
-                textTransform: 'none',
-                color: '#848484'
-              },
-        })
+      subtituloCard: {
+        fontWeight: 500,
+        textTransform: 'none',
+        color: 'var(--dark-font)'
+      },
+
+      ouText: {
+        fontWeight: 'bolder',
+        margin: '0 calc(var(--espaco-padrao) * 5) 0 calc(var(--espaco-padrao) * 5)',
+      },
+
+      loginTexto: {
+        color: 'var(--dark-font)',
+        display: 'flex'
+      },
+
+      loginLink: {
+        color: 'var(--link-font) !important',
+        fontWeight: 'bolder',
+        marginLeft: 'calc(var(--espaco-padrao) * 1)',
+      }
+    })
 }
 
 export const useStyles = () => makeStyles();

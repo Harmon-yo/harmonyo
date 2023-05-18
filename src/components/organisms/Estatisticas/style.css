@@ -1,14 +1,10 @@
-:root {
-    --espaco-padrao: 8px;
-}
-
 section {
     width: 100%;
 }
 
 .box-estatisticas {
     height: 15vh !important;
-    background-color: rgb(247, 247, 247);
+    background-color: var(--light-font);
 }
 
 .container-estatisticas {
@@ -23,6 +19,10 @@ section {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.estatistica-qtd, .estatistica-titulo {
+    color: var(--dark-font);
 }
 
 .estatistica-qtd {
