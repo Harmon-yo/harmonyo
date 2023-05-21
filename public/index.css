@@ -1,0 +1,37 @@
+.vlibras-icon {
+
+    position: fixed;
+    max-width: 95vw;
+    right: 0;
+    top: 0 !important;
+    margin-top: 90vh !important;
+    z-index: 99999999 !important;
+    margin-right: 50px !important;
+    display: none;
+    font-family: Arial;
+    color: #000;
+    line-height: 1.3;
+
+}
+
+.vlibras-chat {
+
+    position: fixed;
+    max-width: 95vw;
+    right: 0;
+    top: 0 !important;
+    margin-top: 45vh !important;
+    z-index: 99999999 !important;
+    margin-right: 50px !important;
+    display: none;
+    font-family: Arial;
+    color: #000;
+    line-height: 1.3;
+
+    /* top: 0; 
+    float: left; 
+    position: fixed; 
+    margin-bottom: 0; 
+    margin-top: 45vh; 
+    margin-right: 50px; */
+}
