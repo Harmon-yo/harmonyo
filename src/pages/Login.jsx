@@ -6,8 +6,7 @@ import { useState } from "react";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
 import { useStyles } from "./styles/Login.styles";
 import Logo from "../components/atoms/Logo"
-import axios from "axios";
-import request from "../api";
+import api from "../api";
 import ModalCriarConta from "../components/organisms/ModalCriarConta/index.jsx"
 
 function Login() {
@@ -57,15 +56,14 @@ function Login() {
         if (validarCampos()) {
 
 
-
-            let url = "http://localhost:8080/usuarios/login";
+            let url = "/usuarios/login";
 
             let dadosLogin = {
                 email: email,
                 senha: senha
             }
 
-            await axios.post(url, dadosLogin)
+            await api.post(url, dadosLogin)
                 .then((res) => {
 
                     sessionStorage.ID = res.data.userId;

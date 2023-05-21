@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography } from "@mui/material";
-import request from "../api";
+import api from "../api.js";
 import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
 import InputMask from 'react-input-mask';
@@ -137,7 +137,7 @@ function Cadastro() {
 
         let dadosViaCep = {}
 
-        await request(urlViaCep).get()
+        await axios.get(urlViaCep)
             .then((res) => {
 
                 if (res.data.erro) {
@@ -188,14 +188,14 @@ function Cadastro() {
                 let url = "";
 
                 if (categoria === "Aluno") {
-                    url = 'http://localhost:8080/alunos/cadastro';
+                    url = '/alunos/cadastro';
                 }
                 else if(categoria === "Professor"){
-                    url = 'http://localhost:8080/professores/cadastro';
+                    url = '/professores/cadastro';
                 }
 
 
-                await axios.post(url, dadosUsuario)
+                await api.post(url, dadosUsuario)
                     .then((res) => {
 
                         console.log(res.data);
@@ -208,7 +208,7 @@ function Cadastro() {
 
                     })
                     .catch((error) => {
-
+                        console.log(error)
                         if (error.response.status === 409) {
 
                             let msgError = error.response.data.message
