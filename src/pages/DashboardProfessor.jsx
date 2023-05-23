@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PaginaPadraoUsuario from "../components/templates/PaginaPadraoUsuario";
+
+/* ================= Navbar =================== */
+
 import DashboardImg from "../imgs/dashboard.png";
 import AgendaImg from "../imgs/calendar.png";
 import LupaImg from "../imgs/search.png";
 import ChatImg from "../imgs/chat.png";
 import PedidosImg from "../imgs/request.png";
+
+/* ================= Conteúdo =================== */
+
+import DashboardProfessorConteudo from "../components/templates/DashboardProfessorConteudo";
 
 
 const opcoesNavbar = [
@@ -58,6 +65,7 @@ function DashboardProfessor() {
             {/* <>
             <h1>Olá {sessionStorage.CATEGORIA}(a) {sessionStorage.NOME} - Dashboard Professor</h1>
             </> */}
+            <DashboardProfessorConteudo/>
         </PaginaPadraoUsuario>
     )
 }
