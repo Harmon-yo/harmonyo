@@ -39,8 +39,8 @@ const teste = [
         valor: "5"
     },
     {
-        titulo: "Conversão de alunos ?",
-        valor: "80"
+        titulo: "Tempo de resposta",
+        valor: "1 hora"
     },
 ]
 
@@ -49,7 +49,7 @@ const chartData = {
     datasets: [
         {
             id: 1,
-            label: 'Aulas',
+            label: 'Aulas realizadas',
             data: [12, 19, 3, 5, 2, 3],
             barPercentage: 0.2,
             barThickness: 6,
@@ -61,7 +61,7 @@ const chartData = {
         },
         {
             id: 2,
-            label: 'Alunos',
+            label: 'Aulas solicitadas',
             data: [2, 3, 20, 5, 1, 4],
             barPercentage: 0.2,
             borderRadius: 2,
