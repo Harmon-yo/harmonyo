@@ -39,8 +39,8 @@ const teste = [
         valor: "5"
     },
     {
-        titulo: "Teste",
-        valor: "1"
+        titulo: "Conversão de alunos ?",
+        valor: "80"
     },
 ]
 
@@ -127,12 +127,6 @@ function criarInstrumento(img, nome, quantidade, valor) {
 
 const instrumentosEnsinados = [
     criarInstrumento(violaoIcon, "Violão", 3, 50),
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
-
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
     criarInstrumento(violaoIcon, "Violão", 2, 40),
     criarInstrumento(violaoIcon, "Violão", 2, 40),
 
