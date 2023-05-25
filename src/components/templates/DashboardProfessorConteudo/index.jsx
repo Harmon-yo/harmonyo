@@ -17,13 +17,14 @@ import {
     Title,
     CategoryScale,
     LinearScale,
+    Tooltip,
     BarElement
 } from "chart.js";
 import violaoIcon from "../../../imgs/violao.png";
 import { Bar } from "react-chartjs-2";
 import "./style.css"
 
-ChartJS.register(Legend, Title, CategoryScale, LinearScale, BarElement);
+ChartJS.register(Legend, Title, CategoryScale, LinearScale, BarElement, Tooltip);
 
 const teste = [
     {
@@ -56,17 +57,17 @@ const chartData = {
             maxBarThickness: 8,
             minBarLength: 2,
             fill: true,
-            backgroundColor: 'rgb(48, 117, 221)',
+            backgroundColor: 'rgb(0, 158, 164)',
             borderRadius: 2
         },
         {
             id: 2,
             label: 'Aulas solicitadas',
-            data: [2, 3, 20, 5, 1, 4],
+            data: [20, 40, 10, 15, 5, 10],
             barPercentage: 0.2,
             borderRadius: 2,
             fill: true,
-            backgroundColor: 'rgb(0, 158, 164)',
+            backgroundColor: 'rgb(48, 117, 221)',
         },
     ],
 }
@@ -100,19 +101,11 @@ const chartOptions = {
         },
         title: {
             display: false
-        },
-        tooltip: {
-            enabled: true,
-            intersect: false,
-            mode: 'nearest',
-            callbacks: {
-                title: () => 'title',
-                label: (item) => item.parsed + '%'
-            }
         }
     },
     scales: {
         x: {
+            stacked: true,
             grid: {
                 display: false
             }

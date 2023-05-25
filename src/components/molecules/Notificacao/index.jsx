@@ -21,7 +21,7 @@ const notificacoes = [
 function Notificacao(props) {
     const [qtdNotificacao, setQtdNotificacao] = React.useState(notificacoes.length);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
+    const open = !!anchorEl;
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     }
