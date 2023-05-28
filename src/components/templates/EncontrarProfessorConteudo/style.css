@@ -1,0 +1,46 @@
+:root {
+    --espaco-elementos-dash: calc(var(--espaco-padrao) * 3);
+}
+
+.encontrar-professor-container {
+    width: 100%;
+    display: grid !important;
+    grid-template-rows: auto;
+    row-gap: var(--espaco-elementos-dash);
+}
+
+.professores-busca-card {
+    width: 100%;
+    background-color: white;
+    border-radius: var(--borda-padrao);
+    display: flex;
+    padding: calc(var(--espaco-padrao) * 2) calc(var(--espaco-padrao) * 4) calc(var(--espaco-padrao) * 2) calc(var(--espaco-padrao) * 4);
+}
+
+.professores-busca-lugar {
+    width: 14%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-right: 1px solid #E5E5E5;
+}
+
+.professores-busca-lugar-nome {
+    color: black;
+    font-weight: 800 !important;
+    margin-left: calc(var(--espaco-padrao) * 1);
+}
+
+.professores-busca-campo {
+    width: 86%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.professores-busca-campo-titulo {
+    color: rgb(97, 97, 97);
+    font-weight: 800 !important;
+}

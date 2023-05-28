@@ -28,4 +28,8 @@
 
         --espaco-padrao: 8px;
 
+        /* || Borda arredondada */
+
+        --borda-padrao: 5px;
+
 }

@@ -1,0 +1,24 @@
+.professores-populares-container {
+    width: 100%;
+}
+
+.professor-populares-container-titulo {
+    width: 100%;
+    margin-bottom: var(--espaco-elementos-dash);
+}
+
+.professor-populares-titulo {
+    font-weight: bold !important;
+    color: black
+}
+
+.professores-populares-card {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    display: flex;
+    flex-direction: row;
+
+}

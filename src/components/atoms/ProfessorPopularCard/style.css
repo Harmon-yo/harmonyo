@@ -1,0 +1,71 @@
+.professor-popular-card {
+    width: 20%;
+    height: 100%;
+    background-color: white;
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: calc(var(--espaco-padrao) * 2);
+    border-radius: var(--borda-padrao);
+    padding: calc(var(--espaco-padrao) * 2);
+    margin-right: calc(var(--espaco-padrao) * 3);   
+}
+
+.card-info-usuario {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-usuario-img {
+    margin-right: calc(var(--espaco-padrao) * 1);
+}
+
+.card-info-nome {
+    color: black;
+    font-weight: 600 !important;
+}
+
+.card-info-estrela {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.card-info-estrela-icon, .card-info-estrela-valor {
+    color: #ffbf51;
+}
+
+.card-info-estrela-valor {
+    font-weight: 700 !important;
+}
+
+.card-info-estrela .card-info-separacao {
+    color: #61738b;
+    font-size: 0.5rem;
+    margin-right: calc(var(--espaco-padrao) * 1);
+    margin-left: calc(var(--espaco-padrao) * 1);
+}
+
+.card-info-estrela-cidade {
+    color: #8c95a0;
+    font-weight: 600;
+}
+
+.card-info-status {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card-info-status .card-info-separacao {
+    color: var(--cor-padrao);
+    font-size: 0.6rem;
+    margin-right: calc(var(--espaco-padrao) * 1);
+}
+
+.card-info-status-hora {
+
+}
