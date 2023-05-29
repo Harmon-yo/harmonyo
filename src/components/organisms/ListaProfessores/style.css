@@ -1,0 +1,27 @@
+.professores-cards {
+    width: 100%;
+    height: auto;
+    background-color: white;
+}
+
+.professor-card {
+    width: 100%;
+    height: auto;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: row;
+}
+
+.professor-card-primeira-parte {
+    width: 10%;
+    height: 100% !important;
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+}
+
+.professor-card-segunda-parte {
+    width: 90%;
+    height: 100%;
+    background-color: orange;
+}

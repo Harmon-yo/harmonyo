@@ -16,7 +16,7 @@ function ProfessorPopularCard(props) {
       </Box>
 
       <Box className="card-info-estrela">
-        <GradeRoundedIcon  className="card-info-estrela-icon"/>
+        <GradeRoundedIcon className="card-info-estrela-icon" />
         <Typography className="card-info-estrela-valor">{props.avaliacao}</Typography>
         <FiberManualRecordIcon className="card-info-separacao" />
         <Typography className="card-info-estrela-cidade" variant="subtitle2">{props.localizacao}</Typography>
@@ -27,6 +27,7 @@ function ProfessorPopularCard(props) {
         <Typography className="card-info-status-hora" variant="subtitle2">{props.status}</Typography>
       </Box>
     </Box>
+
   );
 }
 

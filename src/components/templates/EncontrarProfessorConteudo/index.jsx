@@ -2,33 +2,29 @@ import React from "react";
 import {
     Box,
     Typography,
+    Avatar
 } from "@mui/material";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SearchIcon from '@mui/icons-material/Search';
-import ProfessoresPopulares from "../../molecules/ProfessoresPopulares/index.jsx";
+import FiltroDePesquisaCard from "../../atoms/FiltroDePesquisaCard/index.jsx";
+import BarraDePesquisa from "../../atoms/BarraDePesquisa/index.jsx";
+import ProfessoresPopulares from "../../organisms/ProfessoresPopulares/index.jsx";
+import ListaProfessores from "../../organisms/ListaProfessores/index.jsx";
+import Card from "../../atoms/Card/index.jsx";
 import Mapa from "../../atoms/Mapa/index.jsx";
 import "./style.css"
 
+
+
 function EncontrarProfessorConteudo(props) {
     return (
-        
+
         <Box className="encontrar-professor-container">
-            <Box className="professores-busca-card">
-                <Box className="professores-busca-lugar">
-                    <LocationOnIcon/>
-                    <Typography variant="subtitle1" className="professores-busca-lugar-nome">
-                        São Paulo
-                    </Typography>
-                </Box>
-                <Box className="professores-busca-campo">
-                    <Typography variant="subtitle1" className="professores-busca-campo-titulo">
-                        Buscar
-                    </Typography>
-                    <SearchIcon/>
-                </Box>
+            <FiltroDePesquisaCard/>
+            <Box className="encontrar-professor-conteudo">
+                <BarraDePesquisa />
+                <ProfessoresPopulares/>
+                <ListaProfessores/>
+                
             </Box>
-            <ProfessoresPopulares/>
-            <Mapa/>
         </Box>
     );
 }

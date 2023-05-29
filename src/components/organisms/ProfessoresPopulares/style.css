@@ -7,11 +7,6 @@
     margin-bottom: var(--espaco-elementos-dash);
 }
 
-.professor-populares-titulo {
-    font-weight: bold !important;
-    color: black
-}
-
 .professores-populares-card {
     width: 100%;
     height: auto;

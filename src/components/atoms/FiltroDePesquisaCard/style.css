@@ -1,0 +1,55 @@
+.filtro-card {
+    width: 100%;
+    height: 100%;
+    background-color: pink;
+}
+
+.filtro-titulo {
+    font-weight: 600 !important;
+    color: #202020;
+}
+
+.filtro-preco-container {
+
+}
+
+.filtro-preco-slider-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.filtro-preco-min-max-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.encontrar-professor-preco-minimo, .encontrar-professor-preco-maximo {
+    color: #202020 !important;
+    font-weight: 700 !important;
+}
+
+/* ================================================================ */
+
+.filtro-disponibilidade-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.filtro-check-box {
+    color: black;
+}
+
+.Mui-checked {
+    color: black !important;
+}
+
+
+/* ================================================================ */
+
+.filtro-avaliacao-container {
+    display: flex;
+    flex-direction: column;
+}
