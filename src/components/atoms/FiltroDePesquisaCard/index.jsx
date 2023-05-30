@@ -1,58 +1,79 @@
 import React from "react";
-import { Box, Typography, Slider, FormGroup, FormControlLabel, Checkbox, Rating} from "@mui/material";
+import { Box, Typography, Slider, FormGroup, FormControlLabel, Checkbox, Rating } from "@mui/material";
 import Card from "../Card";
 import "./style.css";
 
-const minDistance = 0;
-
-
 function FiltroDePesquisaCard(props) {
-    const [value1, setValue1] = React.useState([20, 37]);
-    function valuetext(value) {
-        return `R$${value}`;
+    const [preco, setPreco] = React.useState([20, 37]);
+    const [precoMinimo, setPrecoMinimo] = React.useState(0);
+    const [precoMaximo, setPrecoMaximo] = React.useState(100);
+    const [distancia, setDistancia] = React.useState([20, 37]);
+    const [distanciaMinima, setDistanciaMinima] = React.useState(0);
+    const [distanciaMaxima, setDistanciaMaxima] = React.useState(100);
+    const [avaliacao, setAvaliacao] = React.useState(5);
+
+
+    function textoPreco(valor) {
+        return `R$${valor}`;
     }
 
-    const handleChange1 = (event, newValue, activeThumb) => {
-        if (!Array.isArray(newValue)) {
+    function textoDistancia(valor) {
+        return `${valor} Km`;
+    }
+
+    const handleChangePreco = (event, novoValor, activeThumb) => {
+        if (!Array.isArray(novoValor)) {
             return;
         }
 
         if (activeThumb === 0) {
-            setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+            setPreco([Math.min(novoValor[0], preco[1] - precoMinimo), preco[1]]);
         } else {
-            setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+            setPreco([preco[0], Math.max(novoValor[1], preco[0] + precoMinimo)]);
+        }
+    };
+
+    const handleChangeDistancia = (event, novoValor, activeThumb) => {
+        if (!Array.isArray(novoValor)) {
+            return;
+        }
+
+        if (activeThumb === 0) {
+            setDistancia([Math.min(novoValor[0], distancia[1] - distanciaMinima), distancia[1]]);
+        } else {
+            setDistancia([distancia[0], Math.max(novoValor[1], distancia[0] + distanciaMinima)]);
         }
     };
 
     return (
         <Card className="filtro-card">
-            <Box className="encontrar-professor-filtro-titulo">
+            <Box className="filtro-card-titulo">
                 <Typography className="encontrar-professor-titulo" variant="h5">
                     Filtro
                 </Typography>
             </Box>
-            <Box className="filtro-preco-container">
+            <Box className="filtro-slider-container">
                 <Typography className="filtro-titulo" variant="subtitle1">
                     Preço
                 </Typography>
-                <Box className="filtro-preco-slider-container">
+                <Box className="filtro-slider-container">
                     <Slider
-                        getAriaLabel={() => 'Minimum distance'}
-                        value={value1}
-                        onChange={handleChange1}
+                        getAriaLabel={() => 'Preço mínimo'}
+                        value={preco}
+                        onChange={handleChangePreco}
                         valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
+                        getAriaValueText={textoPreco}
                         disableSwap
-                        min={0}
-                        max={100}
+                        min={precoMinimo}
+                        max={precoMaximo}
                         sx={{ color: "black" }}
                     />
-                    <Box className="filtro-preco-min-max-container">
-                        <Typography className="encontrar-professor-preco-minimo" variant="subtitle2">
-                            R$ 50
+                    <Box className="filtro-slider-min-max-container">
+                        <Typography className="filtro-slider-minimo" variant="subtitle2">
+                            R$ {precoMinimo}
                         </Typography>
-                        <Typography className="encontrar-professor-preco-maximo" variant="subtitle2">
-                            R$ 90
+                        <Typography className="filtro-slider-maximo" variant="subtitle2">
+                            R$ {precoMaximo}
                         </Typography>
                     </Box>
                 </Box>
@@ -63,20 +84,48 @@ function FiltroDePesquisaCard(props) {
                 </Typography>
                 <Box className="filtro-disponibilidade-check-container">
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox defaultChecked/>} label="Manhã" />
-                        <FormControlLabel control={<Checkbox />} label="Tarde" />
-                        <FormControlLabel control={<Checkbox />} label="Noite" />
+                        <FormControlLabel control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
+                        <FormControlLabel control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
+                        <FormControlLabel control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
                     </FormGroup>
                 </Box>
             </Box>
             <Box className="filtro-avaliacao-container">
-            <Typography className="filtro-titulo" variant="subtitle1">
+                <Typography className="filtro-titulo" variant="subtitle1">
                     Avaliação
                 </Typography>
-                <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+                <Box className="filtro-avaliacao-rating-container">
+                    <Typography className="filtro-avaliacao-texto" variant="subtitle2">{avaliacao}</Typography>
+                    <Rating name="half-rating" value={avaliacao} defaultValue={5} precision={0.5} onChange={(event, novoValor) => {
+                        setAvaliacao(novoValor);
+                    }} />
+                </Box>
             </Box>
-            <Box>
-                
+            <Box className="filtro-slider-container">
+                <Typography className="filtro-titulo" variant="subtitle1">
+                    Distância
+                </Typography>
+                <Box className="filtro-slider-container">
+                    <Slider
+                        getAriaLabel={() => 'Distância mínima'}
+                        value={distancia}
+                        onChange={handleChangeDistancia}
+                        valueLabelDisplay="auto"
+                        getAriaValueText={textoDistancia}
+                        disableSwap
+                        min={distanciaMinima}
+                        max={distanciaMaxima}
+                        sx={{ color: "black" }}
+                    />
+                    <Box className="filtro-slider-min-max-container">
+                        <Typography className="filtro-slider-minimo" variant="subtitle2">
+                            {distanciaMinima} Km
+                        </Typography>
+                        <Typography className="filtro-slider-maximo" variant="subtitle2">
+                            {distanciaMaxima} Km
+                        </Typography>
+                    </Box>
+                </Box>
             </Box>
         </Card>
     );

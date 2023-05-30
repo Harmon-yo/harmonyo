@@ -1,0 +1,121 @@
+.professor-card {
+    width: 100%;
+    height: auto;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: row;
+}
+
+.professor-card:not(:last-child) {
+    margin-bottom: calc(var(--espaco-padrao) * 2);
+}
+
+.professor-card-primeira-parte {
+    width: 5%;
+    height: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.professor-card-segunda-parte {
+    width: 95%;
+    height: 100%;
+    padding-left: calc(var(--espaco-padrao) * 2);
+    padding-right: calc(var(--espaco-padrao) * 2);
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: calc(var(--espaco-padrao) * 1);
+}
+
+.professor-card-nome-instrumento-texto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.professor-nome-texto {
+    font-weight: 800 !important;
+    color: var(--dark-font);
+    margin-right: calc(var(--espaco-padrao) * 1) !important;
+}
+
+.professores-avaliacao-texto {
+    font-weight: 600 !important;
+    color: var(--dark-font);
+}
+
+.professor-informacoes-adicionais-container {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.professor-informacoes-adicionais-texto {
+    font-weight: 500 !important;
+    color: var(--dark-font);
+}
+
+.professor-preco-texto {
+    font-weight: 700 !important;
+    color: var(--dark-font);
+}
+
+
+.professor-descricao-texto {
+    font-weight: 500 !important;
+    color: var(--dark-font);
+}
+
+.professor-avaliacao-localizacao-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.professores-avaliacao-texto {
+    font-weight: 700 !important;
+    margin-left: calc(var(--espaco-padrao) / 2) !important;
+}
+
+.professor-localizacao {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.professor-localizacao-texto {
+    font-weight: 700 !important;
+    color: #788497;
+}
+
+.professor-localizacao-texto:not(:last-child) {
+    margin-right: calc(var(--espaco-padrao) * 1) !important;
+    margin-left: calc(var(--espaco-padrao) * 1) !important;
+}
+
+.professor-instrumentos-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.professor-instrumentos-card {
+    width: fit-content !important;
+    height: fit-content !important;
+    background-color: #ebebeb !important;
+    padding: 2px 8px 2px 8px !important;
+}
+
+.professor-instrumentos-card:not(:last-child) {
+    margin-right: calc(var(--espaco-padrao) * 1) !important;
+}
+
+.professor-instrumentos-card-texto {
+    font-weight: 700 !important;
+    color: var(--dark-font);
+}

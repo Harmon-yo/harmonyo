@@ -10,7 +10,7 @@ function PaginaPadraoUsuario(props) {
     return (
         <Box sx={{
             width: '100vw',
-            height: '100vh',
+            height: '100%',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'flex-start',
@@ -20,6 +20,7 @@ function PaginaPadraoUsuario(props) {
             <Box sx={{
                 backgroundColor: "#F5F4F7",
                 width: '95vw',
+                height: '100%',
             }}>
                 <ContainerUsuario/>
                 <Box className="pagina-padrao-container">

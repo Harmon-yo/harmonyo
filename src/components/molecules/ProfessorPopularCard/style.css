@@ -1,5 +1,5 @@
 .professor-popular-card {
-    width: 25%;
+    width: 23%;
     height: 100%;
     background-color: white;
     display: grid;
@@ -7,7 +7,6 @@
     row-gap: calc(var(--espaco-padrao) * 2);
     border-radius: var(--borda-padrao);
     padding: calc(var(--espaco-padrao) * 2);
-    margin-right: calc(var(--espaco-padrao) * 3);   
 }
 
 .card-info-usuario {
@@ -21,7 +20,7 @@
 
 .card-info-nome {
     color: var(--dark-font);
-    font-weight: 600 !important;
+    font-weight: 700 !important;
 }
 
 .card-info-estrela {
@@ -37,6 +36,7 @@
 }
 
 .card-info-estrela-valor {
+    margin-left: calc(var(--espaco-padrao) / 2) !important;
     font-weight: 700 !important;
 }
 
@@ -48,8 +48,8 @@
 }
 
 .card-info-estrela-cidade {
-    color: #8c95a0;
-    font-weight: 600;
+    color: rgb(58, 58, 58);
+    font-weight: 700 !important;
 }
 
 .card-info-status {
@@ -60,12 +60,21 @@
     align-items: center;
 }
 
+.card-info-status-cor {
+    font-size: 0.5rem !important;
+    margin-right: calc(var(--espaco-padrao) * 1);
+}
+
+.online {
+    color: #00b300;
+}
+
+.offline {
+    color: #ff0000;
+}
+
 .card-info-status .card-info-separacao {
     color: var(--cor-padrao);
     font-size: 0.6rem;
     margin-right: calc(var(--espaco-padrao) * 1);
-}
-
-.card-info-status-hora {
-
 }

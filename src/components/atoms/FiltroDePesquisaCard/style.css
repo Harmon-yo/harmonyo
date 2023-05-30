@@ -1,34 +1,25 @@
 .filtro-card {
     width: 100%;
-    height: 100%;
-    background-color: pink;
+    height: fit-content;
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: calc(var(--espaco-padrao) * 2);
 }
 
 .filtro-titulo {
-    font-weight: 600 !important;
-    color: #202020;
+    font-weight: 800 !important;
+    color: var(--dark-font);
 }
 
-.filtro-preco-container {
-
-}
-
-.filtro-preco-slider-container {
+.filtro-slider-container {
     display: flex;
     flex-direction: column;
 }
 
-
-
-.filtro-preco-min-max-container {
+.filtro-slider-min-max-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.encontrar-professor-preco-minimo, .encontrar-professor-preco-maximo {
-    color: #202020 !important;
-    font-weight: 700 !important;
 }
 
 /* ================================================================ */
@@ -38,6 +29,7 @@
     flex-direction: column;
 }
 
+
 .filtro-check-box {
     color: black;
 }
@@ -46,10 +38,31 @@
     color: black !important;
 }
 
+.MuiFormControlLabel-root {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.MuiCheckbox-root {
+    padding: 3px !important;
+}
+
 
 /* ================================================================ */
 
 .filtro-avaliacao-container {
     display: flex;
     flex-direction: column;
+}
+
+.filtro-avaliacao-rating-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.filtro-disponibilidade-texto, .filtro-avaliacao-texto, .filtro-slider-minimo, .filtro-slider-maximo {
+    font-weight: 700 !important;
+    color: rgb(58, 58, 58);
 }

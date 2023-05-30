@@ -1,7 +1,7 @@
 :root {
 
         /* || Cores */
-        --corPadrao: #03B441;
+        --cor-padrao: #03B441;
         --gradient-home-antigo: linear-gradient(135deg,
                         #03B441 -0.6%,
                         #00A239 -0.59%,
@@ -31,5 +31,4 @@
         /* || Borda arredondada */
 
         --borda-padrao: 5px;
-
 }
