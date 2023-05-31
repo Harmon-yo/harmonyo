@@ -2,6 +2,7 @@
 
         /* || Cores */
         --cor-padrao: #03B441;
+        --cor-padrao-claro: #49d67a;
         --gradient-home-antigo: linear-gradient(135deg,
                         #03B441 -0.6%,
                         #00A239 -0.59%,
@@ -19,6 +20,7 @@
         --notificacao-nao-lida: #edecec;
         --tempo-notificacao: #4D4D4D;
         --notificacao-marcar-lido: #3075DD;
+        --avaliacao: #ffbf51;
 
         /* || Tipografia */
 
@@ -31,4 +33,9 @@
         /* || Borda arredondada */
 
         --borda-padrao: 5px;
+}
+
+body {
+        padding: 0 !important;
+        overflow-x: hidden !important;
 }

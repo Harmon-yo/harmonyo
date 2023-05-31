@@ -18,7 +18,6 @@ function PaginaPadraoUsuario(props) {
             <NavbarLateral opcoes={props.opcoesNavbar}/>
             {/* <h1>Olá {sessionStorage.CATEGORIA}(a) {sessionStorage.NOME} - Encontrar Professores</h1> */}
             <Box sx={{
-                backgroundColor: "#F5F4F7",
                 width: '95vw',
                 height: '100%',
             }}>

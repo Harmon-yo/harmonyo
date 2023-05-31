@@ -1,17 +1,18 @@
 import React from "react";
 import { deepOrange } from '@mui/material/colors';
-import { Box, Typography, Avatar } from "@mui/material";
+import { Box, Typography, Avatar, Rating } from "@mui/material";
 import GradeRoundedIcon from '@mui/icons-material/GradeRounded';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Card from "../../atoms/Card";
 import "./style.css";
 
 function ProfessorResumidoCard(props) {
+
     return (
         <Card className="professor-card">
             <Box className="professor-card-primeira-parte">
                 <Avatar id="avatar-usuario-botao"
-                    sx={{ bgcolor: deepOrange[500] }}>G</Avatar>
+                    sx={{ bgcolor: "var(--cor-padrao)" }}>G</Avatar>
             </Box>
             <Box className="professor-card-segunda-parte">
                 <Typography variant="h5" className="professor-nome-texto">
@@ -42,13 +43,8 @@ function ProfessorResumidoCard(props) {
                     {props.descricao}
                 </Typography>
                 <Box className="professor-avaliacao-localizacao-container">
-                    {
-                        [1, 2, 3, 4, 5].map(
-                            (nota) => (
-                                <GradeRoundedIcon sx={{ color: deepOrange[500] }} />
-                            ))
-                    }
-                    <Typography variant="subtitle1" className="professores-avaliacao-texto" sx={{ color: deepOrange[500] }}>
+                    <Rating name="half-rating-read" defaultValue={props.avaliacao} precision={0.5} readOnly />
+                    <Typography variant="subtitle1" className="professores-avaliacao-texto">
                         {props.avaliacao}
                     </Typography>
                     <Box className="professor-localizacao">
@@ -64,7 +60,7 @@ function ProfessorResumidoCard(props) {
                         props.instrumentos.map((instrumento) => (
                             <Card className="professor-instrumentos-card">
                                 <Typography variant="subtitle1" className="professor-instrumentos-card-texto">
-                                    {instrumento}
+                                    {instrumento.nome}
                                 </Typography>
                             </Card>
                         ))

@@ -32,7 +32,7 @@
 }
 
 .card-info-estrela-icon, .card-info-estrela-valor {
-    color: #ffbf51;
+    color: var(--avaliacao);
 }
 
 .card-info-estrela-valor {

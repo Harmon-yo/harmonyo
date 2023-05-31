@@ -1,17 +1,31 @@
 import React from "react";
 import { Box, Typography, Slider, FormGroup, FormControlLabel, Checkbox, Rating } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import Card from "../Card";
 import "./style.css";
 
 function FiltroDePesquisaCard(props) {
-    const [preco, setPreco] = React.useState([20, 37]);
     const [precoMinimo, setPrecoMinimo] = React.useState(0);
     const [precoMaximo, setPrecoMaximo] = React.useState(100);
-    const [distancia, setDistancia] = React.useState([20, 37]);
     const [distanciaMinima, setDistanciaMinima] = React.useState(0);
     const [distanciaMaxima, setDistanciaMaxima] = React.useState(100);
+    const [preco, setPreco] = React.useState([precoMinimo, precoMaximo]);
+    const [distancia, setDistancia] = React.useState([distanciaMinima, distanciaMaxima]);
     const [avaliacao, setAvaliacao] = React.useState(5);
+    const [buscandoProfessor, setBuscandoProfessor] = React.useState(false);
 
+    function handleClickFiltro() {
+        setBuscandoProfessor(true);
+
+        let parametros = {
+            preco: preco,
+            distancia: distancia,
+            avaliacao: avaliacao,
+            //disponibilidade: ["Manhã", "Tarde", "Noite"]
+        }
+
+        props.buscarProfessor(parametros);
+    }
 
     function textoPreco(valor) {
         return `R$${valor}`;
@@ -127,6 +141,9 @@ function FiltroDePesquisaCard(props) {
                     </Box>
                 </Box>
             </Box>
+            <LoadingButton loading={buscandoProfessor} onClick={handleClickFiltro} className="filtro-botao">
+                <Typography className="loading-text">Filtrar</Typography>
+            </LoadingButton>
         </Card>
     );
 }

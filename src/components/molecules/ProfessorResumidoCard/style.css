@@ -42,7 +42,7 @@
 
 .professores-avaliacao-texto {
     font-weight: 600 !important;
-    color: var(--dark-font);
+    color: var(--avaliacao);
 }
 
 .professor-informacoes-adicionais-container {

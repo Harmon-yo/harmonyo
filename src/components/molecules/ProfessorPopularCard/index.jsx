@@ -11,7 +11,7 @@ function ProfessorPopularCard(props) {
 
       <Box className="card-info-usuario">
         <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-          sx={{ bgcolor: deepOrange[500] }}>{props.nome[0]}</Avatar>
+          sx={{ bgcolor: "var(--cor-padrao)" }}>{props.nome[0]}</Avatar>
         <Typography className="card-info-nome" noWrap>{props.nome}</Typography>
       </Box>
 

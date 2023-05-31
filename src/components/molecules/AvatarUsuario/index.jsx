@@ -38,7 +38,7 @@ function AvatarUsuario(props) {
     return (
         <div>
             <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                sx={{ bgcolor: deepOrange[500] }}
+                sx={{ bgcolor: "var(--cor-padrao)" }}
                 aria-controls={open ? 'avatar-usuario-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
@@ -48,7 +48,7 @@ function AvatarUsuario(props) {
                 anchorEl={anchorEl} open={open} handleClose={handleClose}>
                 <Box className="avatar-usuario-menu-user-info">
                     <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                        sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+                        sx={{ bgcolor: "var(--cor-padrao)"}}>N</Avatar>
                     <Box className="avatar-usuario-menu-user-info-text">
                         <Typography className="avatar-usuario-menu-nome">Gustavo Pereira</Typography>
                         <Typography className="avatar-usuario-menu-email">gustavo_pereira@hotmail.com</Typography>

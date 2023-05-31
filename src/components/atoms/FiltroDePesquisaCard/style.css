@@ -66,3 +66,23 @@
     font-weight: 700 !important;
     color: rgb(58, 58, 58);
 }
+
+
+    /* ================================================================ */
+
+.filtro-botao {
+    background-color: var(--cor-padrao) !important;
+    color: var(--dark-font) !important;
+}
+
+.loading-text {
+    font-weight: 800 !important;
+}
+
+.MuiLoadingButton-loadingIndicator {
+    color: white !important;
+}
+
+.MuiLoadingButton-loading .loading-text {
+    color: transparent !important;
+}

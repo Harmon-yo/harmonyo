@@ -46,8 +46,8 @@ function ListaProfessores(props) {
             </Box>
             <Card className="professores-cards">
                 {
-                    lista.map((professor) => (
-                        <ProfessorResumidoCard nome={professor.nome} instrumentos={professor.instrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.precoMinimo} precoMaximo={professor.precoMaximo} descricao={professor.descricao} avaliacao={professor.avaliacao} cidade={professor.cidade} estado={professor.estado} />
+                    props.professores.map((professor) => (
+                        <ProfessorResumidoCard nome={professor.nome} instrumentos={professor.ltInstrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
                     ))
                 }
             </Card>
