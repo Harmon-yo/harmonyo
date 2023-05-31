@@ -44,6 +44,7 @@
     width: 80%;
     font-weight: 900 !important;
     letter-spacing: 2px !important;
+    font-size: var(--fonte-grande) !important;
     margin-bottom: calc(var(--espaco-padrao) * 3) !important;
     color: var(--light-font)
 }
@@ -51,6 +52,7 @@
 .hero-subtitulo {
     width: 70%;
     font-weight: 500 !important;
+    font-size: var(--fonte-h6) !important;
     margin-bottom: calc(var(--espaco-padrao) * 4) !important;
     color: var(--light-font);
 }
@@ -61,9 +63,4 @@
     font-weight: 700 !important;
     transition: all 1s ease-in-out;
     color: var(--dark-font) !important;
-}
-
-.botao-criar-conta:hover {
-    /* background-color: var(--dark-font) !important;
-    color: var(--light-font) !important; */
 }

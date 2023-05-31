@@ -1,3 +1,7 @@
+.duvidas-box {
+    height: 70vh !important;
+}
+
 .duvidas-container {
     display: flex !important;
     flex-direction: column;
@@ -5,7 +9,9 @@
 }
 
 .duvidas-title {
-    font-weight: 900;
+    font-weight: bold !important;
+    color: var(--dark-font);
+    font-size: var(--fonte-h3) !important;
     margin-bottom: calc(var(--espaco-padrao) * 2);
 }
 

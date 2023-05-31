@@ -3,6 +3,7 @@
         /* || Cores */
         --cor-padrao: #03B441;
         --cor-padrao-claro: #49d67a;
+        --cor-padrao-escuro: #007a2b;
         --gradient-home-antigo: linear-gradient(135deg,
                         #03B441 -0.6%,
                         #00A239 -0.59%,
@@ -25,6 +26,15 @@
         /* || Tipografia */
 
         --font-padrao: "Nunito";
+
+        --fonte-grande: 3.815rem;
+        --fonte-h1: 3.052rem;
+        --fonte-h2: 2.441rem;
+        --fonte-h3: 1.953rem;
+        --fonte-h4: 1.563rem;
+        --fonte-h5: 1.25rem;
+        --fonte-h6: 1rem;
+        --fonte-pequena: 0.8rem;
 
         /* || Espaço */
 

@@ -30,7 +30,7 @@ function Index() {
             <Navbar onClickCadastro = {abrirModalCriarConta}/>
             <ModalCriarConta open = {open} closeModal = {fecharModalCriarConta}/>
             <Hero onClickCriarConta = {abrirModalCriarConta}/>
-            <Estatisticas/>
+            {/* <Estatisticas/> */}
             <Vantagens/>
             <ComoFunciona/>
             <Duvidas/>

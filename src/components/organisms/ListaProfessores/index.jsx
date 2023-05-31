@@ -10,27 +10,27 @@ import "./style.css";
 const lista = [
     {
         nome: "João Silva",
-        instrumentos: ["Piano", "Violino", "Violoncelo", "Viola"],
+        ltInstrumentos: [{nome: "Piano"}, {nome: "Violino"}, {nome: "Violoncelo"}, {nome: "Viola"}],
         idade: 35,
         bairro: "Centro",
         distancia: 10,
-        precoMinimo: 50,
-        precoMaximo: 100,
+        valorMinimo: 50,
+        valorMaximo: 100,
         descricao: "Profissional com mais de 10 anos de experiência no ensino de piano, violino, violoncelo e viola.",
-        avaliacao: 4.5,
+        mediaAvaliacao: 4.5,
         cidade: "São Paulo",
         estado: "SP"
     },
     {
         nome: "Maria Oliveira",
-        instrumentos: ["Guitarra", "Baixo"],
+        ltInstrumentos: [{nome: "Piano"}, {nome: "Violino"}, {nome: "Violoncelo"}, {nome: "Viola"}],
         idade: 28,
         bairro: "Vila Madalena",
         distancia: 5,
-        precoMinimo: 40,
-        precoMaximo: 80,
+        valorMinimo: 40,
+        valorMaximo: 80,
         descricao: "Professora experiente de guitarra e baixo com abordagem prática e teórica.",
-        avaliacao: 4.8,
+        mediaAvaliacao: 4.8,
         cidade: "São Paulo",
         estado: "SP"
     }

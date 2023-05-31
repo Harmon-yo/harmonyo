@@ -1,8 +1,11 @@
 import React from 'react';
 import BoxWithContainer from '../../atoms/BoxWithContainer';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import {
+    Box,
+    Typography,
+    TextField,
+    Button
+} from '@mui/material';
 import Locationimg from '../../../imgs/location.png';
 import Phoneimg from '../../../imgs/telephone.png';
 import Emailimg from '../../../imgs/mail.png';
@@ -76,7 +79,7 @@ function Duvidas() {
         <BoxWithContainer
             boxClassName="duvidas-box"
             containerClassName="duvidas-container">
-            <h1 className='title duvidas-title'>Dúvidas</h1>
+            <Typography className='title duvidas-title'>Dúvidas</Typography>
             <Box className="duvidas-input-informacoes">
                 <Box className="duvidas-input">
                     <Box className="duvidas-ipt-nome-container">

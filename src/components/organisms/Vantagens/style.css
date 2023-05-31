@@ -1,70 +1,76 @@
 .vantagens-box {
-    background-color: #ffffff;
+    background-color: var(--light-font);
+    height: 60vh;
 }
 
 .vantagens-container {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: center;
+    flex-direction: row !important;
+    padding-top: calc(var(--espaco-padrao) * 7) !important;
+    padding-bottom: calc(var(--espaco-padrao) * 7) !important;
 }
 
-.vantagens-container-cards {
-    width: 100%;
-    height: 85%;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* || Vantagem - card */
-
-.vantagem-card {
-    width: 25%;
-    height: 100% !important;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 10px !important;
-    background: linear-gradient(180deg, var(--cor-padrao) 0%, var(--light-font) 60%);
-    text-align: center;
-}
-
-.vantagem-card-img-container {
-    width: 100%;
-    height: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: calc(var(--espaco-padrao) * 2);
-}
-
-.vantagem-card-img {
+.vantagens-primeiro-container {
+    width: 35%;
     height: 100%;
 }
 
-.vantagens-card-title-container {
-    width: 100%;
-    height: 12%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: calc(var(--espaco-padrao) * 3);
+
+.vantagens-titulo {
+    width: 90%;
+    font-weight: bold !important;
+    color: var(--dark-font);
+    font-size: var(--fonte-h3) !important;
 }
 
-.vantagem-card-title {
-    font-weight: 700;
-}
-
-.vantagem-card-title, .vantagem-card-description {
+.vantagens-subtitulo {
+    width: 70%;
+    font-weight: 600 !important;
+    font-size: var(--fonte-h5) !important;
     color: var(--dark-font);
 }
 
-/* ==================================================== */
-
-.vantagens-title {
-    margin-bottom: calc(var(--espaco-padrao) * 2);
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+.vantagens-segundo-container {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.vantagem-img {
+.vantagens-card {
+    width: 32%;
     height: 100%;
+    background-color: white;
+}
+
+
+.vantagens-icon-container {
+    width: 20%;
+    height: 15%;
+    border-radius: var(--borda-padrao);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: calc(var(--espaco-padrao) * 5);
+}
+
+.vantagens-icon {
+    font-size: var(--fonte-h2) !important;
+    color: var(--cor-padrao);
+}
+
+.vantagens-card-titulo {
+    width: 100%;
+    font-weight: bold !important;
+    color: var(--dark-font);
+    font-size: var(--fonte-h5) !important;
+    margin-bottom: calc(var(--espaco-padrao) * 2) !important;
+}
+
+.vantagens-card-texto {
+    width: 100%;
+    font-weight: 500 !important;
+    color: var(--dark-font);
+    font-size: var(--fonte-small) !important;
 }

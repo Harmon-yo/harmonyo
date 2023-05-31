@@ -2,8 +2,8 @@ import React from 'react';
 import BoxWithContainer from '../../atoms/BoxWithContainer';
 import Box from "@mui/material/Box"
 import Card from "../../atoms/Card";
-import vantagensPagamentoSeguro from "../../../imgs/vantagens-pagamento-seguro.png";
-import vantagensChat from "../../../imgs/vantagens-chat.png";
+import PaymentIcon from '@mui/icons-material/Payment';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import "./style.css";
 import { Typography } from '@mui/material';
 
@@ -11,19 +11,20 @@ const cards = [
     {
         key: "vantagens-pagamento-seguro",
         titulo: "Pagamento Seguro",
-        texto: "A plataforma oferece segurança no pagamento para investir em educação musical com tranquilidade.",
-        img: vantagensPagamentoSeguro,
+        texto: "Pagamentos são realizados através de uma plataforma segura, que garante a segurança de todos os envolvidos",
+        icon: <PaymentIcon className="vantagens-icon"/>,
     },
     {
         key: "vantagens-chat",
-        titulo: "Chat entre professor e aluno",
-        texto: "Nosso chat integrado permite comunicação em tempo real entre aluno e professor, para realizar feedbacks e orientações personalizadas na aprendizagem musical",
-        img: vantagensChat,
+        titulo: "Chat Integrado",
+        texto: "Conectamos alunos e professores, para realizar feedbacks e orientações personalizadas na aprendizagem musical",
+        icon: <ChatBubbleOutlineIcon className="vantagens-icon"/>,
     },
     {
         key: "vantagens-emprestimo-de-instrumento",
-        titulo: "Empréstimo de instrumento do professor",
-        texto: "Professores oferecem instrumentos para empréstimo, permitindo que alunos experimentem diferentes opções sem gastar muito dinheiro em um novo instrumento.",
+        titulo: "Empréstimo",
+        texto: "Professores podem emprestar instrumentos para alunos, para que possam praticar em durante as aulas",
+        icon: <ChatBubbleOutlineIcon className="vantagens-icon"/>
     }
 ];
 
@@ -33,27 +34,33 @@ function Vantagens(props) {
             <BoxWithContainer
                 boxClassName="vantagens-box"
                 containerClassName="vantagens-container">
-                <h1 className="title vantagens-title">Vantagens</h1>
-                <Box className="vantagens-container-cards">
+                <Box className="vantagens-primeiro-container">
+                    <Typography className="vantagens-titulo">
+                        Nossas funcionalidades especiais para você
+                    </Typography>
+                    <Typography className="vantagens-subtitulo">
+                        Providenciamos diversas funcionalidades para todos.
+                    </Typography>
+                </Box>
+                <Box className="vantagens-segundo-container">
                     {
-
                         cards.map((card) => (
-                            <Card key={card.key} className="vantagem-card">
-                                <Box className="vantagem-card-img-container">
-                                    <Box
-                                        className="vantagem-card-img"
-                                        component="img"
-                                        src={card.img}
-                                        alt={card.alt} />
+                            <Card key={card.key} className="vantagens-card">
+                                <Box className="vantagens-icon-container">
+                                    {card.icon}
                                 </Box>
-                                <Box
-                                    className="vantagens-card-title-container">
-                                    <Typography variant="h6" className="vantagem-card-title">{card.titulo}</Typography>
+
+                                <Box className="vantagens-card-conteudo">
+                                    <Typography className="vantagens-card-titulo home-titulo">
+                                        {card.titulo}
+                                    </Typography>
+
+                                    <Typography className="vantagens-card-texto">
+                                        {card.texto}
+                                    </Typography>
                                 </Box>
-                                <Typography variant="subtitle" className="vantagem-card-description">{card.texto}</Typography>
                             </Card>
                         ))
-
                     }
                 </Box>
             </BoxWithContainer>

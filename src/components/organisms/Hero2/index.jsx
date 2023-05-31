@@ -20,7 +20,7 @@ function Hero2(props) {
           <img src={Wave} className="hero-img-wave" />
 
 
-          <Typography variant="h2" className="hero-titulo">
+          <Typography className="hero-titulo">
             Descubra sua harmonia com a música
           </Typography>
 
