@@ -23,7 +23,7 @@
     font-weight: 700 !important;
 }
 
-.card-info-estrela {
+.card-info-avaliacao {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -31,23 +31,29 @@
     height: auto;
 }
 
-.card-info-estrela-icon, .card-info-estrela-valor {
+.card-avaliacao-icon, .card-avaliacao-valor {
     color: var(--avaliacao);
 }
 
-.card-info-estrela-valor {
+.card-avaliacao-valor {
     margin-left: calc(var(--espaco-padrao) / 2) !important;
     font-weight: 700 !important;
 }
 
-.card-info-estrela .card-info-separacao {
+.card-info-avaliacao .card-info-separacao {
     color: #61738b;
     font-size: 0.5rem;
     margin-right: calc(var(--espaco-padrao) * 1);
     margin-left: calc(var(--espaco-padrao) * 1);
 }
 
-.card-info-estrela-cidade {
+.card-cidade-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 55%
+}
+
+.card-cidade {
     color: rgb(58, 58, 58);
     font-weight: 700 !important;
 }

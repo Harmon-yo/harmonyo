@@ -7,17 +7,20 @@
 }
 
 .professores-busca-lugar {
-    width: 25%;
+    width: 20%;
     height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     border-right: 1px solid #E5E5E5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .professores-busca-lugar-nome {
     color: black;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     margin-left: calc(var(--espaco-padrao) * 1);
 }
 

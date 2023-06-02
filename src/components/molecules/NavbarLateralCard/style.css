@@ -5,32 +5,32 @@
 
 .navbar-lateral-card {
     width: 100%;
-    height: 10%;
+    height: 6%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: calc(var(--espaco-padrao) * 1);
-    color: var(--dark-font)
+    padding: calc(var(--espaco-padrao) / 2)
+             calc(var(--espaco-padrao) * 1.5)
+             calc(var(--espaco-padrao) / 2)
+             calc(var(--espaco-padrao) * 1.5);
+    color: #c5fdd5;
+
 }
 
-.navbar-lateral:not(:hover) .navbar-lateral-card{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
 
 .navbar-lateral-card-img, .navbar-lateral-card-img-hover {
-    height: 50%;
+    font-size: var(--fonte-h4) !important;    
 }
 
 .navbar-lateral-card-img-hover {
     margin-right: 5%;
 }
 
+
 .navbar-lateral-cards .active {
-    background-color: var(--cor-padrao-claro);
-    border-radius: 5px;
+    background-color: #30884a;
+    border-radius: var(--borda-padrao);
+    color: var(--light-font) !important;
 }
 
 
@@ -41,11 +41,9 @@
 .navbar-lateral-card-texto{
     font-weight: 700 !important;
     word-wrap: normal;
-    color: var(--light-font) !important;
+    font-size: var(--fonte-h5);
 }
 
 .not-active .navbar-lateral-card-texto {
     font-weight: normal !important;
-    color: var(--light-font) !important;
-
 }

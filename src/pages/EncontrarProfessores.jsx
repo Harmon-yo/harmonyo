@@ -6,6 +6,11 @@ import EncontrarProfessorConteudo from "../components/templates/EncontrarProfess
 import PaginaPadraoUsuario from "../components/templates/PaginaPadraoUsuario/index.jsx";
 
 /* ================= Navbar =================== */
+import ChatIcon from '@mui/icons-material/ChatBubbleOutline';
+import SearchIcon from '@mui/icons-material/Search';
+import FeedbackIcon from '@mui/icons-material/RateReviewOutlined';
+import PedidosIcon from '@mui/icons-material/GradingOutlined';
+import CalendarioIcon from '@mui/icons-material/CalendarTodayOutlined';
 import LupaImg from "../imgs/search.png";
 import AgendaImg from "../imgs/calendar.png";
 import PedidosImg from "../imgs/request.png";
@@ -15,28 +20,28 @@ import FeedbacksImg from "../imgs/feedback.png";
 const opcoesNavbar = [
     {
         titulo: "Encontrar",
-        src: LupaImg,
+        icon: SearchIcon,
         active: true,
     }, 
     {
         titulo: "Agenda",
-        src: AgendaImg,
+        icon: CalendarioIcon,
         active: false,
         href: "/agenda"
     }, 
     {
         titulo: "Pedidos",
-        src: PedidosImg,
+        icon: PedidosIcon,
         active: false
     }, 
     {
         titulo: "Chat",
-        src: ChatImg,
+        icon: ChatIcon,
         active: false
     },
     {
         titulo: "Feedbacks",
-        src: FeedbacksImg,
+        icon: FeedbackIcon,
         active: false
     }
 ];

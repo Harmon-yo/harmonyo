@@ -12,7 +12,7 @@ function ProfessorResumidoCard(props) {
         <Card className="professor-card">
             <Box className="professor-card-primeira-parte">
                 <Avatar id="avatar-usuario-botao"
-                    sx={{ bgcolor: "var(--cor-padrao)" }}>G</Avatar>
+                    sx={{ bgcolor: "var(--cor-padrao)" }}>{props.nome[0]}</Avatar>
             </Box>
             <Box className="professor-card-segunda-parte">
                 <Typography variant="h5" className="professor-nome-texto">

@@ -27,7 +27,7 @@ function NavbarLateral(props) {
                 <Box className="navbar-lateral-cards">
                     {
                         props.opcoes.map((card) => (
-                            <NavbarLateralCard href={card.href} titulo={card.titulo} src={card.src} active={card.active} hover={active}/>
+                            <NavbarLateralCard href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active}/>
                         ))
                     }
                 </Box>

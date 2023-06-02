@@ -1,14 +1,13 @@
 .navbar-lateral-background {
-    height: 100vh;
+    height: auto;
     width: 5vw;
-    background-color: orange;
     position: relative;
 }
 
 .navbar-lateral {
-    background-color: var(--cor-padrao);
+    background-color: #389d57;
     width: 5vw;
-    height: 100vh;
+    height: 100%;
     position: absolute;
     transition: width 0.5s;
     display: flex;
@@ -24,7 +23,7 @@
 }
 
 .navbar-lateral:hover {
-    width: 20vw !important;
+    width: 18vw !important;
 }
 
 .navbar-lateral-logo-container {

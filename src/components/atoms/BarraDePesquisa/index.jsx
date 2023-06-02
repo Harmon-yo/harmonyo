@@ -15,18 +15,21 @@ function BarraDePesquisa(props) {
     const [cidade, setCidade] = React.useState('São Paulo');
 
     const handleChange = (event) => {
-        setCidade(event.target.value);
+        setCidade(event.target.value)
     };
 
     return (
         <Card className="professores-busca-card">
             <Box className="professores-busca-lugar">
                 <LocationOnIcon />
-                <FormControl fullWidth>
+                <FormControl sx={{width: '70%'}}>
                     <Select
                         labelId="demo-simple-select-label"
                         id="select-cidade"
                         value={cidade}
+                        renderValue={(value) => {
+                            return <Typography className="professores-busca-lugar-nome">{value.length > 13 ? value.substring(0, 13) + "..." : value}</Typography>
+                        }}
                         label=""
                         onChange={handleChange}
                         SelectProps={{ IconComponent: () => null }}

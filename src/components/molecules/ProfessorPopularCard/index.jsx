@@ -15,11 +15,14 @@ function ProfessorPopularCard(props) {
         <Typography className="card-info-nome" noWrap>{props.nome}</Typography>
       </Box>
 
-      <Box className="card-info-estrela">
-        <GradeRoundedIcon className="card-info-estrela-icon" />
-        <Typography className="card-info-estrela-valor">{props.avaliacao}</Typography>
+      <Box className="card-info-avaliacao">
+        <GradeRoundedIcon className="card-avaliacao-icon" />
+        <Typography className="card-avaliacao-valor">{props.avaliacao}</Typography>
         <FiberManualRecordIcon className="card-info-separacao" />
-        <Typography className="card-info-estrela-cidade" variant="subtitle2">{props.localizacao}</Typography>
+        <Box className="card-cidade-container"> 
+
+          <Typography className="card-cidade" variant="subtitle2" noWrap>{props.localizacao}</Typography>
+        </Box>
       </Box>
 
       <Box className="card-info-status">
