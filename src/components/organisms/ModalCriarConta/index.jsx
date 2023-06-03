@@ -7,6 +7,8 @@ import {
 import { Link } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import { useStyles } from './modal.styles.js';
+import iconeProfessor from '../../../imgs/icone-professor-v2.png'
+import iconeAluno from '../../../imgs/icone-aluno.png'
 
 
 
@@ -55,12 +57,16 @@ function ModalCriarConta(props) {
                     <Box sx={useStyles().boxCards}>
 
                         <Button sx={useStyles().card} onClick={redirecionarProfessor}>
-                            <Typography sx={useStyles().tituloCard} variant="h5">
-                                Sou Professor
-                            </Typography>
-                            <Typography sx={useStyles().subtituloCard} variant="subtitle1">
-                                Quero ensinar a tocar
-                            </Typography>
+                            <Box>
+                                <Typography sx={useStyles().tituloCard} variant="h5">
+                                    Sou Professor
+                                </Typography>
+                                <Typography sx={useStyles().subtituloCard} variant="subtitle1">
+                                    Quero ensinar a tocar
+                                </Typography>
+                            </Box>
+          
+                            <img src={iconeProfessor} alt="" width="28%"/>
                         </Button>
 
                         <Typography sx={useStyles().ouText} variant="h5">
@@ -68,12 +74,15 @@ function ModalCriarConta(props) {
                         </Typography>
 
                         <Button sx={useStyles().card} onClick={redirecionarAluno}>
-                            <Typography sx={useStyles().tituloCard} variant="h5">
-                                Sou Aluno
-                            </Typography>
-                            <Typography sx={useStyles().subtituloCard} variant="subtitle1">
-                                Quero aprender a tocar
-                            </Typography>
+                            <Box>
+                                <Typography sx={useStyles().tituloCard} variant="h5">
+                                    Sou Aluno
+                                </Typography>
+                                <Typography sx={useStyles().subtituloCard} variant="subtitle1">
+                                    Quero aprender a tocar
+                                </Typography>
+                            </Box>
+                                <img src={iconeAluno} alt="" width="30%"/>
                         </Button>
                     </Box>
                     <Typography sx={useStyles().loginTexto}>

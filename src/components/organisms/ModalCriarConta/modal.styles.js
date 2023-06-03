@@ -45,7 +45,7 @@ const makeStyles = () => {
       card: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-evenly',
         width: '50%',
         height: '100%',
         p: 'var(--espaco-padrao)',
