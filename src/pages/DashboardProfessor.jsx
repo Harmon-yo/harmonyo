@@ -3,11 +3,12 @@ import PaginaPadraoUsuario from "../components/templates/PaginaPadraoUsuario";
 
 /* ================= Navbar =================== */
 
-import DashboardImg from "../imgs/dashboard.png";
-import AgendaImg from "../imgs/calendar.png";
-import LupaImg from "../imgs/search.png";
-import ChatImg from "../imgs/chat.png";
-import PedidosImg from "../imgs/request.png";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ChatIcon from '@mui/icons-material/ChatBubbleOutline';
+import SearchIcon from '@mui/icons-material/Search';
+import FeedbackIcon from '@mui/icons-material/RateReviewOutlined';
+import PedidosIcon from '@mui/icons-material/GradingOutlined';
+import CalendarioIcon from '@mui/icons-material/CalendarTodayOutlined';
 
 /* ================= Conteúdo =================== */
 
@@ -17,28 +18,28 @@ import DashboardProfessorConteudo from "../components/templates/DashboardProfess
 const opcoesNavbar = [
     {
         titulo: "Dashboard",
-        src: DashboardImg,
+        icon: DashboardIcon,
         active: true,
     }, 
     {
         titulo: "Agenda",
-        src: AgendaImg,
+        icon: CalendarioIcon,
         active: false,
         href: "/agenda"
     }, 
     {
         titulo: "Aulas",
-        src: LupaImg,
+        icon: SearchIcon,
         active: false
     }, 
     {
         titulo: "Chat",
-        src: ChatImg,
+        icon: ChatIcon,
         active: false
     },
     {
         titulo: "Pedidos",
-        src: PedidosImg,
+        icon: PedidosIcon,
         active: false
     }
 ];
