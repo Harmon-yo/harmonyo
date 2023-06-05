@@ -171,10 +171,10 @@ function EncontrarProfessorConteudo(props) {
                     teste.map(
                         (item) => (
                             <Card className="kpi-item">
-                                <Typography className="kpi-titulo" variant="subtitle1">
+                                <Typography className="kpi-titulo">
                                     {item.titulo}
                                 </Typography>
-                                <Typography className="kpi-valor" variant="h5">
+                                <Typography className="kpi-valor">
                                     {item.valor}
                                 </Typography>
                             </Card>
@@ -197,13 +197,13 @@ function EncontrarProfessorConteudo(props) {
                             />
                         </Box>
                         <Box className="chart-container">
-                            <Typography className="chart-subtitle" variant="subtitle1">
+                            <Typography className="chart-subtitle">
                                 Total de aulas solicitadas: 75
                             </Typography>
-                            <Typography className="chart-subtitle" variant="subtitle1">
+                            <Typography className="chart-subtitle">
                                 Total de aulas canceladas: 19
                             </Typography>
-                            <Typography className="chart-subtitle" variant="subtitle1">
+                            <Typography className="chart-subtitle">
                                 Total de aulas realizadas: 56
                             </Typography>
 

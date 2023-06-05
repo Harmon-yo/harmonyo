@@ -62,7 +62,7 @@ function EncontrarProfessorConteudo(props) {
 
     return (
 
-        <Box className="encontrar-professor-container">
+        <Box className="pagina-container">
             <FiltroDePesquisaCard buscarProfessor={buscarProfessores}/>
             <Box className="encontrar-professor-conteudo">
                 <BarraDePesquisa />
