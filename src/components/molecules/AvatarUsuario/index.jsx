@@ -1,5 +1,4 @@
 import React from "react";
-import { deepOrange } from '@mui/material/colors';
 import { Box, Avatar, MenuItem, Typography } from "@mui/material";
 import Popup from "../../atoms/Popup/index.jsx";
 import MeuPerfilIcon from "../../../imgs/user.png";
@@ -16,7 +15,7 @@ const opcoes = [
     {
         id: 2,
         src: EditarContaIcon,
-        titulo: "Editar Conta",
+        titulo: "Configurações",
     },
     {
         id: 3,
@@ -38,7 +37,7 @@ function AvatarUsuario(props) {
     return (
         <div>
             <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                sx={{ bgcolor: "var(--cor-padrao)" }}
+                sx={{ bgcolor: "#099250" }}
                 aria-controls={open ? 'avatar-usuario-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
@@ -48,7 +47,7 @@ function AvatarUsuario(props) {
                 anchorEl={anchorEl} open={open} handleClose={handleClose}>
                 <Box className="avatar-usuario-menu-user-info">
                     <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                        sx={{ bgcolor: "var(--cor-padrao)"}}>N</Avatar>
+                        sx={{ bgcolor: "#099250"}}>N</Avatar>
                     <Box className="avatar-usuario-menu-user-info-text">
                         <Typography className="avatar-usuario-menu-nome">Gustavo Pereira</Typography>
                         <Typography className="avatar-usuario-menu-email">gustavo_pereira@hotmail.com</Typography>

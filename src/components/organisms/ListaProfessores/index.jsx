@@ -1,8 +1,5 @@
 import React from "react";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { deepOrange } from '@mui/material/colors';
-import GradeRoundedIcon from '@mui/icons-material/GradeRounded';
-import { Box, Typography, Avatar } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Card from "../../atoms/Card";
 import ProfessorResumidoCard from "../../molecules/ProfessorResumidoCard";
 import "./style.css";
@@ -38,9 +35,9 @@ const lista = [
 
 function ListaProfessores(props) {
     return (
-        <>
+        <Box>
             <Box>
-                <Typography variant="h5" className="encontrar-professor-titulo">
+                <Typography className="encontrar-professor-titulo">
                     Professores
                 </Typography>
             </Box>
@@ -51,7 +48,7 @@ function ListaProfessores(props) {
                     ))
                 }
             </Card>
-        </>
+        </Box>
     );
 }
 

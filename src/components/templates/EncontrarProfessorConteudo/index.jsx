@@ -1,8 +1,6 @@
 import React, {useEffect} from "react";
 import {
-    Box,
-    Typography,
-    Avatar
+    Box
 } from "@mui/material";
 import FiltroDePesquisaCard from "../../atoms/FiltroDePesquisaCard/index.jsx";
 import BarraDePesquisa from "../../atoms/BarraDePesquisa/index.jsx";
@@ -70,7 +68,6 @@ function EncontrarProfessorConteudo(props) {
                 <BarraDePesquisa />
                 <ProfessoresPopulares/>
                 <ListaProfessores professores={professoresLista}/>
-                
             </Box>
         </Box>
     );

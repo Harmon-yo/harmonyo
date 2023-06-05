@@ -1,11 +1,7 @@
 import React from "react";
-import {
-    useState
-} from "react";
 import "./style.css"
 import {
-    Box,
-    Link
+    Box
 } from "@mui/material";
 import Logo from "../../atoms/Logo/index.jsx";
 import NavbarLateralCard from "../../molecules/NavbarLateralCard/index.jsx";
@@ -17,17 +13,17 @@ function NavbarLateral(props) {
     return (
         <Box className="navbar-lateral-background">
             <Box className="navbar-lateral"
-            onMouseEnter={() => setTimeout(() => setActive(true), 50)}
-            onMouseLeave={() => setTimeout(() => setActive(false), 150)}>
+                onMouseEnter={() => setTimeout(() => setActive(true), 50)}
+                onMouseLeave={() => setTimeout(() => setActive(false), 150)}>
                 <a href="/" className="navbar-lateral-logo-container">
-                    <Logo icon height="100%" className={`navbar-lateral-logo ${active ? "hidden" : ""}`} />
-                    <Logo width="200px" className={`navbar-lateral-logo ${!active ? "hidden" : ""}`}/>
+                    <Logo icon white height="40px" className={`navbar-lateral-logo ${active ? "hidden" : ""}`} />
+                    <Logo white width="200px" className={`navbar-lateral-logo ${!active ? "hidden" : ""}`} />
                 </a>
 
                 <Box className="navbar-lateral-cards">
                     {
                         props.opcoes.map((card) => (
-                            <NavbarLateralCard href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active}/>
+                            <NavbarLateralCard href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />
                         ))
                     }
                 </Box>

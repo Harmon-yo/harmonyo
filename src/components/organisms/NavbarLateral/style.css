@@ -5,7 +5,7 @@
 }
 
 .navbar-lateral {
-    background-color: #389d57;
+    background-color: #099250;
     width: 5vw;
     height: 100%;
     position: absolute;
@@ -13,11 +13,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     z-index: 999;
-    padding: calc(var(--espaco-padrao) * 4)
+    padding: calc(var(--espaco-padrao) * 4 )
             calc(var(--espaco-padrao) * 1)
-            0
+            calc(var(--espaco-padrao) * 4)
             calc(var(--espaco-padrao) * 1);
     overflow: hidden;
 }
@@ -28,15 +27,18 @@
 
 .navbar-lateral-logo-container {
     width: 100%;
-    height: 5%;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: calc(var(--espaco-padrao) * 3);
 }
+
 
 .navbar-lateral-cards {
     width: 100%;
-    height: 90%;
+    height: fit-content;
+    padding-top: calc(var(--espaco-padrao) * 1);
 }
 
 .hidden {

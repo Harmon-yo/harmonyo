@@ -27,14 +27,14 @@
 
         --font-padrao: "Nunito";
 
-        --fonte-grande: 3.815rem;
-        --fonte-h1: 3.052rem;
-        --fonte-h2: 2.441rem;
-        --fonte-h3: 1.953rem;
-        --fonte-h4: 1.563rem;
-        --fonte-h5: 1.25rem;
-        --fonte-h6: 1rem;
-        --fonte-pequena: 0.8rem;
+        --fonte-grande: 3.815rem; /* 61 px */
+        --fonte-h1: 3.052rem; /* 48 px */
+        --fonte-h2: 2.441rem; /* 39 px */
+        --fonte-h3: 1.953rem; /* 31px */
+        --fonte-h4: 1.563rem; /* 25px */
+        --fonte-h5: 1.25rem; /* 20px */
+        --fonte-h6: 1rem; /* 16px */
+        --fonte-pequena: 0.8rem; /* 12px */
 
         /* || Espaço */
 

@@ -13,6 +13,11 @@ function FiltroDePesquisaCard(props) {
     const [distancia, setDistancia] = React.useState([distanciaMinima, distanciaMaxima]);
     const [avaliacao, setAvaliacao] = React.useState(5);
     const [buscandoProfessor, setBuscandoProfessor] = React.useState(false);
+    const [disponibilidade, setDisponibilidade] = React.useState({
+        manha: false,
+        tarde: false,
+        noite: false
+    });
 
     function handleClickFiltro() {
         setBuscandoProfessor(true);
@@ -59,15 +64,20 @@ function FiltroDePesquisaCard(props) {
         }
     };
 
+
+    const handleChangeDisponibilidade = (event) => {
+        setDisponibilidade({ ...disponibilidade, [event.target.name]: event.target.checked });
+    };
+
     return (
         <Card className="filtro-card">
             <Box className="filtro-card-titulo">
-                <Typography className="encontrar-professor-titulo" variant="h5">
+                <Typography className="encontrar-professor-titulo" sx={{marginBottom: "0 !important"}}>
                     Filtro
                 </Typography>
             </Box>
             <Box className="filtro-slider-container">
-                <Typography className="filtro-titulo" variant="subtitle1">
+                <Typography className="filtro-titulo">
                     Preço
                 </Typography>
                 <Box className="filtro-slider-container">
@@ -80,7 +90,7 @@ function FiltroDePesquisaCard(props) {
                         disableSwap
                         min={precoMinimo}
                         max={precoMaximo}
-                        sx={{ color: "black" }}
+                        sx={{ color: "black", marginBottom: "4px" }}
                     />
                     <Box className="filtro-slider-min-max-container">
                         <Typography className="filtro-slider-minimo" variant="subtitle2">
@@ -93,30 +103,30 @@ function FiltroDePesquisaCard(props) {
                 </Box>
             </Box>
             <Box className="filtro-disponibilidade-container">
-                <Typography className="filtro-titulo" variant="subtitle1">
+                <Typography className="filtro-titulo">
                     Disponibilidade
                 </Typography>
                 <Box className="filtro-disponibilidade-check-container">
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
-                        <FormControlLabel control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
-                        <FormControlLabel control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
+                        <FormControlLabel checked={disponibilidade.manha} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
+                        <FormControlLabel checked={disponibilidade.tarde} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
+                        <FormControlLabel checked={disponibilidade.noite} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
                     </FormGroup>
                 </Box>
             </Box>
             <Box className="filtro-avaliacao-container">
-                <Typography className="filtro-titulo" variant="subtitle1">
+                <Typography className="filtro-titulo">
                     Avaliação
                 </Typography>
                 <Box className="filtro-avaliacao-rating-container">
-                    <Typography className="filtro-avaliacao-texto" variant="subtitle2">{avaliacao}</Typography>
+                    <Typography className="filtro-avaliacao-texto">{avaliacao}</Typography>
                     <Rating name="half-rating" value={avaliacao} defaultValue={5} precision={0.5} onChange={(event, novoValor) => {
                         setAvaliacao(novoValor);
                     }} />
                 </Box>
             </Box>
             <Box className="filtro-slider-container">
-                <Typography className="filtro-titulo" variant="subtitle1">
+                <Typography className="filtro-titulo">
                     Distância
                 </Typography>
                 <Box className="filtro-slider-container">
@@ -129,7 +139,7 @@ function FiltroDePesquisaCard(props) {
                         disableSwap
                         min={distanciaMinima}
                         max={distanciaMaxima}
-                        sx={{ color: "black" }}
+                        sx={{ color: "black", marginBottom: "4px" }}
                     />
                     <Box className="filtro-slider-min-max-container">
                         <Typography className="filtro-slider-minimo" variant="subtitle2">

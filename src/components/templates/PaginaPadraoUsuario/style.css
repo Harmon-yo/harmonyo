@@ -3,8 +3,12 @@
 }
 
 .pagina-padrao-container {
-    /* background-color: orange; */
+    width: 95vw;
+    height: 100%;
+    padding: calc(var(--espaco-padrao) * 4);
+}
+
+.pagina-conteudo {
     width: 100%;
-    height: fit-content;
-    padding: 1.5%;
+    height: 100vh;
 }

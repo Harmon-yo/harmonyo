@@ -1,34 +1,20 @@
-:root {
-    --espaco-elementos-dash: calc(var(--espaco-padrao) * 2);
-}
-
 .encontrar-professor-container {
     width: 100%;
     display: grid;
     grid-template-columns: 20% auto;
-    column-gap: var(--espaco-elementos-dash);
+    column-gap: calc(var(--espaco-padrao) * 2);
 }
 
 .encontrar-professor-conteudo {
     width: 100%;
     display: grid !important;
     grid-template-rows: auto;
-    row-gap: var(--espaco-elementos-dash);
+    row-gap: calc(var(--espaco-padrao) * 3);
 }
-
-/* ================================================================================= */
-
-
-/* ================================================================================= */
-
-
-
-/* ================================================================================= */
-
 
 .encontrar-professor-titulo {
     font-weight: bold !important;
     color: var(--dark-font);
+    margin-bottom: calc(var(--espaco-padrao) * 2) !important;
+    font-size: var(--fonte-h4) !important;
 }
-
-/* ================================================================================= */

@@ -1,14 +1,12 @@
 .container-usuario {
     background-color: transparent;
     width: 100%;
-    height: 8vh;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 5px 1.5% 5px 0 
+    margin-bottom: calc(var(--espaco-padrao) * 4);
 }
 
 .container-usuario-notificacao {
-    font-size: 2.0rem !important;
-    margin-right: calc(var(--espaco-padrao) * 4);
+    margin-right: calc(var(--espaco-padrao) * 2);
 }

@@ -1,7 +1,5 @@
 import React from "react";
-import { deepOrange } from '@mui/material/colors';
 import { Box, Typography, Avatar, Rating } from "@mui/material";
-import GradeRoundedIcon from '@mui/icons-material/GradeRounded';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Card from "../../atoms/Card";
 import "./style.css";
@@ -12,7 +10,7 @@ function ProfessorResumidoCard(props) {
         <Card className="professor-card">
             <Box className="professor-card-primeira-parte">
                 <Avatar id="avatar-usuario-botao"
-                    sx={{ bgcolor: "var(--cor-padrao)" }}>{props.nome[0]}</Avatar>
+                    sx={{ bgcolor: "#099250" }}>{props.nome[0]}</Avatar>
             </Box>
             <Box className="professor-card-segunda-parte">
                 <Typography variant="h5" className="professor-nome-texto">

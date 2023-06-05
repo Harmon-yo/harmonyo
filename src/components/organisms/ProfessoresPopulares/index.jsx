@@ -23,7 +23,7 @@ const professores = [
     instrumentos: [
       "Violão",
       "Piano"
-    ],
+    ], 
     localizacao: "Capão Redondo",
     status: "Online a 6 horas",
     avaliacao: 4.2
@@ -59,11 +59,10 @@ function ProfessoresPopulares(props) {
     <Box className="professores-populares-container">
 
       <Box className="professor-populares-container-titulo">
-        <Typography className="encontrar-professor-titulo" variant="h5">
+        <Typography className="encontrar-professor-titulo">
           Popular
         </Typography>
         <Pagination count={10} size="small"/>
-
       </Box>
       <Card className="professores-populares-card">
         {

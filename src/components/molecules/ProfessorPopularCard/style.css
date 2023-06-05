@@ -10,12 +10,11 @@
 }
 
 .card-info-usuario {
-    display: flex;
+    width: fit-content;
+    display: grid;
     align-items: center;
-}
-
-.avatar-usuario-img {
-    margin-right: calc(var(--espaco-padrao) * 1);
+    grid-template-columns: auto auto;
+    column-gap: calc(var(--espaco-padrao) * 1);
 }
 
 .card-info-nome {
@@ -24,11 +23,12 @@
 }
 
 .card-info-avaliacao {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
+    width: fit-content;
     height: auto;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto auto auto;
+    column-gap: calc(var(--espaco-padrao) * 1);
 }
 
 .card-avaliacao-icon, .card-avaliacao-valor {
@@ -36,21 +36,18 @@
 }
 
 .card-avaliacao-valor {
-    margin-left: calc(var(--espaco-padrao) / 2) !important;
     font-weight: 700 !important;
 }
 
-.card-info-avaliacao .card-info-separacao {
+.card-info-separacao {
     color: #61738b;
-    font-size: 0.5rem;
-    margin-right: calc(var(--espaco-padrao) * 1);
-    margin-left: calc(var(--espaco-padrao) * 1);
+    font-size: 0.5rem !important;
 }
 
 .card-cidade-container {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 55%
+    width: 100%
 }
 
 .card-cidade {
@@ -59,15 +56,17 @@
 }
 
 .card-info-status {
-    width: 100%;
+    width: fit-content;
     height: auto;
-    display: flex;
-    flex-direction: row;
+    display: grid;
     align-items: center;
+    grid-template-columns: auto auto;
+    column-gap: calc(var(--espaco-padrao) * 1);
+    padding-left: calc(var(--espaco-padrao) * 1);
 }
 
 .card-info-status-cor {
-    font-size: 0.5rem !important;
+    font-size: 0.8rem !important;
     margin-right: calc(var(--espaco-padrao) * 1);
 }
 
@@ -83,4 +82,10 @@
     color: var(--cor-padrao);
     font-size: 0.6rem;
     margin-right: calc(var(--espaco-padrao) * 1);
+}
+
+.card-nome-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%
 }

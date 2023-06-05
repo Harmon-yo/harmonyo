@@ -1,7 +1,7 @@
 import React from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Typography, FormControl, TextField, Select, MenuItem, InputAdornment } from "@mui/material";
+import { Box, Typography, FormControl, TextField, Select, MenuItem, InputAdornment,Tooltip } from "@mui/material";
 import Card from "../Card";
 import "./style.css";
 
@@ -28,7 +28,7 @@ function BarraDePesquisa(props) {
                         id="select-cidade"
                         value={cidade}
                         renderValue={(value) => {
-                            return <Typography className="professores-busca-lugar-nome">{value.length > 13 ? value.substring(0, 13) + "..." : value}</Typography>
+                            return <Tooltip title={value} placement="right"><Typography className="professores-busca-lugar-nome">{value.length > 13 ? value.substring(0, 13) + "..." : value}</Typography></Tooltip>
                         }}
                         label=""
                         onChange={handleChange}

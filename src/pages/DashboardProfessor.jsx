@@ -9,6 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FeedbackIcon from '@mui/icons-material/RateReviewOutlined';
 import PedidosIcon from '@mui/icons-material/GradingOutlined';
 import CalendarioIcon from '@mui/icons-material/CalendarTodayOutlined';
+import ClassIcon from '@mui/icons-material/Class';
 
 /* ================= Conteúdo =================== */
 
@@ -29,7 +30,7 @@ const opcoesNavbar = [
     }, 
     {
         titulo: "Aulas",
-        icon: SearchIcon,
+        icon: ClassIcon,
         active: false
     }, 
     {

@@ -15,18 +15,13 @@ function PaginaPadraoUsuario(props) {
             flexDirection: 'row',
             justifyContent: 'flex-start',
         }}>
-            <NavbarLateral opcoes={props.opcoesNavbar}/>
+            <NavbarLateral opcoes={props.opcoesNavbar} />
             {/* <h1>Olá {sessionStorage.CATEGORIA}(a) {sessionStorage.NOME} - Encontrar Professores</h1> */}
-            <Box sx={{
-                width: '95vw',
-                height: '100%',
-            }}>
-                <ContainerUsuario/>
-                <Box className="pagina-padrao-container">
-                    {
-                        props.children
-                    }
-                </Box>
+            <Box className="pagina-padrao-container">
+                <ContainerUsuario />
+                {
+                    props.children
+                }
             </Box>
         </Box>
     );

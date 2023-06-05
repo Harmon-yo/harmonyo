@@ -2,6 +2,8 @@ import React from "react";
 import Box from "@mui/material/Box";
 import logoNameImg from "../../../imgs/Logo-Harmonyo.png";
 import logoImg from "../../../imgs/Icone-Harmonyo.png";
+import LogoNameImgWhite from "../../../imgs/Logo-Harmonyo-branco.png";
+import LogoImgWhite from "../../../imgs/Icone-Harmonyo-branco.png";
 
 
 function Logo(props) {
@@ -9,7 +11,7 @@ function Logo(props) {
         <Box 
             className={props.className}
             component="img"
-            src={props.icon ? logoImg : logoNameImg} 
+            src={props.icon ? (props.white ? LogoImgWhite : logoImg) : (props.white ? LogoNameImgWhite : logoNameImg)} 
             alt={props.alt}
             href={props.href}
             sx={{
