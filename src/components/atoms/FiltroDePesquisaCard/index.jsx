@@ -29,7 +29,11 @@ function FiltroDePesquisaCard(props) {
             //disponibilidade: ["Manhã", "Tarde", "Noite"]
         }
 
-        props.buscarProfessor(parametros);
+        props.buscarProfessor(parametros)
+        setTimeout(() => {
+            
+        }, 1000);
+        setBuscandoProfessor(false);
     }
 
     function textoPreco(valor) {

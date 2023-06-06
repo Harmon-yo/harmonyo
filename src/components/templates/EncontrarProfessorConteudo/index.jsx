@@ -15,14 +15,20 @@ import "./style.css"
 function EncontrarProfessorConteudo(props) {
     const [professoresPopulares, setProfessoresPopulares] = React.useState([]);
     const [professoresLista, setProfessores] = React.useState([]);
+    const [professoresFiltrados, setProfessoresFiltrados] = React.useState(null);
+    const config = {
+        headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+      };
 
+      
+        
     useEffect(() => {
-        api.get(`/professores/busca`).then((response) => {
+        api.get(`/professores/busca`, config).then((response) => {
             setProfessores(response.data);
         }).catch((error) => {
           console.log(error);
         });
-      }, [])
+    }, []);
 
     function buscarProfessores(filtroOpcao) {
         let parametros = "";
@@ -47,7 +53,13 @@ function EncontrarProfessorConteudo(props) {
             }
         }
 
-        console.log("Parametros: " + parametros);
+        api.get(`/professores/busca?params=${parametros}`, config).then((response) => {
+            setProfessoresFiltrados( response.data   );
+            console.log(parametros)
+        }).catch((error) => {
+            console.log(error);
+            });
+
     }
     
     function definirTipoPesquisa(tipo) {
@@ -67,7 +79,7 @@ function EncontrarProfessorConteudo(props) {
             <Box className="encontrar-professor-conteudo">
                 <BarraDePesquisa />
                 <ProfessoresPopulares/>
-                <ListaProfessores professores={professoresLista}/>
+                <ListaProfessores professores={professoresFiltrados ? professoresFiltrados : professoresLista}/>
             </Box>
         </Box>
     );

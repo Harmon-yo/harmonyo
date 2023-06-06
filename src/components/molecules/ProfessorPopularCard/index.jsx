@@ -5,6 +5,32 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import "./style.css";
 
 function ProfessorPopularCard(props) {
+  var status = props.status;
+  //transformar status de localdatetime para horas
+  var hora = status.substring(11, 13);
+  var minuto = status.substring(14, 16);
+  var horaAtual = new Date().getHours();
+  var minutoAtual = new Date().getMinutes();
+  var horaOnline = horaAtual - hora;
+  var minutoOnline = minutoAtual - minuto;
+  if (horaOnline < 0) {
+    horaOnline = horaOnline + 24;
+  }
+  if (minutoOnline < 0) {
+    minutoOnline = minutoOnline + 60;
+    horaOnline = horaOnline - 1;
+  }
+  if (horaOnline === 0) {
+    if(minutoOnline === 0){
+    status = "Online agora";
+    }else{
+      status = "Online a " + minutoOnline + " minutos";
+    }
+  } else {
+    status = "Online a " + horaOnline + " horas";
+  }
+
+
   return (
     <Box className="professor-popular-card">
 
@@ -29,8 +55,8 @@ function ProfessorPopularCard(props) {
 
       <Box className="card-info-status">
 
-        <FiberManualRecordIcon className={`card-info-status-cor ${props.status === "Offline" ? "offline" : "online"}`} />
-        <Typography className="card-info-status-hora" variant="subtitle2">{props.status}</Typography>
+        <FiberManualRecordIcon className={`card-info-status-cor ${status === "Online agora" ? "online" : "offline"}`} />
+        <Typography className="card-info-status-hora" variant="subtitle2">{status}</Typography>
       </Box>
     </Box>
 

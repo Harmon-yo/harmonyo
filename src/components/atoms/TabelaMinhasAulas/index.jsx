@@ -29,7 +29,7 @@ function TabelaMinhasAulas() {
 
   function getDadosTabela() {
     api
-      .get("/professores/dashboard/minhas-aulas/5", config)
+      .get("/professores/dashboard/minhas-aulas/" + sessionStorage.ID, config)
       .then((response) => {
         setCarregando(false);
        
@@ -56,9 +56,9 @@ function TabelaMinhasAulas() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dados.map((item) => (
+                {dados? dados.map((item) => (
                   <LinhaTabelaMinhasAulas item={item} />
-                ))}
+                )): <></>}
               </TableBody>
             </Table>
           </TableContainer>
