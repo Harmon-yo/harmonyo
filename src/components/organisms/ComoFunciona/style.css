@@ -1,6 +1,16 @@
-.como-funciona-box {
-    background-color: var(--cor-padrao);
+.section-como-funciona{
+    position: relative;
     height: auto;
+}
+
+.como-funciona-box {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 450px;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-padrao);
 }
 
 .como-funciona-titulo {
@@ -13,8 +23,64 @@
     font-weight: bold !important;
 }
 
-.como-funciona-img {
+.como-funciona-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
-    height: 400px !important;
+    height: 70%;
+}
+
+.box-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 75%;
+}
+
+.wave-como-funciona-img{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.card-como-funciona {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 22%;
+    height: 100%;
     background-color: var(--light-font);
+}
+.icon-usuario{
+    height: 35px;
+    width: 40px;
+}
+
+.card-titulo {
+    width: 100%;
+    font-weight: bold !important;
+    color: var(--dark-font);
+    font-size: var(--fonte-h5) !important;
+}
+
+.card-texto {
+    width: 100%;
+    font-weight: 500 !important;
+    color: var(--dark-font);
+    font-size: var(--fonte-small) !important;
+}
+
+.tabs-como-funciona-label {
+    font-weight: bold !important;
+    color: var(--light-font) !important;
+    font-size: var(--fonte-h5) !important;
+
+    padding-left: 0 !important;
+}
+
+.tabs-como-funciona{
+    display: flex !important;
+    text-align: left !important;
 }
