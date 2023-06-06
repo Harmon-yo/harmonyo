@@ -26,6 +26,9 @@ import violaoIcon from "../../../imgs/violao.png";
 import Card from "../../atoms/Card/index.jsx";
 import { Bar, Doughnut } from "react-chartjs-2";
 import "./style.css"
+import KpiDashboard from "../../molecules/KpiDashboard";
+import TabelaMinhasAulas from "../../atoms/TabelaMinhasAulas";
+import HistoricoAulasGraficoDonut from "../../atoms/HistoricoAulasGraficoDonut";
 
 ChartJS.register(Legend, Title, CategoryScale, LinearScale, BarElement, Tooltip, ArcElement);
 
@@ -167,106 +170,15 @@ function EncontrarProfessorConteudo(props) {
                 <Tab label="Visão Geral" {...getTabProps(1)} />
             </Tabs>
             <Box className="kpi-container">
-                {
-                    teste.map(
-                        (item) => (
-                            <Card className="kpi-item">
-                                <Typography className="kpi-titulo">
-                                    {item.titulo}
-                                </Typography>
-                                <Typography className="kpi-valor">
-                                    {item.valor}
-                                </Typography>
-                            </Card>
-                        )
-                    )
-                }
+                  <KpiDashboard titulo="Rendimento total"/>
+                <KpiDashboard titulo="Quantidade de alunos"/>
+                <KpiDashboard titulo="Quantidade de aulas"/>
+                <KpiDashboard titulo="Tempo de resposta"/>
+
             </Box>
             <Box className="charts-container">
-                <Card className="chart-card" >
-                    <Typography className="chart-title" variant="h5">
-                        Histórico de aulas
-                    </Typography>
-                    <Box className="chart-info-container">
-                        <Box className="chart-container">
-                            <Doughnut
-                                options={chartOptionsDoughnut}
-                                data={chartDataDoughnut}
-                                height="200px"
-                                width="200px"
-                            />
-                        </Box>
-                        <Box className="chart-container">
-                            <Typography className="chart-subtitle">
-                                Total de aulas solicitadas: 75
-                            </Typography>
-                            <Typography className="chart-subtitle">
-                                Total de aulas canceladas: 19
-                            </Typography>
-                            <Typography className="chart-subtitle">
-                                Total de aulas realizadas: 56
-                            </Typography>
-
-
-                        </Box>
-                    </Box>
-                </Card>
-                <Card className="instrumento-card">
-                <Typography className="chart-title" variant="h5">
-                    Minhas aulas
-                </Typography>
-                <Box className="chart-instrumentos-container">
-                    <TableContainer sx={{ width: '99%', maxHeight: " !important" }}>
-                        <Table aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center">Instrumento</TableCell>
-                                    <TableCell align="center">Quantidade Aulas</TableCell>
-                                    <TableCell align="center">Rendimento total</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody >
-                                {
-                                    instrumentosEnsinados.map(
-                                        (item, index) => (
-                                            <TableRow
-                                                key={index}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row" align="center">
-                                                    <TooltipMaterial title={item.nome} placement="right">
-                                                        <img src={item.img} alt="" className="instrumentos-img" />
-                                                    </TooltipMaterial>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Typography variant="subtitle1">
-                                                        {item.quantidade}
-                                                    </Typography>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Typography variant="subtitle1">
-                                                        R$ {item.valorTotal}
-                                                    </Typography>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    {/* <Box className="teste">
-                            <Typography>
-                                Valor:
-                            </Typography>
-                            <Typography>
-                                90
-                            </Typography>
-                            <Typography>
-                                R$ 900,00
-                            </Typography>
-                        </Box> */}
-                </Box>
-            </Card>
+                <HistoricoAulasGraficoDonut/>
+               <TabelaMinhasAulas/>
             </Box>
         </Box>
     );
