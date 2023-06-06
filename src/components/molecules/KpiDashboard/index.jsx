@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Card from "../../atoms/Card/index.jsx";
-import { Typography } from "@mui/material";
+import { CircularProgress, LinearProgress, Typography } from "@mui/material";
 import api from "../../../api";
 import { useState } from "react";
 import "./style.css";
@@ -88,7 +88,7 @@ function KpiDashboard(props) {
   if (carregando) {
     return (
       <Card className="kpi-item">
-        <Typography className="kpi-titulo">carregando</Typography>
+        <CircularProgress style={{color: "#16B364"}}/>
       </Card>
     );
   } else {

@@ -32,25 +32,6 @@ import HistoricoAulasGraficoDonut from "../../atoms/HistoricoAulasGraficoDonut";
 
 ChartJS.register(Legend, Title, CategoryScale, LinearScale, BarElement, Tooltip, ArcElement);
 
-const teste = [
-    {
-        titulo: "Rendimento total",
-        valor: "R$ 600,0"
-    },
-    {
-        titulo: "Quantidade de alunos",
-        valor: "10"
-    },
-    {
-        titulo: "Quantidade de aulas",
-        valor: "5"
-    },
-    {
-        titulo: "Tempo de resposta",
-        valor: "1 hora"
-    },
-]
-
 const chartDataBarraGeral = {
     labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
     datasets: [
@@ -170,7 +151,7 @@ function EncontrarProfessorConteudo(props) {
                 <Tab label="Visão Geral" {...getTabProps(1)} />
             </Tabs>
             <Box className="kpi-container">
-                  <KpiDashboard titulo="Rendimento total"/>
+                <KpiDashboard titulo="Rendimento total"/>
                 <KpiDashboard titulo="Quantidade de alunos"/>
                 <KpiDashboard titulo="Quantidade de aulas"/>
                 <KpiDashboard titulo="Tempo de resposta"/>

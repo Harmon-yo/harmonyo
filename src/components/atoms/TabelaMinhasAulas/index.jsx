@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -37,9 +38,7 @@ function TabelaMinhasAulas() {
       });
   }
 
-  if (carregando) {
-    return <div>Carregando...</div>;
-  } else {
+
     return (
       <Card className="instrumento-card">
         <Typography className="chart-title" variant="h5">
@@ -58,7 +57,10 @@ function TabelaMinhasAulas() {
               <TableBody>
                 {dados? dados.map((item) => (
                   <LinhaTabelaMinhasAulas item={item} />
-                )): <></>}
+                )): <>
+        <CircularProgress style={{color: "#16B364"}}/>
+                
+                </>}
               </TableBody>
             </Table>
           </TableContainer>
@@ -76,7 +78,7 @@ function TabelaMinhasAulas() {
         </Box>
       </Card>
     );
-  }
+  
 }
 
 export default TabelaMinhasAulas;

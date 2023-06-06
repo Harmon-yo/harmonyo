@@ -1,7 +1,10 @@
 #root {
     background-color: #F5F4F7 !important;
 }
-
+html, body, #root{
+    width: 100%!important;
+    height: 100%!important;
+}
 .pagina-padrao-container {
     width: 95vw;
     height: 100%;
