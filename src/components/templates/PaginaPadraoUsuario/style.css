@@ -1,10 +1,19 @@
 #root {
     background-color: #F5F4F7 !important;
 }
-html, body, #root{
-    width: 100%!important;
-    height: 100%!important;
+
+.mui-root {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
+
+html,
+body, .mui-root, #root {
+    width: 100% !important;
+    min-height: 100vh;
+}
+
 .pagina-padrao-container {
     width: 95vw;
     height: 100%;

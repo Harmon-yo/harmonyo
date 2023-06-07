@@ -29,10 +29,9 @@ function FiltroDePesquisaCard(props) {
             //disponibilidade: ["Manhã", "Tarde", "Noite"]
         }
 
-        mapearFiltro(parametros)
-        setTimeout(() => {
-            
-        }, 1000);
+        mapearFiltro(parametros).then(
+            setBuscandoProfessor(false)
+        );
     }
 
     function mapearFiltro(filtroOpcao) {
@@ -43,23 +42,28 @@ function FiltroDePesquisaCard(props) {
 
             let chave = Object.keys(filtroOpcao)[i];
             let operacao = definirTipoPesquisa(Object.keys(filtroOpcao)[i]);
-
-            if (Array.isArray(valor)) {
-                parametros += `${chave}${operacao}${valor[0]}`;
-                for (let j = 1; j < valor.length; j++) {
-                    parametros += `&${valor[j]}`;
+            if (chave !== "disponibilidade") {
+                if (Array.isArray(valor)) {
+                    parametros += `${chave}${operacao}${valor[0]}`;
+                    for (let j = 1; j < valor.length; j++) {
+                        parametros += `+${valor[j]}`;
+                    }
+                } else {
+                    parametros += `${chave}${operacao}${valor}`;
                 }
-            } else {
-                parametros += `${chave}${operacao}${valor}`;
+
+                if (i < Object.keys(filtroOpcao).length - 1) {
+                    parametros += ",";
+                }
             }
 
-            if (i < Object.keys(filtroOpcao).length - 1) {
-                parametros += ",";
-            }
+
         }
 
         console.log("Parametros: " + parametros);
-        props.buscarProfessores(parametros);
+        return new Promise((resolve) => {
+            props.buscarProfessores(parametros).then(resolve());
+        });
     }
 
     function definirTipoPesquisa(tipo) {
@@ -68,7 +72,7 @@ function FiltroDePesquisaCard(props) {
             case "distancia": return "><";
             case "avaliacao": return ">:";
             case "instrumentos": return "=";
-            case "disponibilidade": return "=";
+            /* case "disponibilidade": return "="; */
         }
     }
 
@@ -112,7 +116,7 @@ function FiltroDePesquisaCard(props) {
     return (
         <Card className="filtro-card">
             <Box className="filtro-card-titulo">
-                <Typography className="encontrar-professor-titulo" sx={{marginBottom: "0 !important"}}>
+                <Typography className="encontrar-professor-titulo" sx={{ marginBottom: "0 !important" }}>
                     Filtro
                 </Typography>
             </Box>

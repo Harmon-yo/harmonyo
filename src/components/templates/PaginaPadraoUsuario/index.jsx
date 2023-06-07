@@ -8,13 +8,7 @@ import "./style.css"
 
 function PaginaPadraoUsuario(props) {
     return (
-        <Box sx={{
-            width: '100vw',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-        }}>
+        <Box className="mui-root">
             <NavbarLateral opcoes={props.opcoesNavbar} />
             {/* <h1>Olá {sessionStorage.CATEGORIA}(a) {sessionStorage.NOME} - Encontrar Professores</h1> */}
             <Box className="pagina-padrao-container">

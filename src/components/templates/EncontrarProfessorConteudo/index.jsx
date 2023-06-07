@@ -27,9 +27,10 @@ function EncontrarProfessorConteudo(props) {
     }, []);
 
     function obterProfessoresResumido(parametros) {
-        api.get(`/professores/busca?params=${parametros ? parametros : ""}`, config).then((response) => {
+        return api.get(`/professores/busca?params=${parametros ? parametros : ""}`, config).then((response) => {
             setProfessores(response.data);
             console.log(response)
+            
         }).catch((error) => {
             console.log(error);
         });
