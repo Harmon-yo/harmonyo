@@ -2,7 +2,7 @@ import React from "react";
 import api from "../../../api";
 import { useEffect } from "react";
 import Card from "../../atoms/Card/index.jsx";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { Doughnut } from "react-chartjs-2";
 import { useState } from "react";
 
@@ -59,7 +59,22 @@ function HistoricoAulasGraficoDonut() {
     },
   };
 
-  if (carregando) return <div>Carregando...</div>;
+  if (carregando){
+
+  return(
+    <Card className="chart-card">
+        <Typography className="chart-title" variant="h5">
+          Histórico de aulas
+        </Typography>
+        <Box className="chart-info-container">
+          <Box className="chart-container">
+    <CircularProgress style={{color: "#16B364"}}/>
+    </Box>
+    </Box>
+    </Card>
+
+    );
+  }
   else {
     return (
       <Card className="chart-card">
