@@ -55,6 +55,7 @@
 .professor-informacoes-adicionais-texto {
     font-weight: 500 !important;
     color: var(--dark-font);
+    white-space: nowrap;
 }
 
 .professor-preco-texto {

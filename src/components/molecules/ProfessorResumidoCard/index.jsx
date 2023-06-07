@@ -37,9 +37,9 @@ function ProfessorResumidoCard(props) {
                         {`R$ ${props.precoMinimo}~R$${props.precoMaximo}`}
                     </Typography>
                 </Box>
-                <Typography className="professor-descricao-texto">
-                    {props.descricao}
-                </Typography>
+                    {/* <Typography className="professor-descricao-texto">
+                        {props.descricao}
+                    </Typography> */}
                 <Box className="professor-avaliacao-localizacao-container">
                     <Rating name="half-rating-read" defaultValue={props.avaliacao} precision={0.5} readOnly />
                     <Typography variant="subtitle1" className="professores-avaliacao-texto">

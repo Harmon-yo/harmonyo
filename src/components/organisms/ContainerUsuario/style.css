@@ -4,7 +4,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-bottom: calc(var(--espaco-padrao) * 4);
+    margin-bottom: calc(var(--espaco-padrao) * 2);
 }
 
 .container-usuario-notificacao {

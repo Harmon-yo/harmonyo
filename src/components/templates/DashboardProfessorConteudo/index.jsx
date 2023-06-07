@@ -146,7 +146,7 @@ function EncontrarProfessorConteudo(props) {
 
     return (
         <Box className="pagina-container">
-            <Tabs value={value} onChange={handleChange} aria-label="tabs" className="dashboard-professor-tabs" indicatorColor="secundary">
+            <Tabs value={value} onChange={handleChange} aria-label="tabs" className="dashboard-professor-tabs">
                 <Tab label="Visão Mensal" {...getTabProps(0)} />
                 <Tab label="Visão Geral" {...getTabProps(1)} />
             </Tabs>

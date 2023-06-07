@@ -29,11 +29,47 @@ function FiltroDePesquisaCard(props) {
             //disponibilidade: ["Manhã", "Tarde", "Noite"]
         }
 
-        props.buscarProfessor(parametros)
+        mapearFiltro(parametros)
         setTimeout(() => {
             
         }, 1000);
-        setBuscandoProfessor(false);
+    }
+
+    function mapearFiltro(filtroOpcao) {
+        let parametros = "";
+
+        for (let i = 0; i < Object.keys(filtroOpcao).length; i++) {
+            let valor = filtroOpcao[Object.keys(filtroOpcao)[i]];
+
+            let chave = Object.keys(filtroOpcao)[i];
+            let operacao = definirTipoPesquisa(Object.keys(filtroOpcao)[i]);
+
+            if (Array.isArray(valor)) {
+                parametros += `${chave}${operacao}${valor[0]}`;
+                for (let j = 1; j < valor.length; j++) {
+                    parametros += `&${valor[j]}`;
+                }
+            } else {
+                parametros += `${chave}${operacao}${valor}`;
+            }
+
+            if (i < Object.keys(filtroOpcao).length - 1) {
+                parametros += ",";
+            }
+        }
+
+        console.log("Parametros: " + parametros);
+        props.buscarProfessores(parametros);
+    }
+
+    function definirTipoPesquisa(tipo) {
+        switch (tipo) {
+            case "preco": return "><";
+            case "distancia": return "><";
+            case "avaliacao": return ">:";
+            case "instrumentos": return "=";
+            case "disponibilidade": return "=";
+        }
     }
 
     function textoPreco(valor) {
@@ -112,9 +148,9 @@ function FiltroDePesquisaCard(props) {
                 </Typography>
                 <Box className="filtro-disponibilidade-check-container">
                     <FormGroup>
-                        <FormControlLabel checked={disponibilidade.manha} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
-                        <FormControlLabel checked={disponibilidade.tarde} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
-                        <FormControlLabel checked={disponibilidade.noite} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
+                        <FormControlLabel name="manha" checked={disponibilidade.manha} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
+                        <FormControlLabel name="tarde" checked={disponibilidade.tarde} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
+                        <FormControlLabel name="noite" checked={disponibilidade.noite} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
                     </FormGroup>
                 </Box>
             </Box>
