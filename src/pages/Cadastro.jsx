@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography } from "@mui/material";
+import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography, Tooltip as TooltipMaterial } from "@mui/material";
 import api from "../api.js";
 import axios from "axios";
 import InputSenha from "../components/atoms/InputSenha/index.jsx";
@@ -9,9 +9,12 @@ import InputMask from 'react-input-mask';
 import { useStyles } from "./styles/Cadastro.styles";
 import styles from "./css/Cadastro.module.css";
 import Logo from "../components/atoms/Logo";
+import './css/cadastro.css'
 
 
 function Cadastro() {
+
+    const txtPorquePedimosCep = 'Pedimos seu CEP para que após o cadastro sejam encontrados os professores mais próximos a você !'
 
     const[categoria, setCategoria] = useState(new URLSearchParams(window.location.search).get('categoria'));
 
@@ -321,12 +324,17 @@ function Cadastro() {
                                     <TextField id="ipt-cpf" label="CPF" variant="standard" error={errorCpf} helperText={helperTextCpf} />
                                 )}
                             </InputMask>
-
-                            <InputMask mask='99999-999' value={cep} onChange={(e) => setCep(e.target.value)}>
-                                {() => (
-                                    <TextField id="ipt-cep" label="CEP" variant="standard" error={errorCep} helperText={helperTextCep} />
-                                )}
-                            </InputMask>
+                            
+                            <Box sx={{width:'100%'}}>
+                                <InputMask mask='99999-999' value={cep} onChange={(e) => setCep(e.target.value)}>
+                                    {() => (
+                                        <TextField id="ipt-cep" label="CEP" variant="standard" error={errorCep} helperText={helperTextCep} fullWidth = {true}/>
+                                    )}
+                                </InputMask>
+                                <TooltipMaterial title={txtPorquePedimosCep} placement="bottom-start" arrow = {true}>
+                                    <Typography sx={{color: '#2daf5a', fontWeight: 'bold'}}>Por que pedimos seu cep ?</Typography>
+                                </TooltipMaterial>
+                            </Box>
 
                             <FormControl error={errorSexo} >
                                 <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
