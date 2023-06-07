@@ -55,12 +55,12 @@ function EncontrarProfessor() {
     },[])
 
     function validarToken() {
-        /* let token = sessionStorage.TOKEN;
+        // let token = sessionStorage.TOKEN;
         
-        if (token === null || token === "" || token.length < 186) {
-            sessionStorage.TOKEN = ""
-            window.location = "/login"
-        } */
+        // if (token === null || token === "" || token.length < 186) {
+        //     sessionStorage.TOKEN = ""
+        //     window.location = "/login"
+        // }
     }
 
     return (

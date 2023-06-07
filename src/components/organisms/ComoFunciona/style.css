@@ -53,10 +53,39 @@
     height: 100%;
     background-color: var(--light-font);
 }
-.icon-usuario{
+.icone-usuario{
     height: 35px;
     width: 40px;
 }
+
+.icone-encontrar-professor{
+    height: 45px;
+    width: 65px;
+}
+
+.icone-calendario{
+    height: 37px;
+    width: 35px;
+}
+
+.icone-check{
+    height: 28px;
+    width: 35px;
+}
+
+.icone-gerenciar-aulas{
+    height: 35px;
+    width: 33px;
+}
+
+.icone-resultados{
+    height: 41px;
+    width: 54px;
+}
+
+
+
+
 
 .card-titulo {
     width: 100%;
@@ -74,13 +103,18 @@
 
 .tabs-como-funciona-label {
     font-weight: bold !important;
-    color: var(--light-font) !important;
-    font-size: var(--fonte-h5) !important;
-
-    padding-left: 0 !important;
 }
 
-.tabs-como-funciona{
-    display: flex !important;
-    text-align: left !important;
+
+.MuiTabs-indicator{
+    border: 1px solid white !important;
+}
+
+.MuiTab-textColorPrimary {
+    color: rgb(203, 203, 203) !important;
+}
+
+
+.MuiTab-root.Mui-selected {
+    color: rgb(255, 255, 255) !important;
 }

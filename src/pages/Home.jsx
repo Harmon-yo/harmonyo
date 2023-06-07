@@ -9,7 +9,7 @@ import Duvidas from "../components/organisms/Duvidas/index.jsx";
 import Footer from "../components/organisms/Footer/index.jsx";
 import ModalCriarConta from "../components/organisms/ModalCriarConta/index.jsx"
 import { useState } from 'react';
-
+import VLibras from "@djpfs/react-vlibras";
 /* 
 import Wave from './Wave.svg'
 import Botao from "../components/Botao";
