@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Skeleton } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorResumidoCard from "../ProfessorResumidoCard/index.jsx";
 import api from "../../../../../api.js";
@@ -57,15 +57,24 @@ function ListaProfessores(props) {
                     Professores
                 </Typography>
             </Box>
-            <Card className="professores-cards">
-                {
-                    listaProfessores.map((professor) => (
-                        <ProfessorResumidoCard nome={professor.nome} instrumentos={professor.ltInstrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
-                    ))
-                }
-            </Card>
+            {
+                props.isCarregando
+                    ? carregando()
+                    : <Card className="professores-cards">
+                        {
+                            listaProfessores.map((professor) => (
+                                <ProfessorResumidoCard nome={professor.nome} instrumentos={professor.ltInstrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
+                            ))
+                        }
+                    </Card>
+            }
+
         </Box>
     );
+}
+
+const carregando = () => {
+    return (<Skeleton variant="retangular" height={200} />);
 }
 
 export default ListaProfessores;

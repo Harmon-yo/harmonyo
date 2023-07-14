@@ -2,8 +2,6 @@ import React from "react";
 import {
     Menu
 } from "@mui/material";
-import PropostaIcon from "../../../imgs/business-proposal.png";
-/* import "./style.css"; */
 
 
 

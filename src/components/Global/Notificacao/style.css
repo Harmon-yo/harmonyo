@@ -1,3 +1,7 @@
+.container-usuario-notificacao {
+    cursor: pointer;
+}
+
 .notificacao-container {
     position: relative;
     display: flex;
@@ -10,6 +14,7 @@
 #notificacao-menu .MuiMenu-paper {
     background-color: #F1EFF5 !important;
     padding: calc(var(--espaco-padrao) * 2);
+    border-radius: var(--borda-padrao) !important;
 }
 
 .MuiMenu-list {
@@ -34,6 +39,7 @@
 .notificacao-menu-lido {
     font-weight: 500 !important;
     color: var(--notificacao-marcar-lido) !important;
+    cursor: pointer;
 }
 
 

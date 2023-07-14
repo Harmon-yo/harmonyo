@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, Typography, Pagination } from "@mui/material";
+import { Box, Typography, Pagination, Skeleton } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorPopular from "../ProfessorPopularCard/index.jsx";
 import "./style.css";
@@ -42,8 +42,7 @@ const professores = [
 
 function ProfessoresPopulares(props) {
   const [listaProfessores, setListaProfessores] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  
+
   const config = {
     headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
   };
@@ -53,34 +52,42 @@ function ProfessoresPopulares(props) {
       setListaProfessores(response.data);
       setCarregando(false);
     }); */
-    console.log("Renderizei Os parametros");
-  },[props.parametros]);
+  }, [props.parametros.current]);
 
-  if (carregando) {
-    return <div>Carregando...</div>;
-  } else {
-    return (
-      <Box className="professores-populares-container">
-        <Box className="professor-populares-container-titulo">
-          <Typography className="encontrar-professor-titulo">
-            Popular
-          </Typography>
-        </Box>
-        <Card className="professores-populares-card">
-          {listaProfessores.map((professor) => (
-            <ProfessorPopular
-              id={professor.id}
-              nome={professor.nome}
-              instrumentos={professor.instrumentos}
-              localizacao={professor.localizacao}
-              status={professor.ultimaVezOnline}
-              avaliacao={professor.mediaAvaliacao}
-            />
-          ))}
-        </Card>
+
+
+  return (
+    <Box className="professores-populares-container">
+      <Box className="professor-populares-container-titulo">
+        <Typography className="encontrar-professor-titulo">
+          Popular
+        </Typography>
       </Box>
-    );
-  }
+
+
+
+      {
+        props.isCarregando
+          ? carregando()
+          : <Card className="professores-populares-card">
+            {professores.map((professor) => (
+              <ProfessorPopular
+                id={professor.id}
+                nome={professor.nome}
+                instrumentos={professor.instrumentos}
+                localizacao={professor.localizacao}
+                status={professor.ultimaVezOnline}
+                avaliacao={professor.mediaAvaliacao}
+              />
+            ))}
+          </Card>
+      }
+    </Box>
+  );
+}
+
+const carregando = () => {
+  return (<Skeleton variant="retangular" height={100} />);
 }
 
 export default ProfessoresPopulares;

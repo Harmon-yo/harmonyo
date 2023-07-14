@@ -3,7 +3,9 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Badge, Box, Menu, MenuItem, Typography } from "@mui/material";
 import PropostaIcon from "../../../imgs/business-proposal.png";
 import Popup from "../Popup/index.jsx";
-import "./style.css"
+import "./style.css";
+import moment from "moment";
+import "moment/locale/pt-br";
 
 const notificacoes = [
     {
@@ -13,7 +15,7 @@ const notificacoes = [
         descricao: "O professor Fulano de Tal te enviou uma proposta de aula",
         data: "10/10/2021",
         hora: "10:00",
-        tempo: "10 minutos atrás",
+        tempo: moment().locale("pt-br").subtract(10, 'minutes').locale("pt-br").fromNow(),
         lido: false
     }
 ]
@@ -22,10 +24,12 @@ function Notificacao(props) {
     const [qtdNotificacao, setQtdNotificacao] = React.useState(notificacoes.length);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = !!anchorEl;
-    const handleClick = (event) => {
+
+    const abrirNotificacoes = (event) => {
         setAnchorEl(event.currentTarget);
     }
-    const handleClose = () => {
+
+    const fecharNotificacoes = () => {
         setAnchorEl(null);
     }
 
@@ -43,12 +47,12 @@ function Notificacao(props) {
                 aria-controls={open ? 'notificacao-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}>
+                onClick={abrirNotificacoes}>
                 <NotificationsNoneIcon />
             </Badge>
 
             <Popup menuId="notificacao-menu" buttonClassName="notificacao-botao"
-                anchorEl={anchorEl} open={open} handleClose={handleClose}>
+                anchorEl={anchorEl} open={open} handleClose={fecharNotificacoes} className="notificacao-card">
                 <Box className="notificacao-menu-container-title">
                     <Typography className="notificacao-menu-title">Notificações</Typography>
                     {
@@ -59,9 +63,9 @@ function Notificacao(props) {
                 {
                     notificacoes.map(
                         (notificacao) => (
-                            <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={handleClose}
+                            <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={fecharNotificacoes}
                             sx={{
-                                backgroundColor: notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
+                                backgroundColor: !notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
                             }}>
                                 <Box className="notificacao-menu-item-info-container">
                                     <img src={notificacao.src} className="notificacao-menu-item-img" />

@@ -2,7 +2,7 @@
     width: 100%;
     height: fit-content;
     display: grid;
-    grid-template-rows: auto;
+    grid-auto-rows: auto;
     row-gap: calc(var(--espaco-padrao) * 2);
 }
 
@@ -10,7 +10,7 @@
     font-weight: 500 !important;
     font-size: var(--fonte-h5) !important;
     color: var(--dark-font);
-    margin-bottom: calc(var(--espaco-padrao) * 1) !important;
+    
 }
 
 .filtro-slider-container {
@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    
 }
 
 /* ================================================================ */
@@ -79,6 +80,7 @@
 .filtro-botao {
     background-color: #099250 !important;
     color: var(--dark-font) !important;
+    width: 100%;
 }
 
 .loading-text {

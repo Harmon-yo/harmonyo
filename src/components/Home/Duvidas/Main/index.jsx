@@ -31,44 +31,47 @@ const informacoes = [
 ]
 
 function Duvidas() {
-    const [nome, setNome] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [duvida, setDuvida] = React.useState('');
-    const [errorNome, setErrorNome] = React.useState(false);
-    const [errorEmail, setErrorEmail] = React.useState(false);
-    const [errorDuvida, setErrorDuvida] = React.useState(false);
-    const [helperTextNome, setHelperTextNome] = React.useState('');
-    const [helperTextEmail, setHelperTextEmail] = React.useState('');
-    const [helperTextDuvida, setHelperTextDuvida] = React.useState('');
+    const [valor, setValor] = React.useState({
+        nome: '',
+        email: '',
+        duvida: ''
+    });
+
+    const [erro, setErro] = React.useState({
+        nome: false,
+        email: false,
+        duvida: false
+    });
+
+    const [helperText, setHelperText] = React.useState({
+        nome: '',
+        email: '',
+        duvida: ''
+    });
 
 
-    function limparMsgErros() {
-        setErrorNome(false);
-        setErrorEmail(false);
-        setErrorDuvida(false);
-
-        setHelperTextNome('');
-        setHelperTextEmail('');
-        setHelperTextDuvida('');
+    const limparMsgErros = () => {
+        for (let key in erro) setErro((error) => ({ ...error, [key]: false }));
+        for (let key in helperText) setHelperText((helperText) => ({ ...helperText, [key]: "" }));
     }
 
     function enviarDuvida() {
+        limparMsgErros();
 
-        if (nome === '') {
-            setErrorNome(true);
-            setHelperTextNome("Campo Obrigatório !");
+        if (valor.nome === '') {
+            setErro((error) => ({ ...error, nome: true }));
+            setHelperText((helperText) => ({ ...helperText, nome: "Campo Obrigatório !" }));
+            return;
+        }
+        if (valor.email === '') {
+            setErro((error) => ({ ...error, email: true }));
+            setHelperText((helperText) => ({ ...helperText, email: "Campo Obrigatório !" }));
             return;
         }
 
-        if (email === '') {
-            setErrorEmail(true);
-            setHelperTextEmail("Campo Obrigatório !")
-            return;
-        }
-
-        if (duvida === '') {
-            setErrorDuvida(true);
-            setHelperTextDuvida("Campo Obrigatório !")
+        if (valor.duvida === '') {
+            setErro((error) => ({ ...error, duvida: true }));
+            setHelperText((helperText) => ({ ...helperText, duvida: "Campo Obrigatório !" }));
             return;
         }
 
@@ -83,21 +86,21 @@ function Duvidas() {
             <Box className="duvidas-input-informacoes">
                 <Box className="duvidas-input">
                     <Box className="duvidas-ipt-nome-container">
-                        <TextField id="ipt-nome" onChange={(e) => setNome(e.target.value)}
+                        <TextField id="ipt-nome" onChange={(e) => setValor({ ...valor, nome: e.target.value })}
                             label="Nome" variant="filled" size="small"
-                            error={errorNome} helperText={helperTextNome}
+                            error={erro.nome} helperText={helperText.nome}
                             placeholder='Seu nome' fullWidth required />
                     </Box>
                     <Box className="duvidas-ipt-email-container">
-                        <TextField id="ipt-email" onChange={(e) => setEmail(e.target.value)}
+                        <TextField id="ipt-email" onChange={(e) => setValor({ ...valor, email: e.target.value })}
                             label="Email" variant="filled"
-                            error={errorEmail} helperText={helperTextEmail}
+                            error={erro.email} helperText={helperText.email}
                             placeholder='Seu email' fullWidth required />
                     </Box>
                     <Box className="duvidas-ipt-duvida-container">
-                        <TextField id="ipt-duvida" onChange={(e) => setDuvida(e.target.value)}
+                        <TextField id="ipt-duvida" onChange={(e) => setValor({ ...valor, duvida: e.target.value })}
                             label="Dúvida" variant="filled"
-                            error={errorDuvida} helperText={helperTextDuvida}
+                            error={erro.duvida} helperText={helperText.duvida}
                             placeholder='Sua Dúvida' multiline
                             rows={5} maxRows={20} fullWidth required />
                     </Box>

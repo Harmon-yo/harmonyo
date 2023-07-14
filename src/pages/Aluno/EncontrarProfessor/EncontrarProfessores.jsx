@@ -5,11 +5,13 @@ import "./style.css";
 
 /* ================= Navbar =================== */
 
-import ChatIcon from '@mui/icons-material/ChatBubbleOutline';
-import SearchIcon from '@mui/icons-material/Search';
-import FeedbackIcon from '@mui/icons-material/RateReviewOutlined';
-import PedidosIcon from '@mui/icons-material/GradingOutlined';
-import CalendarioIcon from '@mui/icons-material/CalendarTodayOutlined';
+import {
+    ChatBubbleOutline as ChatIcon,
+    Search as SearchIcon,
+    RateReviewOutlined as FeedbackIcon,
+    GradingOutlined as PedidosIcon,
+    CalendarTodayOutlined as CalendarioIcon
+} from '@mui/icons-material';
 
 /* ================= Componentes ==================== */
 
@@ -30,18 +32,18 @@ const opcoesNavbar = [
         titulo: "Encontrar",
         icon: SearchIcon,
         active: true,
-    }, 
+    },
     {
         titulo: "Agenda",
         icon: CalendarioIcon,
         active: false,
         href: "/agenda"
-    }, 
+    },
     {
         titulo: "Pedidos",
         icon: PedidosIcon,
         active: false
-    }, 
+    },
     {
         titulo: "Chat",
         icon: ChatIcon,
@@ -54,39 +56,71 @@ const opcoesNavbar = [
     }
 ];
 
-function EncontrarProfessor() {
-    const [professoresLista, setProfessores] = useState([]);
-    const [professoresFiltrados, setProfessoresFiltrados] = useState(null);
-    let teste = useRef(null);
+const cidadesCadastradas = [
+    'São Paulo',
+    'Santo André',
+    'São Bernardo do Campo',
+]
+
+function EncontrarProfessor(props) {
+    let parametros = useRef("");
+    const [erros, setErros] = useState([]);
+    const [cidade, setCidade] = useState("");
+    const [professoresPopulares, setProfessoresPopulares] = useState([]);
+    const [professoresFiltrados, setProfessoresFiltrados] = useState([]);
+    const isCarregando = professoresFiltrados.length === 0 && professoresPopulares.length === 0;
 
     const navigate = useNavigate();
+
+    const requisicaoGet = (url) => {
+        const config = {
+            headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+        };
+
+        return api.get(url, config);
+    }
+
+    const exibirErro = (erro) => {
+        setErros((erros) => [...erros, erro]);
+    }
 
     useEffect(() => {
         /* if (verificarToken()) {
             navigate(-1);
         } */
-        console.log(teste)
-    },[teste])
+        requisicaoGet("/cidades").then((response) => {
+            setCidade(response.data[0]);
+        }).catch((error) => {
+            exibirErro("Erro ao carregar cidades cadastradas.");
+        });
 
-    /* api.get(`/professores/busca?params=${parametros ? parametros : ""}`, config).then((response) => {
-        setProfessores(response.data);
-        console.log(response)
-        
-    }).catch((error) => {
-        console.log(error);
-    }); */
-    
+        // Pesquisa no banco de dados as cidades cadastradas
+        if (cidadesCadastradas.length === 0) setCidade("?");
+        else if (isCarregando) setCidade("Carregando...");
+        else setCidade(cidadesCadastradas[0]);
+    }, []);
+
+    useEffect(() => {
+        setProfessoresPopulares([]);
+        setProfessoresFiltrados([]);
+
+        requisicaoGet(`/professores/busca?params=${parametros ? parametros : ""}`).then((response) => {
+            setProfessoresFiltrados(response.data);
+        }).catch((error) => {
+            exibirErro("Erro ao carregar professores.");
+        });
+    }, [parametros]);
 
     return (
-        <EstruturaPaginaUsuario opcoesNavbar={opcoesNavbar}>
+        <EstruturaPaginaUsuario opcoesNavbar={opcoesNavbar} errosState={{ erros, setErros }}>
             <Box className="pagina-container">
-            <FiltroDePesquisaCard ref={teste}/>
-            <Box className="encontrar-professor-conteudo">
-                <BarraDePesquisa />
-                <ProfessoresPopulares parametros={teste.parametros} />
-                <ListaProfessores parametros={teste.parametros} professores={professoresFiltrados ? professoresFiltrados : professoresLista} />
+                <FiltroDePesquisaCard parametros={parametros} cidade={cidade} isCarregando={isCarregando} />
+                <Box className="encontrar-professor-conteudo">
+                    <BarraDePesquisa cidadeState={{ cidade, setCidade }} isCarregando={isCarregando}/>
+                    <ProfessoresPopulares parametros={parametros} professoresPopularesState={{ professoresPopulares, setProfessoresPopulares }} isCarregando={isCarregando} />
+                    <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} />
+                </Box>
             </Box>
-        </Box>
         </EstruturaPaginaUsuario>
     )
 }

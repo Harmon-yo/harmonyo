@@ -17,7 +17,6 @@ function FiltroDePesquisaCard(props) {
         valor: [0, 100]
     });
     const [avaliacao, setAvaliacao] = useState(5);
-    const [buscandoProfessor, setBuscandoProfessor] = useState(false);
     const [disponibilidade, setDisponibilidade] = useState({
         manha: false,
         tarde: false,
@@ -25,56 +24,60 @@ function FiltroDePesquisaCard(props) {
     });
 
 
-    let parametros = useRef({
-        preco: {
-            valor: preco,
-            operacao: "><"
-        },
-        distancia: {
-            valor: distancia,
-            operacao: "><"
-        },
-        avaliacao: {
-            valor: avaliacao,
-            operacao: ">:"
-        },
-        //disponibilidade: ["Manhã", "Tarde", "Noite"]
-    });
-
-    const handleClickFiltro = () => {
-        setBuscandoProfessor(true);
-
-        mapearFiltro(parametros).then(
-            (parametrosFiltrados) => {
-                parametros.current = parametrosFiltrados;
-                setBuscandoProfessor(false);
-            }
-        );
-    }
+    
 
     const mapearFiltro = (filtro) => {
         let valor, operacao;
-        let chaves = Object.keys(filtro);
+        let parametrosMapeados = props.parametros.current;
+        
+        parametrosMapeados = "";
+
+        let chaves = Object.keys(parametrosMapeados);
 
         for (let chave in filtro) {
             valor = filtro[chave].valor;
             operacao = filtro[chave].operacao;
 
-            if (chave !== "disponibilidade") continue;
+            if (chave === "disponibilidade") continue;
 
             if (Array.isArray(valor)) {
-                parametros.current += `${chave}${operacao}${valor[0]}`
+                parametrosMapeados += `${chave}${operacao}${valor[0]}`
 
-                for (let i = 1; i < valor.length; i++) parametros.current += `+${valor[i]}`
+                for (let i = 1; i < valor.length; i++) parametrosMapeados += `+${valor[i]}`
             } else {
-                parametros.current += `${chave}${operacao}${valor}`
+                parametrosMapeados += `${chave}${operacao}${valor}`
             }
 
-            if (chaves.indexOf(chave) < chaves.length - 1) parametros.current += ',';
+            if (chaves.indexOf(chave) < chaves.length - 1) parametrosMapeados += ',';
         }
 
-        console.log("Parametros: " + parametros.current);
-        return parametros.current;
+        console.log("Parametros: ");
+        console.log(parametrosMapeados);
+        props.parametros.current = parametrosMapeados;
+    }
+
+    const handleClickFiltro = () => {
+        let parametros = {
+            preco: {
+                valor: preco.valor,
+                operacao: "><"
+            },
+            distancia: {
+                valor: distancia.valor,
+                operacao: "><"
+            },
+            avaliacao: {
+                valor: avaliacao,
+                operacao: ">:"
+            },
+            cidade: {
+                valor: props.cidade,
+                operacao: "="
+            }
+            //disponibilidade: ["Manhã", "Tarde", "Noite"]
+        };
+
+        mapearFiltro(parametros.current);
     }
 
     const textoPreco = (valor) => `R$ ${valor}`;
@@ -84,14 +87,9 @@ function FiltroDePesquisaCard(props) {
         if (!Array.isArray(novoValor)) return;
 
         if (activeThumb === 0) {
-            setPreco(
-                (old) => {{
-                    ...old,
-                    valor: [Math.min(novoValor[0], preco[1] - preco.minimo), preco[1]]
-                }};
-            );
+            setPreco((old) => ({ ...old, valor: [Math.min(novoValor[0], preco.valor[1] - preco.minimo), preco.valor[1]] }));
         } else {
-            setPreco([preco[0], Math.max(novoValor[1], preco[0] + preco.minimo)]);
+            setPreco((old) => ({ ...old, valor: [preco.valor[0], Math.max(novoValor[1], preco.valor[0] + preco.minimo)] }));
         }
     };
 
@@ -99,13 +97,15 @@ function FiltroDePesquisaCard(props) {
         if (!Array.isArray(novoValor)) return;
 
         if (activeThumb === 0) {
-            setDistancia([Math.min(novoValor[0], distancia[1] - distancia.minima), distancia[1]]);
+            setDistancia((old) => ({ ...old, valor: [Math.min(novoValor[0], distancia.valor[1] - distancia.minimo), distancia.valor[1]] }));
         } else {
-            setDistancia([distancia[0], Math.max(novoValor[1], distancia[0] + distancia.minima)]);
+            setDistancia((old) => ({ ...old, valor: [distancia.valor[0], Math.max(novoValor[1], distancia.valor[0] + distancia.minimo)] }));
         }
     };
 
     const handleChangeDisponibilidade = (event) => setDisponibilidade({ ...disponibilidade, [event.target.name]: event.target.checked });
+
+
 
     return (
         <Card className="filtro-card">
@@ -189,7 +189,7 @@ function FiltroDePesquisaCard(props) {
                     </Box>
                 </Box>
             </Box>
-            <LoadingButton loading={buscandoProfessor} onClick={handleClickFiltro} className="filtro-botao">
+            <LoadingButton loading={props.isCarregando} onClick={handleClickFiltro} className="filtro-botao">
                 <Typography className="loading-text">Filtrar</Typography>
             </LoadingButton>
         </Card>

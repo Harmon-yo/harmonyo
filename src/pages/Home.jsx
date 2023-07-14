@@ -7,7 +7,6 @@ import Duvidas from "../components/Home/Duvidas/Main/index.jsx";
 import Footer from "../components/Home/Footer/Main/index.jsx";
 import ModalCriarConta from "../components/Home/ModalCriarConta/index.jsx"
 import { useState } from 'react';
-import VLibras from "@djpfs/react-vlibras";
 
 function Index() {
 

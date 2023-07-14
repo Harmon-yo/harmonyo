@@ -78,9 +78,9 @@ function Footer(props) {
                                     className="footer-title">{card.title}
                                 </Typography>
 
-                                <Box className={`footer-items-${card.items[0].alt != undefined ? "img" : "label"}`}>
+                                <Box className={`footer-items-${card.items[0].alt !== undefined ? "img" : "label"}`}>
                                     {
-                                        card.title != "Midias Sociais" ?
+                                        card.title !== "Midias Sociais" ?
                                             card.items.map((item) => (
                                                 <Typography key={item.key}>{item.label}</Typography>
                                             ))

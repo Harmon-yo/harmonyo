@@ -47,22 +47,25 @@ function AvatarUsuario(props) {
                 anchorEl={anchorEl} open={open} handleClose={handleClose}>
                 <Box className="avatar-usuario-menu-user-info">
                     <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                        sx={{ bgcolor: "#099250"}}>N</Avatar>
+                        sx={{ bgcolor: "#099250" }}>N</Avatar>
                     <Box className="avatar-usuario-menu-user-info-text">
                         <Typography className="avatar-usuario-menu-nome">Gustavo Pereira</Typography>
                         <Typography className="avatar-usuario-menu-email">gustavo_pereira@hotmail.com</Typography>
                     </Box>
                 </Box>
-                {
-                    opcoes.map(
-                        (opcao) => (
-                            <MenuItem key={opcao.id} className="avatar-usuario-menu-item" onClick={handleClose}>
-                                <img src={opcao.src} className="avatar-usuario-menu-item-img" />
-                                <Typography className="avatar-usuario-menu-item-titulo">{opcao.titulo}</Typography>
-                            </MenuItem>
-                        ))
+                <Box className="opcoes-container">
+                    {
+                        opcoes.map(
+                            (opcao) => (
+                                <MenuItem key={opcao.id} className="avatar-usuario-menu-item" onClick={handleClose}>
+                                    <img src={opcao.src} className="avatar-usuario-menu-item-img" />
+                                    <Typography className="avatar-usuario-menu-item-titulo">{opcao.titulo}</Typography>
+                                </MenuItem>
+                            ))
 
-                }
+                    }
+                </Box>
+
             </Popup>
         </div>
     );
