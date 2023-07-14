@@ -18,7 +18,8 @@ function Logo(props) {
                 ...(props.height !== undefined && { height: props.height }),
                 ...(props.width !== undefined && { width: props.width }),
                 ...(props.height === undefined && { height: "auto" }),
-                ...(props.width === undefined && { width: "auto" })
+                ...(props.width === undefined && { width: "auto" }),
+                ...props.sx
             }}
         />
     );

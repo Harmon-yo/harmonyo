@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import "./style.css";
@@ -14,7 +14,7 @@ import CalendarioIcon from '@mui/icons-material/CalendarTodayOutlined';
 /* ================= Componentes ==================== */
 
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
-import ProfessoresPopulares from "../../../components/Aluno/EncontrarProfessor/ProfessoresPopulares/Main/index.jsx";
+import ProfessoresPopulares from "../../../components/Aluno/EncontrarProfessor/ListaProfessoresPopulares/Main/index.jsx";
 import ListaProfessores from "../../../components/Aluno/EncontrarProfessor/ListaProfessores/Main/index.jsx";
 import Mapa from "../../../components/Aluno/EncontrarProfessor/Mapa/index.jsx";
 import FiltroDePesquisaCard from "../../../components/Aluno/EncontrarProfessor/FiltroDePesquisaCard/index.jsx";
@@ -55,45 +55,36 @@ const opcoesNavbar = [
 ];
 
 function EncontrarProfessor() {
-    const [professoresPopulares, setProfessoresPopulares] = React.useState([]);
-    const [professoresLista, setProfessores] = React.useState([]);
-    const [professoresFiltrados, setProfessoresFiltrados] = React.useState(null);
-    const [params, setParams] = React.useState("");
-
-    const config = {
-        headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
-    };
+    const [professoresLista, setProfessores] = useState([]);
+    const [professoresFiltrados, setProfessoresFiltrados] = useState(null);
+    let teste = useRef(null);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (verificarToken()) {
+        /* if (verificarToken()) {
             navigate(-1);
-        }
-    },[])
+        } */
+        console.log(teste)
+    },[teste])
 
-    useEffect(() => {
-        obterProfessoresResumido(params);
-    }, [params]);
-
-    function obterProfessoresResumido(parametros) {
-        return api.get(`/professores/busca?params=${parametros ? parametros : ""}`, config).then((response) => {
-            setProfessores(response.data);
-            console.log(response)
-            
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
+    /* api.get(`/professores/busca?params=${parametros ? parametros : ""}`, config).then((response) => {
+        setProfessores(response.data);
+        console.log(response)
+        
+    }).catch((error) => {
+        console.log(error);
+    }); */
+    
 
     return (
         <EstruturaPaginaUsuario opcoesNavbar={opcoesNavbar}>
             <Box className="pagina-container">
-            <FiltroDePesquisaCard buscarProfessores={obterProfessoresResumido} />
+            <FiltroDePesquisaCard ref={teste}/>
             <Box className="encontrar-professor-conteudo">
                 <BarraDePesquisa />
-                <ProfessoresPopulares />
-                <ListaProfessores professores={professoresFiltrados ? professoresFiltrados : professoresLista} />
+                <ProfessoresPopulares parametros={teste.parametros} />
+                <ListaProfessores parametros={teste.parametros} professores={professoresFiltrados ? professoresFiltrados : professoresLista} />
             </Box>
         </Box>
         </EstruturaPaginaUsuario>

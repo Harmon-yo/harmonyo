@@ -11,14 +11,14 @@ import VLibras from "@djpfs/react-vlibras";
 
 function Index() {
 
-    const [open, setOpen] = useState(false);
-    const abrirModalCriarConta = () => setOpen(true);
-    const fecharModalCriarConta = () => setOpen(false);
+    const [visibilidade, setVisibilidade] = useState(false);
+    const abrirModalCriarConta = () => setVisibilidade(true);
+    const fecharModalCriarConta = () => setVisibilidade(false);
 
     return (
         <>
             <Navbar onClickCadastro={abrirModalCriarConta} />
-            <ModalCriarConta open={open} closeModal={fecharModalCriarConta} />
+            <ModalCriarConta visibilidade={visibilidade} closeModal={fecharModalCriarConta} />
             <Hero onClickCriarConta={abrirModalCriarConta} />
             {/* <Estatisticas/> */}
             <Vantagens />

@@ -10,23 +10,22 @@ const makeStyles = () => {
     
     return (
         {
+            container: {
+                position: 'relative',
+            },
             boxVoltar: {
                 display: 'flex',
                 position: 'absolute',
-                flexDirection: 'row',
-                height: {
-                    xs: '45px',
-                    lg: '60px',
-                    xl: '60px'
-                },
-                width: '100%',
-                alignItems: 'center',
-                paddingLeft: '5%',
                 fontSize: {
                     xs: '16px',
                     lg: '20px',
                     xl: '20px'
                 },
+                margin: {
+                    xs: '8px',
+                    lg: '16px',
+                    xl: '16px'
+                }
 
             },
 

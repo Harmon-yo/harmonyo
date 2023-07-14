@@ -1,0 +1,91 @@
+.professor-popular-card {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: calc(var(--espaco-padrao) * 2);
+    border-radius: var(--borda-padrao);
+    padding: calc(var(--espaco-padrao) * 2);
+}
+
+.card-info-usuario {
+    width: fit-content;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
+    column-gap: calc(var(--espaco-padrao) * 1);
+}
+
+.card-info-nome {
+    color: var(--dark-font);
+    font-weight: 700 !important;
+}
+
+.card-info-avaliacao {
+    width: fit-content;
+    height: auto;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto auto auto;
+    column-gap: calc(var(--espaco-padrao) * 1);
+}
+
+.card-avaliacao-icon, .card-avaliacao-valor {
+    color: var(--avaliacao);
+}
+
+.card-avaliacao-valor {
+    font-weight: 700 !important;
+}
+
+.card-info-separacao {
+    color: #61738b;
+    font-size: 0.5rem !important;
+}
+
+.card-cidade-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%
+}
+
+.card-cidade {
+    color: rgb(58, 58, 58);
+    font-weight: 700 !important;
+}
+
+.card-info-status {
+    width: fit-content;
+    height: auto;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto auto;
+    column-gap: calc(var(--espaco-padrao) * 1);
+    padding-left: calc(var(--espaco-padrao) * 1);
+}
+
+.card-info-status-cor {
+    font-size: 0.8rem !important;
+    margin-right: calc(var(--espaco-padrao) * 1);
+}
+
+.online {
+    color: #00b300;
+}
+
+.offline {
+    color: #ff0000;
+}
+
+.card-info-status .card-info-separacao {
+    color: var(--cor-padrao);
+    font-size: 0.6rem;
+    margin-right: calc(var(--espaco-padrao) * 1);
+}
+
+.card-nome-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%
+}

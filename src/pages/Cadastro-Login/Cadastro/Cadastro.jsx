@@ -1,368 +1,254 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Box, Button, TextField, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Typography, Tooltip as TooltipMaterial } from "@mui/material";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+    Box,
+    Button,
+    Typography
+} from "@mui/material";
 import api from "../../../api.js";
-import axios from "axios";
-import InputSenha from "../../../components/Cadastro-Login/InputSenha/index.jsx";
-import InputMask from 'react-input-mask';
-import { useStyles } from "../../styles/Cadastro.styles.js";
-import Logo from "../../../components/Global/Logo/index.jsx";
-import styles from './Cadastro.module.css'
-
+import { useStyles } from "../Cadastro-Login.styles.js";
+import EtapaUm from "./Etapas/Um.jsx";
+import EtapaDois from "./Etapas/Dois.jsx";
+import EtapaTres from "./Etapas/Tres.jsx";
+import EtapaFinal from "./Etapas/Quatro.jsx";
+import { verificarNome, verificarCpf, verificarEmail, verificarDataNascimento, verificarSenha, verificarCep } from "./verificacoes.js";
+import Design from "../Design.jsx";
 
 function Cadastro() {
+    const classes = useStyles();
+    const navigate = useNavigate();
+    const categoria = useRef(new URLSearchParams(window.location.search).get("categoria"));
 
-    const txtPorquePedimosCep = 'Pedimos seu CEP para que após o cadastro sejam encontrados os professores mais próximos a você !'
+    const [etapa, setEtapa] = useState(1);
+    
+    const [formData, setFormData] = useState({
+        nome: '',
+        email: '',
+        cpf: '',
+        dataNascimento: '',
+        genero: '',
+        senha: '',
+        confirmarSenha: '',
+        cep: '',
+        logradouro: '',
+        numero: '',
+        complemento: '',
+        cidade: '',
+        bairro: '',
+        estado: ''
+    });
 
-    const[categoria, setCategoria] = useState(new URLSearchParams(window.location.search).get('categoria'));
+    const [error, setError] = useState({
+        nome: false,
+        email: false,
+        cpf: false,
+        dataNascimento: false,
+        genero: false,
+        senha: false,
+        confirmarSenha: false,
+        cep: false,
+    });
+    const [helperText, setHelperText] = useState({
+        nome: '',
+        email: '',
+        cpf: '',
+        dataNascimento: '',
+        genero: '',
+        senha: '',
+        confirmarSenha: '',
+        cep: '',
+    });
+    const [errosServidor, setErrosServidor] = useState([]);
+
 
     useEffect(() => {
-        
-        if (categoria !== "Aluno" && categoria !== "Professor") {
-            window.location = "/";
+        if (categoria.current !== "Aluno" && categoria.current !== "Professor") {
+            navigate(-1);
         }
-    },[])
+    }, [])
 
-
-
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [sexo, setSexo] = useState("");
-    const [senha, setSenha] = useState("");
-    const [confirmarSenha, setConfirmarSenha] = useState("");
-    const [cep, setCep] = useState("");
-
-    const [errorNome, setErrorNome] = useState(false);
-    const [errorEmail, setErrorEmail] = useState(false);
-    const [errorCpf, setErrorCpf] = useState(false);
-    const [errorSexo, setErrorSexo] = useState(false);
-    const [errorSenha, setErrorSenha] = useState(false);
-    const [errorConfirmarSenha, setErrorConfirmarSenha] = useState(false);
-    const [errorCep, setErrorCep] = useState(false);
-
-    const [helperTextNome, setHelperTextNome] = useState("");
-    const [helperTextEmail, setHelperTextEmail] = useState("");
-    const [helperTextCpf, setHelperTextCpf] = useState("");
-    const [helperTextSexo, setHelperTextSexo] = useState("");
-    const [helperTextSenha, setHelperTextSenha] = useState("");
-    const [helperTextConfirmarSenha, setHelperTextConfirmarSenha] = useState("");
-    const [helperTextCep, setHelperTextCep] = useState("");
-    
-
-    function limparMsgErros() {
-
-        setErrorNome("")
-        setErrorEmail("")
-        setErrorCpf("")
-        setErrorSexo("")
-        setErrorSenha("")
-        setErrorConfirmarSenha("")
-        setErrorCep("")
-
-        setHelperTextNome("")
-        setHelperTextEmail("")
-        setHelperTextCpf("")
-        setHelperTextSexo("")
-        setHelperTextSenha("")
-        setHelperTextConfirmarSenha("")
-        setHelperTextCep("")
-
+    function limparErros() {
+        for (let key in error) setError((error) => ({ ...error, [key]: false }));
+        for (let key in helperText) setHelperText((helperText) => ({ ...helperText, [key]: "" }));
     }
 
     function validarCampos() {
+        let verificacoes, camposOk = true;
 
-        limparMsgErros()
+        limparErros();
 
-        let camposOk = true;
+        switch (etapa) {
+            case 1:
+                verificacoes = {
+                    nome: verificarNome(formData.nome),
+                    email: verificarEmail(formData.email),
+                    cpf: verificarCpf(formData.cpf)
+                };
 
-        if (nome === "" || nome === null) {
-            setErrorNome(true);
-            setHelperTextNome("Campo Obrigatório !")
-            camposOk = false;
+                break;
+            case 2:
+                verificacoes = {
+                    dataNascimento: verificarDataNascimento(formData.dataNascimento),
+                };
+
+                break;
+            case 3:
+                verificacoes = {
+                    senha: verificarSenha(formData.senha, formData.confirmarSenha),
+                };
+
+                break;
+            case 4:
+                verificacoes = {
+                    cep: verificarCep(formData.cep),
+                };
+                /* verificacoes = {
+                    cep: verificarCep(formData.cep),
+                }; */
+                break;
+            default:
+                break;
         }
-        else if (nome.length < 4) {
-            setErrorNome(true);
-            setHelperTextNome("Deve Conter Pelo Menos 4 Caractéres")
-        }
-        if (email === "" || email === null) {
-            setErrorEmail(true);
-            setHelperTextEmail("Campo Obrigatório !")
-            camposOk = false;
-        }
-        if (cpf === "" || cpf === null) {
-            setErrorCpf(true);
-            setHelperTextCpf("Campo Obrigatório !")
-            camposOk = false;
-        }
-        if (cep === "" || cep === null) {
-            setErrorCep(true);
-            setHelperTextCep("Campo Obrigatório !")
-            camposOk = false;
-        }
-        if (sexo === "" || sexo === null) {
-            setErrorSexo(true);
-            setHelperTextSexo("Selecione Uma Opção !")
-            camposOk = false;
-        }
-        if (senha === "" || senha === null) {
-            setErrorSenha(true);
-            console.log(senha)
-            setHelperTextSenha("Campo Obrigatório !")
-            camposOk = false;
-        }
-        else if (senha.length < 3) {
-            setErrorSenha(true);
-            setHelperTextSenha("Deve Conter Pelo Menos 3 Caractéres")
-            camposOk = false;
-        }
-        else if (senha !== confirmarSenha) {
-            setErrorSenha(true);
-            setHelperTextSenha("As senhas devem ser iguais !")
-            setErrorConfirmarSenha(true);
-            setHelperTextConfirmarSenha("As senhas devem ser iguais !")
-            camposOk = false;
-        }
-        if (confirmarSenha === "" || confirmarSenha === null) {
-            setErrorConfirmarSenha(true);
-            setHelperTextConfirmarSenha("Campo Obrigatório !")
-            camposOk = false;
+
+        for (let campo in verificacoes) {
+            if (formData[campo] === "" || !formData[campo]) {
+                setError((error) => ({ ...error, [campo]: true }));
+                setHelperText((helperText) => ({ ...helperText, [campo]: "Campo Obrigatório" }))
+                camposOk = false;
+            } else if (verificacoes[campo].error) {
+                setError((error) => ({ ...error, [campo]: true }));
+                setHelperText((helperText) => ({ ...helperText, [campo]: verificacoes[campo].helperText }))
+                camposOk = false;
+            }
         }
 
         return camposOk;
     }
 
-    async function buscarDadosEndereco() {
+    const voltarEtapa = () => setEtapa(etapa - 1);
+    const proximaEtapa = () => validarCampos() ? setEtapa(etapa + 1) : null;
 
-        let urlViaCep = "https://viacep.com.br/ws/" + cep + "/json/"
+    function cadastrar() {
+        if (!validarCampos()) return;
 
-        let dadosViaCep = {}
+        let dadosUsuario = {
+            nome: formData.nome,
+            email: formData.email,
+            cpf: formData.cpf,
+            genero: formData.genero,
+            senha: formData.senha,
+            endereco: {
+                logradouro: formData.logradouro,
+                numero: formData.complemento,
+                complemento: "",
+                cidade: formData.localidade,
+                bairro: formData.bairro,
+                estado: formData.uf,
+                cep: formData.cep
+            },
+        };
 
-        await axios.get(urlViaCep)
-            .then((res) => {
+        function errorCatch(error) {
+            let erros = [];
 
-                if (res.data.erro) {
-                    dadosViaCep = null;
-                }
-                else {
-                    dadosViaCep = res.data;
-                }
-
-            })
-            .catch((error) => {
-                console.log(error);
-
-            })
-        return dadosViaCep;
-    }
-
-    async function cadastrar() {
-
-
-        if (validarCampos()) {
-            let dadosViaCep = await buscarDadosEndereco();
-
-            if (dadosViaCep === null) {
-                setErrorCep(true);
-                setHelperTextCep("CEP Inválido !")
-            }
+            if (error.code === "ERR_NETWORK") erros.push("Erro de conexão!")
             else {
+                if (error.response.status === 409) {
+                    switch (error.response.data.message.toUpperCase()) {
+                        case "EMAIL":
+                            erros.push("Email já em uso!");
+                            break;
 
-                let dadosUsuario = {
-                    nome: nome,
-                    email: email,
-                    cpf: cpf,
-                    sexo: sexo,
-                    senha: senha,
-                    endereco: {
-                        logradouro: dadosViaCep.logradouro,
-                        numero: dadosViaCep.complemento,
-                        complemento: "",
-                        cidade: dadosViaCep.localidade,
-                        bairro: dadosViaCep.bairro,
-                        estado: dadosViaCep.uf,
-                        cep: dadosViaCep.cep
-                    },
-                }
+                        case "CPF":
+                            erros.push("CPF já em uso!");
+                            break;
+                    }
+                } else if (error.response.status === 400) {
+                    let listaErros = error.response.data.errors;
 
-                
-                let url = "";
-
-                if (categoria === "Aluno") {
-                    url = '/alunos/cadastro';
-                }
-                else if(categoria === "Professor"){
-                    url = '/professores/cadastro';
-                }
-
-
-                await api.post(url, dadosUsuario)
-                    .then((res) => {
-
-                        console.log(res.data);
-
-                        sessionStorage.EMAIL = res.data.email;
-
-                        alert("Cadastro Realizado com Sucesso !");
-
-                        window.location = "/login";
-
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        if (error.response.status === 409) {
-
-                            let msgError = error.response.data.message
-
-                            msgError = msgError.toUpperCase()
-
-                            if (msgError.includes("EMAIL")) {
-                                setErrorEmail(true);
-                                setHelperTextEmail("Email já em uso !")
-                            }
-
-                            else if (msgError.includes("CPF")) {
-                                setErrorCpf(true);
-                                setHelperTextCpf("CPF já em uso !")
-                            }
-
+                    let msg;
+                    for (let erro of listaErros) {
+                        if (erro.codes[1] === "Size.nome") {
+                            msg = "Deve conter pelo menos 4 caractéres!";
+                        } else if (erro.code === "Email") {
+                            msg = "Email inválido !";
+                        } else if (erro.code[1] === "Size.senha") {
+                            msg = "Deve conter pelo menos 3 caractéres!";
+                        } else if (erro.code === "CPF") {
+                            msg = "CPF inválido !";
+                        } else if (erro.code === "CEP") {
+                            msg = "CEP inválido !";
+                        } else if (erro.code === "genero") {
+                            msg = "Gênero Inválido! Selecione Uma Opção!";
                         }
-                        else if (error.response.status === 400) {
 
-                            let listaErros = error.response.data.errors
-
-                            console.log(listaErros)
-
-                            listaErros.map((erro) => {
-
-                                if (erro.codes[1] === "Size.nome") {
-
-                                    console.log(erro.codes[1])
-                                    console.log(erro.defaultMessage)
-
-                                    setErrorNome(true);
-                                    setHelperTextNome("Deve conter pelo menos 4 caractéres !")
-                                }
-
-                                if (erro.code === "Email") {
-
-                                    console.log(erro.code)
-                                    console.log(erro.defaultMessage)
-
-                                    setErrorEmail(true);
-                                    setHelperTextEmail("Email Inválido !")
-                                }
-
-                                if (erro.codes[1] === "Size.senha") {
-
-                                    console.log(erro.codes[1])
-                                    console.log(erro.defaultMessage)
-
-                                    setErrorSenha(true);
-                                    setHelperTextSenha("Deve Conter Pelo Menos 3 Caractéres !")
-                                }
-
-                                if (erro.code === "CPF") {
-
-                                    console.log(erro.code)
-                                    console.log(erro.defaultMessage)
-
-                                    setErrorCpf(true);
-                                    setHelperTextCpf("CPF Inválido !")
-                                }
-
-                                if (erro.code === "CEP") {
-
-                                    console.log(erro.code)
-                                    console.log(erro.defaultMessage)
-
-                                    setErrorCep(true);
-                                    setHelperTextCep("CEP Inválido !")
-                                }
-
-                                if (erro.code === "Sexo") {
-
-                                    console.log(erro.code)
-                                    console.log(erro.defaultMessage)
-
-                                    setErrorSexo(true);
-                                    setHelperTextSexo("Sexo Inválido! Selecione Uma Opção !")
-                                }
-
-                            })
+                        if (msg) {
+                            erros.push(msg);
                         }
-                    })
+                    }
+
+                    setErrosServidor(erros);
+                }
             }
+
+
+            console.log("Erros:")
+            console.log(erros);
+
+            for (let i = 0; i < erros.length; i++) setErrosServidor((errosServidor) => [...errosServidor, erros[i]]);
         }
+
+        api.post(`/${categoria.current.toLowerCase()}s/cadastro`, dadosUsuario)
+            .then((res) => {
+                sessionStorage.EMAIL = res.data.email;
+                alert("Cadastro Realizado com Sucesso!");
+                navigate("/login");
+            })
+            .catch((error) => errorCatch(error));
     }
 
     return (
-        <>
-            <Box sx={useStyles().boxVoltar}>
-                <Link to="/" style={{ color: 'black', fontWeight: 'bold' }}>{'< Voltar'}</Link>
+        <Design titulo="Criar uma conta" errosServidor={errosServidor} setErrosServidor={setErrosServidor}>
+            <Box sx={useStyles({
+                "gridTemplateColumns": etapa === 4
+            }).formInputContainer}>
+                {
+                    etapa === 1 ? <EtapaUm formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null
+                }
+                {
+                    etapa === 2 ? <EtapaDois formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null
+                }
+                {
+                    etapa === 3 ? <EtapaTres formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null
+                }
+                {
+                    etapa === 4 ? <EtapaFinal formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null
+                }
             </Box>
-            <Box sx={useStyles().background}>
+            <Box sx={classes.etapaContainer}>
+                <Box sx={classes.btnContainer}>
+                    {
+                        etapa < 4
+                            ? <Button variant="contained" onClick={proximaEtapa} sx={classes.btnProxima}>
+                                Próxima
+                            </Button>
+                            : <Button variant="contained" onClick={cadastrar} sx={classes.btnCadastrar}>
+                                Criar Conta
+                            </Button>
+                    }
 
-                <Box sx={useStyles().boxForm}>
-                    <Logo height={{ xs: '30px', sm: '40px', xl: '40px' }} />
-                    <Box sx={useStyles().boxFormInputs}>
-
-                        <Box sx={useStyles().boxInputs}>
-
-                            <TextField id="ipt-nome" onChange={(e) => setNome(e.target.value)} label="Nome" variant="standard" error={errorNome} helperText={helperTextNome} />
-                            <TextField id="ipt-email" onChange={(e) => setEmail(e.target.value)} label="Email" variant="standard" error={errorEmail} helperText={helperTextEmail} />
-                            <InputSenha id="ipt-senha" onChange={(e) => { setSenha(e.target.value) }} error={errorSenha} helperText={helperTextSenha} label={'Senha'} />
-                            <InputSenha id="ipt-confirmar-senha" onChange={(e) => setConfirmarSenha(e.target.value)} error={errorConfirmarSenha} helperText={helperTextConfirmarSenha} label={'Confirmar Senha'} />
-                        </Box>
-
-                        <Box sx={useStyles().boxInputs}>
-
-                            <InputMask mask='999.999.999-99' value={cpf} onChange={(e) => setCpf(e.target.value)}>
-                                {() => (
-                                    <TextField id="ipt-cpf" label="CPF" variant="standard" error={errorCpf} helperText={helperTextCpf} />
-                                )}
-                            </InputMask>
-                            
-                            <Box sx={{width:'100%'}}>
-                                <InputMask mask='99999-999' value={cep} onChange={(e) => setCep(e.target.value)}>
-                                    {() => (
-                                        <TextField id="ipt-cep" label="CEP" variant="standard" error={errorCep} helperText={helperTextCep} fullWidth = {true}/>
-                                    )}
-                                </InputMask>
-                                <TooltipMaterial title={txtPorquePedimosCep} placement="bottom-start" arrow = {true}>
-                                    <Typography sx={{color: '#2daf5a', fontWeight: 'bold'}}>Por que pedimos seu cep ?</Typography>
-                                </TooltipMaterial>
-                            </Box>
-
-                            <FormControl error={errorSexo} >
-                                <FormLabel id="demo-radio-buttons-group-label">Sexo: </FormLabel>
-                                <RadioGroup sx={{ paddingLeft: '2%' }}
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="male"
-                                    name="radio-buttons-group" onChange={(e) => setSexo(e.target.value)}>
-                                    <FormControlLabel value="Masculino" control={<Radio size="16px" />} label="Masculino" />
-                                    <FormControlLabel value="Feminino" control={<Radio size="16px" />} label="Feminino" />
-                                    <FormControlLabel value="Outros" control={<Radio size="16px" />} label="Outros" />
-                                </RadioGroup>
-                                {errorSexo ? <Typography sx={{
-                                    fontSize: '12px',
-                                    color: '#d32f2f'
-                                }} >{helperTextSexo}</Typography> : null}
-                            </FormControl>
-                        </Box>
-                    </Box>
-                    <Button variant="contained"
-                        onClick={cadastrar}
-                        sx={useStyles().btnCadastrar}>
-                        Cadastrar
-                    </Button>
-                    <Typography sx={useStyles().txtPossuiConta}>Já Possui Conta? <Link to="/login" style={{ color: 'black', fontWeight: 'bold' }}> Fazer Login</Link></Typography>
+                    {
+                        etapa > 1
+                            ? <Typography sx={classes.voltarOption} onClick={voltarEtapa}>Voltar</Typography>
+                            : null
+                    }
                 </Box>
+                {
+                    etapa === 1 ? <Typography sx={classes.txtPossuiConta}>Já Possui Conta? <Link to="/login" style={{ color: 'black', fontWeight: 'bold' }}> Fazer Login</Link></Typography> : null
+                }
             </Box>
-        </>
+        </Design>
     );
 }
-
 
 export default Cadastro;

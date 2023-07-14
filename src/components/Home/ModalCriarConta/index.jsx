@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Box, Button,
     Typography, Modal,
@@ -9,30 +9,36 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useStyles } from './modal.styles.js';
 import iconeProfessor from '../../../imgs/icone-professor-v2.png'
 import iconeAluno from '../../../imgs/icone-aluno.png'
+import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 
 
 
 function ModalCriarConta(props) {
+    const navigate = useNavigate();
+    const Transition = React.forwardRef(
+        (props, ref) => {return <Slide direction="up" ref={ref} {...props} />}
+    );
+    const classes = useStyles();
+    const [categoria, setCategoria] = React.useState('');
+    const naoEhPrimeiraRenderizacao = useRef(false);
 
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
-
-    function redirecionarProfessor() {
-        window.location.href = `/cadastro?categoria=Professor`;
-    }
-    function redirecionarAluno() {
-        window.location.href = `/cadastro?categoria=Aluno`;
-    }
+    useEffect(
+        () => {
+            if (naoEhPrimeiraRenderizacao.current) navigate(`cadastro?categoria=${categoria}`);
+            else naoEhPrimeiraRenderizacao.current = true;
+        },
+        [categoria]
+    )
 
     return (
         <>
             <Modal
-                open={props.open}
+                open={props.visibilidade}
                 onClose={props.closeModal}
                 Transition={Transition}
             >
-                <Box sx={useStyles().background}>
+                <Box sx={classes.background}>
                     <Box sx={{
                         width: '100%',
                         display: 'flex',
@@ -48,20 +54,20 @@ function ModalCriarConta(props) {
                             <CloseIcon sx={{ fontSize: '2rem !important' }} />
                         </IconButton>
                     </Box>
-                    <Typography sx={useStyles().titulo} variant="h4">
+                    <Typography sx={classes.titulo} variant="h4">
                         Como você gostaria de se cadastrar ?
                     </Typography>
-                    <Typography sx={useStyles().subtitulo} variant="subtitle1">
+                    <Typography sx={classes.subtitulo} variant="subtitle1">
                         Para fazer o cadastro, é necessário saber o que você é
                     </Typography>
-                    <Box sx={useStyles().boxCards}>
+                    <Box sx={classes.boxCards}>
 
-                        <Button sx={useStyles().card} onClick={redirecionarProfessor}>
+                        <Button sx={classes.card} onClick={() => setCategoria('Professor')}>
                             <Box>
-                                <Typography sx={useStyles().tituloCard} variant="h5">
+                                <Typography sx={classes.tituloCard} variant="h5">
                                     Sou Professor
                                 </Typography>
-                                <Typography sx={useStyles().subtituloCard} variant="subtitle1">
+                                <Typography sx={classes.subtituloCard} variant="subtitle1">
                                     Quero ensinar a tocar
                                 </Typography>
                             </Box>
@@ -69,26 +75,26 @@ function ModalCriarConta(props) {
                             <img src={iconeProfessor} alt="" width="28%"/>
                         </Button>
 
-                        <Typography sx={useStyles().ouText} variant="h5">
+                        <Typography sx={classes.ouText} variant="h5">
                             ou
                         </Typography>
 
-                        <Button sx={useStyles().card} onClick={redirecionarAluno}>
+                        <Button sx={classes.card} onClick={() => setCategoria('Aluno')}>
                             <Box>
-                                <Typography sx={useStyles().tituloCard} variant="h5">
+                                <Typography sx={classes.tituloCard} variant="h5">
                                     Sou Aluno
                                 </Typography>
-                                <Typography sx={useStyles().subtituloCard} variant="subtitle1">
+                                <Typography sx={classes.subtituloCard} variant="subtitle1">
                                     Quero aprender a tocar
                                 </Typography>
                             </Box>
                                 <img src={iconeAluno} alt="" width="30%"/>
                         </Button>
                     </Box>
-                    <Typography sx={useStyles().loginTexto}>
+                    <Typography sx={classes.loginTexto}>
                         Já possuo uma conta. 
                         <Link to="/login" onClick={props.onClickInTelaLogin}> 
-                            <Typography sx={useStyles().loginLink}>
+                            <Typography sx={classes.loginLink}>
                                 Fazer Login
                             </Typography>
                         </Link>

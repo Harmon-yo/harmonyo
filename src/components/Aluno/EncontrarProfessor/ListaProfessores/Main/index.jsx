@@ -2,12 +2,13 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorResumidoCard from "../ProfessorResumidoCard/index.jsx";
+import api from "../../../../../api.js";
 import "./style.css";
 
 const lista = [
     {
         nome: "João Silva",
-        ltInstrumentos: [{nome: "Piano"}, {nome: "Violino"}, {nome: "Violoncelo"}, {nome: "Viola"}],
+        ltInstrumentos: [{ nome: "Piano" }, { nome: "Violino" }, { nome: "Violoncelo" }, { nome: "Viola" }],
         idade: 35,
         bairro: "Centro",
         distancia: 10,
@@ -20,7 +21,7 @@ const lista = [
     },
     {
         nome: "Maria Oliveira",
-        ltInstrumentos: [{nome: "Piano"}, {nome: "Violino"}, {nome: "Violoncelo"}, {nome: "Viola"}],
+        ltInstrumentos: [{ nome: "Piano" }, { nome: "Violino" }, { nome: "Violoncelo" }, { nome: "Viola" }],
         idade: 28,
         bairro: "Vila Madalena",
         distancia: 5,
@@ -34,6 +35,21 @@ const lista = [
 ];
 
 function ListaProfessores(props) {
+    const [listaProfessores, setListaProfessores] = React.useState([]);
+
+    const config = {
+        headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    };
+
+    React.useEffect(() => {
+        api.get(`/professor?p=${props.parametrosPesquisa}`).then((response) => {
+            setListaProfessores(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [props.parametrosPesquisa]);
+
+
     return (
         <Box>
             <Box>
@@ -43,7 +59,7 @@ function ListaProfessores(props) {
             </Box>
             <Card className="professores-cards">
                 {
-                    props.professores.map((professor) => (
+                    listaProfessores.map((professor) => (
                         <ProfessorResumidoCard nome={professor.nome} instrumentos={professor.ltInstrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
                     ))
                 }
