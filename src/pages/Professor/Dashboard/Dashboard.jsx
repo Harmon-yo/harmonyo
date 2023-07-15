@@ -14,16 +14,6 @@ import {
     Tooltip,
 } from "@mui/material";
 
-/* ================= Navbar =================== */
-
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ChatIcon from '@mui/icons-material/ChatBubbleOutline';
-import SearchIcon from '@mui/icons-material/Search';
-import FeedbackIcon from '@mui/icons-material/RateReviewOutlined';
-import PedidosIcon from '@mui/icons-material/GradingOutlined';
-import CalendarioIcon from '@mui/icons-material/CalendarTodayOutlined';
-import ClassIcon from '@mui/icons-material/Class';
-
 /* ================= Icone ==================== */
 
 import violaoIcon from "../../../imgs/violao.png";
@@ -41,34 +31,6 @@ import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 import { useNavigate } from "react-router-dom";
 
-const opcoesNavbar = [
-    {
-        titulo: "Dashboard",
-        icon: DashboardIcon,
-        active: true,
-    },
-    {
-        titulo: "Agenda",
-        icon: CalendarioIcon,
-        active: false,
-        href: "/agenda"
-    },
-    {
-        titulo: "Aulas",
-        icon: ClassIcon,
-        active: false
-    },
-    {
-        titulo: "Chat",
-        icon: ChatIcon,
-        active: false
-    },
-    {
-        titulo: "Pedidos",
-        icon: PedidosIcon,
-        active: false
-    }
-];
 
 function criarInstrumento(img, nome, quantidade, valor) {
     let valorTotal = valor * quantidade;
@@ -105,7 +67,7 @@ function DashboardProfessor() {
     }, [])
 
     return (
-        <EstruturaPaginaUsuario opcoesNavbar={opcoesNavbar}>
+        <EstruturaPaginaUsuario tela="dashboard">
             <Box className="pagina-container">
                 <Tabs value={value} onChange={handleChange} aria-label="tabs" className="dashboard-professor-tabs">
                     <Tab label="Visão Mensal" {...getTabProps(0)} />

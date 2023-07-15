@@ -3,15 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import "./style.css";
 
-/* ================= Navbar =================== */
-
-import {
-    ChatBubbleOutline as ChatIcon,
-    Search as SearchIcon,
-    RateReviewOutlined as FeedbackIcon,
-    GradingOutlined as PedidosIcon,
-    CalendarTodayOutlined as CalendarioIcon
-} from '@mui/icons-material';
 
 /* ================= Componentes ==================== */
 
@@ -27,34 +18,7 @@ import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 
 
-const opcoesNavbar = [
-    {
-        titulo: "Encontrar",
-        icon: SearchIcon,
-        active: true,
-    },
-    {
-        titulo: "Agenda",
-        icon: CalendarioIcon,
-        active: false,
-        href: "/agenda"
-    },
-    {
-        titulo: "Pedidos",
-        icon: PedidosIcon,
-        active: false
-    },
-    {
-        titulo: "Chat",
-        icon: ChatIcon,
-        active: false
-    },
-    {
-        titulo: "Feedbacks",
-        icon: FeedbackIcon,
-        active: false
-    }
-];
+
 
 const cidadesCadastradas = [
     'São Paulo',
@@ -112,7 +76,7 @@ function EncontrarProfessor(props) {
     }, [parametros]);
 
     return (
-        <EstruturaPaginaUsuario opcoesNavbar={opcoesNavbar} errosState={{ erros, setErros }}>
+        <EstruturaPaginaUsuario tela="encontrar" errosState={erros}>
             <Box className="pagina-container">
                 <FiltroDePesquisaCard parametros={parametros} cidade={cidade} isCarregando={isCarregando} />
                 <Box className="encontrar-professor-conteudo">

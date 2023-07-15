@@ -76,8 +76,8 @@ function Login() {
                 sessionStorage.TOKEN = res.data.token
 
 
-                if (res.data.categoria === "Aluno") navigate(`/alunos/encontrar-professor`);
-                else if (res.data.categoria === "Professor") navigate(`/professores/dashboard`);
+                if (res.data.categoria === "Aluno") navigate(`/aluno/encontrar-professor`);
+                else if (res.data.categoria === "Professor") navigate(`/professor/dashboard`);
             })
             .catch((error) => {
                 let response = error.response;
