@@ -1,0 +1,39 @@
+.head {
+  border: 0px !important;
+}
+
+.topCelula {
+  width: fit-content;
+  padding-left: 0px !important;
+  margin: 0px;
+  border: 0px !important;
+  font-size: 20px !important;
+  color: #777 !important;
+
+}
+
+.bodyCelula {
+  width: fit-content !important;
+  padding-left: 0px !important;
+  margin: 0px;
+  border: 0px !important;
+  font-size: 20px !important;
+  font-family: "Nunito" !important;
+  vertical-align: middle !important; 
+
+}
+
+.botao {
+  border-color: #d6d6d6 !important;
+  font-size: 20px !important;
+  font-family: "Nunito" !important;
+  color: #777 !important;
+  font-weight: 600 !important;
+  text-transform: capitalize !important;
+}
+
+.conteudoTabela{
+  height: 100% !important;
+  overflow: scroll !important;
+
+}

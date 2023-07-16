@@ -1,0 +1,37 @@
+.titulo{
+    font-size: 32px !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    width: fit-content !important;
+}
+.botao{
+    background-color: #F4F4F4 !important;
+    cursor: pointer;
+    margin: 0px;
+    border-radius: 10px;
+}
+
+.container{
+    display: flex !important;
+    padding-left: 0px !important;
+    width: 100% !important;
+    justify-content: space-between;
+    flex-direction: row !important;
+    margin-bottom: 1rem !important;
+    border-bottom: 2px solid #099250 !important;
+    padding: 0px !important;
+}
+.direita{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 40%;
+    margin-bottom: 5px;
+   
+}
+.icon{
+    width: 25px;
+}

@@ -1,7 +1,7 @@
 .footer {
     display: flex;
     width: 100%;
-    height: auto; /* 25vh */
+    height: auto!important; /* 25vh */
     flex-direction: column;
     align-items: center;
     justify-content: space-around;

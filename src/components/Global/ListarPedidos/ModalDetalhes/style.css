@@ -1,0 +1,117 @@
+.containerModal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 90%;
+    background-color: #fff;
+    border: 2px solid #000;
+    box-shadow: 24px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: "Nunito" !important;
+}
+
+.tituloModal{
+    font-size: 36px!important;
+    font-weight: 600!important;
+    text-align: left!important;
+    margin-bottom: 20px!important;
+    font-family: "Nunito" !important;
+}
+
+.tituloDetalhe{
+    font-size: 20px!important;
+    font-weight: bold!important;
+    text-align: left!important;
+    font-family: "Nunito" !important;
+}
+.valorDetalhe{
+    font-size: 20px!important;
+    text-align: left!important;
+    font-family: "Nunito" !important;
+    margin-left: 10px!important;
+}
+
+.conteudoB1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px!important;
+    font-family: "Nunito" !important;
+    width: fit-content;
+}
+.conteudoB{
+    height: fit-content!important;
+}
+
+.tudoConteudo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 40%;
+    margin-top: 30px;
+}
+
+.conteudoTop{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.descHistorico{
+    font-size: 20px!important;
+    text-align: left!important;
+    font-family: "Nunito" !important;
+}
+
+.footerModal{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.botoesModal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+    align-self: center;
+    margin-top: 20px;
+    font-family: "Nunito" !important;
+}
+.btnModal{
+    width: 185px!important;
+    height: 54px!important;
+    font-size: 20px!important;
+    font-weight: bolder!important;
+    text-transform: capitalize!important;
+    border-radius: 5px!important;
+    color: #fff!important;
+}
+
+
+
+.recusar, .recusar:hover{
+    background-color: #DE4343;
+}
+
+.aceitar, .aceitar:hover{
+    background-color: #099250;
+}
+.txtChat{
+    font-size: 20px!important;
+    font-weight: bolder!important;
+    text-transform: capitalize!important;
+    color: #000!important;
+}
+.msgChat{
+    width: 24%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: center;
+}

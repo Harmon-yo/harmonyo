@@ -1,0 +1,17 @@
+.lupa{
+    width: 25px;
+}
+.filtro{
+    background-color: #F4F4F4;
+    border-radius: 10px;
+}
+.input_filtro{
+    margin-left: 8px;
+    font-family: "Nunito" !important;
+}
+.botao{
+    width: fit-content;
+    height: fit-content;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}

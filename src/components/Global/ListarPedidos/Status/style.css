@@ -1,0 +1,29 @@
+.status {
+  font-family: "Nunito" !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  border-radius: 50px;
+  padding: 8px;
+  width: fit-content;
+  margin: 0px !important;
+  display: inline-block;
+  vertical-align: top;
+}
+.recusadoCancelado {
+  background-color: #f6e6e6;
+  color: #ae8383;
+}
+
+.confirmado {
+  background-color: #b9edd4;
+  color: #099250;
+}
+.pendente {
+  background-color: #fff0e3;
+  color: #d09d6e;
+}
+
+.concluido {
+  background-color: #C8EBFF;
+  color: #4796DE;
+}
