@@ -35,7 +35,7 @@ function Design(props) {
                     })
                 }
             </Box>
-            <Card sx={classes.formCard}>
+            <Card className="" sx={classes.formCard}>
                 <Logo height={{ xs: '10px', sm: '25px', xl: '35px' }} />
                 <Typography sx={classes.formTitle}>{props.titulo}</Typography>
                 {
