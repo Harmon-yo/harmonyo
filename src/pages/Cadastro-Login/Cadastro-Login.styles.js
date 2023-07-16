@@ -148,10 +148,7 @@ const makeStyles = (props) => {
         },
         btnLogin: {
             width: '80%',
-            height: {
-                md: '7%',
-                xl: 'auto'
-            },
+            height: "auto",
             backgroundColor: "#29c760 !important",
             color: "#fff !important",
             fontWeight: 'bold',
