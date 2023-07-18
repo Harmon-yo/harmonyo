@@ -5,14 +5,20 @@ import { Box, Alert, IconButton } from "@mui/material";
 
 import { Close as CloseIcon } from "@mui/icons-material";
 import "./style.css";
+import { useEffect } from "react";
 
 /* =================== Navbar ======================== */
 
 function EstruturaPaginaUsuario(props) {
-  const { erros, setErros } = useState([]);
-  if (props.errosState) {
-    setErros(props.errosState);
-  }
+  const [erros, setErros] = useState([]);
+
+  useEffect(() => {
+    if (props.errosState) {
+      setErros(props.errosState.erros);
+    }
+  }, [props.errosState]);
+
+
   return (
     <Box className="mui-root">
       <Box className="erro-container">
@@ -27,9 +33,7 @@ function EstruturaPaginaUsuario(props) {
                     aria-label="close"
                     color="inherit"
                     size="small"
-                    onClick={() => {
-                      setErros(erros.filter((_, i) => i !== index));
-                    }}
+                    onClick={() => props.errosState.setErros(erros.filter((_, i) => i !== index))}
                   >
                     <CloseIcon fontSize="inherit" />
                   </IconButton>
