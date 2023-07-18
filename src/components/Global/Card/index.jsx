@@ -5,7 +5,7 @@ import "./style.css";
 
 function Card(props) {
     return (
-        <Box className={`card ${props.className}`}>
+        <Box className={`card ${props.className}`} sx={props.sx}>
             {props.children}
         </Box>
     );
