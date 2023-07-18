@@ -1,0 +1,19 @@
+.chart-title{
+    font-weight: 600!important;
+    font-size: 25px!important;
+    font-family: "Nunito"!important;
+  
+}
+
+.chart-card{
+    height: 10  0%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;    
+}
+
+.chart-info-container{
+    height: 342px;
+
+}

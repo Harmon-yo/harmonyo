@@ -96,11 +96,11 @@
 
 
 .recusar, .recusar:hover{
-    background-color: #DE4343;
+    background-color: #DE4343 !important;
 }
 
 .aceitar, .aceitar:hover{
-    background-color: #099250;
+    background-color: #099250 !important;
 }
 .txtChat{
     font-size: 20px!important;

@@ -41,16 +41,16 @@ function AvatarUsuario(props) {
                 aria-controls={open ? 'avatar-usuario-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}>N</Avatar>
+                onClick={handleClick}>{sessionStorage.getItem("NOME").charAt(0)}</Avatar>
 
             <Popup menuId="avatar-usuario-menu" buttonClassName="avatar-usuario-botao"
                 anchorEl={anchorEl} open={open} handleClose={handleClose}>
                 <Box className="avatar-usuario-menu-user-info">
                     <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                        sx={{ bgcolor: "#099250" }}>N</Avatar>
+                        sx={{ bgcolor: "#099250" }}>{sessionStorage.getItem("NOME").charAt(0)}</Avatar>
                     <Box className="avatar-usuario-menu-user-info-text">
-                        <Typography className="avatar-usuario-menu-nome">Gustavo Pereira</Typography>
-                        <Typography className="avatar-usuario-menu-email">gustavo_pereira@hotmail.com</Typography>
+                        <Typography className="avatar-usuario-menu-nome">{sessionStorage.getItem("NOME")}</Typography>
+                        <Typography className="avatar-usuario-menu-email">{sessionStorage.getItem("EMAIL")}</Typography>
                     </Box>
                 </Box>
                 <Box className="opcoes-container">

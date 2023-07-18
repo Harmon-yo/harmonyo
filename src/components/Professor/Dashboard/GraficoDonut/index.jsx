@@ -5,8 +5,7 @@ import Card from "../../../Global/Card/index.jsx";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { Doughnut } from "react-chartjs-2";
 import { useState } from "react";
-
-
+import "./style.css";
 import {
   Chart as ChartJS,
   Legend,
@@ -15,10 +14,17 @@ import {
   LinearScale,
   Tooltip,
   BarElement,
-  ArcElement
+  ArcElement,
 } from "chart.js";
-ChartJS.register(Legend, Title, CategoryScale, LinearScale, BarElement, Tooltip, ArcElement);
-
+ChartJS.register(
+  Legend,
+  Title,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  ArcElement
+);
 
 function GraficoDonut() {
   const [aulasCanceladas, setAulasCanceladas] = useState(0);
@@ -56,6 +62,8 @@ function GraficoDonut() {
         label: "Quantidade de aulas",
         data: [aulasCanceladas, aulasRealizadas, aulasSolicitadas],
         backgroundColor: ["#DF3939", "#39DF73", "#0263FF"],
+        cutout: "80%",
+        hoverOffset: 4,
       },
     ],
   };
@@ -64,7 +72,7 @@ function GraficoDonut() {
     responsive: true,
     plugins: {
       legend: {
-        display: false,
+        display: true,
         position: "right",
       },
       title: {
@@ -73,51 +81,27 @@ function GraficoDonut() {
     },
   };
 
-  if (carregando){
-
-  return(
-    <Card className="chart-card">
-        <Typography className="chart-title" variant="h5">
-          Histórico de aulas
-        </Typography>
-        <Box className="chart-info-container">
-          <Box className="chart-container">
-    <CircularProgress style={{color: "#16B364"}}/>
-    </Box>
-    </Box>
-    </Card>
-
-    );
-  }
-  else {
+  if (carregando) {
     return (
       <Card className="chart-card">
         <Typography className="chart-title" variant="h5">
-          Histórico de aulas
+          Aulas nesse mês
         </Typography>
         <Box className="chart-info-container">
           <Box className="chart-container">
-            <Doughnut
-              options={chartOptionsDoughnut}
-              data={chartDataDoughnut}
-              height="200px"
-              width="200px"
-            />
+            <CircularProgress style={{ color: "#16B364" }} />
           </Box>
-          <Box className="chart-container">
-            <Typography className="chart-subtitle">
-              Total de aulas solicitadas: {aulasSolicitadas}
-            </Typography>
-            <Typography className="chart-subtitle">
-              Total de aulas canceladas: {aulasCanceladas}
-            </Typography>
-            <Typography className="chart-subtitle">
-              Total de aulas realizadas: {aulasRealizadas}
-            </Typography>
-            <Typography className="chart-subtitle">
-              Taxa de conversão: {aulasRealizadas / aulasSolicitadas * 100}%
-            </Typography>
-          </Box>
+        </Box>
+      </Card>
+    );
+  } else {
+    return (
+      <Card className="chart-card">
+        <Typography className="chart-title" variant="h5">
+          Aulas nesse mês
+        </Typography>
+        <Box className="chart-info-container">
+          <Doughnut options={chartOptionsDoughnut} data={chartDataDoughnut} />
         </Box>
       </Card>
     );

@@ -13,6 +13,7 @@ function Login() {
     sessionStorage.ID = "";
     sessionStorage.NOME = "";
     sessionStorage.TOKEN = "";
+    sessionStorage.EMAIL = "";
 
     useEffect(() => {
         setFormData({ ...formData, email: sessionStorage.EMAIL });
@@ -74,10 +75,10 @@ function Login() {
                 sessionStorage.NOME = res.data.nome;
                 sessionStorage.CATEGORIA = res.data.categoria;
                 sessionStorage.TOKEN = res.data.token
-
+                sessionStorage.EMAIL = res.data.email;
 
                 if (res.data.categoria === "Aluno") navigate(`/aluno/encontrar-professor`);
-                else if (res.data.categoria === "Professor") navigate(`/professor/dashboard`);
+               else if (res.data.categoria === "Professor") navigate(`/professor/dashboard`);
             })
             .catch((error) => {
                 let response = error.response;

@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
-import {
-    Box,
-    Tabs,
-    Tab,
-    Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Tooltip,
-} from "@mui/material";
 
+import { Box, Tabs, Tab } from "@mui/material";
+import "./style.css";
 /* ================= Icone ==================== */
 
 import violaoIcon from "../../../imgs/violao.png";
-
 
 /* ================= Componentes =================== */
 
@@ -25,68 +12,77 @@ import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUs
 import KpiDashboard from "../../../components/Professor/Dashboard/KpiDashboard/index.jsx";
 import TabelaMinhasAulas from "../../../components/Professor/Dashboard/TabelaMinhasAulas/index.jsx";
 import HistoricoAulasGraficoDonut from "../../../components/Professor/Dashboard/GraficoDonut/index.jsx";
-
+import GraficoBarraEmpilhada from "../../../components/Professor/Dashboard/GraficoBarraEmpilhada/index.jsx";
 /* ================= Utils ================= */
 import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 import { useNavigate } from "react-router-dom";
 
-
-function criarInstrumento(img, nome, quantidade, valor) {
-    let valorTotal = valor * quantidade;
-    return { img, nome, quantidade, valorTotal };
-}
-
-const instrumentosEnsinados = [
-    criarInstrumento(violaoIcon, "Violão", 3, 50),
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
-    criarInstrumento(violaoIcon, "Violão", 2, 40),
-]
-
 function DashboardProfessor() {
-    const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(0);
 
-    const handleChange = (evento, novoValor) => {
-        setValue(novoValor)
+  const handleChange = (evento, novoValor) => {
+    setValue(novoValor);
+  };
+
+  function getTabProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      className: "dashboard-professor-tabs-item",
+      "aria-controls": `simple-tabpanel-${index}`,
     };
+  }
 
-    function getTabProps(index) {
-        return {
-            id: `simple-tab-${index}`,
-            className: "dashboard-professor-tabs-item",
-            'aria-controls': `simple-tabpanel-${index}`,
-        };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (verificarToken()) {
+      navigate(-1);
     }
-
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (verificarToken()) {
-            navigate(-1);
-        }
-    }, [])
-
-    return (
-        <EstruturaPaginaUsuario tela="dashboard">
-            <Box className="pagina-container">
-                <Tabs value={value} onChange={handleChange} aria-label="tabs" className="dashboard-professor-tabs">
-                    <Tab label="Visão Mensal" {...getTabProps(0)} />
-                    <Tab label="Visão Geral" {...getTabProps(1)} />
-                </Tabs>
-                <Box className="kpi-container">
-                    <KpiDashboard titulo="Rendimento total" />
-                    <KpiDashboard titulo="Quantidade de alunos" />
-                    <KpiDashboard titulo="Quantidade de aulas" />
-                    <KpiDashboard titulo="Tempo de resposta" />
-
-                </Box>
-                <Box className="charts-container">
-                    <HistoricoAulasGraficoDonut />
-                    <TabelaMinhasAulas />
-                </Box>
+  }, []);
+  var visao = `Visão Geral - ${new Date().getFullYear()}`;
+  return (
+    <EstruturaPaginaUsuario tela="dashboard">
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="tabs"
+        className="dashboard-professor-tabs"
+      >
+        <Tab label="Visão Mensal" className="tab_dash" {...getTabProps(0)} />
+        <Tab label={visao} className="tab_dash" {...getTabProps(1)} />
+      </Tabs>
+      <Box className="pagina-container-dash">
+        {value === 0 ? (
+          <>
+            <Box className="kpi-container">
+              <KpiDashboard titulo="Rendimento total" />
+              <KpiDashboard titulo="Quantidade de alunos" />
+              <KpiDashboard titulo="Quantidade de aulas" />
+              <KpiDashboard titulo="Tempo de resposta" />
             </Box>
-        </EstruturaPaginaUsuario>
-    )
+            <Box className="charts-container">
+              <HistoricoAulasGraficoDonut />
+              <TabelaMinhasAulas />
+            </Box>
+          </>
+        ) : (
+          <>
+            <Box className="kpi-container">
+              <KpiDashboard titulo="Rendimento total" />
+              <KpiDashboard titulo="Quantidade de alunos" />
+              <KpiDashboard titulo="Quantidade de aulas" />
+              <KpiDashboard titulo="Tempo de resposta" />
+            </Box>
+            <Box className="charts-container">
+              <GraficoBarraEmpilhada />
+              <TabelaMinhasAulas />
+            </Box>
+          </>
+        )}
+      </Box>
+    </EstruturaPaginaUsuario>
+  );
 }
 
 export default DashboardProfessor;

@@ -28,6 +28,7 @@ function KpiDashboard(props) {
     var url =
       "/professores/dashboard/mes-atual/rendimento/" + sessionStorage.ID;
     api.get(url, config).then((response) => {
+      console.log(url)
       setCarregando(false);
       setValor("R$ " + response.data);
     });
