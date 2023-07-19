@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import VLibras from "@djpfs/react-vlibras";
 const Home = React.lazy(() => import("./pages/Home"));
+const PerfilUsuario = React.lazy(() => import("./pages/Global/PerfilUsuario"));
 const Login = React.lazy(() => import("./pages/Cadastro-Login/Login/Login"));
 const ListarPedidos = React.lazy(() => import("./pages/Global/ListarPedidos"));
 const Cadastro = React.lazy(() =>
@@ -28,6 +29,7 @@ function Rotas() {
             <Route path="feedbacks" element={<></>} />
             <Route path="chat" element={<></>} />
             <Route path="pedidos" element={<ListarPedidos />} />
+            <Route path="perfil" element={<PerfilUsuario />} />
           </Route>
 
           <Route path="/aluno">

@@ -1,0 +1,132 @@
+.pagina-container {
+    width: 100%;
+    display: flex;
+    height: 80vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container-dados-pessoais {
+    width: 80%;
+    justify-content: space-between;
+    height: 35%;
+    display: flex;
+    flex-direction: row;
+}
+
+.box-foto-perfil{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    height: 100%;
+
+}
+.box-dados-pessoais {
+    width: 78%;
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 10px;
+    height: 100%;
+
+}
+.box-inputs-dados-pessoais-pt1{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+    justify-content: space-between;
+    height: auto;
+}
+
+.box-inputs-dados-pessoais-pt2{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+    justify-content: space-between;
+    height: auto;
+}
+
+.txt-nome{
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+.txt-idade{
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
+
+.box-titulo-e-edit-icon {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+
+.txt-titulo{
+    font-size: 32px !important;
+    font-weight: bold !important;
+}
+
+.container-sobre-mim-e-endereco {
+    width: 80%;
+    align-items: center;
+    min-height: 63%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+
+    border-radius: 10px;
+    overflow: scroll !important;
+}
+.box-sobre-mim {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 60%;
+}
+
+.txt-sobre-mim{
+    width: 95%;
+    font-size: 20px;
+}
+
+.linha-divisao-pagina{
+    width: 95%;
+    border-bottom: 1px solid black;
+}
+
+.box-endereco {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 80%;
+    margin-bottom: 20px;
+}
+
+.box-inputs-endereco-pt1{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+    justify-content: space-between;
+    height: auto;
+}
