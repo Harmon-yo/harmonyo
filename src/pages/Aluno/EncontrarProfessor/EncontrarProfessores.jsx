@@ -3,6 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import "./style.css";
 
+/* ================= Navbar =================== */
+
+import {
+    ChatBubbleOutline as ChatIcon,
+    Search as SearchIcon,
+    RateReviewOutlined as FeedbackIcon,
+    GradingOutlined as PedidosIcon,
+    CalendarTodayOutlined as CalendarioIcon
+} from '@mui/icons-material';
 
 /* ================= Componentes ==================== */
 
@@ -17,76 +26,128 @@ import BarraDePesquisa from "../../../components/Aluno/EncontrarProfessor/BarraD
 import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 
-
-
-
-const cidadesCadastradas = [
-    'São Paulo',
-    'Santo André',
-    'São Bernardo do Campo',
-]
-
 function EncontrarProfessor(props) {
-    let parametros = useRef("");
     const [erros, setErros] = useState([]);
+
+    const [parametrosStr, setParametrosStr] = useState("");
+
     const [cidade, setCidade] = useState("");
+    const [cidades, setCidades] = useState([]);
     const [professoresPopulares, setProfessoresPopulares] = useState([]);
     const [professoresFiltrados, setProfessoresFiltrados] = useState([]);
-    const isCarregando = professoresFiltrados.length === 0 && professoresPopulares.length === 0;
+    const isCarregando = professoresFiltrados.length === 0 && professoresPopulares.length === 0 && cidades.length === 0;
+    const [iniciarPesquisa, setIniciarPesquisa] = useState(false);
+
+
+    const [alcanceFiltro, setAlcanceFiltro] = useState({
+        precoMinimo: -1,
+        precoMaximo: -1,
+        distanciaMinima: -1,
+        distanciaMaxima: -1,
+    });
 
     const navigate = useNavigate();
 
     const requisicaoGet = (url) => {
-        const config = {
-            headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
-        };
-
-        return api.get(url, config);
+        return api.get(url/* , { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }  */);
     }
 
-    const exibirErro = (erro) => {
-        setErros((erros) => [...erros, erro]);
-    }
+    const exibirErro = (erro) => setErros((erros) => [...erros, erro]);
 
     useEffect(() => {
         /* if (verificarToken()) {
             navigate(-1);
         } */
-        requisicaoGet("/cidades").then((response) => {
-            setCidade(response.data[0]);
-        }).catch((error) => {
-            exibirErro("Erro ao carregar cidades cadastradas.");
-        });
-
-        // Pesquisa no banco de dados as cidades cadastradas
-        if (cidadesCadastradas.length === 0) setCidade("?");
-        else if (isCarregando) setCidade("Carregando...");
-        else setCidade(cidadesCadastradas[0]);
+        obterFiltrosPrincipais();
     }, []);
 
     useEffect(() => {
-        setProfessoresPopulares([]);
-        setProfessoresFiltrados([]);
+        if (cidades.length === 0 || alcanceFiltro.precoMinimo === -1 || alcanceFiltro.precoMaximo === -1 || 
+            alcanceFiltro.distanciaMinima === -1 || alcanceFiltro.distanciaMaxima === -1) return;
 
-        requisicaoGet(`/professores/busca?params=${parametros ? parametros : ""}`).then((response) => {
-            setProfessoresFiltrados(response.data);
-        }).catch((error) => {
-            exibirErro("Erro ao carregar professores.");
-        });
-    }, [parametros]);
+        console.log("Pesquisando professores...")
+        obterProfessores();
+
+    }, [parametrosStr]);
+
+    const obterFiltrosPrincipais = () => {
+        Promise.all([
+            requisicaoGet("/usuarios/filtro-minimo-maximo"),
+            requisicaoGet("/enderecos/cidades")
+        ]).then(
+            (responses) => {
+                console.log("Responses:")
+                console.log(responses);
+                let alcanceFiltro = responses[0].data;
+                let cidadesCadastradas = responses[1].data;
+
+                if (alcanceFiltro == null) exibirErro("Erro ao carregar valores do filtro.");
+                else if (cidadesCadastradas == null) exibirErro("Erro ao carregar cidades cadastradas.");
+                else {
+                    setAlcanceFiltro((alcanceFiltroAntigo) => ({
+                        ...alcanceFiltroAntigo,
+                        precoMinimo: alcanceFiltro.precoMinimo,
+                        precoMaximo: alcanceFiltro.precoMaximo,
+                        distanciaMinima: alcanceFiltro.distanciaMinima,
+                        distanciaMaxima: alcanceFiltro.distanciaMaxima,
+                    }));
+                    
+                    if (cidadesCadastradas.length === 0) setCidade("?");
+                    else {
+                        setCidades(cidadesCadastradas);
+                        setCidade(cidadesCadastradas[0]);
+                    }
+
+                    
+                }
+            }
+        )
+    };
+       
+
+    const obterProfessores = () => {
+        setProfessoresFiltrados([]);
+        setProfessoresPopulares([]);
+
+        requisicaoGet(`/professores/busca${parametrosStr ? `?params=${parametrosStr}` : ""}`)
+            .then((response) => {
+                console.log(response.data);
+                if (response.status == 204) {
+                    exibirErro("Nenhum professor encontrado.");
+                    setProfessoresFiltrados([]);
+                } else {
+                    setProfessoresFiltrados(response.data)
+                }
+            })
+            .catch(() => exibirErro("Erro ao carregar professores filtrados."));
+
+        requisicaoGet("/professores/populares")
+            .then((response) => {
+                console.log(response.data);
+                if (response.status == 204) {
+                    exibirErro("Nenhum professor encontrado.");
+                    setProfessoresPopulares([]);
+                } else {
+                    setProfessoresPopulares(response.data)
+                }
+            })
+            .catch(() => exibirErro("Erro ao carregar professores populares."));
+    };
+
 
     return (
-        <EstruturaPaginaUsuario tela="encontrar" errosState={erros}>
+        <EstruturaPaginaUsuario tela="encontrar" errosState={{ erros, setErros }}>
             <Box className="pagina-container">
-                <FiltroDePesquisaCard parametros={parametros} cidade={cidade} isCarregando={isCarregando} />
+                <FiltroDePesquisaCard parametrosStrState={{ parametrosStr, setParametrosStr }} cidade={cidade} isCarregando={isCarregando}
+                    alcanceFiltro={alcanceFiltro} iniciarPesquisaState={{iniciarPesquisa, setIniciarPesquisa}} />
                 <Box className="encontrar-professor-conteudo">
-                    <BarraDePesquisa cidadeState={{ cidade, setCidade }} isCarregando={isCarregando}/>
-                    <ProfessoresPopulares parametros={parametros} professoresPopularesState={{ professoresPopulares, setProfessoresPopulares }} isCarregando={isCarregando} />
+                    <BarraDePesquisa cidadeState={{ cidade, setCidade }} cidades={cidades} isCarregando={isCarregando} iniciarPesquisaState={{ iniciarPesquisa, setIniciarPesquisa }}/>
+                    <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} />
                     <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} />
                 </Box>
             </Box>
         </EstruturaPaginaUsuario>
-    )
+    );
 }
 
 export default EncontrarProfessor;

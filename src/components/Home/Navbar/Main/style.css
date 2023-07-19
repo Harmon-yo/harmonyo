@@ -1,39 +1,39 @@
 .navbar {
-    display: flex!important;
-    align-items: center!important;
-    justify-content: center!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 7vh !important;
     margin: 0 !important;
-    flex-grow: 1 !important;
+    flex-grow: 1;
 }
 
 .navbar-container {
     padding: 0 !important;
-    flex-direction: row!important;
+    flex-direction: row;
     display: flex !important;
-    align-items: center!important;
+    align-items: center;
 }
 
 .navbar-logo {
     margin-right: 2% !important;
 }
 .navbar-navigation-options {
-    display: flex!important;
-    flex-direction: row!important;
-    width: 40%!important;
-    flex-grow: 1!important;
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    flex-grow: 1;
 }
 
 .navbar-navigation-options-container {
-    display: flex!important;
-    flex-direction: row!important;
-    justify-content: space-between!important;
-    align-items: center!important;
-    width: 60%!important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
 }
 
 .navbar-navigation-options-item {
-    transition: all 0.1s ease-in-out!important;
+    transition: all 0.1s ease-in-out;
 }
 
 .navbar-navigation-options-item:hover {
@@ -41,10 +41,10 @@
 }
 
 .navbar-container-button {
-    display: flex!important;
-    justify-content: space-between!important;
-    align-items: center!important;
-    flex-grow: 0.3!important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 0.3;
 }
 
 .navbar-button-login, .navbar-button-cadastro {

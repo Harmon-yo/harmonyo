@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Skeleton } from "@mui/material";
+import { Box, Typography, Skeleton, CircularProgress } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorResumidoCard from "../ProfessorResumidoCard/index.jsx";
 import api from "../../../../../api.js";
@@ -34,21 +34,13 @@ const lista = [
     }
 ];
 
+const carregando = () => {
+    return (<CircularProgress color="success" />);
+}
+
 function ListaProfessores(props) {
-    const [listaProfessores, setListaProfessores] = React.useState([]);
 
-    const config = {
-        headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
-    };
-
-    React.useEffect(() => {
-        api.get(`/professor?p=${props.parametrosPesquisa}`).then((response) => {
-            setListaProfessores(response.data);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }, [props.parametrosPesquisa]);
-
+    
 
     return (
         <Box>
@@ -62,8 +54,8 @@ function ListaProfessores(props) {
                     ? carregando()
                     : <Card className="professores-cards">
                         {
-                            listaProfessores.map((professor) => (
-                                <ProfessorResumidoCard nome={professor.nome} instrumentos={professor.ltInstrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
+                            props.professores.map((professor, index) => (
+                                <ProfessorResumidoCard key={index} nome={professor.nome} instrumentos={professor.instrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
                             ))
                         }
                     </Card>
@@ -73,8 +65,6 @@ function ListaProfessores(props) {
     );
 }
 
-const carregando = () => {
-    return (<Skeleton variant="retangular" height={200} />);
-}
+
 
 export default ListaProfessores;

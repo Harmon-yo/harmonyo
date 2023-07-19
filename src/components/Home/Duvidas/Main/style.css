@@ -4,8 +4,8 @@
 
 .duvidas-container {
     display: flex !important;
-    flex-direction: column!important;
-    justify-content: center!important;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .duvidas-title {

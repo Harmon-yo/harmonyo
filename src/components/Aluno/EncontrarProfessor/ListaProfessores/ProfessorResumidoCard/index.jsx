@@ -55,8 +55,8 @@ function ProfessorResumidoCard(props) {
 
                 <Box className="professor-instrumentos-container">
                     {
-                        props.instrumentos.map((instrumento) => (
-                            <Card className="professor-instrumentos-card">
+                        props.instrumentos.map((instrumento, index) => (
+                            <Card className="professor-instrumentos-card" key={index}>
                                 <Typography variant="subtitle1" className="professor-instrumentos-card-texto">
                                     {instrumento.nome}
                                 </Typography>

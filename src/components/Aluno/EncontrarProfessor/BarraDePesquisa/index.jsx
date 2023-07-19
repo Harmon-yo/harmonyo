@@ -7,19 +7,17 @@ import "./style.css";
 import { useEffect } from "react";
 
 
-const cidadesCadastradas = [
-    'São Paulo',
-    'Santo André',
-    'São Bernardo do Campo',
-]
+
 
 function BarraDePesquisa(props) {
     
     const { cidade, setCidade } = props.cidadeState;
-    const [cidades, setCidades] = React.useState(cidadesCadastradas);
+    const { iniciarPesquisa, setIniciarPesquisa } = props.iniciarPesquisaState;
 
     const mudarCidade = (event) => {
         setCidade(event.target.value);
+        console.log()
+        setIniciarPesquisa(true);
     };
 
     return (
@@ -50,9 +48,9 @@ function BarraDePesquisa(props) {
                         }}
                     >
                         {
-                            cidades.map(
-                                (cidade) => (
-                                    <MenuItem value={cidade}>{cidade}</MenuItem>
+                            props.cidades.map(
+                                (cidade, index) => (
+                                    <MenuItem value={cidade} key={index}>{cidade}</MenuItem>
                                 ))
                         }
                     </Select>

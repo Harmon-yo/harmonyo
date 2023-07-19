@@ -16,7 +16,7 @@ import ClassIcon from '@mui/icons-material/Class';
 
 function NavbarLateral(props) {
     const [active, setActive] = React.useState(false);
-    var tipoUsuario = sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
+    var tipoUsuario = "aluno"/* sessionStorage.getItem("CATEGORIA").toLocaleLowerCase(); */
     const opcoesNavbarProfessor = [
         {
             titulo: "Dashboard",

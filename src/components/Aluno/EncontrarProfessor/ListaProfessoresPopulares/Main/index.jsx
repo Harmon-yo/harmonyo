@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Box, Typography, Pagination, Skeleton } from "@mui/material";
+import { Box, Typography, Pagination, Skeleton, CircularProgress } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorPopular from "../ProfessorPopularCard/index.jsx";
 import "./style.css";
@@ -40,21 +40,11 @@ const professores = [
   },
 ];
 
+const carregando = () => {
+  return (<CircularProgress color="success" />);
+}
+
 function ProfessoresPopulares(props) {
-  const [listaProfessores, setListaProfessores] = useState([]);
-
-  const config = {
-    headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
-  };
-
-  useEffect(() => {
-    /* api.get("/professores/populares", config).then((response) => {
-      setListaProfessores(response.data);
-      setCarregando(false);
-    }); */
-  }, [props.parametros.current]);
-
-
 
   return (
     <Box className="professores-populares-container">
@@ -64,14 +54,13 @@ function ProfessoresPopulares(props) {
         </Typography>
       </Box>
 
-
-
       {
         props.isCarregando
           ? carregando()
           : <Card className="professores-populares-card">
-            {professores.map((professor) => (
+            {props.professores.map((professor, index) => (
               <ProfessorPopular
+                key={index}
                 id={professor.id}
                 nome={professor.nome}
                 instrumentos={professor.instrumentos}
@@ -86,8 +75,6 @@ function ProfessoresPopulares(props) {
   );
 }
 
-const carregando = () => {
-  return (<Skeleton variant="retangular" height={100} />);
-}
+
 
 export default ProfessoresPopulares;

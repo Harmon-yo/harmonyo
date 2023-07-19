@@ -1,15 +1,15 @@
 .box {
-    width: 100%!important;;
-    height: 80vh!important;;
-    padding-right: calc(var(--espaco-padrao) * 10)!important;;
-    padding-left: calc(var(--espaco-padrao) * 10)!important;;
+    width: 100% ;
+    height: 80vh ;
+    padding-right: calc(var(--espaco-padrao) * 10);
+    padding-left: calc(var(--espaco-padrao) * 10);
 }
 
 .container {
-    width: 100%!important;;
-    height: 100%!important;;
-    padding-top: calc(var(--espaco-padrao) * 4)!important;;
-    padding-bottom: calc(var(--espaco-padrao) * 4)!important;;
+    width: 100%;
+    height: 100%;
+    padding-top: calc(var(--espaco-padrao) * 4);
+    padding-bottom: calc(var(--espaco-padrao) * 4);
     padding-right: 0 !important;
     padding-left: 0 !important;
 }
