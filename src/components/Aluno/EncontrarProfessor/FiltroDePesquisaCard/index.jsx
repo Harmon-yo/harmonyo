@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, Slider, FormGroup, FormControlLabel, Checkbox, Rating } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import Card from "../../../Global/Card";
@@ -11,7 +11,7 @@ function FiltroDePesquisaCard(props) {
         valor: [0, 0]
     });
 
-    const { parametrosStr, setParametrosStr } = props.parametrosStrState;
+    const { setParametrosStr } = props.parametrosStrState;
     const { iniciarPesquisa, setIniciarPesquisa } = props.iniciarPesquisaState;
 
     const [distancia, setDistancia] = useState({
@@ -99,7 +99,7 @@ function FiltroDePesquisaCard(props) {
         console.log("Filtragem dos parametros finalizada! Novo valor: " + novoParametro);
         
         setParametrosStr(novoParametro);
-        }
+    }
 
     const handleClickFiltro = () => {
         let parametros = {

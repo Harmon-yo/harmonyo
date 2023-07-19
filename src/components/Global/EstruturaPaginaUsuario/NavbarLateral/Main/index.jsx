@@ -16,36 +16,36 @@ import ClassIcon from '@mui/icons-material/Class';
 
 function NavbarLateral(props) {
     const [active, setActive] = React.useState(false);
-    var tipoUsuario = "aluno"/* sessionStorage.getItem("CATEGORIA").toLocaleLowerCase(); */
+    var tipoUsuario = sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
     const opcoesNavbarProfessor = [
         {
             titulo: "Dashboard",
             icon: DashboardIcon,
-            active: props.tela == "dashboard" ? true : false,
+            active: props.tela === "dashboard" ? true : false,
             href: `/${tipoUsuario}/dashboard`
         },
         {
             titulo: "Agenda",
             icon: CalendarioIcon,
-            active: props.tela == "agenda" ? true : false,
+            active: props.tela === "agenda" ? true : false,
             href: `/${tipoUsuario}/agenda`
         },
         {
             titulo: "Aulas",
             icon: ClassIcon,
-            active: props.tela == "aulas" ? true : false,
+            active: props.tela === "aulas" ? true : false,
             href: `/${tipoUsuario}/aulas`
         },
         {
             titulo: "Chat",
             icon: ChatIcon,
-            active: props.tela == "chat" ? true : false,
+            active: props.tela === "chat" ? true : false,
             href: `/chat`
         },
         {
             titulo: "Pedidos",
             icon: PedidosIcon,
-            active: props.tela == "pedidos" ? true : false,
+            active: props.tela === "pedidos" ? true : false,
             href: `/pedidos`
         }
     ];
@@ -54,31 +54,31 @@ function NavbarLateral(props) {
     {
         titulo: "Encontrar",
         icon: SearchIcon,
-        active: props.tela == "encontrar" ? true : false,
+        active: props.tela === "encontrar" ? true : false,
         href: `/${tipoUsuario}/encontrar-professor`
     },
     {
         titulo: "Agenda",
         icon: CalendarioIcon,
-        active: props.tela == "agenda" ? true : false,
+        active: props.tela === "agenda" ? true : false,
         href: `/${tipoUsuario}/agenda`
     },
     {
         titulo: "Pedidos",
         icon: PedidosIcon,
-        active: props.tela == "pedidos" ? true : false,
+        active: props.tela === "pedidos" ? true : false,
         href: `/pedidos`
     },
     {
         titulo: "Chat",
         icon: ChatIcon,
-        active: props.tela == "chat" ? true : false,
+        active: props.tela === "chat" ? true : false,
         href: `/chat`
     },
     {
         titulo: "Feedbacks",
         icon: FeedbackIcon,
-        active: props.tela == "feedbacks" ? true : false,
+        active: props.tela === "feedbacks" ? true : false,
         href: `/feedbacks`
     }
 ];
@@ -96,7 +96,7 @@ function NavbarLateral(props) {
 
                 <Box className="navbar-lateral-cards">
                     { 
-                        sessionStorage.getItem("CATEGORIA") == "Aluno" 
+                        sessionStorage.getItem("CATEGORIA") === "Aluno" 
                         ?
                        opcoesNavbarAluno.map((card) => (
                             <NavbarLateralCard href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />

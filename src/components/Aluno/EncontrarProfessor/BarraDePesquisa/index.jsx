@@ -12,22 +12,29 @@ import { useEffect } from "react";
 function BarraDePesquisa(props) {
     
     const { cidade, setCidade } = props.cidadeState;
-    const { iniciarPesquisa, setIniciarPesquisa } = props.iniciarPesquisaState;
+    const { setIniciarPesquisa } = props.iniciarPesquisaState;
+    const [ textoDeBusca, setTextoDeBusca ] = React.useState("");
 
     const mudarCidade = (event) => {
         setCidade(event.target.value);
-        console.log()
         setIniciarPesquisa(true);
     };
+
+    const mudarTextoDeBusca = (event) => setTextoDeBusca(event.target.value);
+    const verificarEnter = (event) => {
+        if (event.key === "Enter") {
+            /* Promise.all([
+                props.requisicaoGet(`/professores/busca?params=nome~*${textoDeBusca}*,cidade:${cidade}`),
+            ]) */
+        }
+    };
+
 
     return (
         <Card className="professores-busca-card">
             <Box className="professores-busca-lugar">
                 <LocationOnIcon />
-                {
-                    props.isCarregando
-                    ? <Typography sx={{ fontWeight: "700 !important"}}>Carregando...</Typography>
-                    : <FormControl sx={{width: '70%'}}>
+                <FormControl sx={{width: '70%'}}>
                     <Select
                         labelId="demo-simple-select-label"
                         id="select-cidade"
@@ -55,11 +62,11 @@ function BarraDePesquisa(props) {
                         }
                     </Select>
                 </FormControl>
-                }
             </Box>
             <Box className="professores-busca-campo">
-                <TextField className="busca-campo-input" placeholder="Buscar" InputProps={{
+                <TextField className="busca-campo-input" value={textoDeBusca} onKeyDown={verificarEnter} onChange={mudarTextoDeBusca} placeholder="Buscar" InputProps={{
                 endAdornment: <InputAdornment><SearchIcon/></InputAdornment>,
+                readOnly: props.isCarregando
             }}
                     
                  />

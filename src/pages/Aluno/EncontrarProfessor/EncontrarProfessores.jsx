@@ -109,29 +109,35 @@ function EncontrarProfessor(props) {
         setProfessoresFiltrados([]);
         setProfessoresPopulares([]);
 
-        requisicaoGet(`/professores/busca${parametrosStr ? `?params=${parametrosStr}` : ""}`)
-            .then((response) => {
-                console.log(response.data);
-                if (response.status == 204) {
-                    exibirErro("Nenhum professor encontrado.");
-                    setProfessoresFiltrados([]);
-                } else {
-                    setProfessoresFiltrados(response.data)
-                }
-            })
-            .catch(() => exibirErro("Erro ao carregar professores filtrados."));
+        Promise.all([
+            requisicaoGet(`/professores/busca${parametrosStr ? `?params=${parametrosStr}` : ""}`),
+            requisicaoGet("/professores/populares")
+        ]).then(
+            (responses) => {
+                console.log("Responses Professores:")
+                console.log(responses);
 
-        requisicaoGet("/professores/populares")
-            .then((response) => {
-                console.log(response.data);
-                if (response.status == 204) {
-                    exibirErro("Nenhum professor encontrado.");
-                    setProfessoresPopulares([]);
-                } else {
-                    setProfessoresPopulares(response.data)
+                let professoresFiltrados = responses[0].data;
+                let professoresPopulares = responses[1].data;
+
+                if (professoresFiltrados == null) exibirErro("Erro ao carregar professores filtrados.");
+                else if (professoresPopulares == null) exibirErro("Erro ao carregar professores populares.");
+                else {
+                    if (responses[0].status === 204) {
+                        exibirErro("Nenhum professor encontrado.");
+                        setProfessoresFiltrados([]);
+                    } else {
+                        setProfessoresFiltrados(professoresFiltrados);
+                    }
+
+                    if (responses[1].status === 204) {
+                        exibirErro("Nenhum professor encontrado.");
+                        setProfessoresPopulares([]);
+                    } else {
+                        setProfessoresPopulares(professoresPopulares);
+                    }
                 }
-            })
-            .catch(() => exibirErro("Erro ao carregar professores populares."));
+            });
     };
 
 
@@ -141,7 +147,7 @@ function EncontrarProfessor(props) {
                 <FiltroDePesquisaCard parametrosStrState={{ parametrosStr, setParametrosStr }} cidade={cidade} isCarregando={isCarregando}
                     alcanceFiltro={alcanceFiltro} iniciarPesquisaState={{iniciarPesquisa, setIniciarPesquisa}} />
                 <Box className="encontrar-professor-conteudo">
-                    <BarraDePesquisa cidadeState={{ cidade, setCidade }} cidades={cidades} isCarregando={isCarregando} iniciarPesquisaState={{ iniciarPesquisa, setIniciarPesquisa }}/>
+                    <BarraDePesquisa cidadeState={{ cidade, setCidade }} cidades={cidades} isCarregando={isCarregando} iniciarPesquisaState={{ setIniciarPesquisa }}/>
                     <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} />
                     <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} />
                 </Box>
