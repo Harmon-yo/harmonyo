@@ -30,7 +30,7 @@ function EncontrarProfessor(props) {
     const [erros, setErros] = useState([]);
 
     const [parametros, setParametros] = useState({});
-    const [parametrosStr, setParametrosStr] = useMemo(() => [transformarParametros(parametros)], [parametros]);
+    const parametrosStr = useMemo(() => [transformarParametros(parametros)], [parametros]);
 
     const [professoresPopulares, setProfessoresPopulares] = useState([]);
     const [professoresFiltrados, setProfessoresFiltrados] = useState([]);
@@ -42,14 +42,15 @@ function EncontrarProfessor(props) {
         setCarregou((carregou) => [...carregou, boolean]);
     }
 
-    const adicionarParametro = (chave, valor, operacao) => {
+    const adicionarParametro = (chave, valor, operacao, orPredicate=false) => {
         if (Object.keys(parametros).includes(chave)) {
             setParametros((parametros) => {
                 return {
                     ...parametros,
                     [chave]: {
                         valor: valor,
-                        operacao: operacao
+                        operacao: operacao,
+                        orPredicate: orPredicate
                     }
                 }
             });
@@ -59,7 +60,8 @@ function EncontrarProfessor(props) {
                     ...parametros,
                     [chave]: {
                         valor: valor,
-                        operacao: operacao
+                        operacao: operacao,
+                        orPredicate: orPredicate
                     }
                 }
             });
@@ -145,7 +147,7 @@ function EncontrarProfessor(props) {
 }
 
 function transformarParametros(parametros) {
-    let valor, operacao;
+    let valor, operacao, operadorLogico;
     let novoParametro = "";
 
     console.log("Iniciando Filtragem dos parametros...");
@@ -162,7 +164,10 @@ function transformarParametros(parametros) {
         if (Array.isArray(valor)) {
             novoParametro += `${chave}${operacao}${valor[0]}`;
 
-            for (let i = 1; i < valor.length; i++) novoParametro += `+${valor[i]}`;
+            if (parametros[chave].orPredicate) operadorLogico = ";"
+            else operadorLogico = "-";
+
+            for (let i = 1; i < valor.length; i++) novoParametro += `${operadorLogico}${valor[i]}`;
         } else novoParametro += `${chave}${operacao}${valor}`;
 
         if (chaves.indexOf(chave) < chaves.length - 1) novoParametro += ",";
