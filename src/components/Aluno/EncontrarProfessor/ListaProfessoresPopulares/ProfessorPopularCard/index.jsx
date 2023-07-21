@@ -5,7 +5,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import "./style.css";
 
 function ProfessorPopularCard(props) {
-  var status = props.status;
+  let status = props.ultimaVezOnline;
   //transformar status de localdatetime para horas
   var hora = status.substring(11, 13);
   var minuto = status.substring(14, 16);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import "./style.css";
@@ -29,81 +29,66 @@ import { verificarToken } from "../../../utils/index.js";
 function EncontrarProfessor(props) {
     const [erros, setErros] = useState([]);
 
-    const [parametrosStr, setParametrosStr] = useState("");
+    const [parametros, setParametros] = useState({});
+    const [parametrosStr, setParametrosStr] = useMemo(() => [transformarParametros(parametros)], [parametros]);
 
-    const [cidade, setCidade] = useState("");
-    const [cidades, setCidades] = useState([]);
     const [professoresPopulares, setProfessoresPopulares] = useState([]);
     const [professoresFiltrados, setProfessoresFiltrados] = useState([]);
-    const isCarregando = professoresFiltrados.length === 0 && professoresPopulares.length === 0 && cidades.length === 0;
+    const [carregou, setCarregou] = useState([]);
+    const isCarregando = !allAreTrue(carregou);
     const [iniciarPesquisa, setIniciarPesquisa] = useState(false);
 
+    const adicionarCarregamento = (boolean) => {
+        setCarregou((carregou) => [...carregou, boolean]);
+    }
 
-    const [alcanceFiltro, setAlcanceFiltro] = useState({
-        precoMinimo: -1,
-        precoMaximo: -1,
-        distanciaMinima: -1,
-        distanciaMaxima: -1,
-    });
+    const adicionarParametro = (chave, valor, operacao) => {
+        if (Object.keys(parametros).includes(chave)) {
+            setParametros((parametros) => {
+                return {
+                    ...parametros,
+                    [chave]: {
+                        valor: valor,
+                        operacao: operacao
+                    }
+                }
+            });
+        } else {
+            setParametros((parametros) => {
+                return {
+                    ...parametros,
+                    [chave]: {
+                        valor: valor,
+                        operacao: operacao
+                    }
+                }
+            });
+        }
+    }
 
     const navigate = useNavigate();
 
     const requisicaoGet = (url) => {
-        return api.get(url/* , { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }  */);
+        return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
     }
 
     const exibirErro = (erro) => setErros((erros) => [...erros, erro]);
 
     useEffect(() => {
-        /* if (verificarToken()) {
+        if (verificarToken()) {
             navigate(-1);
-        } */
-        obterFiltrosPrincipais();
+        }
     }, []);
 
     useEffect(() => {
-        if (cidades.length === 0 || alcanceFiltro.precoMinimo === -1 || alcanceFiltro.precoMaximo === -1 || 
-            alcanceFiltro.distanciaMinima === -1 || alcanceFiltro.distanciaMaxima === -1) return;
+        if (parametrosStr.length === 0) return;
 
         console.log("Pesquisando professores...")
         obterProfessores();
 
     }, [parametrosStr]);
 
-    const obterFiltrosPrincipais = () => {
-        Promise.all([
-            requisicaoGet("/usuarios/filtro-minimo-maximo"),
-            requisicaoGet("/enderecos/cidades")
-        ]).then(
-            (responses) => {
-                console.log("Responses:")
-                console.log(responses);
-                let alcanceFiltro = responses[0].data;
-                let cidadesCadastradas = responses[1].data;
-
-                if (alcanceFiltro == null) exibirErro("Erro ao carregar valores do filtro.");
-                else if (cidadesCadastradas == null) exibirErro("Erro ao carregar cidades cadastradas.");
-                else {
-                    setAlcanceFiltro((alcanceFiltroAntigo) => ({
-                        ...alcanceFiltroAntigo,
-                        precoMinimo: alcanceFiltro.precoMinimo,
-                        precoMaximo: alcanceFiltro.precoMaximo,
-                        distanciaMinima: alcanceFiltro.distanciaMinima,
-                        distanciaMaxima: alcanceFiltro.distanciaMaxima,
-                    }));
-                    
-                    if (cidadesCadastradas.length === 0) setCidade("?");
-                    else {
-                        setCidades(cidadesCadastradas);
-                        setCidade(cidadesCadastradas[0]);
-                    }
-
-                    
-                }
-            }
-        )
-    };
-       
+    
 
     const obterProfessores = () => {
         setProfessoresFiltrados([]);
@@ -144,16 +129,53 @@ function EncontrarProfessor(props) {
     return (
         <EstruturaPaginaUsuario tela="encontrar" errosState={{ erros, setErros }}>
             <Box className="pagina-container">
-                <FiltroDePesquisaCard parametrosStrState={{ parametrosStr, setParametrosStr }} cidade={cidade} isCarregando={isCarregando}
-                    alcanceFiltro={alcanceFiltro} iniciarPesquisaState={{iniciarPesquisa, setIniciarPesquisa}} />
+                <FiltroDePesquisaCard isCarregando={isCarregando} requisicaoGet={requisicaoGet}
+                    iniciarPesquisaState={{ iniciarPesquisa, setIniciarPesquisa }} adicionarCarregamento={adicionarCarregamento}
+                    adicionarParametro={adicionarParametro} exibirErro={exibirErro}/> 
                 <Box className="encontrar-professor-conteudo">
-                    <BarraDePesquisa cidadeState={{ cidade, setCidade }} cidades={cidades} isCarregando={isCarregando} iniciarPesquisaState={{ setIniciarPesquisa }}/>
+                    <BarraDePesquisa requisicaoGet={requisicaoGet} isCarregando={isCarregando} 
+                    iniciarPesquisaState={{ setIniciarPesquisa }} adicionarCarregamento={adicionarCarregamento}
+                    adicionarParametro={adicionarParametro} exibirErro={exibirErro}/>
                     <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} />
-                    <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} />
+                    <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando}/>
                 </Box>
             </Box>
         </EstruturaPaginaUsuario>
     );
 }
+
+function transformarParametros(parametros) {
+    let valor, operacao;
+    let novoParametro = "";
+
+    console.log("Iniciando Filtragem dos parametros...");
+    console.log("Valores para serem filtrados: ");
+    console.log(parametros);
+
+    let chaves = Object.keys(parametros);
+    for (let chave in parametros) {
+        valor = parametros[chave].valor;
+        operacao = parametros[chave].operacao;
+
+        if (chave === "disponibilidade") continue;
+
+        if (Array.isArray(valor)) {
+            novoParametro += `${chave}${operacao}${valor[0]}`;
+
+            for (let i = 1; i < valor.length; i++) novoParametro += `+${valor[i]}`;
+        } else novoParametro += `${chave}${operacao}${valor}`;
+
+        if (chaves.indexOf(chave) < chaves.length - 1) novoParametro += ",";
+    }
+
+    console.log("Filtragem dos parametros finalizada! Novo valor: " + novoParametro);
+
+    return novoParametro;
+
+}
+
+function allAreTrue(arr) {
+    return arr.every(element => element === true);
+  }
 
 export default EncontrarProfessor;

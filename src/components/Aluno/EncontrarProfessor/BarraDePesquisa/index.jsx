@@ -11,14 +11,34 @@ import { useEffect } from "react";
 
 function BarraDePesquisa(props) {
     
-    const { cidade, setCidade } = props.cidadeState;
-    const { setIniciarPesquisa } = props.iniciarPesquisaState;
+    const [ cidade, setCidade ] = React.useState("");
+    const [ cidades, setCidades ] = React.useState([]);
+    const adicionarCarregamento = props.adicionarCarregamento;
+    const adicionarParametro = props.adicionarParametro
     const [ textoDeBusca, setTextoDeBusca ] = React.useState("");
 
     const mudarCidade = (event) => {
         setCidade(event.target.value);
-        setIniciarPesquisa(true);
+        adicionarParametro("cidade", event.target.value, ":");
     };
+
+    useEffect(() => {
+        props.requisicaoGet("/enderecos/cidades").then((resposta) => {
+            let cidadesCadastradas = resposta.data;
+            if (cidadesCadastradas.length > 0) {
+                setCidades(cidadesCadastradas);
+                setCidade(cidadesCadastradas[0]);
+                adicionarParametro("cidade", cidadesCadastradas[0], ":");
+                props.adicionarCarregamento(true);
+            } else if (cidadesCadastradas.length == 0) {
+                setCidade("?");
+                props.adicionarCarregamento(false);
+            }
+        }).catch(() => {
+            props.exibirErro("Erro ao carregar cidades cadastradas.");
+            props.adicionarCarregamento(false);
+        });
+    }, []);
 
     const mudarTextoDeBusca = (event) => setTextoDeBusca(event.target.value);
     const verificarEnter = (event) => {
@@ -28,6 +48,7 @@ function BarraDePesquisa(props) {
             ]) */
         }
     };
+    
 
 
     return (
@@ -55,9 +76,9 @@ function BarraDePesquisa(props) {
                         }}
                     >
                         {
-                            props.cidades.map(
-                                (cidade, index) => (
-                                    <MenuItem value={cidade} key={index}>{cidade}</MenuItem>
+                            cidades.map(
+                                (cidade) => (
+                                    <MenuItem value={cidade}>{cidade}</MenuItem>
                                 ))
                         }
                     </Select>

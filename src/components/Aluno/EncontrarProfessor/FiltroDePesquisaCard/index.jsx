@@ -11,8 +11,8 @@ function FiltroDePesquisaCard(props) {
         valor: [0, 0]
     });
 
-    const { setParametrosStr } = props.parametrosStrState;
-    const { iniciarPesquisa, setIniciarPesquisa } = props.iniciarPesquisaState;
+    const adicionarCarregamento = props.adicionarCarregamento;
+    const adicionarParametro = props.adicionarParametro;
 
     const [distancia, setDistancia] = useState({
         minimo: 0,
@@ -26,118 +26,50 @@ function FiltroDePesquisaCard(props) {
         noite: false
     });
 
+    useEffect(
+        () => {
+            props.requisicaoGet("/usuarios/filtro-minimo-maximo").then((resposta) => {
+                let precoMinimo = resposta.data.precoMinimo;
+                let precoMaximo = resposta.data.precoMaximo;
+                let distanciaMinima = resposta.data.distanciaMinima;
+                let distanciaMaxima = resposta.data.distanciaMaxima;
 
-    useEffect(() => {
-        if (props.alcanceFiltro.precoMinimo === -1 || props.alcanceFiltro.precoMaximo === -1 || 
-            props.alcanceFiltro.distanciaMinima === -1 || props.alcanceFiltro.distanciaMaxima === -1) return;
-        console.log("Alcance do Filtro Recebido! Novo Valor:");
-        console.log(props.alcanceFiltro);
+                setPreco({
+                    minimo: precoMinimo,
+                    maximo: precoMaximo,
+                    valor: [precoMinimo, precoMaximo]
+                });
 
-        if (props.alcanceFiltro.distanciaMinima !== -1) {
-            setPreco({
-                minimo: props.alcanceFiltro.precoMinimo,
-                maximo: props.alcanceFiltro.precoMaximo,
-                valor: [props.alcanceFiltro.precoMinimo, props.alcanceFiltro.precoMaximo]
+                setDistancia({
+                    minimo: distanciaMinima,
+                    maximo: distanciaMaxima,
+                    valor: [distanciaMinima, distanciaMaxima]
+                });
+
+                adicionarParametro("preco", [precoMinimo, precoMaximo], "><");
+                adicionarParametro("distancia", [distanciaMinima, distanciaMaxima], "><");
+
+                adicionarCarregamento(true);
+            }).catch(() => {
+                props.exibirErro("Erro ao carregar valores do filtro.");
+                adicionarCarregamento(false);
             });
-    
-            setDistancia({
-                minimo: props.alcanceFiltro.distanciaMinima,
-                maximo: props.alcanceFiltro.distanciaMaxima,
-                valor: [props.alcanceFiltro.distanciaMinima, props.alcanceFiltro.distanciaMaxima]
-            });
-
-            setIniciarPesquisa(true);
-        }
-    }, [props.alcanceFiltro]);
-
-    useEffect(() => {
-        if (!iniciarPesquisa) return;
-
-        let parametros = {
-            preco: {
-                valor: preco.valor,
-                operacao: "><"
-            },
-            distancia: {
-                valor: distancia.valor,
-                operacao: "><"
-            },
-            cidade: {
-                valor: props.cidade,
-                operacao: ":"
-            }
-        };
-
-        mapearFiltro(parametros);
-        setIniciarPesquisa(false);
-    }, [iniciarPesquisa]);
-
-    const mapearFiltro = (filtro) => {
-        let valor, operacao;
-        let novoParametro = "";
-        
-        console.log("Iniciando Filtragem dos parametros...");
-        console.log("Valores para serem filtrados: ");
-        console.log(filtro);
-
-        let chaves = Object.keys(filtro);
-        for (let chave in filtro) {
-            valor = filtro[chave].valor;
-            operacao = filtro[chave].operacao;
-
-            if (chave === "disponibilidade") continue;
-
-            if (Array.isArray(valor)) {
-                novoParametro += `${chave}${operacao}${valor[0]}`;
-
-                for (let i = 1; i < valor.length; i++) novoParametro += `+${valor[i]}`;
-            } else novoParametro += `${chave}${operacao}${valor}`;
-
-            if (chaves.indexOf(chave) < chaves.length - 1) novoParametro += ",";
-        }
-
-        console.log("Filtragem dos parametros finalizada! Novo valor: " + novoParametro);
-        
-        setParametrosStr(novoParametro);
-    }
-
-    const handleClickFiltro = () => {
-        let parametros = {
-            preco: {
-                valor: preco.valor,
-                operacao: "><"
-            },
-            distancia: {
-                valor: distancia.valor,
-                operacao: "><"
-            },
-            avaliacao: {
-                valor: avaliacao,
-                operacao: ">:"
-            },
-            cidade: {
-                valor: props.cidade,
-                operacao: ":"
-            }
-            //disponibilidade: ["Manhã", "Tarde", "Noite"]
-        };
-        mapearFiltro(parametros);
-    }
+        }, []);
 
     const textoPreco = (valor) => `R$ ${valor}`;
     const textoDistancia = (valor) => `${valor} Km`;
 
-    const handleChangePreco = (event, valor, activeThumb) => {
+    const handlePreco = (event, valor, activeThumb) => {
         if (!Array.isArray(valor) || (preco.minimo === 0 && preco.maximo === 0)) return;
 
-        if (activeThumb === 0) { 
+        if (activeThumb === 0) {
             setPreco((old) => ({ ...old, valor: [Math.min(valor[0], preco.valor[1] - 1), preco.valor[1]] }));
         } else {
             setPreco((old) => ({ ...old, valor: [preco.valor[0], Math.max(valor[1], preco.valor[0] + 1)] }))
         }
     };
 
-    const handleChangeDistancia = (event, valor, activeThumb) => {
+    const handleDistancia = (event, valor, activeThumb) => {
         if (!Array.isArray(valor) || (distancia.minimo === 0 && distancia.maximo === 0)) return;
 
         if (activeThumb === 0) {
@@ -147,8 +79,15 @@ function FiltroDePesquisaCard(props) {
         }
     };
 
-    const handleChangeDisponibilidade = (event) => setDisponibilidade({ ...disponibilidade, [event.target.name]: event.target.checked });
-    
+    const handleFiltro = () => {
+        adicionarParametro("preco", preco.valor, "><");
+        adicionarParametro("distancia", distancia.valor, "><");
+        adicionarParametro("avaliacao", avaliacao, ">:");
+        /* adicionarParametro("disponibilidade", disponibilidade, ":"); */
+    };
+
+    const handleDisponibilidade = (event) => setDisponibilidade({ ...disponibilidade, [event.target.name]: event.target.checked });
+
 
     return (
         <Card className="filtro-card">
@@ -165,7 +104,7 @@ function FiltroDePesquisaCard(props) {
                     <Slider
                         getAriaLabel={() => 'Preço mínimo'}
                         value={preco.valor}
-                        onChange={handleChangePreco}
+                        onChange={handlePreco}
                         valueLabelDisplay="auto"
                         getAriaValueText={textoPreco}
                         disableSwap
@@ -189,9 +128,9 @@ function FiltroDePesquisaCard(props) {
                 </Typography>
                 <Box className="filtro-disponibilidade-check-container">
                     <FormGroup>
-                        <FormControlLabel name="manha" checked={disponibilidade.manha} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
-                        <FormControlLabel name="tarde" checked={disponibilidade.tarde} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
-                        <FormControlLabel name="noite" checked={disponibilidade.noite} onChange={handleChangeDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
+                        <FormControlLabel name="manha" checked={disponibilidade.manha} onChange={handleDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
+                        <FormControlLabel name="tarde" checked={disponibilidade.tarde} onChange={handleDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
+                        <FormControlLabel name="noite" checked={disponibilidade.noite} onChange={handleDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
                     </FormGroup>
                 </Box>
             </Box>
@@ -214,7 +153,7 @@ function FiltroDePesquisaCard(props) {
                     <Slider
                         getAriaLabel={() => 'Distância mínima'}
                         value={distancia.valor}
-                        onChange={handleChangeDistancia}
+                        onChange={handleDistancia}
                         valueLabelDisplay="auto"
                         getAriaValueText={textoDistancia}
                         disableSwap
@@ -232,7 +171,7 @@ function FiltroDePesquisaCard(props) {
                     </Box>
                 </Box>
             </Box>
-            <LoadingButton loading={props.isCarregando} onClick={handleClickFiltro} className="filtro-botao">
+            <LoadingButton loading={props.isCarregando} onClick={handleFiltro} className="filtro-botao">
                 <Typography className="loading-text">Filtrar</Typography>
             </LoadingButton>
         </Card>
