@@ -3,15 +3,105 @@ import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUs
 import { Box, Button, Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputMask from 'react-input-mask';
+import api from "../../../api.js";
+
+
 
 function PerfilUsuario() {
 
+  const[formDataDisable, setFormDataDisable] = useState({
+    dadosPessoais: true,
+    dadosEndereco: true,
+    dadosSobreMim: true,
+  })
+
+
+  const [formData, setFormData] = useState({
+      nome: '',
+      email: '',
+      cpf: '',
+      sexo: '',
+      dataNasc: '',
+      dataNascFormatada: '',
+      idade: '',
+      bibliografia: '',
+      cep: '',
+      logradouro: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      estado: '',
+      experiencias: [],
+  });
+
+
+  useEffect(() => {
+     obterDadosPerfil()
+  },[])
+
+
+  function obterDadosPerfil() {
+
+  api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
+          .then(response => {
+
+            console.log(response)
+
+            let dadosUsuario = response.data;
+
+            // Dados pessoais do usuário
+            setFormData({
+              nome: dadosUsuario.nome,
+              email: dadosUsuario.email,
+              cpf: dadosUsuario.cpf,
+              sexo: dadosUsuario.sexo,
+              dataNasc: dadosUsuario.dataNasc,
+              dataNascFormatada: new Date(dadosUsuario.dataNasc).toLocaleString("pt-BR", {year: "numeric", month: "2-digit", day:"2-digit",}),
+              idade: calcularIdade(dadosUsuario.dataNasc),
+              bibliografia: dadosUsuario.bibliografia,
+              cep: dadosUsuario.endereco.cep,
+              logradouro: dadosUsuario.endereco.logradouro,
+              numero: dadosUsuario.endereco.numero,
+              complemento: dadosUsuario.endereco.complemento,
+              bairro: dadosUsuario.endereco.bairro,
+              cidade: dadosUsuario.endereco.cidade,
+              estado: dadosUsuario.endereco.estado,
+              experiencias: dadosUsuario.experiencia,
+            })
+
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+  }
+
+
+  function calcularIdade(dataNasc) {
+    dataNasc = new Date(dataNasc);
+    const dataAtual = new Date();
+  
+    let idade = dataAtual.getFullYear() - dataNasc.getFullYear();
+    const mesAtual = dataAtual.getMonth();
+    const diaAtual = dataAtual.getDate();
+    const mesNascimento = dataNasc.getMonth();
+    const diaNascimento = dataNasc.getDate();
+  
+    // Verifica se ainda não fez aniversário no ano corrente
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
+      idade--;
+    }
+  
+    return idade;
+  }
+
+
   let txtSobreMim = "Um professor de música apaixonado por instrumentos de corda. Com formação em Educação Musical e vasta experiência de atuação, ele compartilha sua paixão pela música através do ensino. Sua expertise abrange teoria musical, técnicas de execução e pedagogia, permitindo que ele transmita conhecimentos de forma envolvente e inspiradora aos seus alunos. "
 
-  const [nome, setNome] = useState(sessionStorage.getItem("NOME"))
-
+  
   return (
     <EstruturaPaginaUsuario>
       <Box className="pagina-container">
@@ -20,8 +110,8 @@ function PerfilUsuario() {
           <Box className="box-foto-perfil">
             <Avatar alt="" src="../../../imgs/user.png" sx={{width: 120, height:120}}/>
             <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="medium"/>
-            <Typography className="txt-nome">{nome}</Typography>
-            <Typography className="txt-idade">22 Anos</Typography>
+            <Typography className="txt-nome">{formData.nome}</Typography>
+            <Typography className="txt-idade">{formData.idade} Anos</Typography>
           </Box>
 
           <Box className="box-dados-pessoais">
@@ -32,27 +122,25 @@ function PerfilUsuario() {
             </Box>
 
             <Box className="box-inputs-dados-pessoais-pt1">
-              <TextField id="ipt-nome" onChange={""} label="Nome" variant="standard" error={""} helperText={""} value={""} sx={{width: "40%"}}/>
-              <InputMask mask='99/99/9999' value={""} onChange={""} sx={{ width: "100%" }}>
+              <TextField id="ipt-nome" onChange={""} label="Nome" variant="standard" error={""} helperText={""} value={formData.nome} sx={{width: "40%"}} disabled={formDataDisable.dadosPessoais}/>
+              <InputMask mask='99/99/9999'  onChange={""} sx={{ width: "100%" }} value={formData.dataNascFormatada} disabled={formDataDisable.dadosPessoais}>
                   {() => (
-                      <TextField id="ipt-dataNascimento" label="Data de Nascimento" error={""} helperText={""}  variant = "standard"/>
+                      <TextField id="ipt-dataNascimento" label="Data de Nascimento" error={""} helperText={""}  variant = "standard" disabled={formDataDisable.dadosPessoais}/>
                   )}
               </InputMask>
-              <InputMask mask='999.999.999-99' value={"999.999.999-99"} onChange={""} sx={{ width: "100%" }} >
-                  {() => (
-                      <TextField id="ipt-cpf" label="CPF" error={""} helperText={""}  variant = "standard" sx={{width: "30%"}}/>
-                  )}
-              </InputMask>
+              
+              <TextField id="ipt-cpf" label="CPF"  variant = "standard" sx={{width: "30%"}} value={formData.cpf} disabled/>      
+
             </Box>
 
             <Box className="box-inputs-dados-pessoais-pt2" >
-              <TextField id="ipt-email" onChange={""} label="Email" variant="standard" error={""} helperText={""} value={""} sx={{width: "64%"}}/>
-              <FormControl variant="standard" sx={{ minWidth: 120, width: "30%"}}>
+              <TextField id="ipt-email" onChange={""} label="Email" variant="standard" error={""} helperText={""} value={formData.email} sx={{width: "64%"}} disabled={formDataDisable.dadosPessoais}/>
+              <FormControl variant="standard" sx={{ minWidth: 120, width: "30%"}} disabled={formDataDisable.dadosPessoais}>
                 <InputLabel id="demo-simple-select-standard-label">Sexo</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
                   id="demo-simple-select-standard"
-                  value={""}
+                  value={formData.sexo}
                   onChange={""}
                   label="Sexo"
                 >
@@ -90,23 +178,23 @@ function PerfilUsuario() {
 
             
             <Box className="box-inputs-endereco-pt1">
-              <InputMask mask='99999-999' value={""} onChange={""} sx={{width: '25%'}}>
+              <InputMask mask='99999-999' value={formData.cep} onChange={""} sx={{width: '25%'}} disabled={formDataDisable.dadosEndereco}>
                         {() => (
-                            <TextField id="ipt-cep" label="CEP" error={""} helperText={""} variant="standard"/>
+                            <TextField id="ipt-cep" label="CEP" error={""} helperText={""} variant="standard" disabled={formDataDisable.dadosEndereco}/>
                         )}
               </InputMask>
             </Box>
 
             <Box className="box-inputs-endereco-pt1">
-              <TextField id="ipt-endereco" onChange={(e) => e.target.value} label="Endereço" variant="standard" error={""} helperText={""} value = "" sx={{width: "60%"}}/>           
-              <TextField id="ipt-numero" onChange={""} label="Número" variant="standard" error={""} helperText={""} value={""} sx={{width: "10%"}}/>           
-              <TextField id="ipt-complemento" onChange={""} label="Complemento" variant="standard" error={""} helperText={""} value={""} sx={{width: "20%"}}/>           
+              <TextField id="ipt-endereco" onChange={""} label="Endereço" variant="standard" error={""} helperText={""} value={formData.logradouro} sx={{width: "60%"}} disabled={formDataDisable.dadosEndereco}/>           
+              <TextField id="ipt-numero" onChange={""} label="Número" variant="standard" error={""} helperText={""} value={formData.numero} sx={{width: "10%"}} disabled={formDataDisable.dadosEndereco} />           
+              <TextField id="ipt-complemento" onChange={""} label="Complemento" variant="standard" error={""} helperText={""} value={formData.complemento} sx={{width: "20%"}} disabled={formDataDisable.dadosEndereco}/>           
             </Box> 
 
             <Box className="box-inputs-endereco-pt1">
-              <TextField id="ipt-bairro" onChange={""} label="Bairro" variant="standard" error={""} helperText={""} value={""} sx={{width: "40%"}}/>           
-              <TextField id="ipt-cidade" onChange={""} label="Cidade" variant="standard" error={""} helperText={""} value={""} sx={{width: "40%"}}/>           
-              <TextField id="ipt-estado" onChange={""} label="Estado" variant="standard" error={""} helperText={""} value={""} sx={{width: "10%"}}/>           
+              <TextField id="ipt-bairro" onChange={""} label="Bairro" variant="standard" error={""} helperText={""} value={formData.bairro} sx={{width: "40%"}} disabled={formDataDisable.dadosEndereco}/>           
+              <TextField id="ipt-cidade" onChange={""} label="Cidade" variant="standard" error={""} helperText={""} value={formData.cidade} sx={{width: "40%"}} disabled={formDataDisable.dadosEndereco}/>           
+              <TextField id="ipt-estado" onChange={""} label="Estado" variant="standard" error={""} helperText={""} value={formData.estado} sx={{width: "10%"}} disabled={formDataDisable.dadosEndereco}/>           
             </Box> 
 
           </Box>
