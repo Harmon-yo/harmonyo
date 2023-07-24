@@ -32,11 +32,11 @@ export default function ChatList(props) {
             idAluno: doc.data().idAluno,
             idProfessor: doc.data().idProfessor,
             nome:
-              sessionStorage.tipo === "aluno"
+              sessionStorage.CATEGORIA === "Aluno"
                 ? doc.data().nomeProfessor
                 : doc.data().nomeAluno,
             src:
-              sessionStorage.tipo === "aluno"
+              sessionStorage.CATEGORIA === "Aluno"
                 ? doc.data().srcProfessor
                 : doc.data().srcAluno,
             ultimaMensagem: doc.data().ultimaMensagem,
