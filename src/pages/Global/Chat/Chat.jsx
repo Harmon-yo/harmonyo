@@ -46,11 +46,11 @@ const Chat = () => {
             idAluno: doc.data().idAluno,
             idProfessor: doc.data().idProfessor,
             nome:
-              sessionStorage.tipo === "aluno"
+              sessionStorage.CATEGORIA === "Aluno" === "aluno"
                 ? doc.data().nomeProfessor
                 : doc.data().nomeAluno,
             src:
-              sessionStorage.tipo === "aluno"
+              sessionStorage.CATEGORIA === "Aluno" === "aluno"
                 ? doc.data().srcProfessor
                 : doc.data().srcAluno,
             ultimaMensagem: doc.data().ultimaMensagem,
@@ -81,7 +81,7 @@ const Chat = () => {
                 <ChatList
                   onChatClick={(chat) => {
                     
-                    if(sessionStorage.tipo === "aluno"){
+                    if(sessionStorage.CATEGORIA === "Aluno" === "aluno"){
                       setIdUsuarioConversa(chat.data.idProfessor)
                     }else{
                       setIdUsuarioConversa(chat.data.idAluno)
