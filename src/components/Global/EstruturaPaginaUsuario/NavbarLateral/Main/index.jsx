@@ -28,7 +28,7 @@ function NavbarLateral(props) {
             titulo: "Agenda",
             icon: CalendarioIcon,
             active: props.tela === "agenda" ? true : false,
-            href: `/${tipoUsuario}/agenda`
+            href: `/agenda`
         },
         {
             titulo: "Aulas",

@@ -7,6 +7,7 @@ const Chat = React.lazy(() => import("./pages/Global/Chat/Chat"));
 const PerfilUsuario = React.lazy(() => import("./pages/Global/PerfilUsuario"));
 const Login = React.lazy(() => import("./pages/Cadastro-Login/Login/Login"));
 const ListarPedidos = React.lazy(() => import("./pages/Global/ListarPedidos"));
+const Agenda = React.lazy(() => import("./pages/Global/Agenda/index"));
 const Cadastro = React.lazy(() =>
   import("./pages/Cadastro-Login/Cadastro/Cadastro")
 );
@@ -31,6 +32,7 @@ function Rotas() {
             <Route path="chat" element={<Chat />} />
             <Route path="pedidos" element={<ListarPedidos />} />
             <Route path="perfil" element={<PerfilUsuario />} />
+            <Route path="agenda" element={<Agenda />} />
           </Route>
 
           <Route path="/aluno">

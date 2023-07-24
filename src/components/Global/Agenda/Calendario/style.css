@@ -1,0 +1,12 @@
+.Mui-selected{
+    background-color: #099250 !important;
+    color: #fff !important;
+}
+.MuiPickersDay-today{
+    background-color: #1294F2!important;
+    color: white!important;
+    border: 0px!important;
+}
+.MuiPickersDay-root{
+    font-size: 16px!important;
+}

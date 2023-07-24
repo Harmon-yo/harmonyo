@@ -1,0 +1,54 @@
+*{
+    font-family: 'Nunito' !important;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    
+}
+.topo{
+    width: 90%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.lupa{
+    width: 25px;
+}
+.filtro{
+    background-color: #F4F4F4;
+    border-radius: 50px;
+    height: 42px;
+}
+.input_filtro{
+    margin-left: 8px;
+    font-family: "Nunito" !important;
+}
+.botao{
+    width: fit-content;
+    height: fit-content;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}
+.cabecalho{
+    font-weight: bolder!important;
+    font-size: 24px!important;
+}
+.texto{
+    color: "#8A8A8A"!important;
+    font-size: 30px!important;
+    margin-left: 20px!important;
+}
+
+.setas{
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
