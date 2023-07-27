@@ -6,11 +6,11 @@ import EditIcon from "../../../imgs/edit-24px.png"
 import { useState, useEffect } from "react";
 import InputMask from 'react-input-mask';
 import api from "../../../api.js";
-
+import CardExperiencias from "../../../components/Professor/CardExperiencias";
 
 
 function PerfilUsuario() {
-
+  
   const[formDataDisable, setFormDataDisable] = useState({
     dadosPessoais: true,
     dadosEndereco: true,
@@ -20,6 +20,7 @@ function PerfilUsuario() {
 
   const [formData, setFormData] = useState({
       nome: '',
+      avaliacaoMedia: 0.0,
       email: '',
       cpf: '',
       sexo: '',
@@ -56,6 +57,7 @@ function PerfilUsuario() {
             setFormData({
               nome: dadosUsuario.nome,
               email: dadosUsuario.email,
+              avaliacaoMedia: dadosUsuario.avaliacaoMedia,
               cpf: dadosUsuario.cpf,
               sexo: dadosUsuario.sexo,
               dataNasc: dadosUsuario.dataNasc,
@@ -109,7 +111,7 @@ function PerfilUsuario() {
         <Box className="container-dados-pessoais">
           <Box className="box-foto-perfil">
             <Avatar alt="" src="../../../imgs/user.png" sx={{width: 120, height:120}}/>
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly size="medium"/>
+            <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia}/>
             <Typography className="txt-nome">{formData.nome}</Typography>
             <Typography className="txt-idade">{formData.idade} Anos</Typography>
           </Box>
@@ -168,6 +170,24 @@ function PerfilUsuario() {
           </Box>
           
           <Box className="linha-divisao-pagina" />
+
+          {
+            sessionStorage.getItem("CATEGORIA").toLowerCase() === 'professor' ?
+            <>
+              <Box className="box-cards-experiencias">
+                <Box className="box-titulo-e-edit-icon">
+                    <Typography className="txt-titulo">Experiências</Typography>
+                    <img src={EditIcon} alt="" />
+                </Box>
+                {
+                  formData.experiencias.map((exp) => 
+                    <CardExperiencias titulo = {exp.titulo} descricao = {exp.descricao}/>
+                  )
+                }
+              </Box>
+              <Box className="linha-divisao-pagina" />
+            </> : null
+          }
 
           <Box className = "box-endereco">
 

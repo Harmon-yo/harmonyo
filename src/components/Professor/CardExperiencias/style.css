@@ -1,0 +1,14 @@
+.box-experiencias{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+}
+
+.titulo-experiencia{
+    font-size: 20px;
+    font-weight: bolder !important;
+}
+
+.descricao-experiencia{
+    font-size: 20px;
+}
