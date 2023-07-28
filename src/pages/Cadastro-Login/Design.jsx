@@ -11,7 +11,7 @@ import { useStyles } from "./Cadastro-Login.styles.js";
 import Logo from "../../components/Global/Logo/index.jsx";
 
 function Design(props) {
-    const classes = useStyles();
+    const classes = props.styles;
 
     return (
         <Box sx={classes.background}>

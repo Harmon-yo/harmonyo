@@ -16,10 +16,18 @@ import Design from "../Design.jsx";
 
 function Cadastro() {
     const classes = useStyles();
+    const classeForm = useStyles({ gridTemplateColumns: true });
     const navigate = useNavigate();
     const categoria = useRef(new URLSearchParams(window.location.search).get("categoria"));
 
-    const [etapa, setEtapa] = useState(1);
+    
+    const [etapa, setEtapa] = useState(4);
+    if (etapa === 4) {
+        classeForm.formInputContainer.gridTemplateColumns = "1fr 1fr";
+        classes.formCard.width = "60%";
+    } else {
+        classeForm.formInputContainer.gridTemplateColumns = "1fr";
+    }
     
     const [formData, setFormData] = useState({
         nome: '',
@@ -208,10 +216,8 @@ function Cadastro() {
     }
 
     return (
-        <Design titulo="Criar uma conta" errosServidor={errosServidor} setErrosServidor={setErrosServidor}>
-            <Box sx={useStyles({
-                "gridTemplateColumns": etapa === 4
-            }).formInputContainer}>
+        <Design titulo="Criar uma conta" errosServidor={errosServidor} setErrosServidor={setErrosServidor} styles={classes}>
+            <Box sx={classeForm.formInputContainer}>
                 {
                     etapa === 1 ? <EtapaUm formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null
                 }

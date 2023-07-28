@@ -86,10 +86,7 @@ const makeStyles = (props) => {
             },
             height: 'auto',
             paddingTop: '24px',
-            paddingBottom: '24px',
-            gridTemplateColumns: props => props.gridTemplateColumns === true
-                ? ' 1fr 1fr'
-                : '1fr'
+            paddingBottom: '24px'
         },
         inputContainer: {
             display: 'flex',
@@ -138,7 +135,7 @@ const makeStyles = (props) => {
         btnCadastrar: {
             width: '80%',
             height: {
-                md: '7%',
+                md: 'auto',
                 xl: 'auto'
             },
             backgroundColor: "#29c760 !important",

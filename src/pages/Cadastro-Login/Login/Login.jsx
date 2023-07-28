@@ -103,7 +103,7 @@ function Login() {
     return (
         <>
             <ModalCriarConta open={visibilidade} closeModal={fecharModalCriarConta} onClickInTelaLogin={() => window.location.reload()} />
-            <Design errosServidor={[]} titulo="Entrar na conta">
+            <Design errosServidor={[]} titulo="Entrar na conta" styles={classes}>
 
                 <Box sx={classes.formInputContainer}>
                     <TextField id="ipt-email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} label="Email" variant="outlined" error={error.email} helperText={helperText.email} value={formData.email} />
