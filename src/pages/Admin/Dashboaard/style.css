@@ -1,0 +1,62 @@
+.pagina-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.metricas-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;   
+}
+
+.metrica-container {
+    width: 100%;
+    cursor: pointer;
+}
+
+.metrica-titulo, .grafico-titulo {
+    font-weight: 600 !important;
+    font-size: var(--fonte-h5) !important;
+}
+
+.metrica-valor {
+    font-weight: 400 !important;
+    font-size: var(--fonte-h5) !important;
+}
+
+.selecionado {
+    border: 3px solid var(--cor-padrao-escuro);
+}
+
+.informacoes-adicionais-container {
+    min-width: 70%;
+    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    height: auto;
+}
+
+.card-grafico-container {
+    width: 80%;
+    height: 100%;
+    padding: calc(var(--espaco-padrao) * 2);
+}
+
+.grafico-titulo {
+    margin-bottom: calc(var(--espaco-padrao) * 2) !important;
+}
+
+.grafico-container {
+    width: 100%;
+    height: 90%;
+}
+
+.card-transacoes-container {
+    width: 30%;
+    height: 100%;
+}

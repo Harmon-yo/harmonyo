@@ -24,8 +24,11 @@ const opcoes = [
     }
 ]
 
+const nomeUsuario = "L"/* sessionStorage.getItem("NOME") */;
+
 function AvatarUsuario(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -41,15 +44,15 @@ function AvatarUsuario(props) {
                 aria-controls={open ? 'avatar-usuario-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}>{sessionStorage.getItem("NOME").charAt(0)}</Avatar>
+                onClick={handleClick}>{/* nomeUsuario.charAt(0) */}</Avatar>
 
             <Popup menuId="avatar-usuario-menu" buttonClassName="avatar-usuario-botao"
                 anchorEl={anchorEl} open={open} handleClose={handleClose}>
                 <Box className="avatar-usuario-menu-user-info">
                     <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                        sx={{ bgcolor: "#099250" }}>{sessionStorage.getItem("NOME").charAt(0)}</Avatar>
+                        sx={{ bgcolor: "#099250" }}>{/* nomeUsuario.charAt(0) */}</Avatar>
                     <Box className="avatar-usuario-menu-user-info-text">
-                        <Typography className="avatar-usuario-menu-nome">{sessionStorage.getItem("NOME")}</Typography>
+                        <Typography className="avatar-usuario-menu-nome">{nomeUsuario}</Typography>
                         <Typography className="avatar-usuario-menu-email">{sessionStorage.getItem("EMAIL")}</Typography>
                     </Box>
                 </Box>

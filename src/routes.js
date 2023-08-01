@@ -8,16 +8,10 @@ const PerfilUsuario = React.lazy(() => import("./pages/Global/PerfilUsuario"));
 const Login = React.lazy(() => import("./pages/Cadastro-Login/Login/Login"));
 const ListarPedidos = React.lazy(() => import("./pages/Global/ListarPedidos"));
 const Agenda = React.lazy(() => import("./pages/Global/Agenda/index"));
-const Cadastro = React.lazy(() =>
-  import("./pages/Cadastro-Login/Cadastro/Cadastro")
-);
-const EncontrarProfessor = React.lazy(() =>
-  import("./pages/Aluno/EncontrarProfessor/EncontrarProfessores")
-);
-const DashboardProfessor = React.lazy(() =>
-  import("./pages/Professor/Dashboard/Dashboard")
-);
-
+const Cadastro = React.lazy(() => import("./pages/Cadastro-Login/Cadastro/Cadastro"));
+const EncontrarProfessor = React.lazy(() => import("./pages/Aluno/EncontrarProfessor/EncontrarProfessores"));
+const DashboardProfessor = React.lazy(() => import("./pages/Professor/Dashboard/Dashboard"));
+const DashboardAdmin = React.lazy(() => import("./pages/Admin/Dashboaard/Dashboard"));
 function Rotas() {
   return (
     <>
@@ -28,21 +22,14 @@ function Rotas() {
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="cadastro" element={<Cadastro />} />
+            <Route path="encontrar-professor" element={<EncontrarProfessor />} />
+            <Route path="dashboard-admin" element={<DashboardAdmin />} />
+            <Route path="dashboard-professor" element={<DashboardProfessor />} />
             <Route path="feedbacks" element={<></>} />
             <Route path="chat" element={<Chat />} />
             <Route path="pedidos" element={<ListarPedidos />} />
             <Route path="perfil" element={<PerfilUsuario />} />
             <Route path="agenda" element={<Agenda />} />
-          </Route>
-
-          <Route path="/aluno">
-            <Route
-              path="encontrar-professor"
-              element={<EncontrarProfessor />}
-            />
-          </Route>
-          <Route path="/professor">
-            <Route path="dashboard" element={<DashboardProfessor />} />
           </Route>
         </Routes>
       </BrowserRouter>
