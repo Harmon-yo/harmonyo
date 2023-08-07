@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, createElement } from 'react';
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
@@ -12,10 +12,14 @@ import {
     Tooltip,
     Legend,
     PointElement,
-    LineElement
+    LineElement,
+    BarElement
 } from "chart.js";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
+import Mapa from "./MapaBrasil/index.jsx";
+import GraficoDoughnut from "./GraficoDoughnut/index.jsx";
 import "./style.css";
+
 
 ChartJS.register(
     CategoryScale,
@@ -25,6 +29,7 @@ ChartJS.register(
     Legend,
     PointElement,
     LineElement,
+    BarElement
 );
 
 const options = {
@@ -34,26 +39,20 @@ const options = {
             grid: {
                 display: false, // Configuração para ocultar as linhas verticais de grade no eixo x
             },
-            stacked: true,
         },
         y: {
             grid: {
                 display: false, // Configuração para ocultar as linhas verticais de grade no eixo x
             },
-            stacked: true,
         },
     },
     interaction: {
-        intersect: false,
+        intersect: true,
         mode: 'index',
     },
     plugins: {
         legend: {
-            position: 'bottom',
-            labels: {
-                usePointStyle: true,
-                pointStyle: 'circle',
-            }
+            display: false
         },
         tooltip: {
             callbacks: {
@@ -70,7 +69,7 @@ const options = {
 }
 
 
-function obterMesesPassados() {
+/* function obterMesesPassados() {
     let labels = [];
     const meses = [
         "Janeiro",
@@ -96,7 +95,12 @@ function obterMesesPassados() {
     return labels;
 }
 
-const labels = obterMesesPassados();
+const labels = obterMesesPassados(); */
+
+
+const labels = {
+    usuario: ["Usuários", "Professor", "Aluno"]
+};
 
 const criarDataset = (label, data, cor) => {
     return {
@@ -110,12 +114,25 @@ const criarDataset = (label, data, cor) => {
 }
 
 
+const porcentagens = [
+    {
+        nome: "Usuários convertidos",
+        valor: 6,
+    }, {
+        nome: "Professores convertidos",
+        valor: 3,
+    }, {
+        nome: "Alunos convertidos",
+        valor: 3,
+    }
+];
+
+
 
 const datasets = {
     usuario: [
-        criarDataset("Usuários", [0, 19, 3, 5, 2, 3], "#1568"),
-        criarDataset("Alunos", [0, 19, 3, 5, 2, 3], "#FF6384"),
-        criarDataset("Professores", [0, 3, 20, 5, 1, 4], "#36A2EB"),
+        criarDataset("Total", [10, 5, 5], "#1568"),
+        criarDataset("Convertidos", [6, 3, 3], "#FF6384"),
     ],
     renda: [
         criarDataset("Renda", [0, 19, 3, 5, 2, 3], "#FF6384"),
@@ -128,7 +145,7 @@ const datasets = {
     }
 }
 
-function DashboardProfessor(props) {
+function DashboardAdmin(props) {
     const [erros, setErros] = useState([]);
 
     /* useEffect(() => {
@@ -164,7 +181,7 @@ function DashboardProfessor(props) {
     ]);
     const [metricaAtiva, setMetricaAtiva] = useState(metricas[0].id);
     const [data, setData] = useState({
-        labels: labels,
+        labels: labels[metricas[0].nomeGrafico],
         datasets: datasets.usuario
     });
 
@@ -175,10 +192,6 @@ function DashboardProfessor(props) {
             datasets: datasets[metricas.find(metrica => metrica.id === id).nomeGrafico]
         });
     };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
     const toggleActiveStyles = (id) => {
         if (id === metricaAtiva) {
@@ -194,21 +207,55 @@ function DashboardProfessor(props) {
                 <Box className="metricas-container">
                     {
                         metricas.map((metrica) =>
-                        <Card key={metrica.id} className={toggleActiveStyles(metrica.id)} onClick={() => handleClickMetrica(metrica.id)}>
-                            <Typography className="metrica-titulo" >{metrica.nome}</Typography>
-                            <Typography className="metrica-valor">{metrica.valor}</Typography>
-                        </Card>)
+                            <Card key={metrica.id} className={toggleActiveStyles(metrica.id)} onClick={() => handleClickMetrica(metrica.id)}>
+                                <Typography className="metrica-titulo" >{metrica.nome}</Typography>
+                                <Typography className="metrica-valor">{metrica.valor}</Typography>
+                            </Card>)
                     }
                 </Box>
                 <Box className="informacoes-adicionais-container">
                     <Card className="card-grafico-container">
                         <Typography className="grafico-titulo">Informações adicionais</Typography>
-                        <Box className="grafico-container">
-                            <Line options={options} data={data} />
+                        <Box className="graficos-container"  >
+                            <Box className="grafico-container">
+                                <Bar options={options} data={data} />
+                            </Box>
+                            <Box>
+                                Taxas
+                                {
+                                    porcentagens.map((porcentagem) =>
+                                        <Box className="taxa-container">
+                                            <Typography className="taxa-nome">{porcentagem.nome}</Typography>
+                                            <Typography className="taxa-valor">{porcentagem.valor}</Typography>
+                                        </Box>
+                                    )
+                                }
+                            </Box>
                         </Box>
                     </Card>
-                    <Card className="card-transacoes-container">
-
+                    {/* <Box className="metricas-adicionais-container">
+                        <Card className="metrica-adicional-card">
+                            <Typography className="metrica-titulo">Usuários convertidos</Typography>
+                            <Typography className="metrica-valor">50%</Typography>
+                        </Card>
+                        <Card className="metrica-adicional-card">
+                            <Typography className="metrica-titulo">professores convertidos</Typography>
+                            <Typography className="metrica-valor">50%</Typography>
+                        </Card>
+                        <Card className="metrica-adicional-card">
+                            <Typography className="metrica-titulo">Alunos convertidos</Typography>
+                            <Typography className="metrica-valor">50%</Typography>
+                        </Card>
+                    </Box> */}
+                    <Card className="card-grafico-doughnut-container">
+                        <Typography className="grafico-titulo">Informações adicionais</Typography>
+                        <GraficoDoughnut/>
+                    </Card>
+                </Box>
+                <Box className="mapa-container">
+                    <Card className="mapa-card">
+                        <Typography className="metrica-titulo">Mapa</Typography>
+                        <Mapa />
                     </Card>
                 </Box>
             </Box>
@@ -216,4 +263,4 @@ function DashboardProfessor(props) {
     );
 }
 
-export default DashboardProfessor; 
+export default DashboardAdmin; 

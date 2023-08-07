@@ -12,7 +12,7 @@
 html,
 body, .mui-root, #root {
     width: 100% !important;
-    height: 100vh!important;
+    /* height: 100vh!important; */
 }
 
 .pagina-padrao-container {

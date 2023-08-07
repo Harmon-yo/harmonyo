@@ -10,7 +10,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 24px;   
+    gap: 24px;
 }
 
 .metrica-container {
@@ -18,12 +18,14 @@
     cursor: pointer;
 }
 
-.metrica-titulo, .grafico-titulo {
+.metrica-titulo,
+.grafico-titulo,
+.taxa-nome {
     font-weight: 600 !important;
     font-size: var(--fonte-h5) !important;
 }
 
-.metrica-valor {
+.metrica-valor, .taxa-valor {
     font-weight: 400 !important;
     font-size: var(--fonte-h5) !important;
 }
@@ -33,30 +35,59 @@
 }
 
 .informacoes-adicionais-container {
-    min-width: 70%;
-    width: fit-content;
+    min-width: 100%;
     display: flex;
-    justify-content: space-between;
     gap: 24px;
-    height: auto;
+    height: 300px;
 }
 
-.card-grafico-container {
-    width: 80%;
-    height: 100%;
+.card-grafico-container,
+.card-grafico-doughnut-container {
+    width: 55%;
     padding: calc(var(--espaco-padrao) * 2);
 }
+
+.card-grafico-doughnut-container {
+    width: 30%;
+}
+
 
 .grafico-titulo {
     margin-bottom: calc(var(--espaco-padrao) * 2) !important;
 }
 
-.grafico-container {
-    width: 100%;
-    height: 90%;
+.graficos-container {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
 }
 
-.card-transacoes-container {
+
+.grafico-doughnut-container {
+    width: 45%;
+    height: 90%
+}
+
+.metricas-adicionais-container {
+    height: 100%;
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.metrica-adicional-card {
+    width: 100%;
+    padding: calc(var(--espaco-padrao) * 2);
+}
+
+.mapa-container {
+    width: 100%;
+    height: 40%;
+}
+
+.mapa-card {
+    width: 40%;
     height: 100%;
 }
