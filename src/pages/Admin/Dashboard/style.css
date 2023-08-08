@@ -18,16 +18,33 @@
     cursor: pointer;
 }
 
-.metrica-titulo,
-.grafico-titulo,
-.taxa-nome {
-    font-weight: 600 !important;
-    font-size: var(--fonte-h5) !important;
+.taxas-container {
+    width: 43%;
 }
 
-.metrica-valor, .taxa-valor {
+.card-grafico-doughnut-container .taxas-container {
+    width: 60%;
+}
+
+.taxa-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.taxa-nome {
+    font-weight: 600 !important;
+    font-size: var(--fonte-h6) !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.taxa-valor {
     font-weight: 400 !important;
-    font-size: var(--fonte-h5) !important;
+    font-size: var(--fonte-pequena) !important;
 }
 
 .selecionado {
@@ -38,17 +55,24 @@
     min-width: 100%;
     display: flex;
     gap: 24px;
-    height: 300px;
+    height: 40%;
 }
 
 .card-grafico-container,
 .card-grafico-doughnut-container {
     width: 55%;
     padding: calc(var(--espaco-padrao) * 2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .card-grafico-doughnut-container {
-    width: 30%;
+    width: 45%;
+}
+
+.grafico-doughnut-container {
+    width: 35%;
 }
 
 
@@ -57,15 +81,10 @@
 }
 
 .graficos-container {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: row;
-}
-
-
-.grafico-doughnut-container {
-    width: 45%;
-    height: 90%
+    justify-content: space-between;
 }
 
 .metricas-adicionais-container {
@@ -84,7 +103,7 @@
 
 .mapa-container {
     width: 100%;
-    height: 40%;
+    height: 400px;
 }
 
 .mapa-card {

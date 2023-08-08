@@ -21,7 +21,7 @@ function Cadastro() {
     const categoria = useRef(new URLSearchParams(window.location.search).get("categoria"));
 
     
-    const [etapa, setEtapa] = useState(4);
+    const [etapa, setEtapa] = useState(1);
     if (etapa === 4) {
         classeForm.formInputContainer.gridTemplateColumns = "1fr 1fr";
         classes.formCard.width = "60%";

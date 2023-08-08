@@ -1,0 +1,10 @@
+.metrica-titulo,
+.grafico-titulo{
+    font-weight: 600 !important;
+    font-size: var(--fonte-h5) !important;
+}
+
+.metrica-valor {
+    font-weight: 400 !important;
+    font-size: var(--fonte-h5) !important;
+}

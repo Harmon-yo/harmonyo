@@ -11,7 +11,7 @@ const Agenda = React.lazy(() => import("./pages/Global/Agenda/index"));
 const Cadastro = React.lazy(() => import("./pages/Cadastro-Login/Cadastro/Cadastro"));
 const EncontrarProfessor = React.lazy(() => import("./pages/Aluno/EncontrarProfessor/EncontrarProfessores"));
 const DashboardProfessor = React.lazy(() => import("./pages/Professor/Dashboard/Dashboard"));
-const DashboardAdmin = React.lazy(() => import("./pages/Admin/Dashboaard/Dashboard"));
+const DashboardAdmin = React.lazy(() => import("./pages/Admin/Dashboard/Dashboard"));
 function Rotas() {
   return (
     <>
