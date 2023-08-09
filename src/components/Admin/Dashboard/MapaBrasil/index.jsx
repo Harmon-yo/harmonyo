@@ -5,16 +5,17 @@ import {
     Box
 } from '@mui/material';
 import pathsRegioes from './svgMapa.js';
+import BarraPorcentagem from '../Graficos/BarraPorcentagem/index.jsx';
 
 const siglas = {
     federacao: ["se",
-    "ma", "es", "am", "rr",
-    "go", "ap", "rs", "pb",
-    "pi", "sp", "sc", "pe",
-    "rj", "ms", "mt", "ba",
-    "mg", "al", "ce", "rn",
-    "pr", "ro", "df", "ac",
-    "pa", "to"],
+        "ma", "es", "am", "rr",
+        "go", "ap", "rs", "pb",
+        "pi", "sp", "sc", "pe",
+        "rj", "ms", "mt", "ba",
+        "mg", "al", "ce", "rn",
+        "pr", "ro", "df", "ac",
+        "pa", "to"],
     sp: [
         "Adamantina",
         "Amparo",
@@ -75,8 +76,29 @@ const siglas = {
         "Taubaté",
         "Tupã",
         "Votuporanga"
-      ]
+    ]
 };
+
+const quantidadeUsuariosPorEstado = {
+    valorTotal: 10,
+    regioes: [
+        {
+            nome: "São Paulo",
+            valor: 4
+        },
+        {
+            nome: "Rio de janeiro",
+            valor: 3
+        },
+        {
+            nome: "Minas Gerais",
+            valor: 2
+        }, {
+            nome: "Rio Grande do Sul",
+            valor: 1
+        }
+    ]
+}
 
 function MapaBrasil(props) {
     const svgRef = useRef(null);
@@ -104,15 +126,29 @@ function MapaBrasil(props) {
     }, [svgRef]);
 
     return (
-        <svg ref={svgRef} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 691" version="1.2" >
-            {
+        <Box className="mapa-container">
+            <Box className="svg-container">
+                <svg ref={svgRef} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 691" version="1.2" >
+                    {
                         pathsSelecionado.map((path, index) => (
                             <Tooltip title={siglas[regiao][index]}>
-                                <path key={index} d={path} fill={defaultFillColor} stroke={defaultStrokeColor}/>
+                                <path key={index} d={path} fill={defaultFillColor} stroke={defaultStrokeColor} />
                             </Tooltip>
                         ))
                     }
-            </svg>
+                </svg>
+            </Box>
+            <Box className="mapa-info-container">
+                <Typography className="mapa-info-titulo">Informações</Typography>
+                {
+                    quantidadeUsuariosPorEstado.regioes.map((regiao) => (
+                        <BarraPorcentagem nome={regiao.nome} valorTotal={quantidadeUsuariosPorEstado.valorTotal} valor={regiao.valor} />
+                    ))
+                }
+
+            </Box>
+        </Box>
+
     )
 }
 

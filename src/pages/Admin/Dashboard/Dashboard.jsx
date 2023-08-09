@@ -9,7 +9,6 @@ import { Box, Typography } from "@mui/material";
 import Metrica from "../../../components/Admin/Dashboard/Graficos/Metrica/index.jsx";
 import Graficos from "../../../components/Admin/Dashboard/Graficos/index.jsx"
 import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx";
-import GraficoDoughnut from "../../../components/Admin/Dashboard/Graficos/GraficoDoughnut/index.jsx";
 
 /* Css */
 import "./style.css";
@@ -27,7 +26,7 @@ function DashboardAdmin(props) {
             id: 1,
             nome: "Usuários",
             nomeGrafico: "usuario",
-            valor: 0,
+            valor: 10,
             temInformacaoAdicional: true,
         },
         {
@@ -95,7 +94,7 @@ function DashboardAdmin(props) {
                         <Graficos doughnut temInformacaoAdicional={metricaSelecionada}/>
                     </Card>
                 </Box>
-                <Box className="mapa-container">
+                <Box className="secao-mapa-container">
                     <Card className="mapa-card">
                         <Typography className="metrica-titulo">Mapa</Typography>
                         <Mapa />

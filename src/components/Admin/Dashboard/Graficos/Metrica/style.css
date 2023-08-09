@@ -1,5 +1,6 @@
 .metrica-titulo,
-.grafico-titulo{
+.grafico-titulo,
+.mapa-info-titulo{
     font-weight: 600 !important;
     font-size: var(--fonte-h5) !important;
 }
