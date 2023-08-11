@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import db from "../../../utils/firebase";
+import {db} from "../../../utils/firebase";
 import ChatItem from "../ChatItem";
 import {
   query,

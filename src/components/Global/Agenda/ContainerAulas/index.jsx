@@ -2,6 +2,8 @@ import { Box, Button, InputBase, Typography } from "@mui/material";
 import React from "react";
 import "./style.css";
 import Lupa from "../../../../imgs/search.png";
+import ItemAula from "../ItemAula";
+import ListaAulas from "../ListaAulas";
 function ContainerAulas(props) {
   const { data, setData } = props.stateData;
   console.log(data["$D"]);
@@ -28,6 +30,7 @@ function ContainerAulas(props) {
         </Box>
       </Box>
         <Box className="aulas">
+          <ListaAulas dia={data} />
         </Box>
     </Box>
   );

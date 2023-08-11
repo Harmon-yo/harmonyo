@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import "firebase/compat/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,4 +22,6 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const db = app.firestore();
 
-export default db;
+const storage = app.storage("gs://chat-harmonyo.appspot.com");
+
+export  {db, storage};

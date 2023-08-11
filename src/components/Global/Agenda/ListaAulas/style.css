@@ -1,0 +1,10 @@
+.containerLista{
+    width: fit-content;
+    display: flex;
+    flex-wrap: wrap; /* Isso faz os itens pularem para a próxima linha quando não couberem */
+    justify-content: flex-start; /* Alinha os itens à esquerda na linha */
+    align-items: flex-start;
+}
+
+
+

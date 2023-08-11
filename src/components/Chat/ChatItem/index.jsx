@@ -17,7 +17,7 @@ import {
   fromTimestampToFormatDate,
   fromDateToFormatDate,
 } from "../../../utils/utils";
-import db from "../../../utils/firebase";
+import {db} from "../../../utils/firebase";
 
 export default function ChatItem(props) {
   const [lida, setLida] = React.useState(props.lida);

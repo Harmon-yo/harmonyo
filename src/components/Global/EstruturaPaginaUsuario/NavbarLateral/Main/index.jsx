@@ -19,7 +19,7 @@ import NavbarLateralCard from "../NavbarLateralCard/index.jsx";
 
 function NavbarLateral(props) {
     const [active, setActive] = React.useState(false);
-    const tipoUsuario = "admin"/* sessionStorage.getItem("CATEGORIA") */.toLocaleLowerCase();
+    const tipoUsuario =  sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
 
     const opcoesNavbar = {
         professor: [
@@ -27,7 +27,7 @@ function NavbarLateral(props) {
                 titulo: "Dashboard",
                 icon: DashboardIcon,
                 active: props.tela === "dashboard" ? true : false,
-                href: `/${tipoUsuario}/dashboard`
+                href: `/dashboard-professor`
             },
             {
                 titulo: "Agenda",
@@ -59,13 +59,13 @@ function NavbarLateral(props) {
                 titulo: "Encontrar",
                 icon: SearchIcon,
                 active: props.tela === "encontrar" ? true : false,
-                href: `/${tipoUsuario}/encontrar-professor`
+                href: `/encontrar-professor`
             },
             {
                 titulo: "Agenda",
                 icon: CalendarioIcon,
                 active: props.tela === "agenda" ? true : false,
-                href: `/${tipoUsuario}/agenda`
+                href: `/agenda`
             },
             {
                 titulo: "Pedidos",

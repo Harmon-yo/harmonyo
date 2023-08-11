@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import CaixaMensagem from "../CaixaMensagem/index.jsx"
 import DivisorDate from "../DivisorDate/index.jsx";
-import db from "../../../utils/firebase.js";
+import {db} from "../../../utils/firebase.js";
 import "./style.css";
 import { Box } from "@mui/material";
 import {

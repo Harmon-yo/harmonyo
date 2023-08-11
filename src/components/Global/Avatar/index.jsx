@@ -5,36 +5,43 @@ import MeuPerfilIcon from "../../../imgs/user.png";
 import EditarContaIcon from "../../../imgs/edit.png";
 import SairIcon from "../../../imgs/logout.png";
 import "./style.css"
+import { useNavigate } from "react-router-dom";
+
 
 const opcoes = [
     {
         id: 1,
         src: MeuPerfilIcon,
         titulo: "Meu Perfil",
+        url: "/perfil"
     },
     {
         id: 2,
         src: EditarContaIcon,
         titulo: "Configurações",
+        url: "/configuracoes"
     },
     {
         id: 3,
         src: SairIcon,
         titulo: "Sair",
+        url: "/sair"
     }
 ]
 
 const nomeUsuario = "L"/* sessionStorage.getItem("NOME") */;
 
 function AvatarUsuario(props) {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     }
-    const handleClose = () => {
+    const handleClose = (opcao) => {
         setAnchorEl(null);
+        navigate(opcao.url);
     }
 
     return (
@@ -60,7 +67,7 @@ function AvatarUsuario(props) {
                     {
                         opcoes.map(
                             (opcao) => (
-                                <MenuItem key={opcao.id} className="avatar-usuario-menu-item" onClick={handleClose}>
+                                <MenuItem key={opcao.id} className="avatar-usuario-menu-item" onClick={()=> handleClose(opcao)}>
                                     <img src={opcao.src} className="avatar-usuario-menu-item-img" />
                                     <Typography className="avatar-usuario-menu-item-titulo">{opcao.titulo}</Typography>
                                 </MenuItem>
