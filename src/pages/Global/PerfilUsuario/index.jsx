@@ -3,13 +3,22 @@ import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUs
 import { Box, Button, Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
+import SaveIcon from "../../../imgs/checked-24px.png"
 import { useState, useEffect } from "react";
 import InputMask from 'react-input-mask';
 import api from "../../../api.js";
 import CardExperiencias from "../../../components/Professor/CardExperiencias";
+import { verificarDataNascimento } from "../../Cadastro-Login/Cadastro/verificacoes";
 
 
 function PerfilUsuario() {
+
+  const[dadosPessoaisAntesDeEditar, setDadosPessoaisAntesDeEditar] = useState({
+    nome: "",
+    email: "",
+    dataNasc: "",
+    sexo: ""
+  })
   
   const[formDataDisable, setFormDataDisable] = useState({
     dadosPessoais: true,
@@ -38,11 +47,21 @@ function PerfilUsuario() {
       experiencias: [],
   });
 
+  const [errorsDadosPessoais, setErrorsDadosPessoais] = useState({
+    errorNome: false,
+    helperTextNome: "",
+
+    errorEmail: false,
+    helperTextEmail: "",
+
+    errorDataNasc: false,
+    helperTextDataNasc: ""
+  })
 
   useEffect(() => {
      obterDadosPerfil()
   },[])
-
+  
 
   function obterDadosPerfil() {
 
@@ -74,11 +93,110 @@ function PerfilUsuario() {
               experiencias: dadosUsuario.experiencia,
             })
 
+            setDadosPessoaisAntesDeEditar({ 
+              nome: dadosUsuario.nome,
+              email: dadosUsuario.email,
+              dataNasc: dadosUsuario.dataNasc,
+              sexo: dadosUsuario.sexo,
+            })
+
           })
           .catch(err => {
             console.log(err)
           })
 
+  }
+
+  function formatDateToLocalDateSpring(date) {
+    const parts = date.split('/');
+
+    let dataFormata = parts[2] + "-" + parts[1] +  "-" + parts[0] 
+
+    return dataFormata;
+
+  }
+
+  function verificarNome(nome) {
+    if (nome.length < 4) {
+        setErrorsDadosPessoais({...errorsDadosPessoais, errorNome: true, helperTextNome: "O Nome deve conter no mínimo 4 caracteres"})
+    }
+    else {
+      setErrorsDadosPessoais({...errorsDadosPessoais, errorNome: false, helperTextNome: ""})
+    }
+  }
+
+  function verificarEmail(email) {
+    if (email.length < 4) {
+      setErrorsDadosPessoais({...errorsDadosPessoais, errorEmail: true, helperTextEmail: "O Email deve conter no mínimo 4 caracteres"})
+    } else if (!email.includes('@') || !email.includes('.')) {
+      setErrorsDadosPessoais({...errorsDadosPessoais, errorEmail: true, helperTextEmail: "Email Inválido"})
+    }
+    else {
+      setErrorsDadosPessoais({...errorsDadosPessoais, errorEmail: false, helperTextEmail: ""})
+    }
+  }
+
+  function validaDataNascimento(dataNascimento) {
+    
+    dataNascimento = dataNascimento.split('/');
+    let dia = dataNascimento[0];
+    let mes = dataNascimento[1];
+    let ano = dataNascimento[2];
+
+    if (dia < 1 || dia > 31) {setErrorsDadosPessoais({...errorsDadosPessoais, errorDataNasc: true, helperTextDataNasc: "Dia inválido"}); return;}
+    else if (mes < 1 || mes > 12) {setErrorsDadosPessoais({...errorsDadosPessoais, errorDataNasc: true, helperTextDataNasc: "Mês inválido"}); return;}
+    else if (ano < 1900 || ano > new Date().getFullYear()) {setErrorsDadosPessoais({...errorsDadosPessoais, errorDataNasc: true, helperTextDataNasc: "Ano inválido"}); return;}
+
+    let data = new Date(ano, mes - 1, dia), dataAtual = new Date();
+
+    if (data > dataAtual) {
+      setErrorsDadosPessoais({...errorsDadosPessoais, errorDataNasc: true, helperTextDataNasc: "Data de Nascimento inválida"})
+    }
+    else {
+      setErrorsDadosPessoais({...errorsDadosPessoais, errorDataNasc: false, helperTextDataNasc: ""})
+    }
+}
+
+
+  function atualizarDadosPessoais() {
+
+    let desabilitarEdicao;
+
+    let camposNaoForamEditados = (dadosPessoaisAntesDeEditar.nome == formData.nome && dadosPessoaisAntesDeEditar.email == formData.email && dadosPessoaisAntesDeEditar.dataNasc && formData.dataNasc && dadosPessoaisAntesDeEditar.sexo == formData.sexo)
+
+    if(camposNaoForamEditados){
+      alert("Você não editou nenhum dos campos !")
+
+      desabilitarEdicao = false;
+
+      return desabilitarEdicao
+    }
+    else if (errorsDadosPessoais.errorNome == false && errorsDadosPessoais.errorEmail == false && errorsDadosPessoais.errorDataNasc == false) {
+
+      let dadosUsuario = {
+        nome: formData.nome,
+        email: formData.email,
+        dataNasc: formatDateToLocalDateSpring(formData.dataNascFormatada),
+      }
+      
+      api.put(`/usuarios/atualiza-dados-pessoais/${sessionStorage.getItem("ID")}`, dadosUsuario, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
+          .then(res => {
+            alert("Seus Dados foram atualizados com sucesso!")
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          desabilitarEdicao = true
+          return desabilitarEdicao;
+    }
+    else {
+      alert("Campos Inválidos! Não foi possível atualizar seus dados!")
+
+      desabilitarEdicao = false
+
+      return desabilitarEdicao;
+    }
+    
   }
 
 
@@ -120,14 +238,24 @@ function PerfilUsuario() {
             
             <Box className="box-titulo-e-edit-icon">
               <Typography className="txt-titulo">Dados Pessoais</Typography>
-              <img src={EditIcon} alt="" className="img-edit-icon"/>
+              <img  src={formDataDisable.dadosPessoais ? EditIcon : SaveIcon} alt="" className="img-edit-icon" 
+                    onClick={() =>{ 
+                        if (formDataDisable.dadosPessoais == false) {
+                          setFormDataDisable({...formData, dadosPessoais: atualizarDadosPessoais() })
+                        }
+                        else {
+                          setFormDataDisable({dadosPessoais: false })
+                        }
+                      }
+                    }
+              />
             </Box>
 
             <Box className="box-inputs-dados-pessoais-pt1">
-              <TextField id="ipt-nome" onChange={""} label="Nome" variant="standard" error={""} helperText={""} value={formData.nome} sx={{width: "40%"}} disabled={formDataDisable.dadosPessoais}/>
-              <InputMask mask='99/99/9999'  onChange={""} sx={{ width: "100%" }} value={formData.dataNascFormatada} disabled={formDataDisable.dadosPessoais}>
+              <TextField id="ipt-nome" onChange={(e) => {setFormData({ ...formData, nome: e.target.value }); verificarNome(e.target.value)}} label="Nome" variant="standard" error={errorsDadosPessoais.errorNome} helperText={errorsDadosPessoais.helperTextNome} value={formData.nome} sx={{width: "40%"}} disabled={formDataDisable.dadosPessoais}/>
+              <InputMask mask='99/99/9999'  onChange={(e) => {setFormData({ ...formData, dataNascFormatada: e.target.value }); validaDataNascimento(e.target.value)}} sx={{ width: "100%" }} value={formData.dataNascFormatada} disabled={formDataDisable.dadosPessoais}>
                   {() => (
-                      <TextField id="ipt-dataNascimento" label="Data de Nascimento" error={""} helperText={""}  variant = "standard" disabled={formDataDisable.dadosPessoais}/>
+                      <TextField id="ipt-dataNascimento" label="Data de Nascimento" error={errorsDadosPessoais.errorDataNasc} helperText={errorsDadosPessoais.helperTextDataNasc}  variant = "standard" disabled={formDataDisable.dadosPessoais}/>
                   )}
               </InputMask>
               
@@ -136,19 +264,16 @@ function PerfilUsuario() {
             </Box>
 
             <Box className="box-inputs-dados-pessoais-pt2" >
-              <TextField id="ipt-email" onChange={""} label="Email" variant="standard" error={""} helperText={""} value={formData.email} sx={{width: "64%"}} disabled={formDataDisable.dadosPessoais}/>
+              <TextField id="ipt-email" onChange={(e) => {setFormData({ ...formData, email: e.target.value }); verificarEmail(e.target.value)}} label="Email" variant="standard" error={errorsDadosPessoais.errorEmail} helperText={errorsDadosPessoais.helperTextEmail} value={formData.email} sx={{width: "64%"}} disabled={formDataDisable.dadosPessoais}/>
               <FormControl variant="standard" sx={{ minWidth: 120, width: "30%"}} disabled={formDataDisable.dadosPessoais}>
                 <InputLabel id="demo-simple-select-standard-label">Sexo</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
                   id="demo-simple-select-standard"
                   value={formData.sexo}
-                  onChange={""}
+                  onChange={(e) => setFormData({ ...formData, sexo: e.target.value })}
                   label="Sexo"
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
                   <MenuItem value={"Masculino"}>Masculino</MenuItem>
                   <MenuItem value={"Feminino"}>Feminino</MenuItem>
                   <MenuItem value={"Outros"}>Outros</MenuItem>

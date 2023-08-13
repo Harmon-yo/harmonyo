@@ -141,5 +141,7 @@
     justify-content: space-between;
     height: auto;
 }
-
+.img-edit-icon {
+    cursor: pointer;
+}
 
