@@ -14,6 +14,7 @@ import "./style.css";
 import PerfilUsuario from "../PerfilUsuario";
 import Status from "../Status";
 import ModalDetalhes from "../ModalDetalhes";
+import api from "../../../../api";
 function Tabela() {
    
   const dados = [
@@ -72,13 +73,33 @@ function Tabela() {
         horario: "19:00"
       }
   ];
+
+  const [dadosPedidos, setDadosPedidos] = React.useState([]);
+
+  React.useEffect(() => {
+    api.get(`/pedidos/usuario/${sessionStorage.ID}`, 
+    { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+      setDadosPedidos(response.data);
+      console.log(response.data);
+    });
+
+  }, [])
+
   const [open, setOpen] = React.useState(false);
-  const [pedido, setPedido] = React.useState({});
+  const [pedido, setPedido] = React.useState();
+  
   const handleOpen = (ped) => {
+    console.log(ped);
     setOpen(true);
     setPedido(ped);
   }
+
   const handleClose = () => setOpen(false);
+
+  const handleData = (data) => {
+    let dataFormatada = new Date(data);
+    return dataFormatada.toLocaleDateString();
+  }
   return (
     <TableContainer style={{maxHeight: "90%", overflow: "scroll"}}>
       <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table" >
@@ -96,18 +117,18 @@ function Tabela() {
           </TableRow>
         </TableHead>
         <TableBody className="conteudoTabela"> 
-          {dados.map((row) => (
+          {dadosPedidos.map((row) => (
                 <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                 <TableCell  className="bodyCelula" align="left">
-                <PerfilUsuario nome={row.nome}/>
+                <PerfilUsuario nome={sessionStorage.CATEGORIA == "Professor"? row.aluno.nome : row.professor.nome}/>
                 </TableCell>
-                <TableCell className="bodyCelula" align="center">{row.instrumento}</TableCell>
-                <TableCell className="bodyCelula"  align="center"><Status status={row.status}/></TableCell>
-                <TableCell className="bodyCelula"  align="center">{row.data}</TableCell>
-                <TableCell className="bodyCelula" style={{fontWeight: "bold"}}  align="left">{row.valor}</TableCell>
+                <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
+                <TableCell className="bodyCelula"  align="center"><Status status={row.status.descricao}/></TableCell>
+                <TableCell className="bodyCelula"  align="center">{handleData(row.dataAula)}</TableCell>
+                <TableCell className="bodyCelula" style={{fontWeight: "bold"}}  align="left">R$ {(row.aula.valorAula).toFixed(2)}</TableCell>
                 <TableCell className="bodyCelula"  align="center">
                     <Button variant="outlined" className="botao" onClick={()=>{handleOpen(row)}}> Detalhes</Button>
                 </TableCell>

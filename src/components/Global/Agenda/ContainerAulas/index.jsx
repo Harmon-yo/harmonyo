@@ -6,7 +6,7 @@ import ItemAula from "../ItemAula";
 import ListaAulas from "../ListaAulas";
 function ContainerAulas(props) {
   const { data, setData } = props.stateData;
-  console.log(data["$D"]);
+
   return (
     <Box className="container">
       <Box className="topo">

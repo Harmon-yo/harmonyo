@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   DateCalendar,
@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import "./style.css";
 import { styled } from "@mui/material/styles";
+import api from "../../../../api";
 
 const DiaDestacado = styled(PickersDay, {
   shouldForwardProp: (prop) => prop !== "customColor", // Evita encaminhar a prop customColor para o elemento DOM
@@ -23,17 +24,56 @@ const DiaDestacado = styled(PickersDay, {
   }),
 }));
 
+function transformarData(data) {
+  var dataRecebida = dayjs(data).toDate();
+  var dia =
+    dataRecebida.getDate() < 10
+      ? "0" + dataRecebida.getDate()
+      : dataRecebida.getDate();
+  var mes =
+    dataRecebida.getMonth() < 10
+      ? "0" + (dataRecebida.getMonth() + 1)
+      : dataRecebida.getMonth() + 1;
+  var dataF = dataRecebida.getFullYear() + "-" + mes + "-" + dia;
+  return dataF;
+}
+
 function Day(props) {
   const { day, selectedDay, ...other } = props;
-  const customColor = day.isSame(dayjs("2023-08-15"), "day") ? "#FF5722" : null;
+  var diaComp = dayjs(day).toDate();
+  var data = transformarData(diaComp);
+  const customColor = props.diasComAulas.includes(data) ? "#FF5722" : null;
   return <DiaDestacado {...other} day={day} customColor={customColor} custom />;
 }
 
 function Agenda(props) {
-
   const { data, setData } = props.stateData;
+  const [diasComAulas, setDiasComAulas] = useState([]);
 
-  
+  function getAulas() {
+    var data = transformarData(props.stateData.data);
+
+    api
+      .get(
+        `/pedidos/pedidos-por-mes-id-usuario?fkUsuario=${sessionStorage.ID}&data=${data}`,
+        { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }
+      )
+
+      .then((response) => {
+        var resposta = response.data;
+        const novosDiasComAulas = resposta.map((aula) =>
+          aula.dataAula.substring(0, 10)
+        );
+        setDiasComAulas(novosDiasComAulas);
+      })
+      .catch((error) => {
+       
+      });
+  }
+
+  useEffect(() => {
+    getAulas();
+  }, [data]);
 
   return (
     <LocalizationProvider adapterLocale="pt-br" dateAdapter={AdapterDayjs}>
@@ -44,12 +84,17 @@ function Agenda(props) {
         onChange={(newValue) => {
           setData(newValue);
         }}
-        dayOfWeekFormatter={(dayOfWeek, short) => {
-          const weekdays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-          const weekdaysShort = ["D", "S", "T", "Q", "Q", "S", "S"];
-          return short ? weekdaysShort[dayOfWeek] : weekdays[dayOfWeek];
+        onMonthChange={(newMonth) => {
+          if (new Date().getMonth() === newMonth.toDate().getMonth()) {
+            setData(dayjs(new Date()));
+          } else {
+            setData(newMonth);
+          }
+          getAulas();
         }}
-        slots={{ day: Day }}
+        slots={{
+          day: (props) => <Day {...props} diasComAulas={diasComAulas} />,
+        }}
       />
     </LocalizationProvider>
   );

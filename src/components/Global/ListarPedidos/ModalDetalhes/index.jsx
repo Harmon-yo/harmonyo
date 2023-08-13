@@ -4,9 +4,10 @@ import "./style.css";
 import PerfilUsuario from "../PerfilUsuario";
 import Close from "../../../../imgs/close.png";
 import Messenger from "../../../../imgs/messenger.png";
+import { useEffect } from "react";
 function ModalDetalhes(props) {
-  console.log(props);
-
+  
+  const [pedido, setPedido] = React.useState();
   const dados = [
     {
       id: 1,
@@ -17,8 +18,13 @@ function ModalDetalhes(props) {
       desc: "Vinicius Silva aceitou a proposta",
     },
   ];
+  useEffect(() => {
+    setPedido(props.pedido);
+  }, [props.pedido]);
+  console.log(props.pedido)
+  console.log(pedido);
 
-  return (
+if(pedido != undefined)  return (
     <Modal
       open={props.open}
       onClose={props.onClose}
@@ -36,37 +42,24 @@ function ModalDetalhes(props) {
             <img src={Close} />
           </Button>
         </Box>
-        <PerfilUsuario nome={props.pedido.nome} />
+        <PerfilUsuario nome={pedido.aluno.nome} />
         <Box className="tudoConteudo">
           <Box className="conteudoB">
             <Box className="conteudoB1">
               <Typography className="tituloDetalhe">Instrumento:</Typography>
               <Typography className="valorDetalhe">
-                {props.pedido.instrumento}
+                {pedido.aula.instrumento.nome}
               </Typography>
             </Box>
             <Box className="conteudoB1">
               <Typography className="tituloDetalhe">Data: </Typography>
               <Typography className="valorDetalhe">
-                {props.pedido.data}
+                {new Date(pedido.dataAula).toLocaleDateString() + " às "} 
+                { new Date(pedido.dataAula).getHours() < 10 ? " 0" + new Date(pedido.dataAula).getHours() : new Date(pedido.dataAula).getHours()}:{new Date(pedido.dataAula).getMinutes() < 10 ? "0" + new Date(pedido.dataAula).getMinutes() : new Date(pedido.dataAula).getMinutes()}
               </Typography>
             </Box>
           </Box>
-          <Box className="conteudoB">
-            <Box className="conteudoB1">
-              <Typography className="tituloDetalhe">Instrumento:</Typography>
-              <Typography className="valorDetalhe">
-                {props.pedido.instrumento}
-              </Typography>
-            </Box>
-            <Box className="conteudoB1">
-              <Typography className="tituloDetalhe">Data: </Typography>
-              <Typography className="valorDetalhe">
-                {props.pedido.data}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
+         </Box>
         <Box className="historicoModal">
           <Typography className="tituloModal">Histórico</Typography>
           {dados.map((item) => {

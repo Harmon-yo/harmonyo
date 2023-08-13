@@ -13,7 +13,7 @@ function ListaAulas(props) {
   const [aulas, setAulas] = useState();
 
   function getAulas() {
-    var data = dia["$d"].getDate();
+    var data = dia["$d"].getDate() < 10 ? "0" + dia["$d"].getDate() : dia["$d"].getDate();
     var mes =
       dia["$d"].getMonth() < 10
         ? "0" + (dia["$d"].getMonth() + 1)
@@ -40,7 +40,7 @@ function ListaAulas(props) {
         setAulas(aulas);
       })
       .catch((error) => {
-        console.log(error);
+      
       });
   }
 
