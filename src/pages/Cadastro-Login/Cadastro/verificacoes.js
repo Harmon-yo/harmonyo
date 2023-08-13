@@ -2,10 +2,10 @@ import { validaDataNascimento } from "../../../utils/index.js";
 
 
 function verificarNome(nome) {
-    if (nome.length < 3) {
+    if (nome.length < 4) {
         return {
             error: true,
-            helperText: 'Nome deve conter no mínimo 3 caracteres'
+            helperText: 'Nome deve conter no mínimo 4 caracteres'
         };
     }
 
