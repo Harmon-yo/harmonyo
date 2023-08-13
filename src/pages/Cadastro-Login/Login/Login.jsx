@@ -78,7 +78,7 @@ function Login() {
                 sessionStorage.EMAIL = res.data.email;
 
                 if (res.data.categoria === "Aluno") navigate(`/aluno/encontrar-professor`);
-               else if (res.data.categoria === "Professor") navigate(`/professor/dashboard`);
+               else if (res.data.categoria === "Professor") navigate(`/dashboard-professor`);
             })
             .catch((error) => {
                 let response = error.response;
