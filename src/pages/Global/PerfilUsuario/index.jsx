@@ -9,16 +9,27 @@ import InputMask from 'react-input-mask';
 import api from "../../../api.js";
 import CardExperiencias from "../../../components/Professor/CardExperiencias";
 import { verificarDataNascimento } from "../../Cadastro-Login/Cadastro/verificacoes";
+import { consultaCep } from "../../../utils";
 
 
 function PerfilUsuario() {
 
-  const[dadosPessoaisAntesDeEditar, setDadosPessoaisAntesDeEditar] = useState({
+  // Este indicador serve para que ao renderizar a página ele não modifique os dados de CEP logo de inicio e sim só altere os dados de endereço
+  // quando o usuário digitar o último número do CEP
+  let [ativarBuscaCep, setAtivarBuscaCep] = useState(false);
+
+  const[dadosPerfilAntesDeEditar, setDadosPerfilAntesDeEditar] = useState({
     nome: "",
     email: "",
     dataNasc: "",
-    sexo: ""
+    sexo: "",
+    bibliografia: "",
+    cep: "",
+    numero: "",
+    complemento: "",
+    experiencias: [],
   })
+
   
   const[formDataDisable, setFormDataDisable] = useState({
     dadosPessoais: true,
@@ -58,54 +69,76 @@ function PerfilUsuario() {
     helperTextDataNasc: ""
   })
 
+  const [errorsDadosEndereco, setErrorsDadosEndereco] = useState({
+
+    errorCep: false,
+    helperTextCep: "",
+
+    errorNumero: false,
+    helperTextNumero: "",
+
+  })
+
   useEffect(() => {
      obterDadosPerfil()
   },[])
-  
 
+  useEffect(() => {
+    if (formData.cep != undefined && !formData.cep.includes('_') && formData.cep != '' && formData.cep.length === 9) {
+      if (ativarBuscaCep) {
+        verificarCep()
+      }
+    }
+ },[formData.cep])
+  
   function obterDadosPerfil() {
 
-  api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
-          .then(response => {
+    api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
+            .then(response => {
 
-            console.log(response)
+              console.log(response)
 
-            let dadosUsuario = response.data;
+              let dadosUsuario = response.data;
 
-            // Dados pessoais do usuário
-            setFormData({
-              nome: dadosUsuario.nome,
-              email: dadosUsuario.email,
-              avaliacaoMedia: dadosUsuario.avaliacaoMedia,
-              cpf: dadosUsuario.cpf,
-              sexo: dadosUsuario.sexo,
-              dataNasc: dadosUsuario.dataNasc,
-              dataNascFormatada: new Date(dadosUsuario.dataNasc).toLocaleString("pt-BR", {year: "numeric", month: "2-digit", day:"2-digit",}),
-              idade: calcularIdade(dadosUsuario.dataNasc),
-              bibliografia: dadosUsuario.bibliografia,
-              cep: dadosUsuario.endereco.cep,
-              logradouro: dadosUsuario.endereco.logradouro,
-              numero: dadosUsuario.endereco.numero,
-              complemento: dadosUsuario.endereco.complemento,
-              bairro: dadosUsuario.endereco.bairro,
-              cidade: dadosUsuario.endereco.cidade,
-              estado: dadosUsuario.endereco.estado,
-              experiencias: dadosUsuario.experiencia,
+              // Dados pessoais do usuário
+              setFormData({
+                nome: dadosUsuario.nome,
+                email: dadosUsuario.email,
+                avaliacaoMedia: dadosUsuario.avaliacaoMedia,
+                cpf: dadosUsuario.cpf,
+                sexo: dadosUsuario.sexo,
+                dataNasc: dadosUsuario.dataNasc,
+                dataNascFormatada: new Date(dadosUsuario.dataNasc).toLocaleString("pt-BR", {year: "numeric", month: "2-digit", day:"2-digit",}),
+                idade: calcularIdade(dadosUsuario.dataNasc),
+                bibliografia: dadosUsuario.bibliografia,
+                cep: dadosUsuario.endereco.cep,
+                logradouro: dadosUsuario.endereco.logradouro,
+                numero: dadosUsuario.endereco.numero,
+                complemento: dadosUsuario.endereco.complemento,
+                bairro: dadosUsuario.endereco.bairro,
+                cidade: dadosUsuario.endereco.cidade,
+                estado: dadosUsuario.endereco.estado,
+                experiencias: dadosUsuario.experiencia,
+              })
+
+              setDadosPerfilAntesDeEditar({ 
+                nome: dadosUsuario.nome,
+                email: dadosUsuario.email,
+                dataNasc: dadosUsuario.dataNasc,
+                sexo: dadosUsuario.sexo,
+                bibliografia: dadosUsuario.bibliografia,
+                cep: dadosUsuario.endereco.cep,
+                numero: dadosUsuario.endereco.numero,
+                complemento: dadosUsuario.endereco.complemento,
+                experiencias: dadosUsuario.experiencia,
+              })
+
+            })
+            .catch(err => {
+              console.log(err)
             })
 
-            setDadosPessoaisAntesDeEditar({ 
-              nome: dadosUsuario.nome,
-              email: dadosUsuario.email,
-              dataNasc: dadosUsuario.dataNasc,
-              sexo: dadosUsuario.sexo,
-            })
-
-          })
-          .catch(err => {
-            console.log(err)
-          })
-
-  }
+    }
 
   function formatDateToLocalDateSpring(date) {
     const parts = date.split('/');
@@ -155,19 +188,49 @@ function PerfilUsuario() {
     else {
       setErrorsDadosPessoais({...errorsDadosPessoais, errorDataNasc: false, helperTextDataNasc: ""})
     }
-}
+  }
 
+  async function verificarCep() {
+
+    let dadosViaCep = await consultaCep(formData.cep)
+
+    
+    if (dadosViaCep === null) {
+      setErrorsDadosEndereco({...errorsDadosEndereco, errorCep: true, helperTextCep: "CEP Inválido"})
+    }
+    else {
+      setFormData({...formData,
+        logradouro: dadosViaCep.logradouro,
+        numero: "",
+        complemento: "",
+        bairro: dadosViaCep.bairro,
+        cidade: dadosViaCep.localidade,
+        estado: dadosViaCep.uf,
+      })
+      setErrorsDadosEndereco({...errorsDadosEndereco, errorCep: false, helperTextCep: ""})
+    }
+  }
+
+  function verificarNumeroEndereco(num) {
+    
+    if (num > 99999 || num <= 0 || num == "" || num == null || num == undefined) {
+      setErrorsDadosEndereco({errorsDadosEndereco, errorNumero: true, helperTextNumero: "Número Inválido"})
+    }
+    else {
+      setErrorsDadosEndereco({errorsDadosEndereco, errorNumero: false, helperTextNumero: ""})
+    }
+  }
 
   function atualizarDadosPessoais() {
 
     let desabilitarEdicao;
 
-    let camposNaoForamEditados = (dadosPessoaisAntesDeEditar.nome == formData.nome && dadosPessoaisAntesDeEditar.email == formData.email && dadosPessoaisAntesDeEditar.dataNasc && formData.dataNasc && dadosPessoaisAntesDeEditar.sexo == formData.sexo)
+    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.nome == formData.nome && dadosPerfilAntesDeEditar.email == formData.email && dadosPerfilAntesDeEditar.dataNasc == formData.dataNasc && dadosPerfilAntesDeEditar.sexo == formData.sexo)
 
     if(camposNaoForamEditados){
       alert("Você não editou nenhum dos campos !")
 
-      desabilitarEdicao = false;
+      desabilitarEdicao = true;
 
       return desabilitarEdicao
     }
@@ -177,6 +240,7 @@ function PerfilUsuario() {
         nome: formData.nome,
         email: formData.email,
         dataNasc: formatDateToLocalDateSpring(formData.dataNascFormatada),
+        sexo: formData.sexo
       }
       
       api.put(`/usuarios/atualiza-dados-pessoais/${sessionStorage.getItem("ID")}`, dadosUsuario, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
@@ -197,6 +261,61 @@ function PerfilUsuario() {
       return desabilitarEdicao;
     }
     
+  }
+
+  function atualizarDadosEndereco() {
+
+      let desabilitarEdicao;
+
+      let camposNaoForamEditados = (dadosPerfilAntesDeEditar.cep == formData.cep && dadosPerfilAntesDeEditar.numero == formData.numero && dadosPerfilAntesDeEditar.complemento == formData.complemento)
+      
+      if(camposNaoForamEditados){
+        alert("Você não editou nenhum dos campos de endereço !")
+
+        desabilitarEdicao = true;
+
+        return desabilitarEdicao
+      }
+      else if (formData.numero > 99999 || formData.numero <= 0 || formData.numero == "" || formData.numero == null || formData.numero == undefined) {
+        setErrorsDadosEndereco({errorsDadosEndereco, errorNumero: true, helperTextNumero: "Número Inválido"})
+        
+        alert("Campos Inválidos! Não foi possível atualizar seus dados!")
+
+        desabilitarEdicao = false
+
+        return desabilitarEdicao;
+      }
+      else if (!errorsDadosEndereco.errorCep && !errorsDadosEndereco.errorNumero) {
+        
+        let dadosEndereco = {
+          cep: formData.cep,
+          logradouro: formData.logradouro,
+          numero: formData.numero,
+          complemento: formData.complemento,
+          bairro: formData.bairro,
+          cidade: formData.cidade,
+          estado: formData.estado
+        }
+
+        api.put(`/enderecos/atualiza-endereco-usuario/${sessionStorage.getItem("ID")}`, dadosEndereco, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
+        .then(res => {
+          alert("Seus Dados foram atualizados com sucesso!")
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+        desabilitarEdicao = true
+
+        return desabilitarEdicao;
+    }
+    else {
+      alert("Campos Inválidos! Não foi possível atualizar seus dados!")
+
+      desabilitarEdicao = false
+
+      return desabilitarEdicao;
+    }
   }
 
 
@@ -241,10 +360,12 @@ function PerfilUsuario() {
               <img  src={formDataDisable.dadosPessoais ? EditIcon : SaveIcon} alt="" className="img-edit-icon" 
                     onClick={() =>{ 
                         if (formDataDisable.dadosPessoais == false) {
-                          setFormDataDisable({...formData, dadosPessoais: atualizarDadosPessoais() })
+                          console.log(formDataDisable)
+                          setFormDataDisable({...formDataDisable, dadosPessoais: atualizarDadosPessoais() })
                         }
                         else {
-                          setFormDataDisable({dadosPessoais: false })
+                          console.log(formDataDisable)
+                          setFormDataDisable({...formDataDisable, dadosPessoais: false })
                         }
                       }
                     }
@@ -318,28 +439,40 @@ function PerfilUsuario() {
 
             <Box className="box-titulo-e-edit-icon">
                 <Typography className="txt-titulo">Endereço</Typography>
-                <img src={EditIcon} alt="" />
+                <img  src={formDataDisable.dadosEndereco ? EditIcon : SaveIcon} alt="" className="img-edit-icon" 
+                    onClick={() =>{ 
+                        if (!formDataDisable.dadosEndereco) {
+                          setFormDataDisable({...formDataDisable, dadosEndereco: atualizarDadosEndereco() })
+                        }
+                        else {
+                          console.log(formDataDisable)
+                          setFormDataDisable({...formDataDisable, dadosEndereco: false })
+                        }
+                      }
+                    }
+              />
             </Box>
 
             
             <Box className="box-inputs-endereco-pt1">
-              <InputMask mask='99999-999' value={formData.cep} onChange={""} sx={{width: '25%'}} disabled={formDataDisable.dadosEndereco}>
+              <InputMask mask='99999-999' value={formData.cep} 
+                onChange={(e) => {setFormData({...formData, cep: e.target.value}); setAtivarBuscaCep(true)}} sx={{width: '25%'}} disabled={formDataDisable.dadosEndereco}>
                         {() => (
-                            <TextField id="ipt-cep" label="CEP" error={""} helperText={""} variant="standard" disabled={formDataDisable.dadosEndereco}/>
+                            <TextField id="ipt-cep" label="CEP" error={errorsDadosEndereco.errorCep} helperText={errorsDadosEndereco.helperTextCep} variant="standard" disabled={formDataDisable.dadosEndereco}/>
                         )}
               </InputMask>
             </Box>
 
             <Box className="box-inputs-endereco-pt1">
-              <TextField id="ipt-endereco" onChange={""} label="Endereço" variant="standard" error={""} helperText={""} value={formData.logradouro} sx={{width: "60%"}} disabled={formDataDisable.dadosEndereco}/>           
-              <TextField id="ipt-numero" onChange={""} label="Número" variant="standard" error={""} helperText={""} value={formData.numero} sx={{width: "10%"}} disabled={formDataDisable.dadosEndereco} />           
-              <TextField id="ipt-complemento" onChange={""} label="Complemento" variant="standard" error={""} helperText={""} value={formData.complemento} sx={{width: "20%"}} disabled={formDataDisable.dadosEndereco}/>           
+              <TextField id="ipt-endereco" onChange={""} label="Endereço" variant="standard" error={""} helperText={""} value={formData.logradouro} sx={{width: "60%"}} disabled/>           
+              <TextField id="ipt-numero" onChange={(e) => {setFormData({...formData, numero: e.target.value}); verificarNumeroEndereco(e.target.value)}} label="Número" variant="standard" error={errorsDadosEndereco.errorNumero} helperText={errorsDadosEndereco.helperTextNumero} value={formData.numero} sx={{width: "10%"}} disabled={formDataDisable.dadosEndereco} type="number"/>           
+              <TextField id="ipt-complemento" onChange={(e) => {setFormData({...formData, complemento: e.target.value})}} label="Complemento" variant="standard" error={""} helperText={""} value={formData.complemento} sx={{width: "20%"}} disabled={formDataDisable.dadosEndereco} inputProps={{ maxLength: 50 }}/>           
             </Box> 
 
             <Box className="box-inputs-endereco-pt1">
-              <TextField id="ipt-bairro" onChange={""} label="Bairro" variant="standard" error={""} helperText={""} value={formData.bairro} sx={{width: "40%"}} disabled={formDataDisable.dadosEndereco}/>           
-              <TextField id="ipt-cidade" onChange={""} label="Cidade" variant="standard" error={""} helperText={""} value={formData.cidade} sx={{width: "40%"}} disabled={formDataDisable.dadosEndereco}/>           
-              <TextField id="ipt-estado" onChange={""} label="Estado" variant="standard" error={""} helperText={""} value={formData.estado} sx={{width: "10%"}} disabled={formDataDisable.dadosEndereco}/>           
+              <TextField id="ipt-bairro" onChange={""} label="Bairro" variant="standard" error={""} helperText={""} value={formData.bairro} sx={{width: "40%"}} disabled/>           
+              <TextField id="ipt-cidade" onChange={""} label="Cidade" variant="standard" error={""} helperText={""} value={formData.cidade} sx={{width: "40%"}} disabled/>           
+              <TextField id="ipt-estado" onChange={""} label="Estado" variant="standard" error={""} helperText={""} value={formData.estado} sx={{width: "10%"}} disabled/>           
             </Box> 
 
           </Box>
