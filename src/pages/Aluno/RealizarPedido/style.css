@@ -1,0 +1,10 @@
+.pagina-container {
+    display: flex;
+    align-items: center;	
+    justify-content: center;
+}
+
+.card-pedido {
+    width: 75%;
+    height: 90%;
+}

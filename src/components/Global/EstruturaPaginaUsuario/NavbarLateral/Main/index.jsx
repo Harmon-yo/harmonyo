@@ -19,7 +19,7 @@ import NavbarLateralCard from "../NavbarLateralCard/index.jsx";
 
 function NavbarLateral(props) {
     const [active, setActive] = React.useState(false);
-    const tipoUsuario =  sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
+    const tipoUsuario =  "aluno"/* sessionStorage.getItem("CATEGORIA").toLocaleLowerCase() */;
 
     const opcoesNavbar = {
         professor: [
