@@ -5,7 +5,7 @@ import {
     Box
 } from '@mui/material';
 import pathsRegioes from './svgMapa.js';
-import BarraPorcentagem from '../Graficos/BarraPorcentagem/index.jsx';
+import BarraPorcentagem from '../Graficos/BarraPorcentagemHorizontal/index.jsx';
 
 const siglas = {
     federacao: ["se",
@@ -139,8 +139,8 @@ function MapaBrasil(props) {
                 </svg>
             </Box>
             <Box className="mapa-info-container">
-                <Typography className="mapa-info-titulo">Informações</Typography>
-                {
+{/*                 <Typography className="mapa-info-titulo">Informações</Typography>
+ */}                {
                     quantidadeUsuariosPorEstado.regioes.map((regiao) => (
                         <BarraPorcentagem nome={regiao.nome} valorTotal={quantidadeUsuariosPorEstado.valorTotal} valor={regiao.valor} />
                     ))

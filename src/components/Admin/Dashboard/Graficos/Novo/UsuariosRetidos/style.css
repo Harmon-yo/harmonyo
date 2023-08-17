@@ -1,0 +1,25 @@
+.card-usuario-retido .taxas-container {
+    width: 70%;
+    margin-top: calc(var(--espaco-padrao) * 3);
+}
+
+.card-usuario-retido .taxas-container .taxa-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-usuario-retido .taxas-container .taxa-container .taxa-nome {
+    font-weight: 600 !important;
+    font-size: var(--fonte-h6) !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card-usuario-retido .taxas-container .taxa-container .taxa-valor {
+    font-weight: 400 !important;
+    font-size: var(--fonte-pequena) !important;
+}

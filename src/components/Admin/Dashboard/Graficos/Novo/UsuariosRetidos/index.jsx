@@ -12,7 +12,11 @@ import {
 import { Bar } from "react-chartjs-2";
 import {
     Box,
+    Typography
 } from "@mui/material";
+import Card from "../../../CardComTitulo/index.jsx";
+import InformacaoAdicionalGrafico from "./InformacaoAdicionalGrafico/index.jsx";
+import "./style.css";
 
 ChartJS.register(
     CategoryScale,
@@ -43,15 +47,21 @@ const options = {
         intersect: true,
         mode: 'index',
     },
+
     plugins: {
         legend: {
-            display: false
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+                usePointStyle: true
+            }
         },
         title: {
             display: false
         }
     }
-}
+};
 
 const criarDataset = (label, data, cor) => {
     return {
@@ -62,30 +72,49 @@ const criarDataset = (label, data, cor) => {
         tension: 0.4,
         pointRadius: 0.3,
     }
-}
+};
 
-const tiposDeGrafico = [
+const data = {
+    labels: ["Usuários", "Professores", "Alunos"],
+    datasets: [
+        criarDataset("Total", [10, 5, 5], "#1568"),
+        criarDataset("Retidos", [6, 3, 3], "#FF6384"),
+    ]
+};
+
+const porcentagens = [
     {
-        id: 1,
-        label: ["Usuários", "Professores", "Alunos"],
-        datasets: [
-            criarDataset("Total", [10, 5, 5], "#1568"),
-            criarDataset("Convertidos", [6, 3, 3], "#FF6384"),
-        ]
+        nome: "Usuários retidos",
+        valorTotal: 10,
+        valor: 6,
+    }, {
+        nome: "Professores retidos",
+        valorTotal: 5,
+        valor: 3,
+    }, {
+        nome: "Alunos retidos",
+        valorTotal: 5,
+        valor: 3,
     }
-]
+];
 
 function GraficoMensal(props) {
-    const data = {
-        labels: tiposDeGrafico.find(tipo => tipo.id === props.idSelecionado).label,
-        datasets: tiposDeGrafico.find(tipo => tipo.id === props.idSelecionado).datasets
-    }; 
 
 
     return (
-        <Box className="grafico-container">
+        <Card className="card-usuario-retido" titulo="Usuários retidos">
             <Bar data={data} options={options} />
-        </Box>
+
+            <Box className="taxas-container">
+                {
+                    porcentagens.map((porcentagem) =>
+                        <InformacaoAdicionalGrafico nome={porcentagem.nome} valor={porcentagem.valor} valorTotal={porcentagem.valorTotal} />
+                    )
+                }
+            </Box>
+
+        </Card>
+
     );
 }
 

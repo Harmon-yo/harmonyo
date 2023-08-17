@@ -1,3 +1,5 @@
+/* Página padrão e Geral */
+
 .pagina-container {
     width: 100%;
     height: 100%;
@@ -6,6 +8,8 @@
     gap: 24px;
 }
 
+/* Métricas */
+
 .metricas-container {
     width: 100%;
     display: flex;
@@ -13,18 +17,32 @@
     gap: 24px;
 }
 
-.metrica-container {
+/* Seção Padrão */
+
+.secao {
     width: 100%;
-    cursor: pointer;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
 }
 
-.taxas-container {
-    width: 43%;
+.secao-usuarios-retidos-cadastrados {
+    height: 70% !important;
 }
 
-.card-grafico-doughnut-container .taxas-container {
-    width: 60%;
+.card-usuario-retido, .card-usuarios-cadastrados {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
+.secao-aulas {
+    height: 70% !important;
+}
+
+/*
 
 .taxa-container {
     width: 100%;
@@ -34,7 +52,7 @@
     align-items: center;
 }
 
-.taxa-nome, .mapa-info-regiao {
+.mapa-info-regiao {
     font-weight: 600 !important;
     font-size: var(--fonte-h6) !important;
     display: flex;
@@ -42,13 +60,9 @@
     align-items: center;
 }
 
-.taxa-valor, .mapa-info-valor {
+.mapa-info-valor {
     font-weight: 400 !important;
     font-size: var(--fonte-pequena) !important;
-}
-
-.selecionado {
-    border: 3px solid var(--cor-padrao-escuro);
 }
 
 .informacoes-adicionais-container {
@@ -58,9 +72,8 @@
     height: 40%;
 }
 
-.card-grafico-container,
-.card-grafico-doughnut-container {
-    width: 55%;
+.card-usuario-retido {
+    width: 40%;
     padding: calc(var(--espaco-padrao) * 2);
     display: flex;
     flex-direction: column;
@@ -69,6 +82,7 @@
 
 .card-grafico-doughnut-container {
     width: 45%;
+    padding: calc(var(--espaco-padrao) * 2);
 }
 
 .grafico-doughnut-container {
@@ -76,15 +90,12 @@
 }
 
 
-.grafico-titulo {
+.card-titulo {
     margin-bottom: calc(var(--espaco-padrao) * 2) !important;
 }
 
 .graficos-container {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
 .metricas-adicionais-container {
@@ -102,7 +113,7 @@
 }
 
 .mapa-card {
-    width: 80%;
+    width: 70%;
     height: 100%;
 }
 
@@ -118,9 +129,28 @@
 }
 
 .mapa-info-container {
-    width: 45%;
+    width: 50%;
 }
 
 .svg-container {
     width: 45%;
 }
+
+
+.secao-cadastro-usuario-mensal {
+    display: flex;
+    flex-direction: row;    
+    gap: 24px;
+}
+
+.mini-metricas-mensal-container {
+    width: 55%;
+    display: flex;
+    gap: 24px;
+}
+.mini-metricas-mensal {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+}
+*/

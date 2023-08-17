@@ -1,0 +1,18 @@
+.card-frequencia {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.secao-usuarios-retidos-cadastrados .card-frequencia {
+    height: 45% !important;
+}
+
+.frequencias-container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: space-evenly;
+}

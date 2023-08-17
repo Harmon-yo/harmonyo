@@ -6,10 +6,15 @@ import { verificarToken } from "../../../utils/index.js";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import Card from "../../../components/Global/Card/index.jsx";
 import { Box, Typography } from "@mui/material";
-import Metrica from "../../../components/Admin/Dashboard/Graficos/Metrica/index.jsx";
-import Graficos from "../../../components/Admin/Dashboard/Graficos/index.jsx"
-import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx";
+import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
+import UsuariosRetidos from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidos/index.jsx";
+import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastrados/index.jsx";
+import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
+import MediaUsuarioSemana from '../../../components/Admin/Dashboard/Graficos/Novo/MediaUsuariosSemana/index.jsx';
+import UsuariosRetidosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidosSemana/index.jsx';
 
+import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx";
+import BarraPorcentagemHorizontal from '../../../components/Admin/Dashboard/Graficos/BarraPorcentagemHorizontal/index.jsx';
 /* Css */
 import "./style.css";
 
@@ -31,16 +36,16 @@ function DashboardAdmin(props) {
         },
         {
             id: 2,
-            nome: "Renda",
+            nome: "Aulas por aluno",
             nomeGrafico: "renda",
-            valor: 0,
+            valor: 0.5,
             temInformacaoAdicional: false
         },
         {
             id: 3,
             nome: "Aulas",
             nomeGrafico: "aulas",
-            valor: 0,
+            valor: 5,
             temInformacaoAdicional: false
         },
         {
@@ -51,55 +56,53 @@ function DashboardAdmin(props) {
             temInformacaoAdicional: false
         }
     ]);
-    const [idMetricaSelecionada, setIdMetricaSelecionada] = useState(1);
-    
-    const metricaSelecionada = metricas.find((metrica) => metrica.id === idMetricaSelecionada);
-
-    const handleClickMetrica = (id) => {
-        setIdMetricaSelecionada(id);
-    };
 
     return (
         <EstruturaPaginaUsuario tela="dashboard-admin" errosState={{ erros, setErros }}>
             <Box className="pagina-container">
-                <Box className="metricas-container">
-                    {
-                        metricas.map((metrica) =>
-                            <Metrica id={metrica.id} nome={metrica.nome} valor={metrica.valor} handleClickMetrica={handleClickMetrica} idMetricaSelecionada={idMetricaSelecionada}/>
-                            )
-                    }
+                <Metricas metricas={metricas} />
+                <Box className="secao secao-usuarios-retidos-cadastrados">
+                    <UsuariosRetidos />
+                    <UsuariosCadastrados />
+                    <Box sx={{
+                        width: "30%",
+                        height: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                    }}>
+                        <UsuariosRetidosSemana />
+                        <MediaUsuarioSemana />
+                    </Box>
                 </Box>
-                <Box className="informacoes-adicionais-container">
-                    <Card className="card-grafico-container">
-                        <Typography className="grafico-titulo">Conversão</Typography>
-                        <Graficos barra metricaSelecionada={idMetricaSelecionada} temInformacaoAdicional={metricaSelecionada}/>
-
-                    </Card>
-                    {/* <Box className="metricas-adicionais-container">
-                        <Card className="metrica-adicional-card">
-                            <Typography className="metrica-titulo">Usuários convertidos</Typography>
-                            <Typography className="metrica-valor">50%</Typography>
-                        </Card>
-                        <Card className="metrica-adicional-card">
-                            <Typography className="metrica-titulo">professores convertidos</Typography>
-                            <Typography className="metrica-valor">50%</Typography>
-                        </Card>
-                        <Card className="metrica-adicional-card">
-                            <Typography className="metrica-titulo">Alunos convertidos</Typography>
-                            <Typography className="metrica-valor">50%</Typography>
-                        </Card>
-                    </Box> */}
-                    <Card className="card-grafico-doughnut-container">
-                        <Typography className="grafico-titulo">Informações adicionais</Typography>
-                        <Graficos doughnut temInformacaoAdicional={metricaSelecionada}/>
-                    </Card>
+                <Box className="secao secao-aulas">
+                    <Box sx={{
+                        width: "30%",
+                        height: "100%",
+                    }}>
+                        <AulasSemana />
+                    </Box>
                 </Box>
-                <Box className="secao-mapa-container">
+                {/* <Box className="secao-mapa-container">
                     <Card className="mapa-card">
-                        <Typography className="metrica-titulo">Mapa</Typography>
+                        <Typography className="metrica-titulo">Aulas por região</Typography>
                         <Mapa />
                     </Card>
                 </Box>
+                <Box className="secao-aula-semana-container">
+
+                </Box>
+                <Box className="secao-cadastro-usuario-mensal">
+                    <Card className="card-usuarios-retencao">
+                        <Typography className="metrica-titulo">Usuários retidos</Typography>
+                    </Card>
+                    <Card className="card-grafico-doughnut-container">
+                        <Typography className="card-titulo">Aulas por instrumentos</Typography>
+                        <BarraPorcentagemHorizontal nome="Violão" valorTotal={5} valor={2} />
+                        <BarraPorcentagemHorizontal nome="Guitarra" valorTotal={5} valor={1} />
+
+                    </Card>
+                </Box> */}
             </Box>
         </EstruturaPaginaUsuario>
     );

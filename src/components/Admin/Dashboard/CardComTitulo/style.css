@@ -1,11 +1,9 @@
-.metrica-titulo,
-.grafico-titulo,
-.mapa-info-titulo{
+.card-titulo {
     font-weight: 600 !important;
     font-size: var(--fonte-h5) !important;
 }
 
-.metrica-valor {
+.card-valor {
     font-weight: 400 !important;
     font-size: var(--fonte-h5) !important;
 }

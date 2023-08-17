@@ -13,7 +13,7 @@ html,
 body, .mui-root, #root {
     width: 100% !important;
     min-height: 100vh !important;
-    height: 100vh !important;
+    height: auto !important;
 }
 
 .pagina-padrao-container {
@@ -24,8 +24,8 @@ body, .mui-root, #root {
 
 .pagina-container {
     width: 100%;
-    min-height: 95%;
-    height: 95%;
+    min-height: 95% !important;
+    height: 95% !important;
 }
 
 .erro-container {
