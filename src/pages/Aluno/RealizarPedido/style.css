@@ -1,10 +1,106 @@
 .pagina-container {
     display: flex;
-    align-items: center;	
-    justify-content: center;
+    gap: 24px;
+}
+
+.card-usuario-info {
+    width: 45%;
 }
 
 .card-pedido {
-    width: 75%;
-    height: 90%;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.card-usuario-info, .card-pedido {
+    height: 70%;
+}
+
+.usuario-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: calc(var(--espaco-padrao) * 2);
+}
+
+.usuario-info-avatar {
+    width: 150px !important;
+    height: 150px !important;
+    font-size: var(--fonte-h1) !important;
+}
+
+.duracao-container {
+    width: 65%;
+    height: 30%;
+    background-color: #AAF0C4;
+    color: #099250;
+    padding: calc(var(--espaco-padrao) * 2);
+    border-radius: var(--borda-padrao);
+}
+
+.nome-usuario {
+    font-size: var(--fonte-h2) !important;
+    font-weight: bold !important;
+}
+
+.pedido-info-container {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around
+}
+
+.item-pedido {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: calc(var(--espaco-padrao) * 2);
+}
+
+.item-nome {
+    font-size: var(--fonte-h5) !important;
+    font-weight: bold !important;
+}
+
+.item-valor {
+    font-size: var(--fonte-h6) !important;
+    font-weight: bold !important;
+}
+
+.card-usuario-info .item-pedido {
+    margin-top: calc(var(--espaco-padrao) * 2);
+    margin-bottom: calc(var(--espaco-padrao) * 2);
+}
+
+.pedido-titulo {
+    font-size: var(--fonte-h4) !important;
+    font-weight: bold !important;
+}
+
+.pedido-form .item-pedido {
+    width: 100%;
+}
+
+.pedido-form {
+    width: 80%;
+}
+
+.botao-passar-etapa {
+    background-color: var(--cor-padrao) !important;
+    color: var(--light-font) !important;
+    padding-right: 10% !important;
+    padding-left: 10% !important;
+    font-weight: 700 !important;
+    width: 40%;
+    height: 10%;
+}
+
+.card-pedido .Mui-active .MuiStepIcon-root, .card-pedido .Mui-completed .MuiStepIcon-root  {
+    color: var(--cor-padrao) !important;
 }
