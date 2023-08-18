@@ -205,8 +205,8 @@ function Cadastro() {
 
             for (let i = 0; i < erros.length; i++) setErrosServidor((errosServidor) => [...errosServidor, erros[i]]);
         }
-
-        api.post(`/${categoria.current.toLowerCase()}s/cadastro`, dadosUsuario)
+        const url = categoria.current.toLowerCase() === "professor" ? "professores": "alunos"
+        api.post(`/${url}/cadastro`, dadosUsuario)
             .then((res) => {
                 sessionStorage.EMAIL = res.data.email;
                 alert("Cadastro Realizado com Sucesso!");

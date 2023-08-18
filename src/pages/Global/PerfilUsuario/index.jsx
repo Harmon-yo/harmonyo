@@ -10,7 +10,8 @@ import api from "../../../api.js";
 import CardExperiencias from "../../../components/Professor/CardExperiencias";
 import { verificarDataNascimento } from "../../Cadastro-Login/Cadastro/verificacoes";
 import { consultaCep } from "../../../utils";
-
+import Textarea from '@mui/joy/Textarea';
+import FormHelperText from '@mui/joy/FormHelperText';
 
 function PerfilUsuario() {
 
@@ -67,6 +68,11 @@ function PerfilUsuario() {
 
     errorDataNasc: false,
     helperTextDataNasc: ""
+  })
+
+  const [errorsSobreMim, setErrorsSobreMim] = useState({
+    errorSobreMim: false,
+    helperTextSobreMim: "",
   })
 
   const [errorsDadosEndereco, setErrorsDadosEndereco] = useState({
@@ -190,6 +196,18 @@ function PerfilUsuario() {
     }
   }
 
+  function validarSobreMim(bibliografia) {
+    if (bibliografia === '' || bibliografia === undefined || bibliografia === ' ' || bibliografia.length < 20) {
+      setErrorsSobreMim({...errorsSobreMim, errorSobreMim: true, helperTextSobreMim: "Texto Inválido. Este campo deve conter no mínimo 20 caracteres"})
+    }
+    else if(bibliografia.length == 500){
+      setErrorsSobreMim({...errorsSobreMim, errorSobreMim: true, helperTextSobreMim: "Você atingiu o máximo de caracteres"})
+    }
+    else{
+      setErrorsSobreMim({...errorsSobreMim, errorSobreMim: false, helperTextSobreMim: ""})
+    }
+  }
+
   async function verificarCep() {
 
     let dadosViaCep = await consultaCep(formData.cep)
@@ -261,6 +279,45 @@ function PerfilUsuario() {
       return desabilitarEdicao;
     }
     
+  }
+
+  function atualizasrSobreMim() {
+    let desabilitarEdicao;
+
+    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.bibliografia == formData.bibliografia)
+
+    if(camposNaoForamEditados){
+      alert("Você não editou nenhum dos campos !")
+
+      desabilitarEdicao = true;
+
+      return desabilitarEdicao
+    }
+    else if (!errorsSobreMim.errorSobreMim) {
+      
+      let usuarioBibliografia = {
+        bibliografia:formData.bibliografia
+      }
+
+      api.put(`/usuarios/atualiza-sobre-mim/${sessionStorage.getItem("ID")}`, usuarioBibliografia, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
+          .then(res => {
+            alert("Seus Dados foram atualizados com sucesso!")
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+          desabilitarEdicao = true
+
+          return desabilitarEdicao;
+    }
+    else {
+      alert("Campos Inválidos! Não foi possível atualizar seus dados!")
+
+      desabilitarEdicao = false
+
+      return desabilitarEdicao;
+    }
   }
 
   function atualizarDadosEndereco() {
@@ -337,10 +394,6 @@ function PerfilUsuario() {
     return idade;
   }
 
-
-  let txtSobreMim = "Um professor de música apaixonado por instrumentos de corda. Com formação em Educação Musical e vasta experiência de atuação, ele compartilha sua paixão pela música através do ensino. Sua expertise abrange teoria musical, técnicas de execução e pedagogia, permitindo que ele transmita conhecimentos de forma envolvente e inspiradora aos seus alunos. "
-
-  
   return (
     <EstruturaPaginaUsuario>
       <Box className="pagina-container">
@@ -360,11 +413,9 @@ function PerfilUsuario() {
               <img  src={formDataDisable.dadosPessoais ? EditIcon : SaveIcon} alt="" className="img-edit-icon" 
                     onClick={() =>{ 
                         if (formDataDisable.dadosPessoais == false) {
-                          console.log(formDataDisable)
                           setFormDataDisable({...formDataDisable, dadosPessoais: atualizarDadosPessoais() })
                         }
                         else {
-                          console.log(formDataDisable)
                           setFormDataDisable({...formDataDisable, dadosPessoais: false })
                         }
                       }
@@ -410,9 +461,47 @@ function PerfilUsuario() {
           <Box className="box-sobre-mim">
             <Box className="box-titulo-e-edit-icon">
                 <Typography className="txt-titulo">Sobre Mim</Typography>
-                <img src={EditIcon} alt="" />
+                <img  src={formDataDisable.dadosSobreMim ? EditIcon : SaveIcon} alt="" className="img-edit-icon" 
+                    onClick={() =>{ 
+                        if (formDataDisable.dadosSobreMim == false) {
+                          setFormDataDisable({...formDataDisable, dadosSobreMim: atualizasrSobreMim()})
+                        }
+                        else {
+                          setFormDataDisable({...formDataDisable, dadosSobreMim: false })
+                        }
+                      }
+                    }
+              />
             </Box>
-            <Typography className="txt-sobre-mim">{txtSobreMim}</Typography>
+            {
+              formDataDisable.dadosSobreMim ? 
+              <Typography className="txt-sobre-mim">
+                { formData.bibliografia === '' ? 
+                  'Seja-bem vindo. Clique no icone de editar no canto superior direito e escreva sobre você! :)':
+                  formData.bibliografia
+                }
+            </Typography>
+              :
+              <>
+                <Textarea name="Outlined" 
+                          placeholder="Escreva sobre você" 
+                          variant="outlined" 
+                          className="txt-area-sobre-mim"
+                          error = {errorsSobreMim.errorSobreMim}
+                          helperText = {errorsSobreMim.helperTextSobreMim}
+                          value={formData.bibliografia}
+                          inputProps={{ maxLength: 500 }}
+                          onChange={(e) => {setFormData({...formData, bibliografia: e.target.value}); validarSobreMim(e.target.value)}}
+                          endDecorator={
+                            <Typography level="body-xs" sx={{ ml: 'auto', color: '#000' }}>
+                              {formData.bibliografia.length} character(s)
+                            </Typography>
+                          }
+                />
+                <FormHelperText>{errorsSobreMim.helperTextSobreMim}</FormHelperText>
+              </>
+              
+            }
           </Box>
           
           <Box className="linha-divisao-pagina" />
