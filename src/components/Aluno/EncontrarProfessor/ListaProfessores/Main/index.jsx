@@ -3,6 +3,7 @@ import { Box, Typography, Skeleton, CircularProgress } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorResumidoCard from "../ProfessorResumidoCard/index.jsx";
 import api from "../../../../../api.js";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 const carregando = () => {
@@ -10,6 +11,7 @@ const carregando = () => {
 }
 
 function ListaProfessores(props) {
+    const navigate = useNavigate();
 
     return (
         <Box>
@@ -24,7 +26,9 @@ function ListaProfessores(props) {
                     : <Card className="professores-cards">
                         {
                             props.professores.map((professor, index) => (
-                                <ProfessorResumidoCard key={index} nome={professor.nome} instrumentos={professor.instrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
+                                <ProfessorResumidoCard onClick={
+                                    () => props.onClick(professor)
+                                } key={index} nome={professor.nome} instrumentos={professor.instrumentos} idade={professor.idade} bairro={professor.bairro} distancia={professor.distancia} precoMinimo={professor.valorMinimo} precoMaximo={professor.valorMaximo} descricao={professor.descricao} avaliacao={professor.mediaAvaliacao} cidade={professor.cidade} estado={professor.estado} />
                             ))
                         }
                     </Card>

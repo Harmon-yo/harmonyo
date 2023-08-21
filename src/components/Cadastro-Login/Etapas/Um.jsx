@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import InputMask from 'react-input-mask';
-import { useStyles } from "../../Cadastro-Login.styles.js";
+import { useStyles } from "../../../pages/Cadastro-Login/Cadastro-Login.styles.js";
 
 
 function EtapaUm(props) {

@@ -13,11 +13,14 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import EtapaUm from "../../../components/Aluno/RealizarPedido/EtapaUm/index.jsx";
+import EtapaDois from "../../../components/Aluno/RealizarPedido/EtapaDois/index.jsx";
+
 
 const steps = [
     "Escolha o dia",
     "Escolha o instrumento",
-    "Aula Marcada"
+    "Proposta Feita"
 ]
 
 
@@ -48,7 +51,29 @@ function RealizarPedido() {
             valor: "R$ 57,90",
         }
     ]);
-    const [instrumento, setInstrumento] = useState("Violão");
+    const [instrumento, setInstrumento] = useState(null);
+
+    const [diaEscolhido, setDiaEscolhido] = useState(null);
+
+    const handleClickDia = (dia) => {
+        setDiaEscolhido(dia);
+    };
+
+    const [errors, setErrors] = useState({
+        dia: false,
+        instrumento: false
+    });
+
+    const [helperText, setHelperText] = useState({
+        dia: "Selecione um dia",
+        instrumento: "Selecione um instrumento"
+    });
+
+    const [horarioEscolhido, setHorarioEscolhido] = useState(null);
+
+    const handleClickHorario = (horario) => {
+        setHorarioEscolhido(horario);
+    };
 
     const [step, setStep] = useState(0);
     const textoBotao = definirTextoBotao(step);
@@ -57,12 +82,30 @@ function RealizarPedido() {
 
     const handleClickContinuar = () => {
         if (step === steps.length - 2) {
-            setStep(step + 1);
+            if (!instrumento) {
+                setErrors({
+                    ...errors,
+                    instrumento: true
+                });
+                console.log(errors);
+                return;
+            }
 
             return;
         } else if (step === steps.length - 1) {
             navigate("/pedidos");
+        } else if (!diaEscolhido) {
+            setErrors({
+                ...errors,
+                dia: true
+            });
+            console.log(errors);
+            return;
         }
+
+        console.log("diaEscolhido", diaEscolhido)
+
+
         setStep(step + 1);
     }
 
@@ -104,18 +147,29 @@ function RealizarPedido() {
                         Escolha o dia e o horário que você deseja ter a aula
                     </Typography>
                     <Box className="pedido-form">
-                        <Box className="item-pedido">
-                            <Typography className="item-valor">
-                                Selecione um dia:
-                            </Typography>
-                            <input type="text" />
-                        </Box>
-                        <Box className="item-pedido">
-                            <Typography className="item-valor">
-                                Selecione um horário:
-                            </Typography>
-                            <input type="text" />
-                        </Box>
+                        {
+                            step === 0 &&
+                            <EtapaUm
+                                handleClicks={{
+                                    handleClickDia,
+                                    handleClickHorario
+                                }}
+                                error={{
+                                    errors,
+                                    helperText,
+                                }} />
+                        }
+                        {
+                            step === 1 &&
+                            <EtapaDois instrumentoState={{ instrumento, setInstrumento }} error={{
+                                errors,
+                                helperText,
+                            }} />
+                        }
+                        {
+                            step === 2 &&
+                            <Typography className="pedido-texto-finalizado">Aguarde o professor analisar a proposta, se for aceita poderá fazer o pagamento</Typography>
+                        }
                     </Box>
                     <Button className="botao-passar-etapa" onClick={handleClickContinuar}>
                         {textoBotao}

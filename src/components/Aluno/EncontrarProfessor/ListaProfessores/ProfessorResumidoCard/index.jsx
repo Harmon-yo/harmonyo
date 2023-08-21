@@ -7,7 +7,7 @@ import "./style.css";
 function ProfessorResumidoCard(props) {
 
     return (
-        <Card className="professor-card">
+        <Card className="professor-card" onClick={props.onClick}>
             <Box className="professor-card-primeira-parte">
                 <Avatar id="avatar-usuario-botao"
                     sx={{ bgcolor: "#099250" }}>{props.nome[0]}</Avatar>

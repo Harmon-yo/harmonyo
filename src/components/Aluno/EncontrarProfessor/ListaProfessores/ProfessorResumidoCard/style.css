@@ -3,6 +3,7 @@
     height: auto;
     display: flex;
     flex-direction: row;
+    cursor: pointer;
 }
 
 .professor-card:not(:last-child) {

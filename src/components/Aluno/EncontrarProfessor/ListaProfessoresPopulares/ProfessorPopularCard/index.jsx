@@ -32,7 +32,7 @@ function ProfessorPopularCard(props) {
 
 
   return (
-    <Box className="professor-popular-card">
+    <Box className="professor-popular-card" onClick={props.onClick}>
 
       <Box className="card-info-usuario">
         <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"

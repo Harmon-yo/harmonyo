@@ -7,6 +7,7 @@
     row-gap: calc(var(--espaco-padrao) * 2);
     border-radius: var(--borda-padrao);
     padding: calc(var(--espaco-padrao) * 2);
+    cursor: pointer;
 }
 
 .card-info-usuario {

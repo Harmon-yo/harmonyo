@@ -1,5 +1,5 @@
 import React from 'react';
-import InputSenha from "../../../../components/Cadastro-Login/InputSenha/index.jsx";
+import InputSenha from "../InputSenha/index.jsx";
 
 
 function EtapaTres(props) {

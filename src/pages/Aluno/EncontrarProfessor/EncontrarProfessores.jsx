@@ -127,6 +127,10 @@ function EncontrarProfessor(props) {
             });
     };
 
+    const handleClickProfessor = (professor) => {
+        navigate(`/perfil/${professor.id}`);
+    }
+
 
     return (
         <EstruturaPaginaUsuario tela="encontrar" errosState={{ erros, setErros }}>
@@ -138,8 +142,8 @@ function EncontrarProfessor(props) {
                     <BarraDePesquisa requisicaoGet={requisicaoGet} isCarregando={isCarregando} 
                     iniciarPesquisaState={{ setIniciarPesquisa }} adicionarCarregamento={adicionarCarregamento}
                     adicionarParametro={adicionarParametro} exibirErro={exibirErro}/>
-                    <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} />
-                    <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando}/>
+                    <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} onClick={handleClickProfessor}/>
+                    <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} onClick={handleClickProfessor}/>
                 </Box>
             </Box>
         </EstruturaPaginaUsuario>

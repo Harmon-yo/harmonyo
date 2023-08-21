@@ -7,10 +7,10 @@ import {
 } from "@mui/material";
 import api from "../../../api.js";
 import { useStyles } from "../Cadastro-Login.styles.js";
-import EtapaUm from "./Etapas/Um.jsx";
-import EtapaDois from "./Etapas/Dois.jsx";
-import EtapaTres from "./Etapas/Tres.jsx";
-import EtapaFinal from "./Etapas/Quatro.jsx";
+import EtapaUm from "../../../components/Cadastro-Login/Etapas/Um.jsx";
+import EtapaDois from "../../../components/Cadastro-Login/Etapas/Dois.jsx";
+import EtapaTres from "../../../components/Cadastro-Login/Etapas/Tres.jsx";
+import EtapaFinal from "../../../components/Cadastro-Login/Etapas/Quatro.jsx";
 import { verificarNome, verificarCpf, verificarEmail, verificarDataNascimento, verificarSenha, verificarCep } from "./verificacoes.js";
 import Design from "../Design.jsx";
 

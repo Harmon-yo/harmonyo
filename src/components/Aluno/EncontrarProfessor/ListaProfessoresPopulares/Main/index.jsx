@@ -33,6 +33,7 @@ function ProfessoresPopulares(props) {
                 localizacao={professor.localizacao}
                 ultimaVezOnline={professor.ultimaVezOnline}
                 avaliacao={professor.mediaAvaliacao}
+                onClick={() => props.onClick(professor)}
               />
             ))}
           </Card>

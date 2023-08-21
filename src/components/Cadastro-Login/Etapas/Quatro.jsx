@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, TextField, Tooltip, Typography } from '@mui/material';
 import InputMask from 'react-input-mask';
-import { consultaCep } from "../../../../utils/index.js";
+import { consultaCep } from "../../../utils/index.js";
 
 function EtapaFinal(props) {
     const txtPorquePedimosCep = 'Pedimos seu CEP para que após o cadastro sejam encontrados os professores mais próximos a você !'
