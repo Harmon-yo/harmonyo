@@ -1,0 +1,158 @@
+.pagina{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pagina-perfil{
+    width: 35%;
+}
+
+.card-perfil{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    width: 30%;
+    background-color: #fff;
+    position: fixed;
+}
+
+.topo-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: end;
+}
+
+.avatar-perfil{
+    margin: 10px;
+}
+
+.duracao{
+    background-color: #AAF0C4;
+    color: #099250;
+    padding-left: 16px;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 5px;
+    width: 250px;
+}
+
+.nome{
+    font-size: 32px;
+    font-weight: bold;
+    margin: 5px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+.avaliacao-usuario{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.avaliacao-numero{
+    color: rgb(185, 185, 0);
+    font-size: 18px;
+    margin-left: 8px;
+}
+
+.pagina-informacoes{
+    width: 65%;
+}
+
+.card-agendar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.card-agendar .botao{
+    background-color: #099250;
+    color: #fff;
+    width: 250px;
+}
+
+.card-agendar .botao:hover{
+    background-color: #085b2a;
+}
+
+.card-geral{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    min-height: 200px;
+    height: fit-content;
+}
+
+.card-titulo{
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.instrumentos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}
+
+.item-instumento{
+    background-color: #EBEBEB;
+    width: fit-content;
+    padding: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.avaliacao{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: baseline;
+    margin: 5px;
+    margin-left: 0px;
+    background-color: #EBEBEB;
+    border-radius: 8px;
+    width: 100%;
+    padding: 8px;
+}
+
+.avaliacao-titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: top;
+    margin: 8px;
+    margin-bottom: 0px;
+}
+
+.avaliacao-nome{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.avaliacao-texto{
+    font-size: 16px;
+    padding: 8px;
+    padding-left: 50px;
+    padding-top: 0px;
+}

@@ -20,6 +20,7 @@ const DashboardProfessor = React.lazy(() => import("./pages/Professor/Dashboard/
 const PerfilUsuario = React.lazy(() => import("./pages/Global/PerfilUsuario"));
 const Agenda = React.lazy(() => import("./pages/Global/Agenda/index"));
 const ListarPedidos = React.lazy(() => import("./pages/Global/ListarPedidos"));
+const PerfilExibicaoUsuario = React.lazy(() => import("./pages/Global/PerfilExibicaoUsuario"));
 
 /* Admin */
 const DashboardAdmin = React.lazy(() => import("./pages/Admin/Dashboard/Dashboard"));
@@ -40,6 +41,7 @@ function Rotas() {
             <Route path="chat" element={<Chat />} />
             <Route path="pedidos" element={<ListarPedidos />} />
             <Route path="perfil" element={<PerfilUsuario />} />
+            <Route path="exibicao-perfil" element={<PerfilExibicaoUsuario />} />
             <Route path="agenda" element={<Agenda />} />
             <Route path="pedido" element={<RealizarPedido/>}/>
           </Route>

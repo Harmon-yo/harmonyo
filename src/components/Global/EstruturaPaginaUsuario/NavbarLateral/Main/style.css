@@ -8,7 +8,7 @@
     background-color: #099250;
     width: 5vw;
     height: 100%;
-    position: absolute;
+    position: fixed;
     transition: width 0.5s;
     display: flex;
     flex-direction: column;
