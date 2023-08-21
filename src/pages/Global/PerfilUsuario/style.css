@@ -152,3 +152,8 @@
     cursor: pointer;
 }
 
+.box-icones-editar-experiencias{
+    display: flex;
+    width: 5%;
+}
+

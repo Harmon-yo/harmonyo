@@ -1,6 +1,6 @@
 .box-experiencias{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 95%;
 }
 
@@ -11,4 +11,22 @@
 
 .descricao-experiencia{
     font-size: 20px;
+}
+
+.box-experiencias-textos{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.box-icons-editar-excluir{
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+    flex-direction: row;
+    width: 5%;
+}
+
+.img-icons {
+    cursor: pointer;
 }
