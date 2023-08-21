@@ -10,20 +10,18 @@ function ModalExperiencias(props) {
 
     const [experiencia, setExperiencia] = useState({id: props.idExp, titulo: props.tituloExp, descricao: props.descExp});
 
-    function atualizarExperiencia() {
-
-        
+    function atualizarExperiencia() {        
 
         let url = '';
 
-        console.log(props.id)
+        console.log(experiencia.id)
 
-        if (props.id == null || props.id == undefined || props.id == ""  && props.isNovaExp) {
+        if (experiencia.id == undefined && props.isNovaExp) {
             url = '/experiencias'
 
-            let data = { titulo: experiencia.titulo, descricao: experiencia.descricao, idProfessor: sessionStorage.getItem("ID")}
+            let dadosExp = { titulo: experiencia.titulo, descricao: experiencia.descricao, idProfessor: sessionStorage.getItem("ID")}
 
-            api.post(url, data, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }}).then(res => {
+            api.post(url, dadosExp, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }}).then(res => {
                 alert("Experiência Adicionada com sucesso!")
             })
             .catch(err => {
@@ -32,12 +30,14 @@ function ModalExperiencias(props) {
             })
         }
         else {
-            url = `/experiencias/atualiza-exp/${props.id}`
+            url = `/experiencias/atualiza-exp/${experiencia.id}`
 
-            let data = { titulo: experiencia.titulo, descricao: experiencia.descricao}
+            console.log(url)
+
+            let dadosExp = { titulo: experiencia.titulo, descricao: experiencia.descricao}
 
             
-            api.put(url, data, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }}).then(res => {
+            api.put(url, dadosExp, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }}).then(res => {
                 alert("Experiência atualizada com sucesso!")
             })
             .catch(err => {
