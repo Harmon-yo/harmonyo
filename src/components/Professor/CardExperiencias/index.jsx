@@ -16,7 +16,13 @@ function CardExperiencias(props) {
 
     return (
         <>
-            <ModalExperiencias visibilidade={visibilidade} closeModal={fecharModalExperiencias} idExp={exp.id} tituloExp={exp.titulo} descExp={exp.descricao} isNovaExp={false}/>
+            <ModalExperiencias  visibilidade={visibilidade}
+                                closeModal={fecharModalExperiencias}
+                                stateFormDataExps={props.stateFormDataExps} 
+                                idExp={exp.id} 
+                                tituloExp={exp.titulo} 
+                                descExp={exp.descricao} 
+                                indexExp = {props.index} isNovaExp={false}/>
             <Box className="box-experiencias">
                 <Box className="box-experiencias-textos">
                     <Typography className="titulo-experiencia"> {props.titulo} </Typography>

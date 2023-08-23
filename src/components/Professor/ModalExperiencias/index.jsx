@@ -8,21 +8,40 @@ import api from "../../../api";
 
 function ModalExperiencias(props) {
 
-    const [experiencia, setExperiencia] = useState({id: props.idExp, titulo: props.tituloExp, descricao: props.descExp});
+
+    const [experiencia, setExperiencia] = useState({id: props.idExp, 
+                                                        titulo: props.tituloExp, 
+                                                        descricao: props.descExp, 
+                                                        idProfessor: sessionStorage.getItem("ID")});
+    
+   
 
     function atualizarExperiencia() {        
 
         let url = '';
-
-        console.log(experiencia.id)
 
         if (experiencia.id == undefined && props.isNovaExp) {
             url = '/experiencias'
 
             let dadosExp = { titulo: experiencia.titulo, descricao: experiencia.descricao, idProfessor: sessionStorage.getItem("ID")}
 
-            api.post(url, dadosExp, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }}).then(res => {
+            api.post(url, dadosExp, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }})
+            .then(res => {
+
                 alert("Experiência Adicionada com sucesso!")
+
+                setExperiencia({...experiencia, id: res.data.id})
+
+                let expsAtualizadas = props.stateFormDataExps.formData.experiencias;
+
+                expsAtualizadas.push(experiencia)
+
+                props.stateFormDataExps.setFormData({...props.stateFormDataExps.formData, experiencias: expsAtualizadas})
+        
+                setExperiencia({...experiencia,
+                                                titulo: "", 
+                                                descricao: "", 
+                                })
             })
             .catch(err => {
                 alert("Ocorreu um erro sao adicionar sua experiência")
@@ -36,12 +55,20 @@ function ModalExperiencias(props) {
 
             let dadosExp = { titulo: experiencia.titulo, descricao: experiencia.descricao}
 
-            
             api.put(url, dadosExp, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }}).then(res => {
+                
                 alert("Experiência atualizada com sucesso!")
+
+                let expsAtualizadas = props.stateFormDataExps.formData.experiencias;
+
+                expsAtualizadas[props.indexExp] = experiencia;
+
+                props.stateFormDataExps.setFormData({...props.stateFormDataExps.formData, experiencias: expsAtualizadas})
+
             })
             .catch(err => {
                 alert("Ocorreu um erro sao adicionar sua experiência")
+                console.log(experiencia)
                 console.log(err)
             })
         }

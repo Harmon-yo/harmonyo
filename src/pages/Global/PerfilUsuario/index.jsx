@@ -151,6 +151,31 @@ function PerfilUsuario() {
 
   }
 
+  function obterExperiencias() {
+    
+    api.get(`/experiencias/professor/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+    .then(response => {
+
+    })
+    .catch(err => {
+      
+    })
+
+  }
+
+  function obterExperienciasProfessor() {
+    
+    let url = `/experiencias/professor/${sessionStorage.getItem("ID")}`
+
+    api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }
+
   function formatDateToLocalDateSpring(date) {
     const parts = date.split('/');
 
@@ -552,12 +577,12 @@ function PerfilUsuario() {
                       />
                     </Box>
                   </Box>
-                  <ModalExperiencias visibilidade={visibilidade} closeModal={fecharModalExperiencias} isNovaExp={true} />
                   {
-                    formData.experiencias.map((exp) =>
-                      <CardExperiencias idExp={exp.id} titulo={exp.titulo} descricao={exp.descricao} disableIconesEditarExcluir={formDataDisable.dadosExperiencias} deletarExpPorId={deletarExpPorId}/>
+                    formData.experiencias.map((exp, i) =>
+                    <CardExperiencias index={i} idExp={exp.id} titulo={exp.titulo} descricao={exp.descricao} disableIconesEditarExcluir={formDataDisable.dadosExperiencias} deletarExpPorId={deletarExpPorId} stateFormDataExps = {{formData, setFormData}}/>
                     )
                   }
+                  <ModalExperiencias  onCallBack={() => obterExperienciasProfessor()} visibilidade={visibilidade} closeModal={fecharModalExperiencias} isNovaExp={true} stateFormDataExps = {{formData, setFormData}}/>
                 </Box>
                 <Box className="linha-divisao-pagina" />
               </> : null
