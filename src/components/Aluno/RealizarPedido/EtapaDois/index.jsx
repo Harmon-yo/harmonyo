@@ -7,33 +7,19 @@ import {
     Typography
 } from "@mui/material";
 
-const instrumentos = [
-    {
-        nome: "Violão",
-        valor: "R$ 57,90",
-    },
-    {
-        nome: "Guitarra",
-        valor: "R$ 57,90",
-    }
-];
-
 function EtapaDois(props) {
     const {
         instrumento,
         setInstrumento
     } = props.instrumentoState;
     
+    const instrumentosDisponiveis = props.instrumentosDisponiveis;
+
     const handleChangeInstrumento = (event) => {
         event.preventDefault();
-        setInstrumento(event.target.value);
-    };
-
-    const {
-        errors,
-        helperText
-    } = props.error;
-    
+        
+        setInstrumento(instrumentosDisponiveis.find((instrumento) => instrumento.nome === event.target.value));
+    };    
 
     return (
         <FormControl sx={{
@@ -43,8 +29,6 @@ function EtapaDois(props) {
             justifyContent: "center",
             alignItems: "center",
         }}
-        error={errors.instrumento}
-        helperText={errors.instrumento ? helperText.instrumento : ""}
         onChange={handleChangeInstrumento}
         value={instrumento}
         >
@@ -61,8 +45,8 @@ function EtapaDois(props) {
                 }}
             >
                 {
-                    instrumentos.map((instrumento) => (
-                        <FormControlLabel key={instrumento.nome} value={instrumento.nome} disableTypography control={<Radio />} sx={{
+                    instrumentosDisponiveis.map((instrumento) => (
+                        <FormControlLabel key={instrumento.id} value={instrumento.nome} disableTypography control={<Radio />} sx={{
                             width: "100%",
                         }}
                             label={<Box sx={{
@@ -74,7 +58,7 @@ function EtapaDois(props) {
                                 margin: "0 !important"
                             }}>
                                 <Typography>{instrumento.nome}</Typography>
-                                <Typography>{instrumento.valor}</Typography>
+                                <Typography>R$ {instrumento.valor}</Typography>
                             </Box>} >
 
                         </FormControlLabel>
