@@ -30,19 +30,24 @@ function ModalExperiencias(props) {
 
                 alert("Experiência Adicionada com sucesso!")
 
-                setExperiencia({...experiencia, id: res.data.id})
+                let novaExp = {
+                    id: res.data.id,
+                    titulo: experiencia.titulo,
+                    descricao: experiencia.descricao,
+                    idProfessor: experiencia.idProfessor,
+                };
 
                 let expsAtualizadas = props.stateFormDataExps.formData.experiencias;
 
-                expsAtualizadas.push(experiencia)
-
+                expsAtualizadas.push(novaExp)
+                
                 props.stateFormDataExps.setFormData({...props.stateFormDataExps.formData, experiencias: expsAtualizadas})
         
                 setExperiencia({...experiencia,
                                                 titulo: "", 
                                                 descricao: "", 
                                 })
-            })
+                            })
             .catch(err => {
                 alert("Ocorreu um erro sao adicionar sua experiência")
                 console.log(err)
@@ -101,7 +106,7 @@ function ModalExperiencias(props) {
 
                         <Box className="box-button-salvar-adicionar-exp">
                             <Button variant="text" onClick = {atualizarExperiencia} className="button-salvar-adicionar-exp">
-                                <Typography variant="inherit">{props.isNovaExp ? 'Adiconar' : 'Salvar'}</Typography>
+                                <Typography variant="inherit">{props.isNovaExp ? 'Adicionar' : 'Salvar'}</Typography>
                             </Button>
                         </Box>
                     </Box>

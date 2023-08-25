@@ -22,6 +22,6 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const db = app.firestore();
 
-const storage = app.storage("gs://chat-harmonyo.appspot.com");
+const storage = app.storage("gs://chat-harmonyo.appspot.com/");
 
 export  {db, storage};

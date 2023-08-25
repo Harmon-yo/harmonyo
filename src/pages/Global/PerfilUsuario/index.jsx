@@ -14,6 +14,7 @@ import { consultaCep } from "../../../utils";
 import Textarea from '@mui/joy/Textarea';
 import FormHelperText from '@mui/joy/FormHelperText';
 import ModalExperiencias from "../../../components/Professor/ModalExperiencias";
+import { storage } from "../../../utils/firebase";
 
 function PerfilUsuario() {
 
@@ -41,6 +42,7 @@ function PerfilUsuario() {
   })
 
   const [formData, setFormData] = useState({
+    imgPerfilURL: '',
     nome: '',
     avaliacaoMedia: 0.0,
     email: '',
@@ -104,6 +106,18 @@ function PerfilUsuario() {
 
   function obterDadosPerfil() {
 
+    const urlImg = '/imgs-perfil-usuario/img-teste-firebase.jpg'
+
+    // Obtendo a URL da imagem de perfil
+    storage.ref(urlImg).getDownloadURL()
+      .then(url => {
+        setFormData({...formData, imgPerfilURL: url})
+      })
+      .catch(error => {
+        console.error('Erro ao obter a URL da imagem:', error);
+      });
+
+    // Obtendo os dados de perfil  
     api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
       .then(response => {
 
@@ -112,7 +126,7 @@ function PerfilUsuario() {
         let dadosUsuario = response.data;
 
         // Dados pessoais do usuário
-        setFormData({
+        setFormData({...formData,
           nome: dadosUsuario.nome,
           email: dadosUsuario.email,
           avaliacaoMedia: dadosUsuario.avaliacaoMedia,
@@ -131,6 +145,8 @@ function PerfilUsuario() {
           estado: dadosUsuario.endereco.estado,
           experiencias: dadosUsuario.experiencia,
         })
+
+        console.log(formData.imgPerfilURL)
 
         setDadosPerfilAntesDeEditar({
           nome: dadosUsuario.nome,
@@ -151,30 +167,6 @@ function PerfilUsuario() {
 
   }
 
-  function obterExperiencias() {
-    
-    api.get(`/experiencias/professor/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
-    .then(response => {
-
-    })
-    .catch(err => {
-      
-    })
-
-  }
-
-  function obterExperienciasProfessor() {
-    
-    let url = `/experiencias/professor/${sessionStorage.getItem("ID")}`
-
-    api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-  }
 
   function formatDateToLocalDateSpring(date) {
     const parts = date.split('/');
@@ -448,7 +440,7 @@ function PerfilUsuario() {
 
         <Box className="container-dados-pessoais">
           <Box className="box-foto-perfil">
-            <Avatar alt="" src="../../../imgs/user.png" sx={{ width: 120, height: 120 }} />
+            <Avatar alt="" src={formData.imgPerfilURL} sx={{ width: 120, height: 120 }} />
             <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
             <Typography className="txt-nome">{formData.nome}</Typography>
             <Typography className="txt-idade">{formData.idade} Anos</Typography>
@@ -582,7 +574,7 @@ function PerfilUsuario() {
                     <CardExperiencias index={i} idExp={exp.id} titulo={exp.titulo} descricao={exp.descricao} disableIconesEditarExcluir={formDataDisable.dadosExperiencias} deletarExpPorId={deletarExpPorId} stateFormDataExps = {{formData, setFormData}}/>
                     )
                   }
-                  <ModalExperiencias  onCallBack={() => obterExperienciasProfessor()} visibilidade={visibilidade} closeModal={fecharModalExperiencias} isNovaExp={true} stateFormDataExps = {{formData, setFormData}}/>
+                  <ModalExperiencias  visibilidade={visibilidade} closeModal={fecharModalExperiencias} isNovaExp={true} stateFormDataExps = {{formData, setFormData}}/>
                 </Box>
                 <Box className="linha-divisao-pagina" />
               </> : null
