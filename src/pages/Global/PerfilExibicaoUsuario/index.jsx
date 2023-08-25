@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
 import { Box, Avatar, Rating, Button } from "@mui/material";
 import Card from "../../../components/Global/Card";
 import "./style.css";
 
 function PerfilExibicaoUsuario() {
+  const id = useRef(new URLSearchParams(window.location.search).get("id"))
+
+  const [idUsuario, setIdUsuario] = React.useState(0)
+  useEffect(()=>{
+      setIdUsuario(id)
+      console.log(idUsuario)
+  }, idUsuario)
+
   return (
     <EstruturaPaginaUsuario className="teste">
       <Box className="pagina">

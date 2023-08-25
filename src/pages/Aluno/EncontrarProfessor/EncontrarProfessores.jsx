@@ -128,7 +128,7 @@ function EncontrarProfessor(props) {
     };
 
     const handleClickProfessor = (professor) => {
-        navigate(`/exibicao-perfil/${professor.id}`);
+        navigate(`/exibicao-perfil?id=${professor.id}`);
     }
 
 
