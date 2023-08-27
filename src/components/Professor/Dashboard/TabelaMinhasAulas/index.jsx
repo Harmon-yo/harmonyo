@@ -16,8 +16,8 @@ import LinhaTabelaMinhasAulas from "./LinhaTabelaMinhasAulas/index.jsx";
 import api from "../../../../api.js";
 import { useEffect } from "react";
 import { useState } from "react";
-import "./style.css"
-function TabelaMinhasAulas() {
+import "./style.css";
+function TabelaMinhasAulas(props) {
   const [carregando, setCarregando] = useState(true);
   const config = {
     headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
@@ -26,19 +26,39 @@ function TabelaMinhasAulas() {
 
   useEffect(() => {
     getDadosTabela();
-  }, []);
+  }, [props.periodo]);
 
   function getDadosTabela() {
-    api
-      .get("/professores/dashboard/minhas-aulas/" + sessionStorage.ID, config)
-      .then((response) => {
-        console.log(response.data);
-        setCarregando(false);
-        setDados(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(props.periodo);
+    if (props.periodo === 0) {
+      api
+        .get(
+          "/professores/dashboard/minhas-aulas-mes/" + sessionStorage.ID,
+          config
+        )
+        .then((response) => {
+          console.log(response.data);
+          setCarregando(false);
+          setDados(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      api
+        .get(
+          "/professores/dashboard/minhas-aulas-ano/" + sessionStorage.ID,
+          config
+        )
+        .then((response) => {
+          console.log(response.data);
+          setCarregando(false);
+          setDados(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }
 
   return (
@@ -57,26 +77,22 @@ function TabelaMinhasAulas() {
               </TableRow>
             </TableHead>
             <TableBody>
-            
-              {
-                !carregando && dados.length === 0 ? (
-                  <TableRow>
-                    <TableCell align="center" colSpan={3}>
-                      Nenhuma aula encontrada
-                    </TableCell>
-                  </TableRow>
-                ) : carregando?(
-                    <CircularProgress style={{ color: "#16B364" }} />
-                ): dados?(
-                  dados.map((item) => <LinhaTabelaMinhasAulas item={item} />)
-                ):<></>
-              }
-
-             
+              {!carregando && dados.length === 0 ? (
+                <TableRow>
+                  <TableCell align="center" colSpan={3}>
+                    Nenhuma aula encontrada
+                  </TableCell>
+                </TableRow>
+              ) : carregando ? (
+                <CircularProgress style={{ color: "#16B364" }} />
+              ) : dados ? (
+                dados.map((item) => <LinhaTabelaMinhasAulas item={item} />)
+              ) : (
+                <></>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-      
       </Box>
     </Card>
   );

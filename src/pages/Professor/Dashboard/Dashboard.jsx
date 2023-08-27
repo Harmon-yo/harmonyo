@@ -56,14 +56,14 @@ function DashboardProfessor() {
         {value === 0 ? (
           <>
             <Box className="kpi-container">
-              <KpiDashboard titulo="Rendimento total" />
-              <KpiDashboard titulo="Quantidade de alunos" />
-              <KpiDashboard titulo="Quantidade de aulas" />
-              <KpiDashboard titulo="Tempo de resposta" />
+              <KpiDashboard titulo="Rendimento total" periodo={value}/>
+              <KpiDashboard titulo="Quantidade de alunos" periodo={value}/>
+              <KpiDashboard titulo="Quantidade de aulas" periodo={value} />
+              <KpiDashboard titulo="Tempo de resposta" periodo={value} />
             </Box>
             <Box className="charts-container">
               <HistoricoAulasGraficoDonut />
-              <TabelaMinhasAulas />
+              <TabelaMinhasAulas periodo={value} />
             </Box>
           </>
         ) : (
@@ -76,7 +76,7 @@ function DashboardProfessor() {
             </Box>
             <Box className="charts-container">
               <GraficoBarraEmpilhada />
-              <TabelaMinhasAulas />
+              <TabelaMinhasAulas periodo={value}/>
             </Box>
           </>
         )}

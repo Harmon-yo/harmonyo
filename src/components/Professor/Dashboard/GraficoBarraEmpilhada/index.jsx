@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +12,8 @@ import { Bar } from "react-chartjs-2";
 import { Box, Typography } from "@mui/material";
 import "./style.css";
 import Card from "../../../Global/Card";
+import api from "../../../../api";
+
 function GraficoBarraEmpilhada() {
   ChartJS.register(
     CategoryScale,
@@ -22,6 +24,52 @@ function GraficoBarraEmpilhada() {
     Legend
   );
 
+  const [carregando, setCarregando] = useState(true);
+  const [labels, setLabels] = useState([]);
+  const [aulasCanceladasDados, setAulasCanceladasDados] = useState([]);
+  const [aulasRecusadasDados, setAulasRecusadasDados] = useState([]);
+  const [aulasConcluidasDados, setAulasConcluidasDados] = useState([]);
+
+  useEffect(() => {
+    getDados();
+  }, []);
+
+  const config = {
+    headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+  };
+
+  function getDados() {
+    api
+      .get(
+        "/professores/dashboard/dados-aulas-anual/" + sessionStorage.ID,
+        config
+      )
+      .then((response) => {
+        const newLabels = [];
+        const newAulasCanceladas = [];
+        const newAulasRecusadas = [];
+        const newAulasConcluidas = [];
+
+        response.data.map((item) => {
+          newLabels.push(item.mes);
+          newAulasCanceladas.push(item.aulasCanceladas);
+          newAulasConcluidas.push(item.aulasConcluidas);
+          newAulasRecusadas.push(item.aulasRecusadas);
+        });
+
+        setLabels(newLabels);
+        setAulasCanceladasDados(newAulasCanceladas);
+        setAulasConcluidasDados(newAulasConcluidas);
+        setAulasRecusadasDados(newAulasRecusadas);
+
+        setCarregando(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // Restante do código...
   const options = {
     plugins: {
       title: {
@@ -47,45 +95,38 @@ function GraficoBarraEmpilhada() {
       },
     },
   };
-
-  const labels = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-  ];
-
   const data = {
     labels,
     datasets: [
       {
         label: "Aulas Canceladas",
-        data: [15, 21, 4, 12, 19],
+        data: aulasCanceladasDados,
         backgroundColor: "#DF3939",
       },
       {
         label: "Aulas Recusadas",
-        data: [2, 4, 0, 1, 7],
+        data: aulasRecusadasDados,
         backgroundColor: "rgb(75, 192, 192)",
       },
       {
         label: "Aulas Concluídas",
-        data: [25, 19, 23, 15, 28],
+        data: aulasConcluidasDados,
         backgroundColor: "rgb(53, 162, 235)",
       },
     ],
   };
-
   return (
     <Card className="card-tabela">
-    <Typography className="chart-title" variant="h5">
+      <Typography className="chart-title" variant="h5">
         Aulas por mês
       </Typography>
-      <Bar options={options} data={data} />
+      {carregando ? (
+        <p>Carregando...</p>
+      ) : (
+        <Bar options={options} data={data} />
+      )}
     </Card>
   );
 }
+
 export default GraficoBarraEmpilhada;

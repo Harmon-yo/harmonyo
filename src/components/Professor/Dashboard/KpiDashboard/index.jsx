@@ -22,36 +22,69 @@ function KpiDashboard(props) {
     } else if (props.titulo === "Tempo de resposta") {
       setValor(getTempoResposta());
     }
-  }, []);
+  }, [props.periodo]);
 
   function getRendimentoTotal() {
+    var periodo = "";
+    if (props.periodo === 0) {
+      periodo = "mes-atual";
+    } else {
+      periodo = "ano-atual";
+    }
+
     var url =
-      "/professores/dashboard/mes-atual/rendimento/" + sessionStorage.ID;
+      `/professores/dashboard/${periodo}/rendimento/` + sessionStorage.ID;
     api.get(url, config).then((response) => {
-      console.log(url)
+      console.log(url);
       setCarregando(false);
       setValor("R$ " + response.data);
     });
   }
   function getQuantidadeAlunos() {
+    var periodo = "";
+    if (props.periodo === 0) {
+      periodo = "mes-atual";
+    } else {
+      periodo = "ano-atual";
+    }
+
     var url =
-      "/professores/dashboard/mes-atual/qtd-alunos/" + sessionStorage.ID;
+      `/professores/dashboard/${periodo}/qtd-alunos/` + sessionStorage.ID;
     api.get(url, config).then((response) => {
       setCarregando(false);
       setValor(response.data);
     });
   }
   function getQuantidadeAulas() {
-    var url = "/professores/dashboard/mes-atual/qtd-aulas/" + sessionStorage.ID;
+    var periodo = "";
+    if (props.periodo === 0) {
+      periodo = "mes-atual";
+    } else {
+      periodo = "ano-atual";
+    }
+    var url =
+      `/professores/dashboard/${periodo}/qtd-aulas/` + sessionStorage.ID;
     api.get(url, config).then((response) => {
       setCarregando(false);
       setValor(response.data);
     });
   }
   function getTempoResposta() {
+    var periodo = "";
+    if (props.periodo === 0) {
+      periodo = "mes-atual";
+    } else {
+      periodo = "ano-atual";
+    }
     var url =
-      "/professores/dashboard/media-tempo-resposta/" + sessionStorage.ID;
+      `/professores/dashboard/${periodo}/media-tempo-resposta/` +
+      sessionStorage.ID;
     api.get(url, config).then((response) => {
+      if(response.data === 0){
+        setValor("Sem dados");
+        setCarregando(false);
+        return;
+      }
       var minutos = response.data;
       var horas = Math.floor(minutos / 60);
       var minutos = minutos % 60;
@@ -73,11 +106,10 @@ function KpiDashboard(props) {
         }
       }
       if (minutos > 0) {
-        if(minutos == 1) {
-            texto += minutos + " minuto ";
-        }
-        else {
-            texto += minutos + " minutos ";
+        if (minutos == 1) {
+          texto += minutos + " minuto ";
+        } else {
+          texto += minutos + " minutos ";
         }
       }
 
@@ -89,7 +121,7 @@ function KpiDashboard(props) {
   if (carregando) {
     return (
       <Card className="kpi-item">
-        <CircularProgress style={{color: "#16B364"}}/>
+        <CircularProgress style={{ color: "#16B364" }} />
       </Card>
     );
   } else {

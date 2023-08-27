@@ -29,7 +29,7 @@ ChartJS.register(
 function GraficoDonut() {
   const [aulasCanceladas, setAulasCanceladas] = useState(0);
   const [aulasRealizadas, setAulasRealizadas] = useState(0);
-  const [aulasSolicitadas, setAulasSolicitadas] = useState(0);
+  const [aulasRecusadas, setaulasRecusadas] = useState(0);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
@@ -50,17 +50,17 @@ function GraficoDonut() {
       .then((response) => {
         setAulasRealizadas(response.data.aulasRealizadas);
         setAulasCanceladas(response.data.aulasCanceladas);
-        setAulasSolicitadas(response.data.aulasSolicitadas);
+        setaulasRecusadas(response.data.aulasRecusadas);
         setCarregando(false);
       });
   }
 
   const chartDataDoughnut = {
-    labels: ["Canceladas", "Realizadas", "Solicitadas"],
+    labels: ["Canceladas", "Realizadas", "Recusadas"],
     datasets: [
       {
         label: "Quantidade de aulas",
-        data: [aulasCanceladas, aulasRealizadas, aulasSolicitadas],
+        data: [aulasCanceladas, aulasRealizadas, aulasRecusadas],
         backgroundColor: ["#DF3939", "#39DF73", "#0263FF"],
         cutout: "80%",
         hoverOffset: 4,
@@ -95,16 +95,40 @@ function GraficoDonut() {
       </Card>
     );
   } else {
-    return (
-      <Card className="chart-card">
-        <Typography className="chart-title" variant="h5">
-          Aulas nesse mês
-        </Typography>
-        <Box className="chart-info-container">
-          <Doughnut options={chartOptionsDoughnut} data={chartDataDoughnut} />
-        </Box>
-      </Card>
-    );
+    console.log(aulasCanceladas, aulasRealizadas, aulasRecusadas)
+    if (
+      aulasCanceladas === 0 &&
+      aulasRealizadas === 0 &&
+      aulasRecusadas === 0
+    ) {
+     
+      return (
+        <Card className="chart-card">
+          <Typography className="chart-title" variant="h5">
+            Aulas nesse mês
+          </Typography>
+          <Box className="chart-info-container">
+            <Box className="chart-container">
+              <Typography variant="h6" className="chart-info">
+                Nenhuma aula nesse mês
+              </Typography>
+            </Box>
+          </Box>
+        </Card>
+      );
+
+    } else {
+      return (
+        <Card className="chart-card">
+          <Typography className="chart-title" variant="h5">
+            Aulas nesse mês
+          </Typography>
+          <Box className="chart-info-container">
+            <Doughnut options={chartOptionsDoughnut} data={chartDataDoughnut} />
+          </Box>
+        </Card>
+      );
+    }
   }
 }
 
