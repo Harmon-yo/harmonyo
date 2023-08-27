@@ -25,8 +25,14 @@
     border-radius: 10px;
     height: 100%;
     border: 1px solid #099250 !important;
-
 }
+
+.img-perfil{
+    cursor: pointer;
+    width: 120px !important; 
+    height: 120px !important;
+}
+
 .box-dados-pessoais {
     width: 78%;
     display: flex;

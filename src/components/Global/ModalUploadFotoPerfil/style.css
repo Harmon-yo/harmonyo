@@ -1,0 +1,53 @@
+.img-perfil-usuario{
+    width: 120px !important; 
+    height: 120px !important;
+    margin-right: 5%;
+}
+
+.box-modal-upload-foto-perfil{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 40%;
+    background-color: #fff;
+    border: 2px solid #000;
+    box-shadow: 24px;
+}
+
+.box-header-modal-upload-foto-perfil{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: fit-content;
+    justify-content: space-between;
+}
+
+.txt-header-modal-upload-foto-perfil{
+    font-size: 32px !important;
+    font-weight: bold;
+}
+
+.box-upload-img{
+    display: flex;
+    width: 90%;
+    height: fit-content;
+    align-items: center;
+}
+
+.ipt-select-img{
+    font-size: 16px;
+}
+
+.button-enviar-img{
+    display: flex;
+    background-color: var(--cor-padrao) !important;
+    color: var(--light-font) !important;
+    font-weight: bold !important;
+    width: 90%;
+}

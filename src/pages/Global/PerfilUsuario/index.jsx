@@ -15,6 +15,7 @@ import Textarea from '@mui/joy/Textarea';
 import FormHelperText from '@mui/joy/FormHelperText';
 import ModalExperiencias from "../../../components/Professor/ModalExperiencias";
 import { storage } from "../../../utils/firebase";
+import ModalUploadFotoPerfil from "../../../components/Global/ModalUploadFotoPerfil";
 
 function PerfilUsuario() {
 
@@ -41,8 +42,9 @@ function PerfilUsuario() {
     dadosExperiencias: true
   })
 
+  const [imgPerfilURL, setImgPerfilURL]= useState("")
+
   const [formData, setFormData] = useState({
-    imgPerfilURL: '',
     nome: '',
     avaliacaoMedia: 0.0,
     email: '',
@@ -92,9 +94,15 @@ function PerfilUsuario() {
   const abrirModalExperiencias = () => setVisibilidade(true);
   const fecharModalExperiencias = () => setVisibilidade(false);;
 
+  let [visibilidadeModalFotoPerfil, setVisibilidadeModalFotoPerfil] = useState(false);
+  const abrirModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(true);
+  const fecharModalFecharModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(false);;
+
   useEffect(() => {
-    obterDadosPerfil()
+    obterDadosPerfil();
+    obterImgPerfil();
   }, [])
+
 
   useEffect(() => {
     if (formData.cep != undefined && !formData.cep.includes('_') && formData.cep != '' && formData.cep.length === 9) {
@@ -105,18 +113,6 @@ function PerfilUsuario() {
   }, [formData.cep])
 
   function obterDadosPerfil() {
-
-    const urlImg = '/imgs-perfil-usuario/img-teste-firebase.jpg'
-
-    // Obtendo a URL da imagem de perfil
-    storage.ref(urlImg).getDownloadURL()
-      .then(url => {
-        setFormData({...formData, imgPerfilURL: url})
-      })
-      .catch(error => {
-        console.error('Erro ao obter a URL da imagem:', error);
-      });
-
     // Obtendo os dados de perfil  
     api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
       .then(response => {
@@ -167,6 +163,20 @@ function PerfilUsuario() {
 
   }
 
+  function obterImgPerfil() {
+
+    let urlImg = `/imgs-perfil-usuario/${sessionStorage.getItem("ID")}_ft_perfil`
+
+    // Obtendo a URL da imagem de perfil
+    storage.ref(urlImg).getDownloadURL()
+      .then(url => {
+        console.log(url)
+        setImgPerfilURL(url)
+      })
+      .catch(error => {
+        console.error('Erro ao obter a URL da imagem:', error);
+      });
+  }
 
   function formatDateToLocalDateSpring(date) {
     const parts = date.split('/');
@@ -440,7 +450,8 @@ function PerfilUsuario() {
 
         <Box className="container-dados-pessoais">
           <Box className="box-foto-perfil">
-            <Avatar alt="" src={formData.imgPerfilURL} sx={{ width: 120, height: 120 }} />
+            <Avatar alt="" src={imgPerfilURL}  onClick={abrirModalUploadFotoPerfil} className="img-perfil"/>
+            <ModalUploadFotoPerfil  visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{imgPerfilURL,setImgPerfilURL}}/>
             <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
             <Typography className="txt-nome">{formData.nome}</Typography>
             <Typography className="txt-idade">{formData.idade} Anos</Typography>
