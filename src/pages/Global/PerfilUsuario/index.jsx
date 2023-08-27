@@ -1,6 +1,6 @@
 import React from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box, Button, Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { Box,  Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
 import SaveIcon from "../../../imgs/checked-24px.png"
@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import InputMask from 'react-input-mask';
 import api from "../../../api.js";
 import CardExperiencias from "../../../components/Professor/CardExperiencias";
-import { verificarDataNascimento } from "../../Cadastro-Login/Cadastro/verificacoes";
 import { consultaCep } from "../../../utils";
 import Textarea from '@mui/joy/Textarea';
 import FormHelperText from '@mui/joy/FormHelperText';
@@ -42,7 +41,7 @@ function PerfilUsuario() {
     dadosExperiencias: true
   })
 
-  const [imgPerfilURL, setImgPerfilURL]= useState("")
+  const [imgPerfilURL, setImgPerfilURL] = useState("")
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -103,7 +102,6 @@ function PerfilUsuario() {
     obterImgPerfil();
   }, [])
 
-
   useEffect(() => {
     if (formData.cep != undefined && !formData.cep.includes('_') && formData.cep != '' && formData.cep.length === 9) {
       if (ativarBuscaCep) {
@@ -117,12 +115,11 @@ function PerfilUsuario() {
     api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
       .then(response => {
 
-        console.log(response)
-
         let dadosUsuario = response.data;
 
         // Dados pessoais do usuário
-        setFormData({...formData,
+        setFormData({
+          ...formData,
           nome: dadosUsuario.nome,
           email: dadosUsuario.email,
           avaliacaoMedia: dadosUsuario.avaliacaoMedia,
@@ -141,8 +138,6 @@ function PerfilUsuario() {
           estado: dadosUsuario.endereco.estado,
           experiencias: dadosUsuario.experiencia,
         })
-
-        console.log(formData.imgPerfilURL)
 
         setDadosPerfilAntesDeEditar({
           nome: dadosUsuario.nome,
@@ -174,8 +169,8 @@ function PerfilUsuario() {
         setImgPerfilURL(url)
       })
       .catch(error => {
-        console.error('Erro ao obter a URL da imagem:', error);
       });
+
   }
 
   function formatDateToLocalDateSpring(date) {
@@ -450,8 +445,8 @@ function PerfilUsuario() {
 
         <Box className="container-dados-pessoais">
           <Box className="box-foto-perfil">
-            <Avatar alt="" src={imgPerfilURL}  onClick={abrirModalUploadFotoPerfil} className="img-perfil"/>
-            <ModalUploadFotoPerfil  visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{imgPerfilURL,setImgPerfilURL}}/>
+            <Avatar alt="" src={imgPerfilURL} onClick={abrirModalUploadFotoPerfil} className="img-perfil" />
+            <ModalUploadFotoPerfil visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{ imgPerfilURL, setImgPerfilURL }} />
             <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
             <Typography className="txt-nome">{formData.nome}</Typography>
             <Typography className="txt-idade">{formData.idade} Anos</Typography>
@@ -582,10 +577,10 @@ function PerfilUsuario() {
                   </Box>
                   {
                     formData.experiencias.map((exp, i) =>
-                    <CardExperiencias index={i} idExp={exp.id} titulo={exp.titulo} descricao={exp.descricao} disableIconesEditarExcluir={formDataDisable.dadosExperiencias} deletarExpPorId={deletarExpPorId} stateFormDataExps = {{formData, setFormData}}/>
+                      <CardExperiencias index={i} idExp={exp.id} titulo={exp.titulo} descricao={exp.descricao} disableIconesEditarExcluir={formDataDisable.dadosExperiencias} deletarExpPorId={deletarExpPorId} stateFormDataExps={{ formData, setFormData }} />
                     )
                   }
-                  <ModalExperiencias  visibilidade={visibilidade} closeModal={fecharModalExperiencias} isNovaExp={true} stateFormDataExps = {{formData, setFormData}}/>
+                  <ModalExperiencias visibilidade={visibilidade} closeModal={fecharModalExperiencias} isNovaExp={true} stateFormDataExps={{ formData, setFormData }} />
                 </Box>
                 <Box className="linha-divisao-pagina" />
               </> : null

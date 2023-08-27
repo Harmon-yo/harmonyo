@@ -12,13 +12,16 @@ function ModalUploadFotoPerfil(props) {
 
     const [imgUpdloadFirebase, setimgUpdloadFirebase] = useState("")
 
+    const [imgNaoAlterada, setImgNaoAlterada] = useState(true)
+
     useEffect(() => {
         if (imgTemp != props.imgState.imgPerfilURL) {
             // Define o estado assim que a página carregar
             setImgTemp(props.imgState.imgPerfilURL);
+            setImgNaoAlterada(true)  
         }
-    },[props.visibilidade])
 
+    },[props.visibilidade])
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -26,6 +29,7 @@ function ModalUploadFotoPerfil(props) {
         if (file && file.type.startsWith('image/')) {
             setImgTemp(URL.createObjectURL(file))
             setimgUpdloadFirebase(file)
+            setImgNaoAlterada(false)
         }
         else {
             alert('Por favor, selecione uma imagem válida.');
@@ -37,7 +41,11 @@ function ModalUploadFotoPerfil(props) {
         const file = imgUpdloadFirebase;
 
         if (!file) {
-            alert("Selecione uma imagem")
+            alert("Selecione uma imagem!")
+            return;
+        }
+        else if (imgNaoAlterada) {
+            alert("Selecione uma imagem!")
             return;
         }
 
