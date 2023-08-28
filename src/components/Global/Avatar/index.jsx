@@ -13,19 +13,19 @@ const opcoes = [
         id: 1,
         src: MeuPerfilIcon,
         titulo: "Meu Perfil",
-        url: "/perfil"
+        url: "/exibicao-perfil"
     },
     {
         id: 2,
         src: EditarContaIcon,
         titulo: "Configurações",
-        url: "/configuracoes"
+        url: "/perfil"
     },
     {
         id: 3,
         src: SairIcon,
         titulo: "Sair",
-        url: "/sair"
+        url: "/login"
     }
 ]
 

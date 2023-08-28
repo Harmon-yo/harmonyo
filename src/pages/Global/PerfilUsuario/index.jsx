@@ -1,6 +1,6 @@
 import React from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box,  Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import { Box,  Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
 import SaveIcon from "../../../imgs/checked-24px.png"
@@ -15,6 +15,7 @@ import FormHelperText from '@mui/joy/FormHelperText';
 import ModalExperiencias from "../../../components/Professor/ModalExperiencias";
 import { storage } from "../../../utils/firebase";
 import ModalUploadFotoPerfil from "../../../components/Global/ModalUploadFotoPerfil";
+
 
 function PerfilUsuario() {
 
@@ -456,17 +457,19 @@ function PerfilUsuario() {
 
             <Box className="box-titulo-e-edit-icon">
               <Typography className="txt-titulo">Dados Pessoais</Typography>
-              <img src={formDataDisable.dadosPessoais ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
-                onClick={() => {
-                  if (formDataDisable.dadosPessoais == false) {
-                    setFormDataDisable({ ...formDataDisable, dadosPessoais: atualizarDadosPessoais() })
+              <Tooltip title={formDataDisable.dadosPessoais ? "Editar Dados Pessoais" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
+                <img src={formDataDisable.dadosPessoais ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
+                  onClick={() => {
+                    if (formDataDisable.dadosPessoais == false) {
+                      setFormDataDisable({ ...formDataDisable, dadosPessoais: atualizarDadosPessoais() })
+                    }
+                    else {
+                      setFormDataDisable({ ...formDataDisable, dadosPessoais: false })
+                    }
                   }
-                  else {
-                    setFormDataDisable({ ...formDataDisable, dadosPessoais: false })
                   }
-                }
-                }
-              />
+                />
+              </Tooltip>
             </Box>
 
             <Box className="box-inputs-dados-pessoais-pt1">
@@ -507,17 +510,19 @@ function PerfilUsuario() {
           <Box className="box-sobre-mim">
             <Box className="box-titulo-e-edit-icon">
               <Typography className="txt-titulo">Sobre Mim</Typography>
-              <img src={formDataDisable.dadosSobreMim ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
-                onClick={() => {
-                  if (formDataDisable.dadosSobreMim == false) {
-                    setFormDataDisable({ ...formDataDisable, dadosSobreMim: atualizasrSobreMim() })
+              <Tooltip title={formDataDisable.dadosSobreMim ? "Editar Sobre Mim" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
+                <img src={formDataDisable.dadosSobreMim ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
+                  onClick={() => {
+                    if (formDataDisable.dadosSobreMim == false) {
+                      setFormDataDisable({ ...formDataDisable, dadosSobreMim: atualizasrSobreMim() })
+                    }
+                    else {
+                      setFormDataDisable({ ...formDataDisable, dadosSobreMim: false })
+                    }
                   }
-                  else {
-                    setFormDataDisable({ ...formDataDisable, dadosSobreMim: false })
                   }
-                }
-                }
-              />
+                />
+              </Tooltip>
             </Box>
             {
               formDataDisable.dadosSobreMim ?
@@ -559,20 +564,23 @@ function PerfilUsuario() {
                   <Box className="box-titulo-e-edit-icon">
                     <Typography className="txt-titulo">Experiências</Typography>
                     <Box className="box-icones-editar-experiencias" style={{ justifyContent: formDataDisable.dadosExperiencias ? 'end' : 'space-between' }}>
-                      <img src={AdicionarIcon} alt="" onClick={abrirModalExperiencias} className="img-edit-icon"
+                      <Tooltip title="Adicionar Experiência" placement="bottom-start" arrow={true}>
+                        <img src={AdicionarIcon} alt="" onClick={abrirModalExperiencias} className="img-edit-icon"
                         style={{ display: formDataDisable.dadosExperiencias ? 'none' : 'flex' }} />
-
-                      <img src={formDataDisable.dadosExperiencias ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
-                        onClick={() => {
-                          if (formDataDisable.dadosExperiencias == false) {
-                            setFormDataDisable({ ...formDataDisable, dadosExperiencias: true })
+                      </Tooltip>
+                      <Tooltip title={formDataDisable.dadosExperiencias ? "Editar Experiências" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
+                        <img src={formDataDisable.dadosExperiencias ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
+                          onClick={() => {
+                            if (formDataDisable.dadosExperiencias == false) {
+                              setFormDataDisable({ ...formDataDisable, dadosExperiencias: true })
+                            }
+                            else {
+                              setFormDataDisable({ ...formDataDisable, dadosExperiencias: false })
+                            }
                           }
-                          else {
-                            setFormDataDisable({ ...formDataDisable, dadosExperiencias: false })
                           }
-                        }
-                        }
-                      />
+                        />
+                      </Tooltip>
                     </Box>
                   </Box>
                   {
@@ -590,18 +598,20 @@ function PerfilUsuario() {
 
             <Box className="box-titulo-e-edit-icon">
               <Typography className="txt-titulo">Endereço</Typography>
-              <img src={formDataDisable.dadosEndereco ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
-                onClick={() => {
-                  if (!formDataDisable.dadosEndereco) {
-                    setFormDataDisable({ ...formDataDisable, dadosEndereco: atualizarDadosEndereco() })
+              <Tooltip title={formDataDisable.dadosEndereco ? "Editar Dados de Endereço" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
+                <img src={formDataDisable.dadosEndereco ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
+                  onClick={() => {
+                    if (!formDataDisable.dadosEndereco) {
+                      setFormDataDisable({ ...formDataDisable, dadosEndereco: atualizarDadosEndereco() })
+                    }
+                    else {
+                      console.log(formDataDisable)
+                      setFormDataDisable({ ...formDataDisable, dadosEndereco: false })
+                    }
                   }
-                  else {
-                    console.log(formDataDisable)
-                    setFormDataDisable({ ...formDataDisable, dadosEndereco: false })
                   }
-                }
-                }
-              />
+                />
+              </Tooltip>
             </Box>
 
 

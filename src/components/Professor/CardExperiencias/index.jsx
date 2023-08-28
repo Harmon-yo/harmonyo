@@ -5,6 +5,7 @@ import "./style.css"
 import EditIcon from "../../../imgs/edit-24px.png"
 import DeleteIcon from "../../../imgs/delete-24px.png"
 import ModalExperiencias from "../ModalExperiencias";
+import Tooltip from '@mui/material/Tooltip';
 
 function CardExperiencias(props) {
 
@@ -30,8 +31,12 @@ function CardExperiencias(props) {
                 </Box>
 
                 <Box className="box-icons-editar-excluir" display={props.disableIconesEditarExcluir ? 'none' : 'flex'}>
-                    <img src={EditIcon} alt=""  className="img-icons" onClick={abrirModalExperiencias}/>
-                    <img src={DeleteIcon} alt="" className="img-icons" onClick={() => props.deletarExpPorId(props.idExp)}/>
+                    <Tooltip title="Editar Experiência" placement="bottom-start" arrow={true}>
+                        <img src={EditIcon} alt=""  className="img-icons" onClick={abrirModalExperiencias}/>
+                    </Tooltip>
+                    <Tooltip title="Deletar Experiência" placement="bottom-start" arrow={true}>
+                        <img src={DeleteIcon} alt="" className="img-icons" onClick={() => props.deletarExpPorId(props.idExp)}/>
+                    </Tooltip>
                 </Box>
             </Box>
         </>
