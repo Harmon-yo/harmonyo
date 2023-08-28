@@ -1,13 +1,101 @@
+.modal .modal-button-open{
+    margin: 10px;
+    background-color: #099250;
+    color: #fff;
+    width: 150px;
+}
+
+.modal .modal-button-open:hover{
+    background-color: #085b2a;
+}
 
 .modal-avaliacao {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: 400px;
+    width: fit-content;
+    height: fit-content;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: 24px;
     padding: 4px;
+}
+
+.modal-head{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+}
+
+.modal-usuario{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin: 10px;
+}
+
+.avaliacao-usuario{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.avaliacao-numero{
+    color: #faaf00;
+    font-size: 18px;
+    margin-left: 8px;
+}
+
+.modal-body{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin: 10px;
+}
+
+.modal-text-input{
+    width: 600px;
+    height: fit-content;
+}
+
+.modal-body .modal-button{
+    margin: 10px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    background-color: #099250;
+    color: #fff;
+    width: 150px;
+}
+
+.modal-body .modal-button:hover{
+    background-color: #085b2a;
+}
+
+.modal-close .button-close{
+    width: fit-content;
+    padding: 0px;
+    color: #000;
+}
+
+.modal-close .button-close:hover{
+    background-color: transparent;
+}
+
+.modal-area{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.modal-close{
+    margin: 10px;
+    margin-right: -10px;
+    width: fit-content;
+    height: fit-content;
 }
