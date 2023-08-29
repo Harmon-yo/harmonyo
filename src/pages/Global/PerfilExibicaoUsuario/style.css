@@ -47,6 +47,11 @@
     margin-bottom: 0px;
 }
 
+.categoria{
+    font-size: 18px;
+    margin-top: -8px;
+}
+
 .avaliacao-usuario{
     display: flex;
     flex-direction: row;
@@ -91,7 +96,7 @@
     margin: 10px;
     padding: 10px;
     background-color: #fff;
-    min-height: 200px;
+    min-height: 150px;
     height: fit-content;
 }
 
@@ -139,8 +144,6 @@
     flex-direction: row;
     justify-content: left;
     align-items: top;
-    margin: 8px;
-    margin-bottom: 0px;
 }
 
 .avaliacao-nome{
@@ -153,6 +156,21 @@
 .avaliacao-texto{
     font-size: 16px;
     padding: 8px;
-    padding-left: 50px;
+    padding-left: 55px;
     padding-top: 0px;
 }
+
+.avaliacao-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding: 5px;
+}
+
+.avaliacao-data{
+    font-size: 14px;
+    margin-left: 8px;
+    margin-top: -2px;
+    color: #8C8C8C;
+}
+
