@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import VLibras from "@djpfs/react-vlibras";
-
+/* import VLibras from "@djpfs/react-vlibras";
+ */
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Chat = React.lazy(() => import("./pages/Global/Chat/Chat"));
@@ -27,7 +27,7 @@ const DashboardAdmin = React.lazy(() => import("./pages/Admin/Dashboard/Dashboar
 function Rotas() {
   return (
     <>
-      <VLibras forceOnload />
+      {/* <VLibras forceOnload /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/">

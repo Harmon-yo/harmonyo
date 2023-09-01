@@ -6,6 +6,7 @@ import "./style.css";
 import api from "../../../api.js";
 import { storage } from "../../../utils/firebase";
 import ModalAvaiacao from "../../../components/Global/ModalAvaliacao";
+import { useNavigate } from "react-router-dom";
 
 function PerfilExibicaoUsuario() {
 
@@ -34,10 +35,10 @@ function PerfilExibicaoUsuario() {
     tempoMedio: "",
   });
 
-  useEffect(() => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const idUsuario = urlSearchParams.get("id");
+  const navigate = useNavigate();
+  const idUsuario = new URLSearchParams(window.location.search).get("id");
 
+  useEffect(() => {
     if (idUsuario) {
       console.log(idUsuario);
 
@@ -145,6 +146,8 @@ function PerfilExibicaoUsuario() {
             console.log(err)
           })
       }
+    } else {
+      navigate(-1);
     }
   }, [])
 
@@ -152,6 +155,10 @@ function PerfilExibicaoUsuario() {
   console.log(formRating);
   console.log(formInstruments);
   console.log(formTimeResponse);
+
+  const handleClickAgendar = () => {
+    navigate(`/pedido?id=${idUsuario}`);
+}
 
   return (
     <EstruturaPaginaUsuario className="teste">
@@ -188,7 +195,7 @@ function PerfilExibicaoUsuario() {
             {formData.categoria === "Professor" ?
               <>
                 <Box className="box-agendar">
-                  <Button className="botao">Agende uma aula</Button>
+                  <Button className="botao" onClick={handleClickAgendar}>Agende uma aula</Button>
                 </Box>
               </> : null
             }</Card>

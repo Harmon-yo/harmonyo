@@ -1,118 +1,138 @@
-.containerModal{
+.containerModal {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
-    height: 90%;
+    height: fit-content;
+    min-height: 80%;
     background-color: #fff;
-    border: 2px solid #000;
+    border: 0px;
+    border-radius: var(--borda-padrao);
     box-shadow: 24px;
-    padding: 20px;
+    padding: calc(var(--espaco-padrao) * 2);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-family: "Nunito" !important;
 }
 
-.tituloModal{
-    font-size: 36px!important;
-    font-weight: 600!important;
-    text-align: left!important;
-    margin-bottom: 20px!important;
-    font-family: "Nunito" !important;
+.container-historico {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--espaco-padrao) * 2);
 }
 
-.tituloDetalhe{
-    font-size: 20px!important;
-    font-weight: bold!important;
-    text-align: left!important;
-    font-family: "Nunito" !important;
+.tituloModal {
+    font-size: var(--fonte-h3) !important;
+    font-weight: 600 !important;
 }
-.valorDetalhe{
-    font-size: 20px!important;
-    text-align: left!important;
-    font-family: "Nunito" !important;
-    margin-left: 10px!important;
+
+.tituloDetalhe {
+    font-size: var(--fonte-h5)  !important;
+    font-weight: bold !important;
+}
+
+.valorDetalhe {
+    font-size: var(--fonte-h5) !important;
+    margin-left: calc(var(--espaco-padrao) * 1)!important;
     width: fit-content;
 }
 
-.conteudoB1{
+.conteudoB1 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 20px!important;
-    font-family: "Nunito" !important;
-    width: fit-content;
-}
-.conteudoB{
-    height: fit-content!important;
 }
 
-.tudoConteudo{
+.tudoConteudo {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 40%;
-    margin-top: 30px;
+    flex-direction: column;
+    gap: calc(var(--espaco-padrao) * 1);
+    height: fit-content;
 }
 
-.conteudoTop{
+.conteudoTop {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.descHistorico{
-    font-size: 20px!important;
-    text-align: left!important;
+.historico-lista {
+    width: fit-content;
+    margin-top: calc(var(--espaco-padrao) * 1);
+}
+
+.descHistorico {
+    font-size: var(--fonte-h6) !important;
+    text-align: left !important;
     font-family: "Nunito" !important;
 }
 
-.footerModal{
+.footerModal {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: calc(var(--espaco-padrao) * 1);    
 }
-.botoesModal{
+
+.botoesModal {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
     width: 50%;
-    align-self: center;
-    margin-top: 20px;
     font-family: "Nunito" !important;
 }
-.btnModal{
-    width: 185px!important;
-    height: 54px!important;
-    font-size: 20px!important;
-    font-weight: bolder!important;
-    text-transform: capitalize!important;
-    border-radius: 5px!important;
-    color: #fff!important;
+
+.btnModal {
+    min-width: 40% !important;
+    width: auto !important;
+    height: 10% !important;
+    font-size: var(--fonte-h5) !important;
+    font-weight: bolder !important;
+    text-transform: capitalize !important;
+    border-radius: 5px !important;
+    color: #fff !important;
 }
 
-
-
-.recusar, .recusar:hover{
+.recusar,
+.recusar:hover,
+.cancelar,
+.cancelar:hover {
     background-color: #DE4343 !important;
 }
 
-.aceitar, .aceitar:hover{
+.aceitar,
+.aceitar:hover,
+.avaliar,
+.avaliar:hover,
+.confirmar,
+.confirmar:hover {
     background-color: #099250 !important;
 }
-.txtChat{
-    font-size: 20px!important;
-    font-weight: bolder!important;
-    text-transform: capitalize!important;
-    color: #000!important;
+
+.txtChat {
+    font-size: 20px !important;
+    font-weight: bolder !important;
+    text-transform: capitalize !important;
+    color: #000 !important;
 }
-.msgChat{
-    width: 24%;
+
+.msgChat {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-self: center;
+    padding: 0 !important;
+}
+
+.icon-color {
+    color: #000 !important;
+    font-size: 20px !important;
+}
+
+.msg-icon {
+    margin-right: calc(var(--espaco-padrao) * 2) !important;
 }

@@ -9,84 +9,32 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 import PerfilUsuario from "../PerfilUsuario";
 import Status from "../Status";
 import ModalDetalhes from "../ModalDetalhes";
 import api from "../../../../api";
 function Tabela() {
-   
-  const dados = [
-    {
-        id: 1,
-        nome: "Caio Xamps",
-        instrumento: "Violão",
-        status: "Recusado",
-        data: "10/10/2023",
-        valor: "R$ 100,00",
-        horario: "10:00"
-      },
-      {
-        id: 2,
-        nome: "Maria Antonina",
-        instrumento: "Violino",
-        status: "Cancelado",
-        data: "19/05/2023",
-        valor: "R$ 250,00",
-        horario: "10:00"
-      },
-      {
-        id: 2,
-        nome: "Maria Antonina",
-        instrumento: "Violino",
-        status: "Confirmado",
-        data: "19/05/2023",
-        valor: "R$ 250,00",
-        horario: "13:00"
-      },
-      {
-        id: 2,
-        nome: "Maria Antonina",
-        instrumento: "Violino",
-        status: "Aguardando Pagamento",
-        data: "19/05/2023",
-        valor: "R$ 250,00",
-        horario: "15:00"
-      },
-      {
-        id: 2,
-        nome: "Maria Antonina",
-        instrumento: "Violino",
-        status: "Pendente",
-        data: "19/05/2023",
-        valor: "R$ 250,00",
-        horario: "17:00"
-      },
-      {
-        id: 2,
-        nome: "Maria Antonina",
-        instrumento: "Violino",
-        status: "Concluído",
-        data: "19/05/2023",
-        valor: "R$ 250,00",
-        horario: "19:00"
-      }
-  ];
+  const [dadosPedidos, setDadosPedidos] = useState([]);
 
-  const [dadosPedidos, setDadosPedidos] = React.useState([]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     api.get(`/pedidos/usuario/${sessionStorage.ID}`, 
     { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+      let pedidos = response.data;
+      pedidos = pedidos.sort(
+        (a, b) => {
+          return new Date(b.horaCriacao) - new Date(a.horaCriacao);
+        }
+      )
       setDadosPedidos(response.data);
       console.log(response.data);
     });
 
   }, [])
 
-  const [open, setOpen] = React.useState(false);
-  const [pedido, setPedido] = React.useState();
+  const [open, setOpen] = useState(false);
+  const [pedido, setPedido] = useState();
   
   const handleOpen = (ped) => {
     console.log(ped);
@@ -100,6 +48,7 @@ function Tabela() {
     let dataFormatada = new Date(data);
     return dataFormatada.toLocaleDateString();
   }
+
   return (
     <TableContainer style={{maxHeight: "90%", overflow: "scroll"}}>
       <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table" >

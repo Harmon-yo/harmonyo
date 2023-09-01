@@ -14,6 +14,7 @@ function ListarPedidos() {
       <Box className="pagina-container">
         <Box className="pagina-conteudo">
           <CabecalhoPagina />
+          <Box className="divider"/>
           <Tabela/>
         </Box>
       </Box>
