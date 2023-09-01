@@ -5,6 +5,7 @@ import Card from "../../../components/Global/Card";
 import "./style.css";
 import api from "../../../api.js";
 import { storage } from "../../../utils/firebase";
+import ModalAvaiacao from "../../../components/Global/ModalAvaliacao";
 
 function PerfilExibicaoUsuario() {
 
@@ -184,16 +185,15 @@ function PerfilExibicaoUsuario() {
               })}
             </Box>
             <Box>{formData.estado} - {formData.cidade} - {formData.bairro}</Box>
-          </Card>
+            {formData.categoria === "Professor" ?
+              <>
+                <Box className="box-agendar">
+                  <Button className="botao">Agende uma aula</Button>
+                </Box>
+              </> : null
+            }</Card>
         </Box>
         <Box className="pagina-informacoes">
-          {formData.categoria === "Professor" ?
-            <>
-              <Card className="card-agendar">
-                <Button className="botao">Agende uma aula</Button>
-              </Card>
-            </> : null
-          }
           {formData.bibliografia !== "" ?
             <>
               <Card className="card-geral">
@@ -209,9 +209,9 @@ function PerfilExibicaoUsuario() {
                 <Box>
                   {formData.experiencias.map((experiencia) => {
                     return (
-                      <Box className="item-experiencia">
-                        <Box className="item-experiencia-titulo">{experiencia.titulo}</Box>
-                        <Box className="item-experiencia-descricao">{experiencia.descricao}</Box>
+                      <Box className="box-experiencia">
+                        <Box className="titulo-experiencia">{experiencia.titulo}</Box>
+                        <Box className="descricao-experiencia">{experiencia.descricao}</Box>
                       </Box>
                     )
                   })}

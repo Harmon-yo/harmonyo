@@ -6,16 +6,18 @@
 
 .pagina-perfil{
     width: 35%;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-perfil{
+    position: fixed;
     display: flex;
     flex-direction: column;
     margin: 10px;
     padding: 10px;
     width: 30%;
     background-color: #fff;
-    position: fixed;
 }
 
 .topo-card{
@@ -71,22 +73,20 @@
     width: 65%;
 }
 
-.card-agendar{
+.box-agendar{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px;
-    padding: 10px;
-    background-color: #fff;
+    margin-top: 24px;
 }
 
-.card-agendar .botao{
+.box-agendar .botao{
     background-color: #099250;
     color: #fff;
     width: 250px;
 }
 
-.card-agendar .botao:hover{
+.box-agendar .botao:hover{
     background-color: #085b2a;
 }
 
@@ -124,6 +124,25 @@
     border-radius: 5px;
     margin: 5px;
     margin-left: 0px;
+}
+
+.box-experiencia{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: baseline;
+}
+
+.titulo-experiencia{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-left: 0px;
+}
+
+.descricao-experiencia{
+    font-size: 16px;
+    text-indent: 10px;
 }
 
 .avaliacao{
