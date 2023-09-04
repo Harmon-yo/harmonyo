@@ -30,6 +30,7 @@
   color: #777 !important;
   font-weight: 600 !important;
   text-transform: capitalize !important;
+  width: 150px;
 }
 
 .conteudoTabela{
