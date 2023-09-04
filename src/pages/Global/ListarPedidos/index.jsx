@@ -5,17 +5,17 @@ import "./style.css";
 import CabecalhoPagina from "../../../components/Global/ListarPedidos/CabecalhoPagina";
 import Tabela from "../../../components/Global/ListarPedidos/Tabela";
 import ModalDetalhes from "../../../components/Global/ListarPedidos/ModalDetalhes";
-// import { Container } from './styles';
 
 function ListarPedidos() {
+  const [erros, setErros] = React.useState([]);
 
   return (
-    <EstruturaPaginaUsuario tela="pedidos">
+    <EstruturaPaginaUsuario tela="pedidos" errosState={{erros, setErros}}>
       <Box className="pagina-container">
         <Box className="pagina-conteudo">
           <CabecalhoPagina />
           <Box className="divider"/>
-          <Tabela/>
+          <Tabela errosState={{erros, setErros}}/>
         </Box>
       </Box>
      

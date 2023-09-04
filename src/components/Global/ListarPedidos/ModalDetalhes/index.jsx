@@ -19,10 +19,38 @@ const criarBotao = (texto, funcao, className = "confirmar") => {
     <Button className={`btnModal ${className}`} onClick={funcao}>{texto}</Button>
   );
 }
+
+
 function ModalDetalhes(props) {
 
   const pedido = props.pedido;
   const [historico, setHistorico] = React.useState([]);
+
+  const erros = props.errosState.erros;
+
+  const adicionaErro = (erro) => {
+    props.errosState.setErros([...erros, erro]);
+  }
+
+  const errosResponse = (error, acao) => {
+    switch (error.response.status) {
+      case 400:
+        adicionaErro(`Erro ao ${acao} pedido!`);
+        break;
+      case 401:
+        adicionaErro(`Você não tem permissão para ${acao} este pedido!`);
+        break;
+      case 404:
+        adicionaErro("Pedido não encontrado!");
+        break;
+      case 409:
+        adicionaErro("Você não pode realizar essa ação");
+        break;
+      default:
+        adicionaErro("Erro desconhecido!");
+        break;
+    }
+  }
 
   useEffect(() => {
     if (pedido !== undefined) {
@@ -41,84 +69,62 @@ function ModalDetalhes(props) {
 
   const navigate = useNavigate();
 
-  console.log(props.pedido)
-
   const confirmarPedido = () => {
     requisicaoPut(`/pedidos/aceita-pedido/${pedido.id}`, {}).then((response) => {
       let status = response.status;
-      switch (status) {
-        case 200:
-          alert("Pedido confirmado com sucesso!");
-          navigate(0);
-          break;
-        case 400:
-          alert("Erro ao confirmar pedido!");
-          break;
-        case 401:
-          alert("Você não tem permissão para confirmar este pedido!");
-          break;
-        case 404:
-          alert("Pedido não encontrado!");
-          break;
-        default:
-          alert("Erro desconhecido!");
-          break;
+
+      if (status === 200) {
+        adicionaErro("Pedido confirmado com sucesso!");
+        navigate(0);
       }
     }).catch((error) => {
-      console.log(error);
+      errosResponse(error, "confirmar");
     });
   }
 
   const cancelarPedido = () => {
     requisicaoPut(`/pedidos/cancela-pedido/${pedido.id}`, {}).then((response) => {
       let status = response.status;
-      switch (status) {
-        case 200:
-          alert("Pedido cancelado com sucesso!");
-          navigate(0);
-          break;
-        case 400:
-          alert("Erro ao cancelar pedido!");
-          break;
-        case 401:
-          alert("Você não tem permissão para cancelar este pedido!");
-          break;
-        case 404:
-          alert("Pedido não encontrado!");
-          break;
-        default:
-          alert("Erro desconhecido!");
-          break;
+
+      if (status === 200) {
+        adicionaErro("Pedido cancelado com sucesso!");
+        navigate(0);
       }
+    }).catch((error) => {
+      errosResponse(error, "cancelar");
     });
   }
 
   const recusarPedido = () => {
     requisicaoPut(`/pedidos/recusa-pedido/${pedido.id}`, {}).then((response) => {
       let status = response.status;
-      switch (status) {
-        case 200:
-          alert("Pedido recusado com sucesso!");
-          navigate(0);
-          break;
-        case 400:
-          alert("Erro ao recusar pedido!");
-          break;
-        case 401:
-          alert("Você não tem permissão para recusar este pedido!");
-          break;
-        case 404:
-          alert("Pedido não encontrado!");
-          break;
-        default:
-          alert("Erro desconhecido!");
-          break;
+
+      if (status === 200) {
+        adicionaErro("Pedido recusado com sucesso!");
+        navigate(0);
       }
+    }).catch((error) => {
+      errosResponse(error, "recusar");
     });
   }
 
+  const concluirPedido = () => {
+    requisicaoPut(`/pedidos/conclui-pedido/${pedido.id}`, {}).then((response) => {
+      let status = response.status;
+
+      if (status === 200) {
+        adicionaErro("Pedido confirmado com sucesso!");
+        navigate(0);
+      }
+    }).catch((error) => {
+      errosResponse(error, "confirmar");
+    });
+  }
+
+
   const getModalButton = (status) => {
     const categoria = sessionStorage.CATEGORIA;
+
     if (categoria === "Aluno") {
       switch (status) {
         case "Pendente":
@@ -131,13 +137,14 @@ function ModalDetalhes(props) {
             </>
           )
         case "Confirmado":
-          return criarBotao("Cancelar", cancelarPedido, "cancelar");
-        case "Concluído":
-          return criarBotao("Avaliar", abrirModalAvaliacao, "avaliar");
+          if (new Date() > new Date(pedido.dataAula)) {
+            return criarBotao("Concluir Pedido", concluirPedido, "aceitar");
+          } else {
+          }
         default:
           return null;
       }
-    } else {
+    } else if (categoria === "Professor") {
       switch (status) {
         case "Pendente":
           return (
@@ -148,15 +155,11 @@ function ModalDetalhes(props) {
           )
         case "Aguardando Pagamento":
           return criarBotao("Cancelar", cancelarPedido, "cancelar");
-        case "Concluído":
-          return criarBotao("Avaliar", abrirModalAvaliacao, "avaliar");
         default:
           return null;
       }
     }
-  }
 
-  const abrirModalAvaliacao = () => {
   }
 
   if (pedido !== undefined) return (

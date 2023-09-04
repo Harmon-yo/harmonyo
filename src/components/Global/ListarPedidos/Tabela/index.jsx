@@ -16,8 +16,9 @@ import ModalDetalhes from "../ModalDetalhes";
 import api from "../../../../api";
 import ModalAvaliacao from "../../ModalAvaliacao";
 
-function Tabela() {
+function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
+  const { erros, setErros } = props.errosState;
 
   useEffect(() => {
     api.get(`/pedidos/usuario/${sessionStorage.ID}`,
@@ -90,7 +91,7 @@ function Tabela() {
           ))}
         </TableBody>
       </Table>
-      <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} />
+      <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} errosState={{ erros, setErros }}/>
     </TableContainer >
   );
 }
