@@ -3,6 +3,7 @@
     border-radius: 5px!important;;
     width: 100%!important;;
     height: fit-content!important;;
+    max-height: 200px!important;;
     display: grid!important;;
     grid-auto-rows: auto auto!important;;
     gap: 8px!important;;
@@ -15,6 +16,5 @@
 }
 
 .kpi-valor {
- 
-    font-size: 31px !important;
+    font-size: 2.1vw!important;
 }

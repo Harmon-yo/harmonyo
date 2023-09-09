@@ -29,7 +29,7 @@ function ListaAulas(props) {
       .then((response) => {
         let aulas = []
         var resposta = response.data
-       
+        console.log(fkUsuario)
         resposta.map((aula) => {
           aulas.push({
             id: aula.id,

@@ -8,11 +8,13 @@ import "./style.css";
 function KpiDashboard(props) {
   const [valor, setValor] = useState("0,00");
   const [carregando, setCarregando] = useState(true);
+  
   const config = {
     headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
   };
-
+ 
   useEffect(() => {
+
     if (props.titulo === "Rendimento total") {
       setValor(getRendimentoTotal());
     } else if (props.titulo === "Quantidade de alunos") {
@@ -117,7 +119,7 @@ function KpiDashboard(props) {
       setValor(texto);
     });
   }
-
+  
   if (carregando) {
     return (
       <Card className="kpi-item">
@@ -128,7 +130,7 @@ function KpiDashboard(props) {
     return (
       <Card className="kpi-item">
         <Typography className="kpi-titulo">{props.titulo}</Typography>
-        <Typography className="kpi-valor">{valor}</Typography>
+        <Typography className="kpi-valor" >{valor}</Typography>
       </Card>
     );
   }
