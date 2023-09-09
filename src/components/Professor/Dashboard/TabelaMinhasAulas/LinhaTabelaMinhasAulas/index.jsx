@@ -1,8 +1,6 @@
 import { TableCell, TableRow, Typography, Tooltip as TooltipMaterial } from "@mui/material";
 import React, { useState } from "react";
 import "../../../../../pages/Professor/Dashboard/style.css";
-import violaoIcon from "../../../../../imgs/violao.png";
-
 
 function LinhaTabelaMinhasAulas(props) {
 
@@ -17,8 +15,8 @@ function LinhaTabelaMinhasAulas(props) {
       <TableCell component="th" scope="row" align="center">
         <TooltipMaterial title={props.item.nomeInstrumento} placement="right">
           
-          <img src={violaoIcon} alt="" className="instrumentos-img" />
-        </TooltipMaterial>
+        <Typography >{props.item.nomeInstrumento}</Typography>
+     </TooltipMaterial>
       </TableCell>
       <TableCell align="center">
         <Typography variant="subtitle1">{props.item.quantidadeAulas}</Typography>

@@ -25,7 +25,7 @@ const opcoes = [
         id: 3,
         src: SairIcon,
         titulo: "Sair",
-        url: "/login"
+        url: "/"
     }
 ]
 
