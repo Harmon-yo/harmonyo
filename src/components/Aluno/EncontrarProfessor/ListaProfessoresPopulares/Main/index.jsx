@@ -31,7 +31,6 @@ function ProfessoresPopulares(props) {
                 nome={professor.nome}
                 instrumentos={professor.instrumentos}
                 localizacao={professor.localizacao}
-                ultimaVezOnline={professor.ultimaVezOnline}
                 avaliacao={professor.mediaAvaliacao}
                 onClick={() => props.onClick(professor)}
               />

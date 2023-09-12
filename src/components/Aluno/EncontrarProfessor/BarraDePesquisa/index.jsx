@@ -44,7 +44,7 @@ function BarraDePesquisa(props) {
     const verificarEnter = (event) => {
         if (event.key === "Enter") {
             /* Promise.all([
-                props.requisicaoGet(`/professores/busca?params=nome~*${textoDeBusca}*,cidade:${cidade}`),
+                props.requisicaoGet(`/professores/busca?params=nome~*${textoDeBusca}*,cidade:${cidade},instrumentos~*${textoDeBusca}*`),
             ]) */
         }
     };

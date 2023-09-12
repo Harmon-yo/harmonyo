@@ -20,11 +20,6 @@ function FiltroDePesquisaCard(props) {
         valor: [0, 0]
     });
     const [avaliacao, setAvaliacao] = useState(5);
-    const [disponibilidade, setDisponibilidade] = useState({
-        manha: false,
-        tarde: false,
-        noite: false
-    });
 
     useEffect(
         () => {
@@ -83,11 +78,7 @@ function FiltroDePesquisaCard(props) {
         adicionarParametro("preco", preco.valor, "><");
         adicionarParametro("distancia", distancia.valor, "><");
         adicionarParametro("avaliacao", avaliacao, ">:");
-        /* adicionarParametro("disponibilidade", disponibilidade, ":"); */
     };
-
-    const handleDisponibilidade = (event) => setDisponibilidade({ ...disponibilidade, [event.target.name]: event.target.checked });
-
 
     return (
         <Card className="filtro-card">
@@ -120,18 +111,6 @@ function FiltroDePesquisaCard(props) {
                             R$ {preco.maximo}
                         </Typography>
                     </Box>
-                </Box>
-            </Box>
-            <Box className="filtro-disponibilidade-container">
-                <Typography className="filtro-titulo">
-                    Disponibilidade
-                </Typography>
-                <Box className="filtro-disponibilidade-check-container">
-                    <FormGroup>
-                        <FormControlLabel name="manha" checked={disponibilidade.manha} onChange={handleDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Manhã</Typography>} />
-                        <FormControlLabel name="tarde" checked={disponibilidade.tarde} onChange={handleDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Tarde</Typography>} />
-                        <FormControlLabel name="noite" checked={disponibilidade.noite} onChange={handleDisponibilidade} control={<Checkbox />} label={<Typography className="filtro-disponibilidade-texto">Noite</Typography>} />
-                    </FormGroup>
                 </Box>
             </Box>
             <Box className="filtro-avaliacao-container">

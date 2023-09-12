@@ -4,9 +4,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Card from "../../../../Global/Card/index.jsx";
 import "./style.css";
 
-function ProfessorResumidoCard(props) {
-
-    
+function ProfessorResumidoCard(props) {    
     return (
         <Card className="professor-card" onClick={props.onClick}>
             <Box className="professor-card-primeira-parte">
