@@ -54,20 +54,6 @@ function EtapaUm(props) {
     const shouldDisableTime = (time) => {
         return diasIndisponiveis.some(
             diaIndisponivel => {
-                /* console.log("==========================================")
-                console.log("Tempo:")
-                console.log(time)
-                console.log("Dia Indisponível Inicial:")
-                console.log(dayjs(diaIndisponivel.inicio))
-                console.log("Dia Indisponível Final:")
-                console.log(dayjs(diaIndisponivel.fim))
-                console.log("O tempo está depois do dia indisponível inicial?")
-                console.log(time.isSameOrAfter(dayjs(diaIndisponivel.inicio)))
-                console.log("O tempo está antes do dia indisponível final?")
-                console.log(time.isBefore(dayjs(diaIndisponivel.fim)))
-                console.log("É o mesmo dia?")
-                console.log(diaEscolhido.isSame(dayjs(diaIndisponivel), "day"))
-                console.log("==========================================") */
                 return diaEscolhido.isSame(dayjs(diaIndisponivel.inicio), "day") && (time.isSameOrAfter(dayjs(diaIndisponivel.inicio)) && time.isBefore(dayjs(diaIndisponivel.fim)))
             }
         )
@@ -118,7 +104,7 @@ function EtapaUm(props) {
                         ampm={false}
                         shouldDisableTime={shouldDisableTime}
                         skipDisabled={true}
-                        disablePast={dataSemelhante()}
+                        disablePast={dataSemelhante}
                     />
                 </LocalizationProvider>
             </Box>

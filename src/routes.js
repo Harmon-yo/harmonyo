@@ -1,9 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-/* import VLibras from "@djpfs/react-vlibras";
- */
-
 const Home = React.lazy(() => import("./pages/Home"));
 const Chat = React.lazy(() => import("./pages/Global/Chat/Chat"));
 const Cadastro = React.lazy(() => import("./pages/Cadastro-Login/Cadastro/Cadastro"));
@@ -24,6 +21,7 @@ const PerfilExibicaoUsuario = React.lazy(() => import("./pages/Global/PerfilExib
 
 /* Admin */
 const DashboardAdmin = React.lazy(() => import("./pages/Admin/Dashboard/Dashboard"));
+
 function Rotas() {
   return (
     <>
@@ -35,7 +33,7 @@ function Rotas() {
             <Route path="login" element={<Login />} />
             <Route path="cadastro" element={<Cadastro />} />
             <Route path="encontrar-professor" element={<EncontrarProfessor />} />
-            <Route path="dashboard-admin" element={<DashboardAdmin />} />
+            <Route path="dashboard-administrador" element={<DashboardAdmin />} />
             <Route path="dashboard-professor" element={<DashboardProfessor />} />
             <Route path="feedbacks" element={<></>} />
             <Route path="chat" element={<Chat />} />

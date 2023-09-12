@@ -1,0 +1,22 @@
+.card-body {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-texto {
+    font-size: var(--fonte-h2) !important;
+}
+
+.realizadas {
+    color: #00a65a;
+}
+
+.pendentes {
+    color: #f39c12;
+}
+
+.canceladas {
+    color: #dd4b39;
+}
+

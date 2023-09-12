@@ -13,14 +13,14 @@ const opcoes = [
         id: 1,
         src: MeuPerfilIcon,
         titulo: "Meu Perfil",
-        url: "/exibicao-perfil"
+        url: "/perfil"
     },
-    {
+/*     {
         id: 2,
         src: EditarContaIcon,
         titulo: "Configurações",
         url: "/perfil"
-    },
+    }, */
     {
         id: 3,
         src: SairIcon,

@@ -5,7 +5,7 @@ import "./style.css";
 
 function Card(props) {
     return (
-        <Box className={`card ${props.className}`} sx={props.sx} onClick={props.onClick} id={props.id}>
+        <Box className={`card ${props.className}`} sx={props.sx} id={props.id} onClick={props.onClick}>
             {props.children}
         </Box>
     );

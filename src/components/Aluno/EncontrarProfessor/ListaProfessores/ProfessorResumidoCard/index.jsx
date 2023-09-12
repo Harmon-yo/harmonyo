@@ -6,6 +6,7 @@ import "./style.css";
 
 function ProfessorResumidoCard(props) {
 
+    
     return (
         <Card className="professor-card" onClick={props.onClick}>
             <Box className="professor-card-primeira-parte">

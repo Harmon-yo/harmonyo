@@ -86,12 +86,12 @@ function NavbarLateral(props) {
                 href: `/feedbacks`
             }
         ],
-        admin: [
+        administrador: [
             {
                 titulo: "Dashboard",
                 icon: DashboardIcon,
                 active: props.tela === "dashboard" ? true : false,
-                href: `/dashboard-admin`
+                href: `/dashboard-administrador`
             }
         ]
     }

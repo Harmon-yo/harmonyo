@@ -1,11 +1,13 @@
+import { useEffect, useState } from "react";
 import FrequenciaSemanal from "./FrequenciaSemanal/index.jsx"
+import api from "../../../../../../api";
 
 const frequencias = [
     {
         dia: "S",
         valor: 0,
         valorTotal: 10
-    }, 
+    },
     {
         dia: "T",
         valor: 1,
@@ -38,9 +40,44 @@ const frequencias = [
     }
 ];
 
+const requisicaoGet = (url) => {
+    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
+}
+
 function UsuariosRetidosSemana(props) {
+
+    const [frequencias, setFrequencias] = useState([{
+        dia: "S",
+        valor: 0
+    },
+    {
+        dia: "T",
+        valor: 0
+    },
+    {
+        dia: "Q",
+        valor: 0
+    },
+    {
+        dia: "Q",
+        valor: 0
+    },
+    {
+        dia: "S",
+        valor: 0
+    },
+    {
+        dia: "S",
+        valor: 0
+    },
+    {
+        dia: "D",
+        valor: 0
+    }
+    ]);
+
     return (
-        <FrequenciaSemanal titulo="Usuários retidos na semana" frequencias={frequencias}/>
+        <FrequenciaSemanal titulo="Usuários retidos na semana" frequencias={frequencias} />
     );
 }
 

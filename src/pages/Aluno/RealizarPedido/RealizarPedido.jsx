@@ -9,9 +9,7 @@ import "./style.css";
 import InformacoesCompraEUsuario from "../../../components/Aluno/RealizarPedido/InformacoesCompraEUsuario";
 import InformacoesPedido from "../../../components/Aluno/RealizarPedido/InformacoesPedido";
 
-import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
-import dayjs from "dayjs";
 
 const steps = [
     "Escolha o dia",

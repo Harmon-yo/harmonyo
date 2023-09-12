@@ -13,6 +13,9 @@ const carregando = () => {
 function ListaProfessores(props) {
     const navigate = useNavigate();
 
+    console.log("Teste")
+    console.log(props.onClick)
+    
     return (
         <Box>
             <Box>

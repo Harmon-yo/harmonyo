@@ -25,7 +25,7 @@ body, .mui-root, #root {
 .pagina-container {
     width: 100%;
     min-height: 95% !important;
-    height: 95% !important;
+    /* height: 95% !important; */
 }
 
 .erro-container {

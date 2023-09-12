@@ -1,3 +1,12 @@
+:root {
+    --aulas-realizadas: #00a65a;
+    --aulas-pendentes: #f39c12;
+    --aulas-canceladas: #dd4b39;
+    --porcentagem-aulas-realizadas: 0%;
+    --porcentagem-aulas-pendentes: 0%;
+    --porcentagem-aulas-canceladas: 0%;
+}
+
 .barra-porcentagem-vertical-container {
     width: 5%;
     height: 100%;
@@ -23,4 +32,3 @@
 .barra-background, .barra-quantidade {
     border-radius: 20px;
 }
-

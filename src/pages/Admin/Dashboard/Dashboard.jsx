@@ -1,69 +1,119 @@
-import { useState, useEffect, useRef, createElement } from 'react';
-import api from "../../../api.js";
+import { useState, useEffect } from 'react';
 import { verificarToken } from "../../../utils/index.js";
 
 /* Componentes */
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
-import Card from "../../../components/Global/Card/index.jsx";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
 import UsuariosRetidos from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidos/index.jsx";
+import UsuariosRetidosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidosSemana/index.jsx';
 import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastrados/index.jsx";
 import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
-import MediaUsuarioSemana from '../../../components/Admin/Dashboard/Graficos/Novo/MediaUsuariosSemana/index.jsx';
-import UsuariosRetidosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidosSemana/index.jsx';
+import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
+import api from '../../../api.js';
 
-import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx";
-import BarraPorcentagemHorizontal from '../../../components/Admin/Dashboard/Graficos/BarraPorcentagemHorizontal/index.jsx';
+/* import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx"; */
 /* Css */
 import "./style.css";
+import { useNavigate } from 'react-router-dom';
+import UsuariosCadastradosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosSemana/index.jsx';
+
+const requisicaoGet = (url) => {
+    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
+}
 
 function DashboardAdmin(props) {
     const [erros, setErros] = useState([]);
 
-    /* useEffect(() => {
-        if (verificarToken()) {
-            navigate(-1);
-        }
-    }, []); */
+    const adicionaErro = (erro) => {
+        setErros([...erros, erro]);
+    }
+
     const [metricas, setMetricas] = useState([
         {
             id: 1,
             nome: "Usuários",
-            nomeGrafico: "usuario",
-            valor: 10,
-            temInformacaoAdicional: true,
+            endpoint: "/usuarios/quantidade",
+            valor: -1,
         },
         {
             id: 2,
             nome: "Aulas por aluno",
-            nomeGrafico: "renda",
-            valor: 0.5,
-            temInformacaoAdicional: false
+            endpoint: "/aulas/quantidade-por-aluno",
+            valor: -1,
         },
         {
             id: 3,
             nome: "Aulas",
-            nomeGrafico: "aulas",
-            valor: 5,
-            temInformacaoAdicional: false
+            endpoint: "/aulas/quantidade",
+            valor: -1,
         },
         {
             id: 4,
             nome: "Avaliações",
-            nomeGrafico: "avaliacoes",
-            valor: 0,
-            temInformacaoAdicional: false
+            endpoint: "",
+            valor: -1,
         }
     ]);
 
+    const [valorAulas, setValorAulas] = useState([
+        {
+            id: 1,
+            nome: "Aulas Realizadas",
+            endpoint: "/pedidos/quantidade-realizadas-semana-total",
+            valor: -1,
+        }, {
+            id: 2,
+            nome: "Aulas Pendentes",
+            endpoint: "/pedidos/quantidade-pendentes-semana-total",
+            valor: -1,
+        }, {
+            id: 3,
+            nome: "Aulas Canceladas",
+            endpoint: "/pedidos/quantidade-canceladas-semana-total",
+            valor: -1,
+        }
+    ]);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (verificarToken()) navigate(-1);
+
+        metricas.forEach(metrica => {
+            if (metrica.id !== 4) {
+                requisicaoGet(metrica.endpoint).then((resposta) => {
+                    setMetricas(metricas => metricas.map(metricaAntiga => {
+                        if (metricaAntiga.id === metrica.id) {
+                            metricaAntiga.valor = resposta.data;
+                        }
+                        return metricaAntiga;
+                    }));
+            }).catch(() => adicionaErro(`Erro ao obter quantidade de ${metrica.nome}`));
+            }
+        });
+
+        valorAulas.forEach(valorAula => {
+            if (valorAula.id !== 4) {
+                requisicaoGet(valorAula.endpoint).then((resposta) => {
+                    setValorAulas(valorAulas => [...valorAulas.map(valorAulaAntigo => {
+                        if (valorAulaAntigo.id === valorAula.id) {
+                            valorAulaAntigo.valor = resposta.data;
+                        }
+                        return valorAulaAntigo;
+                    })])
+                }).catch(() => adicionaErro(`Erro ao obter quantidade de ${valorAula.nome}`));
+            }
+        });
+    }, []);
+
     return (
-        <EstruturaPaginaUsuario tela="dashboard-admin" errosState={{ erros, setErros }}>
+        <EstruturaPaginaUsuario tela="dashboard" errosState={{ erros, setErros }}>
             <Box className="pagina-container">
                 <Metricas metricas={metricas} />
                 <Box className="secao secao-usuarios-retidos-cadastrados">
                     <UsuariosRetidos />
-                    <UsuariosCadastrados />
+                    <UsuariosCadastrados adicionaErro={adicionaErro} />
                     <Box sx={{
                         width: "30%",
                         height: "100%",
@@ -72,7 +122,7 @@ function DashboardAdmin(props) {
                         justifyContent: "space-between",
                     }}>
                         <UsuariosRetidosSemana />
-                        <MediaUsuarioSemana />
+                        <UsuariosCadastradosSemana adicionaErro={adicionaErro} />
                     </Box>
                 </Box>
                 <Box className="secao secao-aulas">
@@ -80,29 +130,12 @@ function DashboardAdmin(props) {
                         width: "30%",
                         height: "100%",
                     }}>
-                        <AulasSemana />
+                        <AulasSemana adicionaErro={adicionaErro}/>
                     </Box>
+                    <AulasInfo className="realizadas" titulo="Aulas Realizadas na semana" valor={valorAulas[0].valor} />
+                    <AulasInfo className="pendentes" titulo="Aulas Pendentes na semana" valor={valorAulas[1].valor} />
+                    <AulasInfo className="canceladas" titulo="Aulas Canceladas na semana" valor={valorAulas[2].valor} />
                 </Box>
-                {/* <Box className="secao-mapa-container">
-                    <Card className="mapa-card">
-                        <Typography className="metrica-titulo">Aulas por região</Typography>
-                        <Mapa />
-                    </Card>
-                </Box>
-                <Box className="secao-aula-semana-container">
-
-                </Box>
-                <Box className="secao-cadastro-usuario-mensal">
-                    <Card className="card-usuarios-retencao">
-                        <Typography className="metrica-titulo">Usuários retidos</Typography>
-                    </Card>
-                    <Card className="card-grafico-doughnut-container">
-                        <Typography className="card-titulo">Aulas por instrumentos</Typography>
-                        <BarraPorcentagemHorizontal nome="Violão" valorTotal={5} valor={2} />
-                        <BarraPorcentagemHorizontal nome="Guitarra" valorTotal={5} valor={1} />
-
-                    </Card>
-                </Box> */}
             </Box>
         </EstruturaPaginaUsuario>
     );
