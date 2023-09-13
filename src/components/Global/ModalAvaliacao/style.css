@@ -7,6 +7,7 @@
     background-color: #f4f4f4;
     border: #d6d6d6 1px solid;
     width: 150px;
+    border-radius: 10px;
 }
 
 .modal .modal-button-open:hover{
@@ -124,7 +125,7 @@
     text-transform: capitalize;
     background-color:#099250;
     border: #065730 1px solid;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 150px;
     padding: 8px;
 }

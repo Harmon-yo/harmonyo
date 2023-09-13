@@ -51,7 +51,7 @@ function ModalAvaliacao(props) {
             alert("Por favor, avalie o usuário!")
             return false
         }
-        if (comentario === "") {
+        if (comentario.length <= 3) {
             alert("Por favor, escreva um comentário!")
             return false
         }
@@ -64,7 +64,7 @@ function ModalAvaliacao(props) {
             usuarioAvaliadorId: parseInt(sessionStorage.ID),
             valor: value,
             comentario: comentario,
-            pedidoId: props.stateUsuario.aula.id,
+            pedidoId: props.stateUsuario.id,
         }
 
         console.log(avaliacao)
