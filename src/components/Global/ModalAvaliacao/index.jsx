@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./style.css";
-import { Box, Avatar, Rating, Button, Modal, Typography, TextField } from "@mui/material";
+import { Box, Rating, Button, Modal, Typography, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import AvatarComFoto from "../AvatarComFoto";
 import { storage } from "../../../utils/firebase";
 import api from "../../../api";
 
@@ -11,6 +12,8 @@ function ModalAvaliacao(props) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [value, setValue] = React.useState(0);
+
+    const usuario = props.stateUsuario;
 
     const [imgPerfilURL, setImgPerfilURL] = useState("")
 
@@ -28,23 +31,6 @@ function ModalAvaliacao(props) {
         });
 
     // Obtendo a URL da imagem de perfil
-    function obterImgPerfil() {
-
-        let urlImg = "";
-
-        if (sessionStorage.CATEGORIA === "Professor") {
-            urlImg = `/imgs-perfil-usuario/${props.stateUsuario.aluno.id}_ft_perfil`;
-        } else {
-            urlImg = `/imgs-perfil-usuario/${props.stateUsuario.professor.id}_ft_perfil`;
-        }
-
-
-        storage.ref(urlImg).getDownloadURL()
-            .then(url => {
-                console.log(url)
-                setImgPerfilURL(url)
-            })
-    }
 
     function validacaoDados() {
         if (value === 0) {
@@ -88,8 +74,9 @@ function ModalAvaliacao(props) {
 
 
     // Usar esse modelo abaixo:
-    // <ModalAvaliacao stateUsuario={{informacoesAvaliado, setInformacoesAvaliado}}></ModalAvaliacao>
-
+    // <ModalAvaliacao stateUsuario={{informacoesAvaliado, setInformacoesAvaliado}}></ModalAvaliacao>]
+    const idUsuario = sessionStorage.CATEGORIA === "Professor" ? usuario.aluno.id : usuario.professor.id;
+    const nomeUsuario = sessionStorage.CATEGORIA === "Professor" ? usuario.aluno.nome.charAt(0) : usuario.professor.nome.charAt(0);
     if (!pedidoAvaliado) {
         return (
             <Box className="modal">
@@ -103,18 +90,19 @@ function ModalAvaliacao(props) {
                     <Box className="modal-avaliacao">
                         <Box className="modal-area">
                             <Box className="modal-head">
-                                <Avatar
-                                    sx={{ width: 90, height: 90, backgroundColor: '#099250', fontSize: 35 }}
-                                    src={imgPerfilURL}>
-                                    {sessionStorage.CATEGORIA === "Professor" ?
-                                        props.stateUsuario.aluno.nome.charAt(0) :
-                                        props.stateUsuario.professor.nome.charAt(0)}
-                                </Avatar>
+                                <AvatarComFoto
+                                    id={idUsuario}
+                                    nome={nomeUsuario}
+                                    sx={{
+                                        width: 90, 
+                                        height: 90, 
+                                        fontSize: 35
+                                    }}/>
                                 <Box className="modal-usuario">
                                     <Typography id="modal-modal-title" variant="h8" component="h2">
                                         {sessionStorage.CATEGORIA === "Professor" ?
-                                            props.stateUsuario.aluno.nome :
-                                            props.stateUsuario.professor.nome}
+                                            usuario.aluno.nome :
+                                            usuario.professor.nome}
                                     </Typography>
                                     <Box className="avaliacao-usuario">
                                         <Rating

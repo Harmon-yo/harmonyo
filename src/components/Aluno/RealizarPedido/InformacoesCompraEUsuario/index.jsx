@@ -9,6 +9,7 @@ import Card from "../../../Global/Card/index.jsx";
 import { useState, useEffect } from "react";
 
 import api from "../../../../api.js";
+import AvatarComFoto from "../../../Global/AvatarComFoto/index.jsx";
 
 const requisicaoGet = (url) => {
     return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
@@ -16,6 +17,7 @@ const requisicaoGet = (url) => {
 
 function InformacoesCompraEUsuario(props) {
 
+    const idProfessor = props.idProfessor;
     const [nomeProfessor, setNomeProfessor] = useState("Professor");
     const instrumento = props.instrumento;
     const valor = instrumento === null ? "00,00" : (
@@ -25,7 +27,7 @@ function InformacoesCompraEUsuario(props) {
     );
 
     useEffect(() => {
-        requisicaoGet(`/professores/${props.idProfessor}`).then(
+        requisicaoGet(`/professores/${idProfessor}`).then(
             (respostaProfessor) => {
                 const professor = respostaProfessor.data;
                 setNomeProfessor(professor.nome);
@@ -35,8 +37,11 @@ function InformacoesCompraEUsuario(props) {
 
     return (<Card className="card-usuario-info">
     <Box className="usuario-info">
-        <Avatar className="usuario-info-avatar"
-            sx={{ bgcolor: "#099250" }}>G</Avatar>
+        <AvatarComFoto
+            id={idProfessor}
+            nome={nomeProfessor}
+            className="usuario-info-avatar"
+        />
         <Box className="duracao-container">
             <Typography>Duração</Typography>
             <Typography>1 Hora</Typography>

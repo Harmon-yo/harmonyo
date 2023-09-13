@@ -1,9 +1,9 @@
 import React from "react";
 import { useState, Component, useEffect } from "react";
 import { Box, Button, Typography, Modal, TextField, IconButton, Avatar } from '@mui/material';
+import AvatarComFoto from "../AvatarComFoto";
 import CloseIcon from '@mui/icons-material/Close';
 import "./style.css";
-import api from "../../../api";
 import { storage } from "../../../utils/firebase";
 
 function ModalUploadFotoPerfil(props) {
@@ -13,6 +13,8 @@ function ModalUploadFotoPerfil(props) {
     const [imgUpdloadFirebase, setimgUpdloadFirebase] = useState("")
 
     const [imgNaoAlterada, setImgNaoAlterada] = useState(true)
+
+    const { recarregarImg, setRecarregarImg } = props.imgState
 
     useEffect(() => {
         if (imgTemp != props.imgState.imgPerfilURL) {
@@ -89,7 +91,7 @@ function ModalUploadFotoPerfil(props) {
                     </Box>
 
                     <Box className={"box-upload-img"}>
-                        <Avatar alt="" src={imgTemp} className="img-perfil-usuario" />
+                        <AvatarComFoto src={imgTemp} className="img-perfil-usuario" nome={props.nomeUsuario}/>
                         <input type="file" className="ipt-select-img"
                             onChange={handleFileChange} />
                     </Box>

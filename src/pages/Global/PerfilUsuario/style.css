@@ -24,13 +24,18 @@
     justify-content: space-evenly;
     border-radius: 10px;
     height: 100%;
-    border: 1px solid #099250 !important;
 }
 
 .img-perfil{
     cursor: pointer;
-    width: 120px !important; 
-    height: 120px !important;
+    width: 50% !important;
+    height: 50% !important;
+}
+
+.container-avaliacao {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
 }
 
 .box-dados-pessoais {
@@ -42,7 +47,6 @@
     align-items: center;
     border-radius: 10px;
     height: 100%;
-    border: 1px solid #099250 !important;
 
 }
 .box-inputs-dados-pessoais-pt1{
@@ -66,12 +70,12 @@
 }
 
 .txt-nome{
-    font-size: 24px !important;
-    font-weight: bold !important;
+    font-size: var(--fonte-h5) !important;
+    font-weight: 500 !important;
 }
 .txt-idade{
-    font-size: 20px !important;
-    font-weight: bold !important;
+    font-size: var(--fonte-h6) !important;
+    font-weight: 400 !important;
 }
 
 .box-titulo-e-edit-icon {
@@ -96,7 +100,6 @@
     display: flex;
     flex-direction: column;
     background-color: white;
-    border: 1px solid #099250 !important;
     border-radius: 10px;
     overflow: scroll !important;
 }

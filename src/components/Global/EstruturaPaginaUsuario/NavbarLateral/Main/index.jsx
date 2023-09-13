@@ -110,7 +110,7 @@ function NavbarLateral(props) {
                 
                     { 
                         opcoesNavbar[tipoUsuario].map((card) => (
-                            <NavbarLateralCard href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />
+                            <NavbarLateralCard key={`opcao-navbar-${card.titulo}`} href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />
                         ))
                     }
                 </Box>

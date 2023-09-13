@@ -1,16 +1,20 @@
 import React from "react";
-import { Box, Avatar, Typography, Tooltip } from "@mui/material";
+import { Box, Typography, Tooltip } from "@mui/material";
+import AvatarComFoto from "../../../../Global/AvatarComFoto";
 import GradeRoundedIcon from '@mui/icons-material/GradeRounded';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import "./style.css";
 
 function ProfessorPopularCard(props) {
   return (
-    <Box className="professor-popular-card" onClick={props.onClick}>
+    <Box key={`popular-${props.id}`} className="professor-popular-card" onClick={props.onClick}>
 
       <Box className="card-info-usuario">
-        <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-          sx={{ bgcolor: "#099250" }}>{props.nome[0]}</Avatar>
+          <AvatarComFoto
+            id={props.id}
+            nome={props.nome}
+            className="avatar-usuario-img"
+          />
         <Box className="card-nome-container">
 
           <Tooltip title={props.nome} placement="right"><Typography className="card-info-nome" noWrap>{props.nome}</Typography></Tooltip>

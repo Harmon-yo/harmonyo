@@ -121,6 +121,19 @@ function ModalDetalhes(props) {
     });
   }
 
+  const realizarPagamento = () => {
+    requisicaoPut(`/pedidos/realiza-pagamento/${pedido.id}`, {}).then((response) => {
+      let status = response.status;
+
+      if (status === 200) {
+        adicionaErro("Pagamento realizado com sucesso!");
+        navigate(0);
+      }
+    }).catch((error) => {
+      errosResponse(error, "realizar pagamento");
+    });
+  }
+
 
   const getModalButton = (status) => {
     const categoria = sessionStorage.CATEGORIA;
@@ -132,7 +145,7 @@ function ModalDetalhes(props) {
         case "Aguardando Pagamento":
           return (
             <>
-              {criarBotao("Realizar Pagamento", "", "confirmar")}
+              {criarBotao("Realizar Pagamento", realizarPagamento, "confirmar")}
               {criarBotao("Cancelar", cancelarPedido, "cancelar")}
             </>
           )

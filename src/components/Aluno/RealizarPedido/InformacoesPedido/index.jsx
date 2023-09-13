@@ -126,16 +126,20 @@ function InformacoesPedido(props) {
     const textoBotao = definirTextoBotao(step);
 
     const adicionarAulas = (aulas) => {
+        let ltAulas = [];
         let aula;
+
         for (let i = 0; i < aulas.length; i++) {
             aula = aulas[i];
-
-            setInstrumentosDisponiveis(instrumentosDisponiveis => [...instrumentosDisponiveis, {
+            
+            ltAulas.push({
                 id: aula.id,
                 nome: aula.instrumento.nome,
                 valor: aula.valorAula,
-            }]);
+            });
         }
+
+        setInstrumentosDisponiveis(ltAulas);
     };
 
     const obterDiasIndisponiveis = (pedidos) => {

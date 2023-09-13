@@ -1,15 +1,18 @@
 import React from "react";
-import { Box, Typography, Avatar, Rating } from "@mui/material";
+import { Box, Typography, Rating } from "@mui/material";
+import AvatarComFoto from "../../../../Global/AvatarComFoto/index.jsx";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Card from "../../../../Global/Card/index.jsx";
 import "./style.css";
 
 function ProfessorResumidoCard(props) {    
     return (
-        <Card className="professor-card" onClick={props.onClick}>
+        <Card key={`resumido-${props.id}`} className="professor-card" onClick={props.onClick}>
             <Box className="professor-card-primeira-parte">
-                <Avatar id="avatar-usuario-botao"
-                    sx={{ bgcolor: "#099250" }}>{props.nome[0]}</Avatar>
+                <AvatarComFoto
+                    id={props.id}
+                    nome={props.nome}
+                />
             </Box>
             <Box className="professor-card-segunda-parte">
                 <Typography variant="h5" className="professor-nome-texto">

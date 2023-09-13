@@ -46,7 +46,7 @@ function EtapaDois(props) {
             >
                 {
                     instrumentosDisponiveis.map((instrumento) => (
-                        <FormControlLabel key={instrumento.id} value={instrumento.nome} disableTypography control={<Radio />} sx={{
+                        <FormControlLabel key={`instrumento-${instrumento.nome}`} value={instrumento.nome} disableTypography control={<Radio />} sx={{
                             width: "100%",
                         }}
                             label={<Box sx={{

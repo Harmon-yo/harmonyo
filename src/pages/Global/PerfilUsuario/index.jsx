@@ -1,6 +1,6 @@
 import React from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box,  Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
+import { Box,  Typography, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
 import SaveIcon from "../../../imgs/checked-24px.png"
@@ -13,14 +13,17 @@ import { consultaCep } from "../../../utils";
 import Textarea from '@mui/joy/Textarea';
 import FormHelperText from '@mui/joy/FormHelperText';
 import ModalExperiencias from "../../../components/Professor/ModalExperiencias";
-import { storage } from "../../../utils/firebase";
 import ModalUploadFotoPerfil from "../../../components/Global/ModalUploadFotoPerfil";
+import AvatarComFoto from "../../../components/Global/AvatarComFoto/index.jsx";
 
 
 function PerfilUsuario() {
 
   // Este indicador serve para que ao renderizar a página ele não modifique os dados de CEP logo de inicio e sim só altere os dados de endereço
   // quando o usuário digitar o último número do CEP
+
+  const idUsuario = sessionStorage.getItem("ID");
+
   let [ativarBuscaCep, setAtivarBuscaCep] = useState(false);
 
   const [dadosPerfilAntesDeEditar, setDadosPerfilAntesDeEditar] = useState({
@@ -42,7 +45,6 @@ function PerfilUsuario() {
     dadosExperiencias: true
   })
 
-  const [imgPerfilURL, setImgPerfilURL] = useState("")
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -96,15 +98,15 @@ function PerfilUsuario() {
 
   let [visibilidadeModalFotoPerfil, setVisibilidadeModalFotoPerfil] = useState(false);
   const abrirModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(true);
-  const fecharModalFecharModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(false);;
+  const fecharModalFecharModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(false);
+  const [recarregarImg, setRecarregarImg] = useState(false);
 
   useEffect(() => {
     obterDadosPerfil();
-    obterImgPerfil();
   }, [])
 
   useEffect(() => {
-    if (formData.cep != undefined && !formData.cep.includes('_') && formData.cep != '' && formData.cep.length === 9) {
+    if (formData.cep !== undefined && !formData.cep.includes('_') && formData.cep !== '' && formData.cep.length === 9) {
       if (ativarBuscaCep) {
         verificarCep()
       }
@@ -113,7 +115,7 @@ function PerfilUsuario() {
 
   function obterDadosPerfil() {
     // Obtendo os dados de perfil  
-    api.get(`/usuarios/dados-perfil/${sessionStorage.getItem("ID")}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+    api.get(`/usuarios/dados-perfil/${idUsuario}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
       .then(response => {
 
         let dadosUsuario = response.data;
@@ -156,21 +158,6 @@ function PerfilUsuario() {
       .catch(err => {
         console.log(err)
       })
-
-  }
-
-  function obterImgPerfil() {
-
-    let urlImg = `/imgs-perfil-usuario/${sessionStorage.getItem("ID")}_ft_perfil`
-
-    // Obtendo a URL da imagem de perfil
-    storage.ref(urlImg).getDownloadURL()
-      .then(url => {
-        console.log(url)
-        setImgPerfilURL(url)
-      })
-      .catch(error => {
-      });
 
   }
 
@@ -228,7 +215,7 @@ function PerfilUsuario() {
     if (bibliografia === '' || bibliografia === undefined || bibliografia === ' ' || bibliografia.length < 20) {
       setErrorsSobreMim({ ...errorsSobreMim, errorSobreMim: true, helperTextSobreMim: "Texto Inválido. Este campo deve conter no mínimo 20 caracteres" })
     }
-    else if (bibliografia.length == 500) {
+    else if (bibliografia.length === 500) {
       setErrorsSobreMim({ ...errorsSobreMim, errorSobreMim: true, helperTextSobreMim: "Você atingiu o máximo de caracteres" })
     }
     else {
@@ -260,7 +247,7 @@ function PerfilUsuario() {
 
   function verificarNumeroEndereco(num) {
 
-    if (num > 99999 || num <= 0 || num == "" || num == null || num == undefined) {
+    if (num > 99999 || num <= 0 || num === "" || num === null || num === undefined) {
       setErrorsDadosEndereco({ errorsDadosEndereco, errorNumero: true, helperTextNumero: "Número Inválido" })
     }
     else {
@@ -272,7 +259,7 @@ function PerfilUsuario() {
 
     let desabilitarEdicao;
 
-    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.nome == formData.nome && dadosPerfilAntesDeEditar.email == formData.email && dadosPerfilAntesDeEditar.dataNasc == formData.dataNasc && dadosPerfilAntesDeEditar.sexo == formData.sexo)
+    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.nome === formData.nome && dadosPerfilAntesDeEditar.email === formData.email && dadosPerfilAntesDeEditar.dataNasc === formData.dataNasc && dadosPerfilAntesDeEditar.sexo === formData.sexo)
 
     if (camposNaoForamEditados) {
       alert("Você não editou nenhum dos campos !")
@@ -281,7 +268,7 @@ function PerfilUsuario() {
 
       return desabilitarEdicao
     }
-    else if (errorsDadosPessoais.errorNome == false && errorsDadosPessoais.errorEmail == false && errorsDadosPessoais.errorDataNasc == false) {
+    else if (errorsDadosPessoais.errorNome === false && errorsDadosPessoais.errorEmail === false && errorsDadosPessoais.errorDataNasc === false) {
 
       let dadosUsuario = {
         nome: formData.nome,
@@ -290,7 +277,7 @@ function PerfilUsuario() {
         sexo: formData.sexo
       }
 
-      api.put(`/usuarios/atualiza-dados-pessoais/${sessionStorage.getItem("ID")}`, dadosUsuario, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+      api.put(`/usuarios/atualiza-dados-pessoais/${idUsuario}`, dadosUsuario, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
         .then(res => {
           alert("Seus Dados foram atualizados com sucesso!")
         })
@@ -313,7 +300,7 @@ function PerfilUsuario() {
   function atualizasrSobreMim() {
     let desabilitarEdicao;
 
-    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.bibliografia == formData.bibliografia)
+    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.bibliografia === formData.bibliografia)
 
     if (camposNaoForamEditados) {
       alert("Você não editou nenhum dos campos !")
@@ -328,7 +315,7 @@ function PerfilUsuario() {
         bibliografia: formData.bibliografia
       }
 
-      api.put(`/usuarios/atualiza-sobre-mim/${sessionStorage.getItem("ID")}`, usuarioBibliografia, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+      api.put(`/usuarios/atualiza-sobre-mim/${idUsuario}`, usuarioBibliografia, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
         .then(res => {
           alert("Seus Dados foram atualizados com sucesso!")
         })
@@ -353,7 +340,7 @@ function PerfilUsuario() {
 
     let desabilitarEdicao;
 
-    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.cep == formData.cep && dadosPerfilAntesDeEditar.numero == formData.numero && dadosPerfilAntesDeEditar.complemento == formData.complemento)
+    let camposNaoForamEditados = (dadosPerfilAntesDeEditar.cep === formData.cep && dadosPerfilAntesDeEditar.numero === formData.numero && dadosPerfilAntesDeEditar.complemento === formData.complemento)
 
     if (camposNaoForamEditados) {
       alert("Você não editou nenhum dos campos de endereço !")
@@ -362,7 +349,7 @@ function PerfilUsuario() {
 
       return desabilitarEdicao
     }
-    else if (formData.numero > 99999 || formData.numero <= 0 || formData.numero == "" || formData.numero == null || formData.numero == undefined) {
+    else if (formData.numero > 99999 || formData.numero <= 0 || formData.numero === "" || formData.numero === null || formData.numero === undefined) {
       setErrorsDadosEndereco({ errorsDadosEndereco, errorNumero: true, helperTextNumero: "Número Inválido" })
 
       alert("Campos Inválidos! Não foi possível atualizar seus dados!")
@@ -383,7 +370,7 @@ function PerfilUsuario() {
         estado: formData.estado
       }
 
-      api.put(`/enderecos/atualiza-endereco-usuario/${sessionStorage.getItem("ID")}`, dadosEndereco, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+      api.put(`/enderecos/atualiza-endereco-usuario/${idUsuario}`, dadosEndereco, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
         .then(res => {
           alert("Seus Dados foram atualizados com sucesso!")
         })
@@ -446,11 +433,20 @@ function PerfilUsuario() {
 
         <Box className="container-dados-pessoais">
           <Box className="box-foto-perfil">
-            <Avatar alt="" src={imgPerfilURL} onClick={abrirModalUploadFotoPerfil} className="img-perfil" />
-            <ModalUploadFotoPerfil visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{ imgPerfilURL, setImgPerfilURL }} />
-            <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
+            <AvatarComFoto
+              id={idUsuario}
+              onClick={abrirModalUploadFotoPerfil}
+              className="img-perfil"
+              nome={formData.nome}
+              recarregarImg={recarregarImg}
+            />
+            <ModalUploadFotoPerfil visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{ recarregarImg, setRecarregarImg }} nomeUsuario={formData.nome}/>
+            <Box className="container-avaliacao">
+              <Typography>{formData.avaliacaoMedia}</Typography>
+              <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
+            </Box>
             <Typography className="txt-nome">{formData.nome}</Typography>
-            <Typography className="txt-idade">{formData.idade} Anos</Typography>
+            {/* <Typography className="txt-idade">{formData.idade} Anos</Typography> */}
           </Box>
 
           <Box className="box-dados-pessoais">
@@ -460,7 +456,7 @@ function PerfilUsuario() {
               <Tooltip title={formDataDisable.dadosPessoais ? "Editar Dados Pessoais" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
                 <img src={formDataDisable.dadosPessoais ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
                   onClick={() => {
-                    if (formDataDisable.dadosPessoais == false) {
+                    if (formDataDisable.dadosPessoais === false) {
                       setFormDataDisable({ ...formDataDisable, dadosPessoais: atualizarDadosPessoais() })
                     }
                     else {
@@ -513,7 +509,7 @@ function PerfilUsuario() {
               <Tooltip title={formDataDisable.dadosSobreMim ? "Editar Sobre Mim" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
                 <img src={formDataDisable.dadosSobreMim ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
                   onClick={() => {
-                    if (formDataDisable.dadosSobreMim == false) {
+                    if (formDataDisable.dadosSobreMim === false) {
                       setFormDataDisable({ ...formDataDisable, dadosSobreMim: atualizasrSobreMim() })
                     }
                     else {
@@ -571,7 +567,7 @@ function PerfilUsuario() {
                       <Tooltip title={formDataDisable.dadosExperiencias ? "Editar Experiências" : "Salvar Alterações"} placement="bottom-start" arrow={true}>
                         <img src={formDataDisable.dadosExperiencias ? EditIcon : SaveIcon} alt="" className="img-edit-icon"
                           onClick={() => {
-                            if (formDataDisable.dadosExperiencias == false) {
+                            if (formDataDisable.dadosExperiencias === false) {
                               setFormDataDisable({ ...formDataDisable, dadosExperiencias: true })
                             }
                             else {
