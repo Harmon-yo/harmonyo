@@ -59,7 +59,7 @@
 .modal-body{
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     margin: 10px;
 }
 

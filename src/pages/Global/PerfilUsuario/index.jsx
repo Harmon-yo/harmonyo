@@ -1,6 +1,6 @@
 import React from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box,  Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
+import { Box,  Typography, Avatar, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip, CircularProgress} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
 import SaveIcon from "../../../imgs/checked-24px.png"
@@ -22,7 +22,7 @@ function PerfilUsuario() {
   // Este indicador serve para que ao renderizar a página ele não modifique os dados de CEP logo de inicio e sim só altere os dados de endereço
   // quando o usuário digitar o último número do CEP
   let [ativarBuscaCep, setAtivarBuscaCep] = useState(false);
-
+  const [carregando, setCarregando] = useState(true)
   const [dadosPerfilAntesDeEditar, setDadosPerfilAntesDeEditar] = useState({
     nome: "",
     email: "",
@@ -168,6 +168,7 @@ function PerfilUsuario() {
       .then(url => {
         console.log(url)
         setImgPerfilURL(url)
+        setCarregando(false)
       })
       .catch(error => {
       });
@@ -439,7 +440,14 @@ function PerfilUsuario() {
       })
 
   }
-
+  if(carregando){
+    return(
+      <CircularProgress  sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%'}} />
+      )
+  }
   return (
     <EstruturaPaginaUsuario>
       <Box className="pagina-container">
