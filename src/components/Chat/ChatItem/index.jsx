@@ -26,6 +26,7 @@ export default function ChatItem(props) {
 
   useEffect(() => {
     setCarregouNaoLidas(false);
+    console.log(props.foto)
     const unsubscribe = db
       .collection("chats")
       .doc(props.id)
@@ -80,7 +81,11 @@ export default function ChatItem(props) {
         className="chat_item"
         >
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src={props.src} />
+        {props.foto !== "" ? (
+              <Avatar src={props.foto} />
+            ) : (
+              <Avatar  sx={{ bgcolor: "#099250" }}>{props.nome.charAt(0)}</Avatar>
+            )}
         </ListItemAvatar>
         <ListItemText
           primary={props.nome}

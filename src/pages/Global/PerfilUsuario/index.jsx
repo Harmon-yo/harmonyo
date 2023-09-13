@@ -1,6 +1,6 @@
 import React from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box,  Typography, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
+import { Box, Typography, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
 import SaveIcon from "../../../imgs/checked-24px.png"
@@ -25,7 +25,7 @@ function PerfilUsuario() {
   const idUsuario = sessionStorage.getItem("ID");
 
   let [ativarBuscaCep, setAtivarBuscaCep] = useState(false);
-
+  const [carregando, setCarregando] = useState(true)
   const [dadosPerfilAntesDeEditar, setDadosPerfilAntesDeEditar] = useState({
     nome: "",
     email: "",
@@ -160,6 +160,7 @@ function PerfilUsuario() {
       })
 
   }
+
 
   function formatDateToLocalDateSpring(date) {
     const parts = date.split('/');
@@ -426,7 +427,14 @@ function PerfilUsuario() {
       })
 
   }
-
+  if(carregando){
+    return(
+      <CircularProgress  sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%'}} />
+      )
+  }
   return (
     <EstruturaPaginaUsuario>
       <Box className="pagina-container">

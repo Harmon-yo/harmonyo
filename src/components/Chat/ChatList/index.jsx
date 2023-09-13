@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {db} from "../../../utils/firebase";
+import {db, storage} from "../../../utils/firebase";
 import ChatItem from "../ChatItem";
 import {
   query,
@@ -42,12 +42,36 @@ export default function ChatList(props) {
             ultimaMensagem: doc.data().ultimaMensagem,
             lida: doc.data().lida,
             timestamp: doc.data().timestamp,
-            bloqueado: doc.data().bloqueado
+            bloqueado: doc.data().bloqueado,
+            
           },
         }))
       );
     });
-
+  
+    //tenho o state de vetores de chats, quero adicionar uma propriedade de foto
+    //para cada chat
+    chats.forEach((chat) => {
+      if (sessionStorage.CATEGORIA === "Aluno") {
+        storage
+          .ref(`/imgs-perfil-professor/${chat.data.idProfessor}_ft_perfil`)
+          .getDownloadURL()
+          .then((url) => {
+            chat.data.foto = url;
+          }).catch((error) => {
+            chat.data.foto = "";
+          });
+      } else {
+        storage
+          .ref(`/imgs-perfil-aluno/${chat.data.idAluno}_ft_perfil`)
+          .getDownloadURL()
+          .then((url) => {
+            chat.data.foto = url;
+          }).catch((error) => {
+            chat.data.foto = "";
+          });
+      }
+    });
     setCarregouConversas(true);
     return () => unsubscribe();
   }, []);
@@ -63,6 +87,7 @@ export default function ChatList(props) {
           timestamp={chat.data.timestamp}
           lida={chat.data.lida}
           src={chat.data.src}
+          foto={chat.data.foto}
           onClick={() => {
             props.onChatClick(chat);
           }}
