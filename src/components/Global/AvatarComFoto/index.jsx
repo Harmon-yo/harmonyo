@@ -23,15 +23,22 @@ function AvatarComFoto(props) {
     }
 
     useEffect(() => {
-        if (!props.imgUrl) {
-            obterImgPerfil(idUsuario);
-        } else {
-            setImgPerfilURL(props.imgUrl);
+        if (props.naoCarregar) {
+            if (!props.imgUrl) {
+                obterImgPerfil(idUsuario);
+            } else {
+                setImgPerfilURL(props.imgUrl);
+            }
         }
     }, []);
 
     useEffect(() => {
-        obterImgPerfil(idUsuario);
+        if (props.imgUrl) {
+            setImgPerfilURL(props.imgUrl);
+            setErroAoCarregar(false);
+        } else {
+            obterImgPerfil(idUsuario);
+        }
     }, [props.recarregarImg]);
     
     const corDeFundoPerfil = erroAoCarregar ? "#099250" : "#eeeeee";

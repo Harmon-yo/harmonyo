@@ -11,16 +11,22 @@ function ModalUploadFotoPerfil(props) {
 
     const [imgUpdloadFirebase, setimgUpdloadFirebase] = useState("");
 
+    const [imgUrl, setImgUrl] = useState("");
+
     const [imgNaoAlterada, setImgNaoAlterada] = useState(true);
 
-    const {setRecarregarImg } = props.imgState;
+    const { setRecarregarImg } = props.imgState;
+
+    const [recarregarImgModal, setRecarregarImgModal] = useState(false);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
 
         if (file && file.type.startsWith('image/')) {
-            setimgUpdloadFirebase(file)
-            setImgNaoAlterada(false)
+            setimgUpdloadFirebase(file);
+            setImgUrl(URL.createObjectURL(file));
+            setImgNaoAlterada(false);
+            setRecarregarImgModal(true)
         }
         else {
             alert('Por favor, selecione uma imagem válida.');
@@ -60,6 +66,7 @@ function ModalUploadFotoPerfil(props) {
             });
             alert("Sua foto de perfil foi atualizada com sucesso!")
 
+            reiniciarImg();
             props.closeModal()
         }).catch(err => {
             console.log(err)
@@ -67,23 +74,37 @@ function ModalUploadFotoPerfil(props) {
         });
     }
 
+    const reiniciarImg = () => {
+        setImgUrl("");
+        setRecarregarImgModal(false);
+        setImgNaoAlterada(true);
+    };
+
+    const onClose = () => {
+        reiniciarImg();
+        props.closeModal();
+    }
+
     return (
         <>
-            <Modal open={props.visibilidade} onClose={props.closeModal}>
+            <Modal open={props.visibilidade} onClose={onClose} >
                 <Box className="box-modal-upload-foto-perfil">
 
                     <Box className="box-header-modal-upload-foto-perfil">
                         <Typography className="txt-header-modal-upload-foto-perfil">Editar Foto de Perfil </Typography>
-                        <IconButton aria-label="close" onClick={props.closeModal} sx={{ color: "var(--dark-font)" }} >
+                        <IconButton aria-label="close" onClick={onClose} sx={{ color: "var(--dark-font)" }} >
                             <CloseIcon sx={{ fontSize: '2rem !important' }} />
                         </IconButton>
                     </Box>
 
                     <Box className={"box-upload-img"}>
-                        <AvatarComFoto 
+                        <AvatarComFoto
                             className="img-perfil-usuario"
+                            id={props.idUsuario}
                             nome={props.nomeUsuario}
-                            id={props.idUsuario}/>
+                            recarregarImg={recarregarImgModal}
+                            imgUrl={imgUrl}
+                            naoCarregar />
                         <input type="file" className="ipt-select-img"
                             onChange={handleFileChange} />
                     </Box>
