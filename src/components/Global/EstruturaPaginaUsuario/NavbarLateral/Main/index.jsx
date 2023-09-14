@@ -39,7 +39,7 @@ function NavbarLateral(props) {
                 titulo: "Aulas",
                 icon: ClassIcon,
                 active: props.tela === "aulas" ? true : false,
-                href: `/${tipoUsuario}/aulas`
+                href: `/aulas`
             },
             {
                 titulo: "Chat",

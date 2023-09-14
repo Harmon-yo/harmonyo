@@ -25,7 +25,6 @@ function PerfilUsuario() {
   const idUsuario = sessionStorage.getItem("ID");
 
   let [ativarBuscaCep, setAtivarBuscaCep] = useState(false);
-  const [carregando, setCarregando] = useState(true)
   const [dadosPerfilAntesDeEditar, setDadosPerfilAntesDeEditar] = useState({
     nome: "",
     email: "",
@@ -427,14 +426,6 @@ function PerfilUsuario() {
       })
 
   }
-  if(carregando){
-    return(
-      <CircularProgress  sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%'}} />
-      )
-  }
   return (
     <EstruturaPaginaUsuario>
       <Box className="pagina-container">
@@ -448,9 +439,9 @@ function PerfilUsuario() {
               nome={formData.nome}
               recarregarImg={recarregarImg}
             />
-            <ModalUploadFotoPerfil visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{ recarregarImg, setRecarregarImg }} nomeUsuario={formData.nome}/>
+            <ModalUploadFotoPerfil idUsuario={idUsuario} visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{ recarregarImg, setRecarregarImg }} nomeUsuario={formData.nome}/>
             <Box className="container-avaliacao">
-              <Typography>{formData.avaliacaoMedia}</Typography>
+              <Typography>{formData.avaliacaoMedia.toFixed(2)}</Typography>
               <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
             </Box>
             <Typography className="txt-nome">{formData.nome}</Typography>

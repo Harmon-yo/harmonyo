@@ -1,5 +1,5 @@
 import { Timestamp, serverTimestamp } from "firebase/firestore";
-import {db, storage} from "./firebase";
+import { db } from "./firebase";
 
 export function fromTimestampToFormatDate(timestamp) {
 

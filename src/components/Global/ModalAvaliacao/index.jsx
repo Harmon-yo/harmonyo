@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import { Box, Rating, Button, Modal, Typography, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import AvatarComFoto from "../AvatarComFoto";
-import { storage } from "../../../utils/firebase";
+import AvatarComFoto from "../AvatarComFoto/index.jsx";
 import api from "../../../api";
 
 function ModalAvaliacao(props) {
@@ -14,8 +13,6 @@ function ModalAvaliacao(props) {
     const [value, setValue] = React.useState(0);
 
     const usuario = props.stateUsuario;
-
-    const [imgPerfilURL, setImgPerfilURL] = useState("")
 
     const [formEnviar, setFormEnviar] = useState({
         dadosEnviar: false
@@ -30,7 +27,6 @@ function ModalAvaliacao(props) {
             setPedidoAvaliado(response.data);
         });
 
-    // Obtendo a URL da imagem de perfil
 
     function validacaoDados() {
         if (value === 0) {
@@ -64,7 +60,8 @@ function ModalAvaliacao(props) {
 
         api.post(`/usuarios/${idAvaliado}/avaliacoes`, avaliacao, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
             .then(res => {
-                alert("Avaliação felita com sucesso!")
+                alert("Avaliação feita com sucesso!");
+                handleClose();
             })
             .catch(err => {
                 console.log(err)
@@ -128,7 +125,7 @@ function ModalAvaliacao(props) {
                             <Box className="box-text-input">
                                 <TextField className="comentario_avaliacao"
                                     onChange={(e) => setComentario(e.target.value)}
-                                    autoFocus multiline rows={6} />
+                                    multiline rows={6} />
                             </Box>
                             <Button
                                 onClick={() => {

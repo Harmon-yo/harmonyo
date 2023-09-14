@@ -1,6 +1,5 @@
 import {
   Button,
-  Box,
   Table,
   TableBody,
   TableCell,
@@ -14,7 +13,7 @@ import PerfilUsuario from "../PerfilUsuario";
 import Status from "../Status";
 import ModalDetalhes from "../ModalDetalhes";
 import api from "../../../../api";
-import ModalAvaliacao from "../../ModalAvaliacao";
+import ModalAvaliacao from "../../ModalAvaliacao/index.jsx";
 
 function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
@@ -29,8 +28,7 @@ function Tabela(props) {
             return new Date(b.horaCriacao) - new Date(a.horaCriacao);
           }
         )
-        setDadosPedidos(response.data);
-        console.log(response.data);
+        setDadosPedidos(pedidos);
       });
 
   }, [])
@@ -57,7 +55,7 @@ function Tabela(props) {
         <TableHead className="head">
           <TableRow>
             <TableCell className="topCelula" align="left">
-              {sessionStorage.getItem("CATEGORIA") == "Professor" ? "Aluno" : "Professor"}
+              {sessionStorage.getItem("CATEGORIA")  ===  "Professor" ? "Aluno" : "Professor"}
             </TableCell>
             <TableCell className="topCelula" align="center">Instrumento</TableCell>
             <TableCell className="topCelula" align="center">Status</TableCell>
@@ -74,14 +72,14 @@ function Tabela(props) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell className="bodyCelula" align="left">
-                <PerfilUsuario id={sessionStorage.CATEGORIA == "Professor" ? row.aluno.id : row.professor.id} nome={sessionStorage.CATEGORIA == "Professor" ? row.aluno.nome : row.professor.nome} />
+                <PerfilUsuario id={sessionStorage.CATEGORIA  ===  "Professor" ? row.aluno.id : row.professor.id} nome={sessionStorage.CATEGORIA  ===  "Professor" ? row.aluno.nome : row.professor.nome} />
               </TableCell>
               <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
               <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
               <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
               <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.aula.valorAula).toFixed(2)}</TableCell>
               <TableCell className="bodyCelula" align="center">
-                {row.status.descricao === "Concluído" ?
+                {row.status.descricao  === "Concluído" ?
                   <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>
                   :
                   <Button variant="outlined" className="botao" onClick={() => { handleOpen(row) }}> Detalhes</Button>

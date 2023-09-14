@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, Component, useEffect } from "react";
-import { Box, Button, Typography, Modal, TextField, IconButton, Avatar } from '@mui/material';
+import { useState } from "react";
+import { Box, Button, Typography, Modal, IconButton } from '@mui/material';
 import AvatarComFoto from "../AvatarComFoto";
 import CloseIcon from '@mui/icons-material/Close';
 import "./style.css";
@@ -8,28 +8,17 @@ import { storage } from "../../../utils/firebase";
 
 function ModalUploadFotoPerfil(props) {
 
-    const [imgTemp, setImgTemp] = useState(props.imgState.imgPerfilURL)
 
-    const [imgUpdloadFirebase, setimgUpdloadFirebase] = useState("")
+    const [imgUpdloadFirebase, setimgUpdloadFirebase] = useState("");
 
-    const [imgNaoAlterada, setImgNaoAlterada] = useState(true)
+    const [imgNaoAlterada, setImgNaoAlterada] = useState(true);
 
-    const { recarregarImg, setRecarregarImg } = props.imgState
-
-    useEffect(() => {
-        if (imgTemp != props.imgState.imgPerfilURL) {
-            // Define o estado assim que a página carregar
-            setImgTemp(props.imgState.imgPerfilURL);
-            setImgNaoAlterada(true)  
-        }
-
-    },[props.visibilidade])
+    const {setRecarregarImg } = props.imgState;
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
 
         if (file && file.type.startsWith('image/')) {
-            setImgTemp(URL.createObjectURL(file))
             setimgUpdloadFirebase(file)
             setImgNaoAlterada(false)
         }
@@ -66,7 +55,7 @@ function ModalUploadFotoPerfil(props) {
 
             // Obtenha a URL de download do arquivo enviado
             snapshot.ref.getDownloadURL().then((downloadURL) => {
-                props.imgState.setImgPerfilURL(downloadURL)
+                setRecarregarImg(true)
 
             });
             alert("Sua foto de perfil foi atualizada com sucesso!")
@@ -91,7 +80,10 @@ function ModalUploadFotoPerfil(props) {
                     </Box>
 
                     <Box className={"box-upload-img"}>
-                        <AvatarComFoto src={imgTemp} className="img-perfil-usuario" nome={props.nomeUsuario}/>
+                        <AvatarComFoto 
+                            className="img-perfil-usuario"
+                            nome={props.nomeUsuario}
+                            id={props.idUsuario}/>
                         <input type="file" className="ipt-select-img"
                             onChange={handleFileChange} />
                     </Box>
