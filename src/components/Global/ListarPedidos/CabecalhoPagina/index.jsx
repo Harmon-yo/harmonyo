@@ -13,8 +13,8 @@ function CabecalhoPagina() {
 
       <Box className="direita">
         <Calendario/>
-        <Pesquisa />
-        <Filtro />
+        <Pesquisa/>
+        <Filtro stateUsuario={sessionStorage.getItem("ID")}/>
       </Box>
     </Container>
   );

@@ -64,7 +64,6 @@ function Tabela(props) {
             <TableCell className="topCelula" align="center">Data</TableCell>
             <TableCell className="topCelula" align="center">Valor</TableCell>
             <TableCell className="topCelula" align="center"></TableCell>
-
           </TableRow>
         </TableHead>
         <TableBody className="conteudoTabela">

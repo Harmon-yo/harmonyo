@@ -1,0 +1,10 @@
+.modal-filtro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    margin: 10px;
+    height: fit-content;
+    width: fit-content;
+    background-color: rgb(170, 170, 170);
+}
