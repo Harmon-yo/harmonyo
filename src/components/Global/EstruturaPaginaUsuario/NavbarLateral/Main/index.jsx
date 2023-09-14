@@ -39,7 +39,7 @@ function NavbarLateral(props) {
                 titulo: "Aulas",
                 icon: ClassIcon,
                 active: props.tela === "aulas" ? true : false,
-                href: `/${tipoUsuario}/aulas`
+                href: `/aulas`
             },
             {
                 titulo: "Chat",
@@ -110,7 +110,7 @@ function NavbarLateral(props) {
                 
                     { 
                         opcoesNavbar[tipoUsuario].map((card) => (
-                            <NavbarLateralCard href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />
+                            <NavbarLateralCard key={`opcao-navbar-${card.titulo}`} href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />
                         ))
                     }
                 </Box>

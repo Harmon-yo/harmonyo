@@ -20,14 +20,6 @@ function ContainerAulas(props) {
             <img className="lupa" src={Lupa} />
           </Button>
         </Box>
-        <Box className="setas">
-        <Typography className="texto">
-            {"<"}
-        </Typography>
-        <Typography className="texto">
-            {">"}
-        </Typography>
-        </Box>
       </Box>
         <Box className="aulas">
           <ListaAulas dia={data} />

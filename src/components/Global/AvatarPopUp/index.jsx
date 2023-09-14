@@ -2,10 +2,10 @@ import React from "react";
 import { Box, Avatar, MenuItem, Typography } from "@mui/material";
 import Popup from "../Popup/index.jsx";
 import MeuPerfilIcon from "../../../imgs/user.png";
-import EditarContaIcon from "../../../imgs/edit.png";
 import SairIcon from "../../../imgs/logout.png";
 import "./style.css"
 import { useNavigate } from "react-router-dom";
+import AvatarComFoto from "../AvatarComFoto/index.jsx";
 
 
 const opcoes = [
@@ -31,7 +31,7 @@ const opcoes = [
 
 const nomeUsuario = sessionStorage.getItem("NOME");
 
-function AvatarUsuario(props) {
+function AvatarPopUp(props) {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     
@@ -46,18 +46,24 @@ function AvatarUsuario(props) {
 
     return (
         <div>
-            <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                sx={{ bgcolor: "#099250" }}
-                aria-controls={open ? 'avatar-usuario-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}>{nomeUsuario.charAt(0)}</Avatar>
+            <AvatarComFoto
+                id={sessionStorage.getItem("ID")}
+                nome={nomeUsuario}
+                className="avatar-usuario-img"
+                onClick={handleClick}
+                ariaControls={open ? 'avatar-usuario-menu' : undefined}
+                ariaHaspopup="true"
+                ariaExpanded={open ? 'true' : undefined}
+            />
 
             <Popup menuId="avatar-usuario-menu" buttonClassName="avatar-usuario-botao"
                 anchorEl={anchorEl} open={open} handleClose={handleClose}>
                 <Box className="avatar-usuario-menu-user-info">
-                    <Avatar id="avatar-usuario-botao" className="avatar-usuario-img"
-                        sx={{ bgcolor: "#099250" }}>{nomeUsuario.charAt(0)}</Avatar>
+                    <AvatarComFoto
+                        id={sessionStorage.getItem("ID")}
+                        className="avatar-usuario-img"
+                        nome={nomeUsuario}
+                    />
                     <Box className="avatar-usuario-menu-user-info-text">
                         <Typography className="avatar-usuario-menu-nome">{nomeUsuario}</Typography>
                         <Typography className="avatar-usuario-menu-email">{sessionStorage.getItem("EMAIL")}</Typography>
@@ -81,4 +87,4 @@ function AvatarUsuario(props) {
     );
 }
 
-export default AvatarUsuario;
+export default AvatarPopUp;

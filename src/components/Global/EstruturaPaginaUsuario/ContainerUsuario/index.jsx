@@ -4,13 +4,13 @@ import {
 } from "@mui/material";
 import "./style.css"
 import Notificacao from "../../Notificacao/index.jsx";
-import AvatarUsuario from "../../Avatar/index.jsx";
+import AvatarPopUp from "../../AvatarPopUp/index.jsx";
 
 function Containerusuario(props) {
     return (
         <Box className="container-usuario">
             <Notificacao/>
-            <AvatarUsuario/>
+            <AvatarPopUp/>
         </Box>
     )
 }

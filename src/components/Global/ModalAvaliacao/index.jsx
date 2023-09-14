@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./style.css";
-import { Box, Avatar, Rating, Button, Modal, Typography, TextField } from "@mui/material";
+import { Box, Rating, Button, Modal, Typography, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { storage } from "../../../utils/firebase";
+import AvatarComFoto from "../AvatarComFoto/index.jsx";
 import api from "../../../api";
 
 function ModalAvaliacao(props) {
@@ -12,7 +12,7 @@ function ModalAvaliacao(props) {
     const handleClose = () => setOpen(false);
     const [value, setValue] = React.useState(0);
 
-    const [imgPerfilURL, setImgPerfilURL] = useState("")
+    const usuario = props.stateUsuario;
 
     const [formEnviar, setFormEnviar] = useState({
         dadosEnviar: false
@@ -27,24 +27,6 @@ function ModalAvaliacao(props) {
             setPedidoAvaliado(response.data);
         });
 
-    // Obtendo a URL da imagem de perfil
-    function obterImgPerfil() {
-
-        let urlImg = "";
-
-        if (sessionStorage.CATEGORIA === "Professor") {
-            urlImg = `/imgs-perfil-usuario/${props.stateUsuario.aluno.id}_ft_perfil`;
-        } else {
-            urlImg = `/imgs-perfil-usuario/${props.stateUsuario.professor.id}_ft_perfil`;
-        }
-
-
-        storage.ref(urlImg).getDownloadURL()
-            .then(url => {
-                console.log(url)
-                setImgPerfilURL(url)
-            })
-    }
 
     function validacaoDados() {
         if (value === 0) {
@@ -78,7 +60,8 @@ function ModalAvaliacao(props) {
 
         api.post(`/usuarios/${idAvaliado}/avaliacoes`, avaliacao, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
             .then(res => {
-                alert("Avaliação felita com sucesso!")
+                alert("Avaliação feita com sucesso!");
+                handleClose();
             })
             .catch(err => {
                 console.log(err)
@@ -88,8 +71,9 @@ function ModalAvaliacao(props) {
 
 
     // Usar esse modelo abaixo:
-    // <ModalAvaliacao stateUsuario={{informacoesAvaliado, setInformacoesAvaliado}}></ModalAvaliacao>
-
+    // <ModalAvaliacao stateUsuario={{informacoesAvaliado, setInformacoesAvaliado}}></ModalAvaliacao>]
+    const idUsuario = sessionStorage.CATEGORIA === "Professor" ? usuario.aluno.id : usuario.professor.id;
+    const nomeUsuario = sessionStorage.CATEGORIA === "Professor" ? usuario.aluno.nome.charAt(0) : usuario.professor.nome.charAt(0);
     if (!pedidoAvaliado) {
         return (
             <Box className="modal">
@@ -103,18 +87,19 @@ function ModalAvaliacao(props) {
                     <Box className="modal-avaliacao">
                         <Box className="modal-area">
                             <Box className="modal-head">
-                                <Avatar
-                                    sx={{ width: 90, height: 90, backgroundColor: '#099250', fontSize: 35 }}
-                                    src={imgPerfilURL}>
-                                    {sessionStorage.CATEGORIA === "Professor" ?
-                                        props.stateUsuario.aluno.nome.charAt(0) :
-                                        props.stateUsuario.professor.nome.charAt(0)}
-                                </Avatar>
+                                <AvatarComFoto
+                                    id={idUsuario}
+                                    nome={nomeUsuario}
+                                    sx={{
+                                        width: 90, 
+                                        height: 90, 
+                                        fontSize: 35
+                                    }}/>
                                 <Box className="modal-usuario">
                                     <Typography id="modal-modal-title" variant="h8" component="h2">
                                         {sessionStorage.CATEGORIA === "Professor" ?
-                                            props.stateUsuario.aluno.nome :
-                                            props.stateUsuario.professor.nome}
+                                            usuario.aluno.nome :
+                                            usuario.professor.nome}
                                     </Typography>
                                     <Box className="avaliacao-usuario">
                                         <Rating
@@ -140,7 +125,7 @@ function ModalAvaliacao(props) {
                             <Box className="box-text-input">
                                 <TextField className="comentario_avaliacao"
                                     onChange={(e) => setComentario(e.target.value)}
-                                    autoFocus multiline rows={6} />
+                                    multiline rows={6} />
                             </Box>
                             <Button
                                 onClick={() => {

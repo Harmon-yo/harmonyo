@@ -1,12 +1,16 @@
 import React from "react";
 import "./style.css";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import AvatarComFoto from "../../AvatarComFoto";
 
 function PerfilUsuario(props) {
   return (
-    <Box className="perfil-container">
-      <Avatar className="avatar">{props.nome.charAt(0).toUpperCase()}</Avatar>
-     
+    <Box key={`usuario-pedido-${props.id}`} className="perfil-container">
+      <AvatarComFoto
+        id={props.id}
+        nome={props.nome.toUpperCase()}
+        className="avatar"
+      />
         <Typography className="nome">{props.nome}</Typography>
       
     </Box>

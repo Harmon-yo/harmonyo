@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box, Avatar, Rating, Button, Typography } from "@mui/material";
+import { Box, Rating, Button, Typography } from "@mui/material";
 import Card from "../../../components/Global/Card";
 import "./style.css";
 import api from "../../../api.js";
 import { storage } from "../../../utils/firebase";
 import ModalAvaiacao from "../../../components/Global/ModalAvaliacao";
 import { useNavigate } from "react-router-dom";
+import AvatarComFoto from "../../../components/Global/AvatarComFoto";
 
 function PerfilExibicaoUsuario() {
 
@@ -158,7 +159,7 @@ function PerfilExibicaoUsuario() {
 
   const handleClickAgendar = () => {
     navigate(`/pedido?id=${idUsuario}`);
-}
+  }
 
   return (
     <EstruturaPaginaUsuario className="teste">
@@ -166,7 +167,11 @@ function PerfilExibicaoUsuario() {
         <Box className="pagina-perfil">
           <Card className="card-perfil">
             <Box className="topo-card">
-              <Avatar className="avatar-perfil" sx={{ width: 100, height: 100, backgroundColor: '#099250', fontSize: '45px' }} src={imgPerfilURL}>{formData.nome.charAt(0)}</Avatar>
+              <AvatarComFoto
+                id={idUsuario}
+                nome={formData.nome}
+                className="avatar-perfil" 
+                sx={{ width: 100, height: 100, fontSize: '45px' }}/>
               {formData.categoria === "Professor" && formTimeResponse.tempoMedio !== "" ?
                 <>
                   <Box className="duracao">
@@ -201,19 +206,20 @@ function PerfilExibicaoUsuario() {
             }</Card>
         </Box>
         <Box className="pagina-informacoes">
-          {formData.bibliografia !== "" ?
-            <>
-              <Card className="card-geral">
-                <Box className="card-titulo">Biografia</Box>
-                <Box>{formData.bibliografia}</Box>
-              </Card>
-            </> : null
-          }
-          {formData.categoria === "Professor" && formData.experiencias.length !== 0 ?
+          <Card className="card-geral">
+            <Box className="card-titulo">Biografia</Box>
+            <Box>{
+              formData.bibliografia !== "" ? formData.bibliografia : "Sem biografia"
+            }</Box>
+          </Card>
+
+          {formData.categoria === "Professor" ?
             <>
               <Card className="card-geral">
                 <Box className="card-titulo">Formações</Box>
-                <Box>
+                {
+                  formData.experiencias.length !== 0 ?
+                  <Box>
                   {formData.experiencias.map((experiencia) => {
                     return (
                       <Box className="box-experiencia">
@@ -222,7 +228,8 @@ function PerfilExibicaoUsuario() {
                       </Box>
                     )
                   })}
-                </Box>
+                </Box> : "Sem formações"
+                }
               </Card>
             </> : null
           }
@@ -231,29 +238,16 @@ function PerfilExibicaoUsuario() {
               <Box className="card-titulo">Avaliações</Box>
               {formRating.avaliacoes.map((avaliacao) => {
 
-                let urlImgAvaliacao = `/imgs-perfil-usuario/${avaliacao.usuarioAvaliador.id}_ft_perfil`
-
-                let imgPerfilAvaliacaoURL = ""
-
-                storage.ref(urlImgAvaliacao).getDownloadURL()
-                  .then(url => {
-                    console.log(url)
-                    imgPerfilAvaliacaoURL = url
-                  })
-                  .catch(err => {
-                    console.log(err)
-                  });
-
                 return (
                   <>
                     <Box className="avaliacao">
                       <Box className="avaliacao-head">
                         <Box>
-                          <Avatar
-                            sx={{ width: 50, height: 50, backgroundColor: '#099250' }}
-                            src={imgPerfilAvaliacaoURL}>
-                            {avaliacao.usuarioAvaliador.nome.charAt(0)}
-                          </Avatar>
+                          <AvatarComFoto
+                            id={avaliacao.usuarioAvaliador.id}
+                            nome={formData.nome}
+                            sx={{width: 50, height: 50}}
+                          />
                         </Box>
                         <Box>
                           <Box className="avaliacao-titulo">
