@@ -19,20 +19,31 @@ function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
   const { erros, setErros } = props.errosState;
 
+  let statusFiltro = props.filtroState.filtro.status;
+
+  let url = "";
+
+  if (statusFiltro === "Sem Filtro") {
+    url = `/pedidos/usuario/${sessionStorage.ID}`;
+    console.log(url);
+  } else {
+    url = `/pedidos/usuario/hashing/${sessionStorage.ID}?status=${statusFiltro}`;
+    console.log(url);
+  }
+
   useEffect(() => {
-    api.get(`/pedidos/usuario/${sessionStorage.ID}`,
-      { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
-        let pedidos = response.data;
-        pedidos = pedidos.sort(
-          (a, b) => {
-            return new Date(b.horaCriacao) - new Date(a.horaCriacao);
-          }
-        )
-        setDadosPedidos(pedidos);
-      });
-
-  }, [])
-
+      api.get(url, 
+        { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+          let pedidos = response.data;
+          pedidos = pedidos.sort(
+            (a, b) => {
+              return new Date(b.horaCriacao) - new Date(a.horaCriacao);
+            }
+          )
+          setDadosPedidos(pedidos);
+        });
+  }, [statusFiltro])
+  
   const [open, setOpen] = useState(false);
   const [pedido, setPedido] = useState();
 
@@ -55,7 +66,7 @@ function Tabela(props) {
         <TableHead className="head">
           <TableRow>
             <TableCell className="topCelula" align="left">
-              {sessionStorage.getItem("CATEGORIA")  ===  "Professor" ? "Aluno" : "Professor"}
+              {sessionStorage.getItem("CATEGORIA") === "Professor" ? "Aluno" : "Professor"}
             </TableCell>
             <TableCell className="topCelula" align="center">Instrumento</TableCell>
             <TableCell className="topCelula" align="center">Status</TableCell>
@@ -71,14 +82,14 @@ function Tabela(props) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell className="bodyCelula" align="left">
-                <PerfilUsuario id={sessionStorage.CATEGORIA  ===  "Professor" ? row.aluno.id : row.professor.id} nome={sessionStorage.CATEGORIA  ===  "Professor" ? row.aluno.nome : row.professor.nome} />
+                <PerfilUsuario id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id} nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
               </TableCell>
               <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
               <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
               <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
               <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.aula.valorAula).toFixed(2)}</TableCell>
               <TableCell className="bodyCelula" align="center">
-                {row.status.descricao  === "Concluído" ?
+                {row.status.descricao === "Concluído" ?
                   <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>
                   :
                   <Button variant="outlined" className="botao" onClick={() => { handleOpen(row) }}> Detalhes</Button>
@@ -88,7 +99,7 @@ function Tabela(props) {
           ))}
         </TableBody>
       </Table>
-      <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} errosState={{ erros, setErros }}/>
+      <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} errosState={{ erros, setErros }} />
     </TableContainer >
   );
 }

@@ -5,16 +5,17 @@ import Calendario from "../Calendario/index.jsx";
 import Filtro from "../Filtro/index.jsx";
 import Pesquisa from "../Pesquisa/index.jsx";
 
-function CabecalhoPagina() {
+function CabecalhoPagina(props) {
+
+  const {filtro, setFiltro} = props.filtroState;
+  
   return (
     <Container className="container">
-
       <Typography className="titulo">Pedidos</Typography>
-
       <Box className="direita">
         <Calendario/>
         <Pesquisa/>
-        <Filtro stateUsuario={sessionStorage.getItem("ID")}/>
+        <Filtro filtroState={{filtro, setFiltro}}/>
       </Box>
     </Container>
   );

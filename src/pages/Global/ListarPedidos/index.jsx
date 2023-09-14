@@ -17,13 +17,17 @@ function ListarPedidos() {
     if (verificarToken()) navigate(-1);
   }, []);
 
+  const [filtro, setFiltro] = React.useState({
+    status: "Sem Filtro",
+  });
+
   return (
     <EstruturaPaginaUsuario tela="pedidos" errosState={{erros, setErros}}>
       <Box className="pagina-container">
         <Box className="pagina-conteudo">
-          <CabecalhoPagina />
+          <CabecalhoPagina filtroState={{filtro, setFiltro}}/>
           <Box className="divider"/>
-          <Tabela errosState={{erros, setErros}}/>
+          <Tabela errosState={{erros, setErros}} filtroState={{filtro, setFiltro}}/>
         </Box>
       </Box>
      
