@@ -25,6 +25,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import AvatarComFoto from "../../Global/AvatarComFoto";
 
 export default function ChatHeader(props) {
   const [open, setOpen] = React.useState(props.abreModal);
@@ -32,7 +33,6 @@ export default function ChatHeader(props) {
   const [outro, setOutro] = React.useState("");
   const [ehOutro, setEhOutro] = React.useState(false);
   const [erro, setErro] = React.useState(false);
-
   const handleChange = (event) => {
     if (event.target.value === 3) {
       setEhOutro(true);
@@ -134,7 +134,11 @@ export default function ChatHeader(props) {
         <List className="chat_header">
           <ListItem key={props.nome}>
             <ListItemIcon>
-              <Avatar alt={props.nome} src={props.src} />
+            <AvatarComFoto
+            id={props.idUsuarioConversa}
+            nome={props.nome}
+            className="avatar"
+          />
             </ListItemIcon>
             <ListItemText primary={props.nome}></ListItemText>
           </ListItem>

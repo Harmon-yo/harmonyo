@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {db} from "../../../utils/firebase";
+import { db } from "../../../utils/firebase";
 import "./style.css";
-import {
-  Box,
-  CircularProgress,
-} from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import {
   query,
   collection,
@@ -16,17 +13,21 @@ import {
 import ChatContainer from "../../../components/Chat/ChatContainer";
 import ProfileChat from "../../../components/Chat/ProfileChat";
 import ChatList from "../../../components/Chat/ChatList";
+import { useLocation } from "react-router-dom";
 
-const Chat = () => {
+const Chat = (props) => {
   const [activeChat, setActiveChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [nomeChat, setNomeChat] = useState("");
   const [srcChat, setSrcChat] = useState("");
   const [chats, setChats] = useState([]);
-  const [bloqueado, setBloqueado] = useState(false)
+  const [bloqueado, setBloqueado] = useState(false);
   const [carregouConversas, setCarregouConversas] = useState(false);
-  const [idUsuarioConversa, setIdUsuarioConversa] = useState(0)
+  const [idUsuarioConversa, setIdUsuarioConversa] = useState(0);
+  const location = useLocation();
+  const idChatAtivo = location.state ? location.state.idChatAtivo : null;
+  const chatAtivo = location.state ? location.state.chatAtivo : null;
 
   useEffect(() => {
     const q = query(
@@ -46,29 +47,42 @@ const Chat = () => {
             idAluno: doc.data().idAluno,
             idProfessor: doc.data().idProfessor,
             nome:
-              sessionStorage.CATEGORIA === "Aluno" === "aluno"
+              (sessionStorage.CATEGORIA === "Aluno") === "aluno"
                 ? doc.data().nomeProfessor
                 : doc.data().nomeAluno,
             src:
-              sessionStorage.CATEGORIA === "Aluno" === "aluno"
+              (sessionStorage.CATEGORIA === "Aluno") === "aluno"
                 ? doc.data().srcProfessor
                 : doc.data().srcAluno,
             ultimaMensagem: doc.data().ultimaMensagem,
             lida: doc.data().lida,
             timestamp: doc.data().timestamp,
-            bloqueado: doc.data().bloqueado
+            bloqueado: doc.data().bloqueado,
           },
         }))
-        
       );
-    
-   
     });
 
     setCarregouConversas(true);
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+
+    if (idChatAtivo !== null && chatAtivo !== null) {
+      setActiveChat(idChatAtivo);
+      if (sessionStorage.CATEGORIA === "Aluno") {
+        setNomeChat(chatAtivo.nomeProfessor);
+        setIdUsuarioConversa(chatAtivo.idProfessor);
+      } else {
+        setNomeChat(chatAtivo.nomeAluno);
+        setIdUsuarioConversa(chatAtivo.idAluno);
+      }
+      setMessages([]);
+      setBloqueado(chatAtivo.bloqueado);
+
+    }
+  }, [chatAtivo, idChatAtivo]);
   if (carregouConversas) {
     return (
       <>
@@ -80,18 +94,15 @@ const Chat = () => {
               <Box className="chat_list_container">
                 <ChatList
                   onChatClick={(chat) => {
-                    
-                    if(sessionStorage.CATEGORIA === "Aluno" === "aluno"){
-                      setIdUsuarioConversa(chat.data.idProfessor)
-                    }else{
-                      setIdUsuarioConversa(chat.data.idAluno)
+                    if (sessionStorage.CATEGORIA === "Aluno") {
+                      setIdUsuarioConversa(chat.data.idProfessor);
+                    } else {
+                      setIdUsuarioConversa(chat.data.idAluno);
                     }
-
                     setActiveChat(chat.id);
                     setNomeChat(chat.data.nome);
-                    setSrcChat(chat.data.src);
                     setMessages([]);
-                    setBloqueado(chat.data.bloqueado)
+                    setBloqueado(chat.data.bloqueado);
                   }}
                 />
               </Box>
@@ -101,11 +112,10 @@ const Chat = () => {
                 <>
                   <ChatContainer
                     id={activeChat}
-                    src={srcChat}
                     nome={nomeChat}
                     isBloqueado={bloqueado}
                     valueInput={inputValue}
-                    idUsuarioConversa = {idUsuarioConversa}
+                    idUsuarioConversa={idUsuarioConversa}
                     onChange={(e) => setInputValue(e)}
                     onClick={() => setInputValue("")}
                   />
@@ -122,7 +132,7 @@ const Chat = () => {
       </>
     );
   } else {
-    return <CircularProgress color="success"/>;
+    return <CircularProgress color="success" />;
   }
 };
 

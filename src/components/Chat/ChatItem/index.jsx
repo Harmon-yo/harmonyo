@@ -7,17 +7,16 @@ import {
   Divider,
 } from "@mui/material";
 import React, { useEffect } from "react";
-import "./style.css"
-import {
-  marcarMensagemComoLida,
-} from "../../../utils/utils";
+import "./style.css";
+import { marcarMensagemComoLida } from "../../../utils/utils";
 import { Timestamp } from "firebase/firestore";
 import {
   fromTimestampToFormatHour,
   fromTimestampToFormatDate,
   fromDateToFormatDate,
 } from "../../../utils/utils";
-import {db} from "../../../utils/firebase";
+import { db } from "../../../utils/firebase";
+import AvatarComFoto from "../../Global/AvatarComFoto";
 
 export default function ChatItem(props) {
   const [lida, setLida] = React.useState(props.lida);
@@ -26,7 +25,7 @@ export default function ChatItem(props) {
 
   useEffect(() => {
     setCarregouNaoLidas(false);
-    console.log(props.foto)
+   
     const unsubscribe = db
       .collection("chats")
       .doc(props.id)
@@ -38,7 +37,6 @@ export default function ChatItem(props) {
         setCarregouNaoLidas(true);
       });
     if (carregouNaoLidas) {
-      console.log(qtdNaoLidas);
     }
     return () => unsubscribe();
   }, [qtdNaoLidas]);
@@ -48,8 +46,7 @@ export default function ChatItem(props) {
     setLida(true);
     marcarMensagemComoLida(props.id);
   }
-  
-  
+
   var data = new Timestamp(
     props.timestamp?.seconds,
     props.timestamp?.nanoseconds
@@ -75,17 +72,13 @@ export default function ChatItem(props) {
 
   return (
     <>
-      <ListItem
-        button
-        onClick={handleClick}
-        className="chat_item"
-        >
+      <ListItem button onClick={handleClick} className="chat_item">
         <ListItemAvatar>
-        {props.foto !== "" ? (
-              <Avatar src={props.foto} />
-            ) : (
-              <Avatar  sx={{ bgcolor: "#099250" }}>{props.nome.charAt(0)}</Avatar>
-            )}
+          <AvatarComFoto
+            id={props.idContato}
+            nome={props.nome}
+            className="avatar"
+          />
         </ListItemAvatar>
         <ListItemText
           primary={props.nome}
@@ -97,16 +90,15 @@ export default function ChatItem(props) {
         <ListItemText className="data_box">
           <Box className="data_notificacao">
             <Box className="tempo">{isToday ? horario : dataFormatada}</Box>
-            {qtdNaoLidas !== 0 ?  
-            <Box className="notificacao">
-              <Box className="notificacao_numero">{qtdNaoLidas}</Box>
-            </Box>
-             : null}
-           
+            {qtdNaoLidas !== 0 ? (
+              <Box className="notificacao">
+                <Box className="notificacao_numero">{qtdNaoLidas}</Box>
+              </Box>
+            ) : null}
           </Box>
         </ListItemText>
       </ListItem>
-      <Divider variant="fullWidth" className="divider_chat"/>
+      <Divider variant="fullWidth" className="divider_chat" />
     </>
   );
 }

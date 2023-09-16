@@ -8,10 +8,9 @@ import ChatInputBloqueado from "../ChatInputBloqueado";
 export default function ChatContainer(props) {
 
 
-
   return (
     <>
-      <ChatHeader src={props.src} idUsuarioConversa={props.idUsuarioConversa} nome={props.nome} idConversa={props.id} />
+      <ChatHeader idUsuarioConversa={props.idUsuarioConversa} nome={props.nome} idConversa={props.id} />
       <MessagesContainer id={props.id} />
       {props.isBloqueado ? <ChatInputBloqueado nome={props.nome}/> :
         <ChatInput

@@ -35,10 +35,6 @@ export default function ChatList(props) {
               sessionStorage.CATEGORIA === "Aluno"
                 ? doc.data().nomeProfessor
                 : doc.data().nomeAluno,
-            src:
-              sessionStorage.CATEGORIA === "Aluno"
-                ? doc.data().srcProfessor
-                : doc.data().srcAluno,
             ultimaMensagem: doc.data().ultimaMensagem,
             lida: doc.data().lida,
             timestamp: doc.data().timestamp,
@@ -48,32 +44,7 @@ export default function ChatList(props) {
         }))
       );
     });
-  
-    //tenho o state de vetores de chats, quero adicionar uma propriedade de foto
-    //para cada chat
-    chats.forEach((chat) => {
-      if (sessionStorage.CATEGORIA === "Aluno") {
-        storage
-          .ref(`/imgs-perfil-professor/${chat.data.idProfessor}_ft_perfil`)
-          .getDownloadURL()
-          .then((url) => {
-            chat.data.foto = url;
-          }).catch((error) => {
-            chat.data.foto = "";
-          });
-      } else {
-        storage
-          .ref(`/imgs-perfil-aluno/${chat.data.idAluno}_ft_perfil`)
-          .getDownloadURL()
-          .then((url) => {
-            chat.data.foto = url;
-          }).catch((error) => {
-            chat.data.foto = "";
-          });
-      }
-    });
-    setCarregouConversas(true);
-    return () => unsubscribe();
+ 
   }, []);
   return (
     <>
@@ -86,11 +57,11 @@ export default function ChatList(props) {
           ultimaMensagem={chat.data.ultimaMensagem}
           timestamp={chat.data.timestamp}
           lida={chat.data.lida}
-          src={chat.data.src}
           foto={chat.data.foto}
           onClick={() => {
             props.onChatClick(chat);
           }}
+          idContato={sessionStorage.CATEGORIA == "Aluno" ? chat.data.idProfessor : chat.data.idAluno}
         />
       ))}
       
