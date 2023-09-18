@@ -133,19 +133,48 @@ function PerfilExibicaoUsuario() {
 
       function obterTempoMedioDeResposta() {
 
-        api.get(`/dashboard/mes-atual/media-tempo-resposta/${idUsuario}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
+        api.get(`/professores/dashboard/mes-atual/media-tempo-resposta/${idUsuario}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
           .then(response => {
 
-            let tempoMedio = response.data;
+            var minutos = response.data;
+            var horas = Math.floor(minutos / 60);
+            var minutos = minutos % 60;
+            var dias = Math.floor(horas / 24);
+            var horas = horas % 24;
+            var texto = "";
+            if (dias > 0) {
+              if (dias == 1) {
+                texto += dias + " dia ";
+              } else {
+                texto += dias + " dias ";
+              }
+            }
+            if (horas > 0) {
+              if (horas == 1) {
+                texto += horas + " hora ";
+              } else {
+                texto += horas + " horas ";
+              }
+            }
+            if (minutos > 0) {
+              if (minutos == 1) {
+                texto += minutos + " minuto ";
+              } else {
+                texto += minutos + " minutos ";
+              }
+            }
+
 
             setFormTimeResponse({
               ...formTimeResponse,
-              tempoMedio: tempoMedio,
+              tempoMedio: texto,
             })
           })
           .catch(err => {
             console.log(err)
           })
+
+
       }
     } else {
       navigate(-1);
@@ -170,8 +199,8 @@ function PerfilExibicaoUsuario() {
               <AvatarComFoto
                 id={idUsuario}
                 nome={formData.nome}
-                className="avatar-perfil" 
-                sx={{ width: 100, height: 100, fontSize: '45px' }}/>
+                className="avatar-perfil"
+                sx={{ width: 100, height: 100, fontSize: '45px' }} />
               {formData.categoria === "Professor" && formTimeResponse.tempoMedio !== "" ?
                 <>
                   <Box className="duracao">
@@ -219,16 +248,16 @@ function PerfilExibicaoUsuario() {
                 <Box className="card-titulo">Formações</Box>
                 {
                   formData.experiencias.length !== 0 ?
-                  <Box>
-                  {formData.experiencias.map((experiencia) => {
-                    return (
-                      <Box className="box-experiencia">
-                        <Box className="titulo-experiencia">{experiencia.titulo}</Box>
-                        <Box className="descricao-experiencia">{experiencia.descricao}</Box>
-                      </Box>
-                    )
-                  })}
-                </Box> : "Sem formações"
+                    <Box>
+                      {formData.experiencias.map((experiencia) => {
+                        return (
+                          <Box className="box-experiencia">
+                            <Box className="titulo-experiencia">{experiencia.titulo}</Box>
+                            <Box className="descricao-experiencia">{experiencia.descricao}</Box>
+                          </Box>
+                        )
+                      })}
+                    </Box> : "Sem formações"
                 }
               </Card>
             </> : null
@@ -246,7 +275,7 @@ function PerfilExibicaoUsuario() {
                           <AvatarComFoto
                             id={avaliacao.usuarioAvaliador.id}
                             nome={formData.nome}
-                            sx={{width: 50, height: 50}}
+                            sx={{ width: 50, height: 50 }}
                           />
                         </Box>
                         <Box>

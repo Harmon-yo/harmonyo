@@ -39,8 +39,6 @@ function Tabela(props) {
 
         if (pedidos === "") {
           setFiltroErro(true);
-          console.log(filtroErro);
-          console.log("entrou");
         } else {
           setFiltroErro(false);
 
@@ -50,6 +48,7 @@ function Tabela(props) {
             }
           )
           setDadosPedidos(pedidos);
+          console.log(pedidos);
         }
       });
   }, [url])
@@ -92,7 +91,10 @@ function Tabela(props) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell className="bodyCelula" align="left">
-                <PerfilUsuario id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id} nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
+
+                <PerfilUsuario
+                  id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id}
+                  nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
               </TableCell>
               <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
               <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
