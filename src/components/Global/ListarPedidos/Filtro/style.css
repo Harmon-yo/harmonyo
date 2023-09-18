@@ -1,3 +1,13 @@
+.modal .button{
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}
+
+.modal .button:hover{
+    background-color: #fff;
+}
+
 .modal-filtro{
     display: flex;
     flex-direction: column;

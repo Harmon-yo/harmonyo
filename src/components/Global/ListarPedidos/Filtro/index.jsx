@@ -24,8 +24,9 @@ function Filtro(props) {
 
     return (
         <>
-            <Box>
+            <Box className="modal">
                 <Button
+                    className="button"
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
