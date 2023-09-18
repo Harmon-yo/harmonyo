@@ -14,6 +14,7 @@ import Status from "../Status";
 import ModalDetalhes from "../ModalDetalhes";
 import api from "../../../../api";
 import ModalAvaliacao from "../../ModalAvaliacao/index.jsx";
+import ModalFiltroErro from "../ModalFiltroErro/index.jsx";
 
 function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
@@ -25,25 +26,34 @@ function Tabela(props) {
 
   if (statusFiltro === "Sem Filtro") {
     url = `/pedidos/usuario/${sessionStorage.ID}`;
-    console.log(url);
   } else {
     url = `/pedidos/usuario/hashing/${sessionStorage.ID}?status=${statusFiltro}`;
-    console.log(url);
   }
 
+  const [filtroErro, setFiltroErro] = useState(false);
+
   useEffect(() => {
-      api.get(url, 
-        { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
-          let pedidos = response.data;
+    api.get(url,
+      { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+        let pedidos = response.data;
+
+        if (pedidos === "") {
+          setFiltroErro(true);
+          console.log(filtroErro);
+          console.log("entrou");
+        } else {
+          setFiltroErro(false);
+
           pedidos = pedidos.sort(
             (a, b) => {
               return new Date(b.horaCriacao) - new Date(a.horaCriacao);
             }
           )
           setDadosPedidos(pedidos);
-        });
-  }, [statusFiltro])
-  
+        }
+      });
+  }, [url])
+
   const [open, setOpen] = useState(false);
   const [pedido, setPedido] = useState();
 
@@ -97,6 +107,7 @@ function Tabela(props) {
               </TableCell>
             </TableRow>
           ))}
+          {filtroErro === true ? <ModalFiltroErro statusErro={statusFiltro}></ModalFiltroErro> : null}
         </TableBody>
       </Table>
       <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} errosState={{ erros, setErros }} />
