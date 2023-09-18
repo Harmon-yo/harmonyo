@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import NavbarLateral from "../NavbarLateral/Main/index.jsx";
 import ContainerUsuario from "../ContainerUsuario/index.jsx";
 import { Box, Alert, IconButton } from "@mui/material";
 
 import { Close as CloseIcon } from "@mui/icons-material";
 import "./style.css";
-import { useEffect } from "react";
 
 /* =================== Navbar ======================== */
 
 function EstruturaPaginaUsuario(props) {
+  const [recarregarImgPagina, setRecarregarImgPagina] = useState(false);
   const [erros, setErros] = useState([]);
+  const recarregarTodasImgs = props.recarregarTodasImgs;
 
   useEffect(() => {
     if (props.errosState) {
       setErros(props.errosState.erros);
     }
   }, [props.errosState]);
+
+  useEffect(() => {
+    if (recarregarTodasImgs) {
+      setRecarregarImgPagina(recarregarTodasImgs);
+    }
+  }, [recarregarTodasImgs]);
 
 
   return (
@@ -50,7 +57,7 @@ function EstruturaPaginaUsuario(props) {
       <NavbarLateral tela={props.tela} />
       {/* <h1>Olá {sessionStorage.CATEGORIA}(a) {sessionStorage.NOME} - Encontrar Professores</h1> */}
       <Box className="pagina-padrao-container">
-        <ContainerUsuario />
+        <ContainerUsuario recarregarTodasImgs={recarregarTodasImgs}/>
         {props.children}
       </Box>
     </Box>

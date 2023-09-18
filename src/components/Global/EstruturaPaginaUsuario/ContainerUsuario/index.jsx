@@ -7,10 +7,11 @@ import Notificacao from "../../Notificacao/index.jsx";
 import AvatarPopUp from "../../AvatarPopUp/index.jsx";
 
 function Containerusuario(props) {
+
     return (
         <Box className="container-usuario">
             <Notificacao/>
-            <AvatarPopUp/>
+            <AvatarPopUp recarregarTodasImgs={props.recarregarTodasImgs}/>
         </Box>
     )
 }

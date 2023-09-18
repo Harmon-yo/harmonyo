@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Avatar, MenuItem, Typography } from "@mui/material";
+import { Box, MenuItem, Typography } from "@mui/material";
 import Popup from "../Popup/index.jsx";
 import MeuPerfilIcon from "../../../imgs/user.png";
 import SairIcon from "../../../imgs/logout.png";
@@ -54,6 +54,7 @@ function AvatarPopUp(props) {
                 ariaControls={open ? 'avatar-usuario-menu' : undefined}
                 ariaHaspopup="true"
                 ariaExpanded={open ? 'true' : undefined}
+                recarregarImg={props.recarregarTodasImgs}
             />
 
             <Popup menuId="avatar-usuario-menu" buttonClassName="avatar-usuario-botao"
@@ -74,7 +75,7 @@ function AvatarPopUp(props) {
                         opcoes.map(
                             (opcao) => (
                                 <MenuItem key={opcao.id} className="avatar-usuario-menu-item" onClick={()=> handleClose(opcao)}>
-                                    <img src={opcao.src} className="avatar-usuario-menu-item-img" />
+                                    <img src={opcao.src} className="avatar-usuario-menu-item-img" alt=""/>
                                     <Typography className="avatar-usuario-menu-item-titulo">{opcao.titulo}</Typography>
                                 </MenuItem>
                             ))

@@ -5,6 +5,7 @@ import AvatarComFoto from "../AvatarComFoto";
 import CloseIcon from '@mui/icons-material/Close';
 import "./style.css";
 import { storage } from "../../../utils/firebase";
+import { useEffect } from "react";
 
 function ModalUploadFotoPerfil(props) {
 
@@ -15,9 +16,7 @@ function ModalUploadFotoPerfil(props) {
 
     const [imgNaoAlterada, setImgNaoAlterada] = useState(true);
 
-    const { setRecarregarImg } = props.imgState;
-
-    const [recarregarImgModal, setRecarregarImgModal] = useState(false);
+    const { recarregarImgPerfil, setRecarregarImgPerfil } = props.imgState;
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -26,14 +25,14 @@ function ModalUploadFotoPerfil(props) {
             setimgUpdloadFirebase(file);
             setImgUrl(URL.createObjectURL(file));
             setImgNaoAlterada(false);
-            setRecarregarImgModal(true)
+            setRecarregarImgPerfil(true)
         }
         else {
             alert('Por favor, selecione uma imagem válida.');
         }
     };
 
-    function atualizarFotoDePerfil() {
+    const atualizarFotoDePerfil = () => {
 
         const file = imgUpdloadFirebase;
 
@@ -61,8 +60,7 @@ function ModalUploadFotoPerfil(props) {
 
             // Obtenha a URL de download do arquivo enviado
             snapshot.ref.getDownloadURL().then((downloadURL) => {
-                setRecarregarImg(true)
-
+                props.recarregarTodasImgs(true);
             });
             alert("Sua foto de perfil foi atualizada com sucesso!")
 
@@ -76,7 +74,7 @@ function ModalUploadFotoPerfil(props) {
 
     const reiniciarImg = () => {
         setImgUrl("");
-        setRecarregarImgModal(false);
+        setRecarregarImgPerfil(false);
         setImgNaoAlterada(true);
     };
 
@@ -84,6 +82,10 @@ function ModalUploadFotoPerfil(props) {
         reiniciarImg();
         props.closeModal();
     }
+
+    useEffect(() => {
+        setImgUrl(props.imgUrl);
+    }, [props.imgUrl])
 
     return (
         <>
@@ -102,7 +104,7 @@ function ModalUploadFotoPerfil(props) {
                             className="img-perfil-usuario"
                             id={props.idUsuario}
                             nome={props.nomeUsuario}
-                            recarregarImg={recarregarImgModal}
+                            recarregarImg={recarregarImgPerfil}
                             imgUrl={imgUrl}
                             naoCarregar />
                         <input type="file" className="ipt-select-img"

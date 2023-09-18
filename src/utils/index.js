@@ -7,6 +7,8 @@ function verificarToken() {
         sessionStorage.TOKEN = "";
         return true;
     }
+
+    return false;
 }
 
 function validaDataNascimento(dataNascimento) {

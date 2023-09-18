@@ -1,4 +1,3 @@
-import React from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
 import { Box, Typography, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
 import "./style.css";
@@ -13,17 +12,16 @@ import { consultaCep } from "../../../utils";
 import Textarea from '@mui/joy/Textarea';
 import FormHelperText from '@mui/joy/FormHelperText';
 import ModalExperiencias from "../../../components/Professor/ModalExperiencias";
-import ModalUploadFotoPerfil from "../../../components/Global/ModalUploadFotoPerfil";
-import AvatarComFoto from "../../../components/Global/AvatarComFoto/index.jsx";
+import FotoPerfil from "../../../components/Global/PerfilUsuario/FotoPerfil/index.jsx";
+
+import { verificarToken } from "../../../utils/index.js";
+import { useNavigate } from "react-router-dom";
 
 
 function PerfilUsuario() {
 
   // Este indicador serve para que ao renderizar a página ele não modifique os dados de CEP logo de inicio e sim só altere os dados de endereço
   // quando o usuário digitar o último número do CEP
-
-  const idUsuario = sessionStorage.getItem("ID");
-
   let [ativarBuscaCep, setAtivarBuscaCep] = useState(false);
   const [dadosPerfilAntesDeEditar, setDadosPerfilAntesDeEditar] = useState({
     nome: "",
@@ -37,6 +35,7 @@ function PerfilUsuario() {
     experiencias: [],
   })
 
+  // Desativa o formData
   const [formDataDisable, setFormDataDisable] = useState({
     dadosPessoais: true,
     dadosEndereco: true,
@@ -44,7 +43,8 @@ function PerfilUsuario() {
     dadosExperiencias: true
   })
 
-
+  // Valor adicionados pelo usuário
+  const idUsuario = sessionStorage.getItem("ID");
   const [formData, setFormData] = useState({
     nome: '',
     avaliacaoMedia: 0.0,
@@ -65,6 +65,7 @@ function PerfilUsuario() {
     experiencias: [],
   });
 
+  // Erros de validação
   const [errorsDadosPessoais, setErrorsDadosPessoais] = useState({
     errorNome: false,
     helperTextNome: "",
@@ -76,11 +77,13 @@ function PerfilUsuario() {
     helperTextDataNasc: ""
   })
 
+  // Erros de validação
   const [errorsSobreMim, setErrorsSobreMim] = useState({
     errorSobreMim: false,
     helperTextSobreMim: "",
   })
 
+  // Erros de validação
   const [errorsDadosEndereco, setErrorsDadosEndereco] = useState({
 
     errorCep: false,
@@ -91,16 +94,27 @@ function PerfilUsuario() {
 
   })
 
+
+  // Modal de Experiências
   let [visibilidade, setVisibilidade] = useState(false);
   const abrirModalExperiencias = () => setVisibilidade(true);
   const fecharModalExperiencias = () => setVisibilidade(false);;
 
+  // Modal de Upload de Foto de Perfil
   let [visibilidadeModalFotoPerfil, setVisibilidadeModalFotoPerfil] = useState(false);
   const abrirModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(true);
   const fecharModalFecharModalUploadFotoPerfil = () => setVisibilidadeModalFotoPerfil(false);
-  const [recarregarImg, setRecarregarImg] = useState(false);
+  
+  // Fotos da página
+  const [recarregarImgPerfil, setRecarregarImgPerfil] = useState(false);
+  const [recarregarImgPagina, setRecarregarImgPagina] = useState(false);
+
+  // Navegação
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (verificarToken()) navigate("/login");
+
     obterDadosPerfil();
   }, [])
 
@@ -159,7 +173,6 @@ function PerfilUsuario() {
       })
 
   }
-
 
   function formatDateToLocalDateSpring(date) {
     const parts = date.split('/');
@@ -391,7 +404,6 @@ function PerfilUsuario() {
     }
   }
 
-
   function calcularIdade(dataNasc) {
     dataNasc = new Date(dataNasc);
     const dataAtual = new Date();
@@ -426,27 +438,23 @@ function PerfilUsuario() {
       })
 
   }
+
+  const recarregarTodasImgs = () => {
+    setRecarregarImgPerfil(true);
+    setRecarregarImgPagina(true);
+  }
+  
   return (
-    <EstruturaPaginaUsuario>
+    <EstruturaPaginaUsuario recarregarTodasImgs={recarregarImgPagina}>
       <Box className="pagina-container">
 
         <Box className="container-dados-pessoais">
-          <Box className="box-foto-perfil">
-            <AvatarComFoto
-              id={idUsuario}
-              onClick={abrirModalUploadFotoPerfil}
-              className="img-perfil"
-              nome={formData.nome}
-              recarregarImg={recarregarImg}
-            />
-            <ModalUploadFotoPerfil idUsuario={idUsuario} visibilidade={visibilidadeModalFotoPerfil} closeModal={fecharModalFecharModalUploadFotoPerfil} imgState={{ recarregarImg, setRecarregarImg }} nomeUsuario={formData.nome}/>
-            <Box className="container-avaliacao">
-              <Typography>{formData.avaliacaoMedia.toFixed(2)}</Typography>
-              <Rating name="half-rating-read" defaultValue={0} precision={0.5} readOnly size="medium" value={formData.avaliacaoMedia} />
-            </Box>
-            <Typography className="txt-nome">{formData.nome}</Typography>
-            {/* <Typography className="txt-idade">{formData.idade} Anos</Typography> */}
-          </Box>
+          <FotoPerfil
+            infoUsuario={{ idUsuario, formData }}
+            funcoesModal={{ abrirModalUploadFotoPerfil, visibilidadeModalFotoPerfil, fecharModalFecharModalUploadFotoPerfil }}
+            imgPerfilState={{ recarregarImgPerfil, setRecarregarImgPerfil}}
+            recarregarImgPagina={{ recarregarImgPagina, setRecarregarImgPagina}}
+            recarregarTodasImgs={recarregarTodasImgs} />
 
           <Box className="box-dados-pessoais">
 

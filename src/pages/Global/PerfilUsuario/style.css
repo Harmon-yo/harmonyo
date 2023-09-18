@@ -15,29 +15,6 @@
     flex-direction: row;
 }
 
-.box-foto-perfil{
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 10px;
-    height: 100%;
-}
-
-.img-perfil{
-    cursor: pointer;
-    width: 50% !important;
-    height: 50% !important;
-}
-
-.container-avaliacao {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-}
-
 .box-dados-pessoais {
     width: 78%;
     display: flex;
@@ -69,10 +46,6 @@
     height: auto;
 }
 
-.txt-nome{
-    font-size: var(--fonte-h5) !important;
-    font-weight: 500 !important;
-}
 .txt-idade{
     font-size: var(--fonte-h6) !important;
     font-weight: 400 !important;

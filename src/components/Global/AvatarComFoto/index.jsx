@@ -1,14 +1,20 @@
 import { Avatar } from "@mui/material";
 import { useState, useEffect } from "react";
 import { storage } from "../../../utils/firebase";
+import { useImperativeHandle, forwardRef } from "react";
 
-function AvatarComFoto(props) {
+function AvatarComFoto(props, ref) {
+    
     const idUsuario = props.id;
     const nomeUsuario = props.nome;
 
     const [imgPerfilURL, setImgPerfilURL] = useState("");
     const [carregarImagem, setCarregarImagem] = useState(false);
     const [erroAoCarregar, setErroAoCarregar] = useState(false);
+
+    useImperativeHandle(ref, () =>  { return {
+        getImgPerfilURL: () => {return imgPerfilURL}
+    }}, [imgPerfilURL]);
 
     const obterImgPerfil = (id) => {
         let urlImg = `/imgs-perfil-usuario/${id}_ft_perfil`;
@@ -67,4 +73,4 @@ function AvatarComFoto(props) {
 
 }
 
-export default AvatarComFoto;
+export default forwardRef(AvatarComFoto);
