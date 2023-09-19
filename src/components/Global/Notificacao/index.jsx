@@ -1,28 +1,30 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Badge, Box, Menu, MenuItem, Typography } from "@mui/material";
+import { Badge, Box, MenuItem, Typography } from "@mui/material";
 import PropostaIcon from "../../../imgs/business-proposal.png";
 import Popup from "../Popup/index.jsx";
 import "./style.css";
 import moment from "moment";
 import "moment/locale/pt-br";
 
-const notificacoes = [
-    {
-        id: 1,
-        src: PropostaIcon,
-        titulo: "Nova Proposta",
-        descricao: "O professor Fulano de Tal te enviou uma proposta de aula",
-        data: "10/10/2021",
-        hora: "10:00",
-        tempo: moment().locale("pt-br").subtract(10, 'minutes').locale("pt-br").fromNow(),
-        lido: false
-    }
-]
+import api from "../../../api.js";
+
+const requisicaoGet = (url) => {
+    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
+}
+
+const requisicaoPut = (url, body) => {
+    return api.put(url, body, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
+}
 
 function Notificacao(props) {
-    const [qtdNotificacao, setQtdNotificacao] = React.useState(notificacoes.length);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const idUsuario = sessionStorage.getItem("ID");
+
+    const [notificacoes, setNotificacoes] = useState([]);
+    const [qtdNotificacao, setQtdNotificacao] = useState(0);
+
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = !!anchorEl;
 
     const abrirNotificacoes = (event) => {
@@ -33,12 +35,66 @@ function Notificacao(props) {
         setAnchorEl(null);
     }
 
-    function marcarComoLido() {
-        for (let i = 0; i < notificacoes.length; i++) {
-            notificacoes[i].lido = true;
+    const handleClickNotificacao = (idNotificacao) => {
+        requisicaoPut(`/notificacoes/lida/${idNotificacao}`, {}).then((resposta) => {
+            if (resposta.status === 200) {
+                alert("Lendo a notificacao com id: " + idNotificacao)
+                notificacoes.forEach((notificacao) => {
+                    if (notificacao.id === idNotificacao) {
+                        notificacao.lida = true;
+                    }
+                });
+                setNotificacoes(notificacoes);
+                setQtdNotificacao(qtdNotificacao - 1);
+            }
         }
-        setQtdNotificacao(0);
+        ).catch((erro) => {
+            console.log(erro);
+        });
     }
+
+    const marcarTodosComoLido = () => {
+        requisicaoPut(`/notificacoes/lida-usuario/${idUsuario}`, {}).then((resposta) => {
+            if (resposta.status === 200) {
+                console.log("Teste")
+                notificacoes.forEach((notificacao) => {
+                    notificacao.lida = true;
+                });
+                setNotificacoes(notificacoes);
+                setQtdNotificacao(0);
+            }
+        }
+        ).catch((erro) => {
+            console.log(erro);
+        });
+    }
+
+    const obterNotificacoes = () => {
+        requisicaoGet("/notificacoes").then((resposta) => {
+            const notificacoes = resposta.data;
+            console.log("Recebi a notificacao: ");
+            console.log(notificacoes);
+            if (resposta.status === 204) {
+                setNotificacoes([]);
+                return;
+            }
+
+            notificacoes.forEach((notificacao) => {
+                notificacao.tempo = moment(notificacao.data).fromNow();
+                notificacao.src = PropostaIcon;
+            });
+                
+            setNotificacoes(notificacoes);
+            setQtdNotificacao(notificacoes.filter((notificacao) => !notificacao.lida).length);
+        }).catch((erro) => {
+            console.log(erro);
+        });
+    }
+
+    useEffect(() => {
+        obterNotificacoes();
+    }, []);
+
 
     return (
         <div>
@@ -56,19 +112,21 @@ function Notificacao(props) {
                 <Box className="notificacao-menu-container-title">
                     <Typography className="notificacao-menu-title">Notificações</Typography>
                     {
-                        qtdNotificacao > 0 ? <Typography className="notificacao-menu-lido" onClick={marcarComoLido}>Marcar como lido</Typography>
+                        qtdNotificacao > 0 ? <Typography className="notificacao-menu-lido" onClick={marcarTodosComoLido}>Marcar como visto</Typography>
                             : ""
                     }
                 </Box>
                 {
                     notificacoes.map(
                         (notificacao) => (
-                            <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={fecharNotificacoes}
+                            <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={() => {
+                                handleClickNotificacao(notificacao.id);
+                            }}
                             sx={{
                                 backgroundColor: !notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
                             }}>
                                 <Box className="notificacao-menu-item-info-container">
-                                    <img src={notificacao.src} className="notificacao-menu-item-img" />
+                                    <img src={notificacao.src} className="notificacao-menu-item-img" alt="" />
                                     <Typography className="notificacao-menu-item-titulo">{notificacao.titulo}</Typography>
                                 </Box>
                                 <Box className="notificacao-menu-item-container-tempo">

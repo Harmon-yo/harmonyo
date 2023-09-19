@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
-import InformacoesCompraEUsuario from "../../../components/Aluno/RealizarPedido/InformacoesCompraEUsuario";
-import InformacoesPedido from "../../../components/Aluno/RealizarPedido/InformacoesPedido";
+import InformacoesCompraEUsuario from "../../../components/Aluno/RealizarPedido/InformacoesCompraEUsuario/index.jsx";
+import InformacoesPedido from "../../../components/Aluno/RealizarPedido/InformacoesPedido/index.jsx";
 
 import { verificarToken } from "../../../utils/index.js";
 

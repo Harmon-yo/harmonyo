@@ -7,14 +7,13 @@ import {
 } from "@mui/material";
 import Card from "../../components/Global/Card/index.jsx"
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { useStyles } from "./Cadastro-Login.styles.js";
 import Logo from "../../components/Global/Logo/index.jsx";
 
 function Design(props) {
     const classes = props.styles;
 
     return (
-        <Box sx={classes.background}>
+        <Box sx={classes.background} onKeyDown={props.onKeyDown}>
             <Box sx={classes.voltarContainer}>
                 <Link to="/" style={{ color: 'black', fontWeight: 'bolder' }}>{<ArrowBackIosNewIcon />}</Link>
             </Box>

@@ -100,11 +100,17 @@ function Login() {
             });
     }
 
+    const verificarEnter = (event) => {
+        if (event.key === "Enter") {
+            login();
+        }
+    };
+
 
     return (
         <>
             <ModalCriarConta open={visibilidade} closeModal={fecharModalCriarConta} onClickInTelaLogin={() => window.location.reload()} />
-            <Design errosServidor={[]} titulo="Entrar na conta" styles={classes}>
+            <Design errosServidor={[]} titulo="Entrar na conta" styles={classes} onKeyDown={verificarEnter}>
 
                 <Box sx={classes.formInputContainer}>
                     <TextField id="ipt-email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} label="Email" variant="outlined" error={error.email} helperText={helperText.email} value={formData.email} />

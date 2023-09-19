@@ -1,7 +1,6 @@
 
 import {
     Box,
-    Avatar,
     Typography,
     Divider,
 } from "@mui/material";

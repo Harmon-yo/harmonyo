@@ -93,6 +93,7 @@ function FiltroDePesquisaCard(props) {
                 </Typography>
                 <Box className="filtro-slider-container">
                     <Slider
+                        size="small"
                         getAriaLabel={() => 'Preço mínimo'}
                         value={preco.valor}
                         onChange={handlePreco}
@@ -130,6 +131,7 @@ function FiltroDePesquisaCard(props) {
                 </Typography>
                 <Box className="filtro-slider-container">
                     <Slider
+                        size="small"
                         getAriaLabel={() => 'Distância mínima'}
                         value={distancia.valor}
                         onChange={handleDistancia}

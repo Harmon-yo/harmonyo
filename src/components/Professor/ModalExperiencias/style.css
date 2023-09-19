@@ -57,7 +57,7 @@
 .box-button-salvar-adicionar-exp{
     display: flex;
     width: 100%;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .button-salvar-adicionar-exp {
