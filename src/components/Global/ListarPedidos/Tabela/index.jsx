@@ -9,12 +9,11 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import "./style.css";
-import PerfilUsuario from "../PerfilUsuario";
+import PerfilUsuario from "../PerfilUsuario/index.jsx";
 import Status from "../Status";
-import ModalDetalhes from "../ModalDetalhes";
+import ModalDetalhes from "../ModalDetalhes/index.jsx";
 import api from "../../../../api";
 import ModalAvaliacao from "../../ModalAvaliacao/index.jsx";
-import ModalFiltroErro from "../ModalFiltroErro/index.jsx";
 
 function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
@@ -30,18 +29,12 @@ function Tabela(props) {
     url = `/pedidos/usuario/hashing/${sessionStorage.ID}?status=${statusFiltro}`;
   }
 
-  const [filtroErro, setFiltroErro] = useState(false);
-
   useEffect(() => {
     api.get(url,
       { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
         let pedidos = response.data;
 
-        if (pedidos === "") {
-          setFiltroErro(true);
-        } else {
-          setFiltroErro(false);
-
+        if (pedidos !== "") {
           pedidos = pedidos.sort(
             (a, b) => {
               return new Date(b.horaCriacao) - new Date(a.horaCriacao);
@@ -49,6 +42,8 @@ function Tabela(props) {
           )
           setDadosPedidos(pedidos);
           console.log(pedidos);
+        } else {
+          setDadosPedidos([]);
         }
       });
   }, [url])
@@ -85,31 +80,35 @@ function Tabela(props) {
           </TableRow>
         </TableHead>
         <TableBody className="conteudoTabela">
-          {dadosPedidos.map((row) => (
-            <TableRow
-              key={row.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell className="bodyCelula" align="left">
+          {dadosPedidos.length !== 0 ?
+            dadosPedidos.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell className="bodyCelula" align="left">
 
-                <PerfilUsuario
-                  id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id}
-                  nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
-              </TableCell>
-              <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
-              <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
-              <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
-              <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.aula.valorAula).toFixed(2)}</TableCell>
-              <TableCell className="bodyCelula" align="center">
-                {row.status.descricao === "Concluído" ?
-                  <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>
-                  :
-                  <Button variant="outlined" className="botao" onClick={() => { handleOpen(row) }}> Detalhes</Button>
-                }
-              </TableCell>
+                  <PerfilUsuario
+                    id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id}
+                    nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
+                </TableCell>
+                <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
+                <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
+                <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
+                <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.aula.valorAula).toFixed(2)}</TableCell>
+                <TableCell className="bodyCelula" align="center">
+                  {row.status.descricao === "Concluído" ?
+                    <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>
+                    :
+                    <Button variant="outlined" className="botao" onClick={() => { handleOpen(row) }}> Detalhes</Button>
+                  }
+                </TableCell>
+              </TableRow>
+            )) :
+            <TableRow>
+              <TableCell colSpan={6} className="bodyCelula" align="center">Nenhum pedido encontrado</TableCell>
             </TableRow>
-          ))}
-          {filtroErro === true ? <ModalFiltroErro statusErro={statusFiltro}></ModalFiltroErro> : null}
+          }
         </TableBody>
       </Table>
       <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} errosState={{ erros, setErros }} />
