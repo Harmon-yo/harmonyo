@@ -21,6 +21,7 @@ function Notificacao(props) {
 
     const idUsuario = sessionStorage.getItem("ID");
 
+    const [qtdPaginas, setQtdPaginas] = useState(0);
     const [notificacoes, setNotificacoes] = useState([]);
     const [qtdNotificacao, setQtdNotificacao] = useState(0);
 
@@ -45,7 +46,9 @@ function Notificacao(props) {
                     }
                 });
                 setNotificacoes(notificacoes);
-                setQtdNotificacao(qtdNotificacao - 1);
+                if (qtdNotificacao > 0) {
+                    setQtdNotificacao(qtdNotificacao - 1);
+                }
             }
         }
         ).catch((erro) => {
@@ -56,7 +59,6 @@ function Notificacao(props) {
     const marcarTodosComoLido = () => {
         requisicaoPut(`/notificacoes/lida-usuario/${idUsuario}`, {}).then((resposta) => {
             if (resposta.status === 200) {
-                console.log("Teste")
                 notificacoes.forEach((notificacao) => {
                     notificacao.lida = true;
                 });
@@ -70,8 +72,10 @@ function Notificacao(props) {
     }
 
     const obterNotificacoes = () => {
-        requisicaoGet("/notificacoes").then((resposta) => {
-            const notificacoes = resposta.data;
+        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
+            const respostaPagina = resposta.data;
+
+            const notificacoes = respostaPagina.content;
             console.log("Recebi a notificacao: ");
             console.log(notificacoes);
             if (resposta.status === 204) {
@@ -83,6 +87,8 @@ function Notificacao(props) {
                 notificacao.tempo = moment(notificacao.data).fromNow();
                 notificacao.src = PropostaIcon;
             });
+
+            setQtdPaginas(respostaPagina.totalPages);
                 
             setNotificacoes(notificacoes);
             setQtdNotificacao(notificacoes.filter((notificacao) => !notificacao.lida).length);
@@ -135,6 +141,19 @@ function Notificacao(props) {
                             </MenuItem>
                         )
                     )
+                }
+
+                {
+                    qtdPaginas > 1 ? (<Box sx={{
+                        width: "100%",
+                        height: "fit-content",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}>
+                        <Typography className="notificacao-menu-lido" >Mostrar Todos</Typography>
+    
+                    </Box>) : ""
                 }
             </Popup>
         </div>

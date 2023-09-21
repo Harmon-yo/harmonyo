@@ -142,7 +142,7 @@ function EncontrarProfessor(props) {
                 <Box className="encontrar-professor-conteudo">
                     <BarraDePesquisa requisicaoGet={requisicaoGet} isCarregando={isCarregando} 
                     iniciarPesquisaState={{ setIniciarPesquisa }} adicionarCarregamento={adicionarCarregamento}
-                    adicionarParametro={adicionarParametro} exibirErro={exibirErro}/>
+                    adicionarParametro={adicionarParametro} exibirErro={exibirErro} setProfessoresFiltrados={setProfessoresFiltrados}/>
                     <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} onClick={handleClickProfessor}/>
                     <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} onClick={handleClickProfessor}/>
                 </Box>

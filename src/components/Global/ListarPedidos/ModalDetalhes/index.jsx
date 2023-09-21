@@ -77,12 +77,16 @@ function ModalDetalhes(props) {
         },
       ]);
     }
-  }, [props.pedido]);
+  }, [pedido]);
 
   const navigate = useNavigate();
 
   const confirmarPedido = () => {
-    requisicaoPut(`/pedidos/aceita-pedido/${pedido.id}`, {})
+    requisicaoPut(`/pedidos/aceita-pedido`, {
+      idPedido: pedido.id,
+      idUsuario: sessionStorage.ID,
+      motivo: ""
+    })
       .then((response) => {
         let status = response.status;
 
@@ -97,7 +101,11 @@ function ModalDetalhes(props) {
   };
 
   const cancelarPedido = () => {
-    requisicaoPut(`/pedidos/cancela-pedido/${pedido.id}`, {})
+    requisicaoPut(`/pedidos/cancela-pedido`, {
+      idPedido: pedido.id,
+      idUsuario: sessionStorage.ID,
+      motivo: ""
+    })
       .then((response) => {
         let status = response.status;
 
@@ -112,7 +120,11 @@ function ModalDetalhes(props) {
   };
 
   const recusarPedido = () => {
-    requisicaoPut(`/pedidos/recusa-pedido/${pedido.id}`, {})
+    requisicaoPut(`/pedidos/recusa-pedido`, {
+      idPedido: pedido.id,
+      idUsuario: sessionStorage.ID,
+      motivo: ""
+    })
       .then((response) => {
         let status = response.status;
 
@@ -127,7 +139,11 @@ function ModalDetalhes(props) {
   };
 
   const concluirPedido = () => {
-    requisicaoPut(`/pedidos/conclui-pedido/${pedido.id}`, {})
+    requisicaoPut(`/pedidos/conclui-pedido`, {
+      idPedido: pedido.id,
+      idUsuario: sessionStorage.ID,
+      motivo: ""
+    })
       .then((response) => {
         let status = response.status;
 
@@ -142,7 +158,11 @@ function ModalDetalhes(props) {
   };
 
   const realizarPagamento = () => {
-    requisicaoPut(`/pedidos/realiza-pagamento/${pedido.id}`, {})
+    requisicaoPut(`/pedidos/realiza-pagamento`, {
+      idPedido: pedido.id,
+      idUsuario: sessionStorage.ID,
+      motivo: ""
+    })
       .then((response) => {
         let status = response.status;
 

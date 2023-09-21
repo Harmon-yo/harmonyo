@@ -1,7 +1,7 @@
 import React from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Typography, FormControl, TextField, Select, MenuItem, InputAdornment,Tooltip } from "@mui/material";
+import { Box, Typography, FormControl, TextField, Select, MenuItem, InputAdornment, Tooltip } from "@mui/material";
 import Card from "../../../Global/Card/index.jsx";
 import "./style.css";
 import { useEffect } from "react";
@@ -10,12 +10,13 @@ import { useEffect } from "react";
 
 
 function BarraDePesquisa(props) {
-    
-    const [ cidade, setCidade ] = React.useState("");
-    const [ cidades, setCidades ] = React.useState([]);
-    const adicionarCarregamento = props.adicionarCarregamento;
+
+    const [cidade, setCidade] = React.useState("");
+    const [cidades, setCidades] = React.useState([]);
+
+    const setProfessoresFiltrados = props.setProfessoresFiltrados;
     const adicionarParametro = props.adicionarParametro
-    const [ textoDeBusca, setTextoDeBusca ] = React.useState("");
+    const [textoDeBusca, setTextoDeBusca] = React.useState("");
 
     const mudarCidade = (event) => {
         setCidade(event.target.value);
@@ -40,22 +41,38 @@ function BarraDePesquisa(props) {
         });
     }, []);
 
-    const mudarTextoDeBusca = (event) => setTextoDeBusca(event.target.value);
+    const mudarTextoDeBusca = (event) => {
+        event.preventDefault();
+        setTextoDeBusca(event.target.value)
+    };
     const verificarEnter = (event) => {
+        event.preventDefault();
+        
         if (event.key === "Enter") {
-            /* Promise.all([
-                props.requisicaoGet(`/professores/busca?params=nome~*${textoDeBusca}*,cidade:${cidade},instrumentos~*${textoDeBusca}*`),
-            ]) */
+            const textoAProcurar = textoDeBusca.replace("*", "").replace("~", "")
+            const parametros = `nome~*${textoAProcurar}*,instrumentos~*${textoAProcurar}*,cidade:${cidade}`;
+            props.requisicaoGet(`/professores/busca?params=${parametros}`).then(
+                (resposta) => {
+                    if (resposta.status === 200) {
+                        console.log("Professores encontrados: " + resposta.data.length);
+                        console.log(resposta.data)
+                        setProfessoresFiltrados(resposta.data);
+                    } else {
+                        console.log("Nenhum professor encontrado.");
+                        setProfessoresFiltrados([]);
+                    }
+                }
+            )
+
         }
     };
-    
 
 
     return (
         <Card className="professores-busca-card">
             <Box className="professores-busca-lugar">
                 <LocationOnIcon />
-                <FormControl sx={{width: '70%'}}>
+                <FormControl sx={{ width: '70%' }}>
                     <Select
                         labelId="demo-simple-select-label"
                         id="select-cidade"
@@ -85,12 +102,10 @@ function BarraDePesquisa(props) {
                 </FormControl>
             </Box>
             <Box className="professores-busca-campo">
-                <TextField className="busca-campo-input" value={textoDeBusca} onKeyDown={verificarEnter} onChange={mudarTextoDeBusca} placeholder="Buscar" InputProps={{
-                endAdornment: <InputAdornment><SearchIcon/></InputAdornment>,
-                readOnly: props.isCarregando
-            }}
-                    
-                 />
+                <TextField className="busca-campo-input" value={textoDeBusca} onKeyUp={verificarEnter} onChange={mudarTextoDeBusca} placeholder="Buscar" InputProps={{
+                    endAdornment: <InputAdornment><SearchIcon /></InputAdornment>,
+                    readOnly: props.isCarregando
+                }} />
             </Box>
         </Card>
     );

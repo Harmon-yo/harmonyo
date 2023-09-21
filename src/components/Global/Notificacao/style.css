@@ -15,6 +15,7 @@
     background-color: #F1EFF5 !important;
     padding: calc(var(--espaco-padrao) * 2);
     border-radius: var(--borda-padrao) !important;
+    width: 40vw !important;
 }
 
 .MuiMenu-list {
@@ -22,7 +23,6 @@
 }
 
 .notificacao-menu-container-title {
-    width: 25vw !important;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -45,7 +45,6 @@
 
 .notificacao-menu-item {
     width: 100%;
-    height: 8vh;
     border-radius: 5px !important;
     padding: 8px !important;
     display: flex;
@@ -60,13 +59,14 @@
 }
 
 .notificacao-menu-item-img {
-    height: 60%;
+    height: 25px;
     margin-right: calc(var(--espaco-padrao) * 2);
 }
 
 .notificacao-menu-item-titulo {
     color: var(--dark-font);
     font-weight: 600 !important;
+    white-space: break-spaces;
 }
 
 .notificacao-menu-item-container-tempo {

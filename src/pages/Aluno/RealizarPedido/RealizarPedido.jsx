@@ -36,7 +36,7 @@ function RealizarPedido() {
 
     useEffect(
         () => {
-            if (verificarToken()) navigate(-1);      
+            if (verificarToken()) navigate("/login");      
         }, []
     );
 
