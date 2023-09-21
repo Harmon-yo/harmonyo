@@ -126,78 +126,47 @@ function Filtro(props) {
                 >
                     <FilterAltOutlinedIcon sx={{ color: 'black' }} />
                 </Button>
-                <Popper className='popper' id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
+                <Popper className='filtro-popper' id={id} open={open} anchorEl={anchorEl} placement="bottom-start">
                     <ClickAwayListener onClickAway={handleClick} >
-                        <Box className="popup">
-                            <Box className="popup-item">
+                        <Box className="filtro-popup">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={semFilto}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Sem Filtro") }) }} />
-                                <Typography className="popup-text">Sem Filtros</Typography>
+                                <Typography className="filtro-popup-text">Sem Filtros</Typography>
                             </Box>
-                            <Box className="popup-item">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={pendente}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Pendente") }) }} />
-                                <Typography className="popup-text">Pendente</Typography>
+                                <Typography className="filtro-popup-text">Pendente</Typography>
                             </Box>
-                            <Box className="popup-item">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={confirmado}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Confirmado") }) }} />
-                                <Typography className="popup-text">Confirmado</Typography>
+                                <Typography className="filtro-popup-text">Confirmado</Typography>
                             </Box>
-                            <Box className="popup-item">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={cancelado}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Cancelado") }) }} />
-                                <Typography className="popup-text">Cancelado</Typography>
+                                <Typography className="filtro-popup-text">Cancelado</Typography>
                             </Box>
-                            <Box className="popup-item">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={recusado}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Recusado") }) }} />
-                                <Typography className="popup-text">Recusado</Typography>
+                                <Typography className="filtro-popup-text">Recusado</Typography>
                             </Box>
-                            <Box className="popup-item">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={concluido}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Concluído") }) }} />
-                                <Typography className="popup-text">Concluído</Typography>
+                                <Typography className="filtro-popup-text">Concluído</Typography>
                             </Box>
-                            <Box className="popup-item">
+                            <Box className="filtro-popup-item">
                                 <Radio color="success" checked={aguardando}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Aguardando") }) }} />
-                                <Typography className="popup-text">Aguardando</Typography>
+                                <Typography className="filtro-popup-text">Aguardando</Typography>
                             </Box>
                         </Box>
                     </ClickAwayListener>
                 </Popper>
-                {/* <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Sem Filtro") }) }}>
-                        Sem Filtros
-                    </MenuItem>
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Pendente") }) }}>
-                        Pendente
-                    </MenuItem>
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Confirmado") }) }}>
-                        Confirmado
-                    </MenuItem>
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Cancelado") }) }}>
-                        Cancelado
-                    </MenuItem>
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Recusado") }) }}>
-                        Recusado
-                    </MenuItem>
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Concluído") }) }}>
-                        Concluído
-                    </MenuItem>
-                    <MenuItem onClick={() => { setFiltro({ ...filtro, status: aplicarfiltro("Aguardando Pagamento") }) }}>
-                        Aguardando
-                    </MenuItem>
-                </Menu> */}
             </Box>
         </>
     );

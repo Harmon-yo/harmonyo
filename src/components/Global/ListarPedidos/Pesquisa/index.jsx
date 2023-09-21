@@ -1,28 +1,34 @@
 import { Box, Button, TextField, InputAdornment } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SearchOutlined as SearchOutlinedIcon
 } from "@mui/icons-material";
 import "./style.css";
 
-function Pesquisa() {
+function Pesquisa(props) {
 
-  function filtrar() {
-    alert("filtrar");
+  const [nome, setNome] = React.useState("");
+
+  const filtrar = (event) => {
+    setNome(event.target.value);
   }
 
+  useEffect(() => {
+    props.filtroState.setFiltro({ ...props.filtroState.filtro, nomeFiltro: nome });
+  }, [nome]);
+
   return (
-    <TextField placeholder="Filtrar" className="input_filtro"
+    <TextField placeholder="Filtrar" className="input_filtro" name="input_filtro"
+      value={nome}
+      onChange={filtrar}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <SearchOutlinedIcon className="lupa" onClick={filtrar} sx={{
-              cursor: "pointer"
-            }}/>
+            <SearchOutlinedIcon className="lupa" />
           </InputAdornment>
         ),
       }}
-      variant="standard"/>
+      variant="standard" />
   );
 }
 

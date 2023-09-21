@@ -13,8 +13,8 @@ function CabecalhoPagina(props) {
     <Container className="container">
       <Typography className="titulo">Pedidos</Typography>
       <Box className="direita">
-        <Calendario/>
-        <Pesquisa/>
+        <Pesquisa filtroState={{filtro, setFiltro}}/>
+        <Calendario filtroState={{filtro, setFiltro}}/>
         <Filtro filtroState={{filtro, setFiltro}}/>
       </Box>
     </Container>

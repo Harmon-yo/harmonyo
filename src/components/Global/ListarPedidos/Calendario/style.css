@@ -1,0 +1,42 @@
+.button:hover{
+    background-color: #fff;
+}
+
+.calen-popper{
+    z-index: 1000;
+    position: absolute;
+}
+
+.calen-popup{
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    background-color: #fff;
+    border: 2px solid #b3b3b3;
+}
+
+.calen-popup-body{
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+.calen-popup-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.button-submit{
+    background-color: #099250;
+    color: #fff;
+    border-radius: 5px;
+    width: fit-content;
+    padding: 5px 25px;
+    margin: 5px;
+}
+
+.button-submit:hover{
+    background-color: #085b2a;
+}

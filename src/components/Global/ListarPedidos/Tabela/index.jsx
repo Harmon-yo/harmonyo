@@ -19,14 +19,16 @@ function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
   const { erros, setErros } = props.errosState;
 
-  let statusFiltro = props.filtroState.filtro.status;
+  let filtroArray = props.filtroState.filtro;
+
+  console.log(filtroArray);
 
   let url = "";
 
-  if (statusFiltro === "Sem Filtro") {
+  if (filtroArray.status === "Sem Filtro") {
     url = `/pedidos/usuario/${sessionStorage.ID}`;
   } else {
-    url = `/pedidos/usuario/hashing/${sessionStorage.ID}?status=${statusFiltro}`;
+    url = `/pedidos/usuario/hashing/${sessionStorage.ID}?status=${filtroArray.status}`;
   }
 
   useEffect(() => {
@@ -40,13 +42,51 @@ function Tabela(props) {
               return new Date(b.horaCriacao) - new Date(a.horaCriacao);
             }
           )
+
+          if (filtroArray.dataInicio !== null && filtroArray.dataFim !== null) {
+            pedidos = pedidos.filter(
+              (pedido) => {
+                let dataPedido = new Date(pedido.dataAula).toLocaleDateString();
+
+                let dataInicio = new Date(filtroArray.dataInicio);
+                dataInicio.setDate(dataInicio.getDate() + 1);
+                dataInicio = dataInicio.toLocaleDateString();
+
+                let dataFim = new Date(filtroArray.dataFim);
+                dataFim.setDate(dataFim.getDate() + 1);
+                dataFim = dataFim.toLocaleDateString();
+
+                console.log(dataPedido + " / " + dataInicio + " / " + dataFim);
+                return dataPedido >= dataInicio && dataPedido <= dataFim;
+              }
+            )
+          }
+
+          if (sessionStorage.getItem("CATEGORIA") === "Professor") {
+            if (filtroArray.nomeFiltro !== "") {
+              pedidos = pedidos.filter(
+                (pedido) => {
+                  return pedido.aluno.nome.toLowerCase().includes(filtroArray.nomeFiltro.toLowerCase());
+                }
+              )
+            }
+          } else {
+            if (filtroArray.nomeFiltro !== "") {
+              pedidos = pedidos.filter(
+                (pedido) => {
+                  return pedido.professor.nome.toLowerCase().includes(filtroArray.nomeFiltro.toLowerCase());
+                }
+              )
+            }
+          }
+
           setDadosPedidos(pedidos);
           console.log(pedidos);
         } else {
           setDadosPedidos([]);
         }
       });
-  }, [url])
+  }, [filtroArray])
 
   const [open, setOpen] = useState(false);
   const [pedido, setPedido] = useState();
