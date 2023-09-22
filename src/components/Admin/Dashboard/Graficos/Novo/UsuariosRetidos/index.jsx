@@ -15,7 +15,7 @@ import {
     Typography
 } from "@mui/material";
 import Card from "../../../CardComTitulo/index.jsx";
-import InformacaoAdicionalGrafico from "./InformacaoAdicionalGrafico/index.jsx";
+import InformacaoAdicionalGrafico from "../UsuariosCadastradosSemana/InformacaoAdicionalGrafico/index.jsx";
 import "./style.css";
 
 ChartJS.register(
@@ -102,7 +102,7 @@ function GraficoMensal(props) {
 
 
     return (
-        <Card className="card-usuario-retido" titulo="Usuários retidos">
+        <Card className="card-usuario-" titulo="Quantidade de usuários">
             <Bar data={data} options={options} />
 
             <Box className="taxas-container">

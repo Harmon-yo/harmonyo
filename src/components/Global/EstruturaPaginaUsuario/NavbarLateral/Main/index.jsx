@@ -36,10 +36,10 @@ function NavbarLateral(props) {
                 href: `/agenda`
             },
             {
-                titulo: "Aulas",
-                icon: ClassIcon,
-                active: props.tela === "aulas" ? true : false,
-                href: `/aulas`
+                titulo: "Pedidos",
+                icon: PedidosIcon,
+                active: props.tela === "pedidos" ? true : false,
+                href: `/pedidos`
             },
             {
                 titulo: "Chat",
@@ -48,10 +48,10 @@ function NavbarLateral(props) {
                 href: `/chat`
             },
             {
-                titulo: "Pedidos",
-                icon: PedidosIcon,
-                active: props.tela === "pedidos" ? true : false,
-                href: `/pedidos`
+                titulo: "Aulas",
+                icon: ClassIcon,
+                active: props.tela === "aulas" ? true : false,
+                href: `/aulas`
             }
         ],
         aluno: [

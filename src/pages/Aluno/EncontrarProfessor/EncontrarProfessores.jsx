@@ -3,16 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import "./style.css";
 
-/* ================= Navbar =================== */
-
-import {
-    ChatBubbleOutline as ChatIcon,
-    Search as SearchIcon,
-    RateReviewOutlined as FeedbackIcon,
-    GradingOutlined as PedidosIcon,
-    CalendarTodayOutlined as CalendarioIcon
-} from '@mui/icons-material';
-
 /* ================= Componentes ==================== */
 
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";

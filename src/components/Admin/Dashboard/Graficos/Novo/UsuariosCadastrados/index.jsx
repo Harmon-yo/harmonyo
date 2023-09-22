@@ -63,10 +63,11 @@ function UsuariosCadastrados(props) {
     const [usuariosMesAtual, setUsuariosMesAtual] = useState([]);
     const [usuariosMesAnterior, setUsuariosMesAnterior] = useState([]);
 
-    const data = {labels: labels,
+    const data = {
+        labels: labels,
         datasets: [
             {
-                label: 'Mês Anterior',
+                label: 'Mês Atual',
                 data: usuariosMesAtual,
                 fill: false,
                 backgroundColor: 'rgb(54, 162, 235)',
@@ -75,7 +76,7 @@ function UsuariosCadastrados(props) {
     
             },
             {
-                label: 'Mês Atual',
+                label: 'Mês Anterior',
                 data: usuariosMesAnterior,
                 fill: false,
                 backgroundColor: 'rgb(255, 99, 132)',
@@ -120,7 +121,7 @@ function UsuariosCadastrados(props) {
 
 
     return (
-        <Card className="card-cadastro-usuario" titulo="Usuários cadastrados">
+        <Card className="card-cadastro-usuario" titulo="Usuários cadastrados no mês">
             <Line data={data} options={options} />
 
             <Box className="cadastro-mensal-container">

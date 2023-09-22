@@ -12,11 +12,11 @@ function AulasInfo(props) {
     return (
         <Card className="card-body">
             <Box >
-                    <Typography className="card-titulo">{titulo}</Typography>
-                </Box>
-                <Box className={`${props.className}`}>
-                    <Typography className="card-texto">{valor}</Typography>
-                </Box>
+                <Typography className="card-titulo titulo-kpi">{titulo}</Typography>
+            </Box>
+            <Box className={`${props.className}`}>
+                <Typography className="card-texto">{valor}</Typography>
+            </Box>
         </Card>
     );
 }

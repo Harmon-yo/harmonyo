@@ -6,7 +6,6 @@ import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUs
 import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
 import UsuariosRetidos from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidos/index.jsx";
-import UsuariosRetidosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidosSemana/index.jsx';
 import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastrados/index.jsx";
 import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
 import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
@@ -34,25 +33,25 @@ function DashboardAdmin(props) {
             id: 1,
             nome: "Usuários",
             endpoint: "/usuarios/quantidade",
-            valor: -1,
+            valor: 0,
         },
         {
             id: 2,
             nome: "Aulas por aluno",
             endpoint: "/aulas/quantidade-por-aluno",
-            valor: -1,
+            valor: 0,
         },
         {
             id: 3,
             nome: "Aulas",
             endpoint: "/aulas/quantidade",
-            valor: -1,
+            valor: 0,
         },
         {
             id: 4,
             nome: "Avaliações",
             endpoint: "",
-            valor: -1,
+            valor: 0,
         }
     ]);
 
@@ -61,24 +60,24 @@ function DashboardAdmin(props) {
             id: 1,
             nome: "Aulas Realizadas",
             endpoint: "/pedidos/quantidade-realizadas-semana-total",
-            valor: -1,
+            valor: 0,
         }, {
             id: 2,
             nome: "Aulas Pendentes",
             endpoint: "/pedidos/quantidade-pendentes-semana-total",
-            valor: -1,
+            valor: 0,
         }, {
             id: 3,
             nome: "Aulas Canceladas",
             endpoint: "/pedidos/quantidade-canceladas-semana-total",
-            valor: -1,
+            valor: 0,
         }
     ]);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (verificarToken()) navigate(-1);
+        if (verificarToken()) navigate("/login");
 
         metricas.forEach(metrica => {
             if (metrica.id !== 4) {
@@ -114,16 +113,8 @@ function DashboardAdmin(props) {
                 <Box className="secao secao-usuarios-retidos-cadastrados">
                     <UsuariosRetidos />
                     <UsuariosCadastrados adicionaErro={adicionaErro} />
-                    <Box sx={{
-                        width: "30%",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between",
-                    }}>
-                        <UsuariosRetidosSemana />
-                        <UsuariosCadastradosSemana adicionaErro={adicionaErro} />
-                    </Box>
+                    <UsuariosCadastradosSemana adicionaErro={adicionaErro} />
+
                 </Box>
                 <Box className="secao secao-aulas">
                     <Box sx={{

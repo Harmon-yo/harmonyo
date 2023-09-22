@@ -4,6 +4,10 @@
     flex-direction: column;
 }
 
+.titulo-kpi {
+    white-space: break-spaces;
+}
+
 .card-texto {
     font-size: var(--fonte-h2) !important;
 }

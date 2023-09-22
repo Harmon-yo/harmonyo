@@ -1,17 +1,120 @@
 import { useEffect, useState } from "react";
-import FrequenciaSemanal from "./FrequenciaSemanal";
 import api from "../../../../../../api";
 import "./style.css";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    Title,
+    Tooltip,
+    Legend,
+    PointElement,
+    LineElement,
+    BarElement
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import Card from "../../../CardComTitulo/index.jsx";
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    Title,
+    Tooltip,
+    Legend,
+    PointElement,
+    LineElement,
+    BarElement
+);
+
+const diasSemanaResumido = ["S", "T", "Q", "Q", "S", "S", "D"]
+const diasSemanaTraduzido = {
+    "S": "Segunda",
+    "T": "Terça",
+    "Q": "Quarta",
+    "Q": "Quinta",
+    "S": "Sexta",
+    "S": "Sábado",
+    "D": "Domingo"
+}
+
+const options = {
+    responsive: true,
+    scales: {
+        x: {
+            stacked: true,
+            grid: {
+                display: false, // Configuração para ocultar as linhas verticais de grade no eixo x
+            },
+        },
+        y: {
+            stacked: true,
+            grid: {
+                display: true, // Configuração para ocultar as linhas verticais de grade no eixo x
+            },
+        },
+    },
+    interaction: {
+        intersect: true,
+        mode: 'index',
+    },
+
+    plugins: {
+        legend: {
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+                usePointStyle: true
+            }
+        },
+        title: {
+            display: false
+        },
+        tooltip: {
+            callbacks: {
+                title: (toolTipItem, data) => {
+                    return diasSemanaTraduzido[toolTipItem[0].label]
+                }
+            }
+        }
+    },
+    
+};
+
 
 const requisicaoGet = (url) => {
     return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
 }
 
+const criarDataset = (label, data, cor) => {
+    return {
+        label: label,
+        data: data,
+        backgroundColor: cor,
+        borderColor: cor,
+        tension: 0.4,
+        pointRadius: 0.3,
+    }
+};
+
+
+
 function AulaSemana(props) {
 
     const adicionaErro = props.adicionaErro;
-    const [frequencias, setFrequencias] = useState([]);
 
+    const [aulasRealizadas, setAulasRealizadas] = useState([]);
+    const [aulasPendentes, setAulasPendentes] = useState([]);
+    const [aulasCanceladas, setAulasCanceladas] = useState([]);
+
+    const data = {
+        labels: diasSemanaResumido,
+        datasets: [
+            criarDataset("Canceladas", aulasCanceladas, "#FF6384"),
+            criarDataset("Pendentes", aulasPendentes, "#FFCE56"),
+            criarDataset("Realizadas", aulasRealizadas, "#00a65a"),
+        ]
+    };
     useEffect(() => {
 
         Promise.all([requisicaoGet("/pedidos/quantidade-realizadas-semana"),
@@ -29,14 +132,9 @@ function AulaSemana(props) {
                 console.log("Aulas Canceladas na semana: ")
                 console.log(canceladas);
 
-                const dias = ["D", "S", "T", "Q", "Q", "S", "S"];
-
-                for (let i = 0; i < 7; i++) {
-                    setFrequencias(valorAntigo => [...valorAntigo, {
-                        dia: dias[i],
-                        valores: [realizadas[i], pendentes[i], canceladas[i]],
-                        }]);
-                }
+                setAulasRealizadas(realizadas);
+                setAulasPendentes(pendentes);
+                setAulasCanceladas(canceladas);
             }
         ).catch((erro) => {
             adicionaErro(erro);
@@ -44,7 +142,9 @@ function AulaSemana(props) {
     }, []);
 
     return (
-        <FrequenciaSemanal titulo="Aulas na semana" frequencias={frequencias}/>
+        <Card className="card-quantidade-aulas" titulo="Quantidade de aulas">
+            <Bar data={data} options={options} />
+        </Card>
     );
 }
 

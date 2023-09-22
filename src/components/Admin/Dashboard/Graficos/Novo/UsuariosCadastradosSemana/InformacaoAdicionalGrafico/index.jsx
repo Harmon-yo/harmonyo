@@ -2,19 +2,18 @@ import {
     Box,
     Typography
 } from "@mui/material";
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-
+import "./style.css";
 
 function InformacaoAdicionalGrafico(props) {
     return (
         <Box className="taxa-container">
-            <Typography className="taxa-nome">
+            <Typography className="quantidade-usuario-titulo">
                {/*  <FiberManualRecordIcon sx={{
                     fontSize: "var(----fonte-h6)"
                 }} /> */}
                 {props.nome}
             </Typography>
-            <Typography className="taxa-valor">{props.valor} ({(props.valor / props.valorTotal) * 100}%)</Typography>
+            <Typography className="quantidade-usuario-valor">{props.valor} ({(props.valor / props.valorTotal) * 100}%)</Typography>
         </Box>
     );
 }
