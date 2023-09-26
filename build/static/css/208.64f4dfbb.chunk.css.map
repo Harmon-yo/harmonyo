@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/208.64f4dfbb.chunk.css","mappings":"AAAA,MACI,qBAAuB,CACvB,iCAAkC,CAClC,oCACJ","sources":["components/Global/Card/style.css"],"sourcesContent":[".card {\n    background-color: white;\n    border-radius: var(--borda-padrao);\n    padding: calc(var(--espaco-padrao) * 2);\n}"],"names":[],"sourceRoot":""}
