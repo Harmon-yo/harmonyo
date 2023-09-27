@@ -1,7 +1,5 @@
 .hero-section {
-
-    /* background: var(--gradient-home); */
-    background: black;
+    background: var(--gradient-home);
     background-size: 500% 100%;
     animation: hero-degrade-animado 10s ease infinite alternate;
 }
