@@ -1,0 +1,109 @@
+.item-aula{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    height: 250px;
+    padding: 10px;
+    padding-top: 2px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: #b8b8b8 solid 1px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+.item-conteudo{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.instrumento{
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.preco{
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #414141;
+    text-align: center;
+}
+
+.modal{
+    width: 100%;
+}
+
+.box-button-deletar{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.button-deletar{
+    width: fit-content;
+    height: fit-content;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.button-deletar:hover{
+    background-color: transparent;
+}
+
+.modal-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-text{
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.modal-button-deletar{
+    width: 150px;
+    height: 40px;
+    background-color: #ff0000;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-button-deletar:hover{
+    background-color: #cc0000;
+}
+
+.modal-button-cancelar{
+    width: 150px;
+    height: 40px;
+    background-color: #c4c4c4;
+    border: #a0a0a0 solid 1px;
+    border-radius: 5px;
+    color: #000000;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modal-button-cancelar:hover{
+    background-color: #929292;
+    color: #000000;
+}

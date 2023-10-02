@@ -1,0 +1,8 @@
+.titulo{
+    font-size: var(--fonte-h3) !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    width: fit-content !important;
+}

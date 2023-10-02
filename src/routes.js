@@ -13,6 +13,7 @@ const RealizarPedido = lazy(() => import("./pages/Aluno/RealizarPedido/RealizarP
 
 /* Professor */
 const DashboardProfessor = lazy(() => import("./pages/Professor/Dashboard/Dashboard"));
+const Aulas = lazy(() => import("./pages/Professor/Aulas"));
 
 /* Aluno e Professor */
 const PerfilUsuario =   lazy(() => import("./pages/Global/PerfilUsuario"));
@@ -41,6 +42,7 @@ function Rotas() {
             <Route path="pedidos" element={<ListarPedidos />} />
             <Route path="perfil" element={<PerfilUsuario />} />
             <Route path="exibicao-perfil" element={<PerfilExibicaoUsuario />} />
+            <Route path="aulas" element={<Aulas />} />
             <Route path="agenda" element={<Agenda />} />
             <Route path="pedido" element={<RealizarPedido/>}/>
           </Route>
