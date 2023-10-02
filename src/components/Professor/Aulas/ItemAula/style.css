@@ -37,6 +37,7 @@
     text-align: center;
 }
 
+
 .modal{
     width: 100%;
 }
@@ -60,6 +61,19 @@
     background-color: transparent;
 }
 
+.modal-dialog{
+    width: fit-content;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .modal-body{
     display: flex;
     flex-direction: column;
@@ -71,7 +85,8 @@
     font-size: 1.25rem;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 10px;
+    margin: 10px;
+    width: 75%;
 }
 
 .modal-button-deletar{
@@ -84,6 +99,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
+    margin: 10px;
 }
 
 .modal-button-deletar:hover{
@@ -99,8 +115,8 @@
     color: #000000;
     font-size: 1.1rem;
     font-weight: 600;
+    margin: 10px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 .modal-button-cancelar:hover{

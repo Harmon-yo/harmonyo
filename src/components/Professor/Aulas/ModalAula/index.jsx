@@ -24,6 +24,10 @@ function ModalAula(props) {
         const aulaAtualizacao = {
             valorAula: document.getElementsByName("valor")[0].value,
         }
+
+        console.log(aulaAtualizacao);
+
+        console.log(aula.id);
         api.put(`/aulas/${aula.id}`, aulaAtualizacao,
             { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
                 props.reloadState.setReloadPage({ ...props.reloadState, reloadPage: !props.reloadState.reloadPage });
@@ -48,38 +52,27 @@ function ModalAula(props) {
             instrumentoId: instrumentoAula.id,
         }
 
-        let aulaVerificada = verificarAula(instrumentoAula.id);
-
-        console.log(aulaVerificada);
-
-        if (aulaVerificada !== null) {
-            api.put(`/aulas/ativar/${aulaVerificada.id}`,
-                { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
-                }).catch((err) => {
-                    console.log(err);
-                });
-            editarAula();
-        } else {
-            api.post(`/aulas`, novaAula,
-                { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
-                    props.reloadState.setReloadPage({ ...props.reloadState, reloadPage: !props.reloadState.reloadPage });
-                }).catch((err) => {
-                    console.log(err);
-                });
-
-            handleClose();
-        }
-    }
-
-    function verificarAula(instrumentoId) {
         api.get(`/aulas/${sessionStorage.ID}`,
             { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
-                let aulas = response.data;
-                let aula = aulas.find((aula) => aula.instrumentoId === instrumentoId);
-                if (aula !== undefined) {
-                    return aula;
+                console.log(response.data);
+                let aulaVerificada = response.data.find((aula) => aula.instrumento.id === instrumentoAula.id);
+
+                if (aulaVerificada !== undefined) {
+                    api.put(`/aulas/ativar/${aulaVerificada.id}`, {},
+                        { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+                            aula.id = aulaVerificada.id;
+                            editarAula();
+                        }).catch((err) => {
+                            console.log(err);
+                        });
                 } else {
-                    return null;
+                    api.post(`/aulas`, novaAula,
+                        { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+                            props.reloadState.setReloadPage({ ...props.reloadState, reloadPage: !props.reloadState.reloadPage });
+                            handleClose();
+                        }).catch((err) => {
+                            console.log(err);
+                        });
                 }
             }).catch((err) => {
                 console.log(err);
