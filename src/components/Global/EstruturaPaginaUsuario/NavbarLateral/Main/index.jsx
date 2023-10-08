@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css"
 import {
-    Box
+    Box, Button
 } from "@mui/material";
 import Logo from "../../../Logo/index.jsx";
 import {
@@ -11,15 +11,42 @@ import {
     RateReviewOutlined as FeedbackIcon,
     GradingOutlined as PedidosIcon,
     CalendarTodayOutlined as CalendarioIcon,
-    Class as ClassIcon
+    Class as ClassIcon,
+    DriveFileMove as ExportIcon
 } from "@mui/icons-material";
 import NavbarLateralCard from "../NavbarLateralCard/index.jsx";
-
+import api from "../../../../../api"
 
 
 function NavbarLateral(props) {
     const [active, setActive] = React.useState(false);
     const tipoUsuario =  sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
+
+    function downloadCSV() {
+        fetch('http://localhost:8080/professores/download-csv', {
+            method: 'GET',
+            responseType: 'blob',
+            headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` }
+          })
+        .then((response) => {
+          return response.blob();
+        })
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'data.csv';
+          
+          a.click();
+    
+          window.URL.revokeObjectURL(url);
+        })
+        .catch((error) => {
+          console.error('Erro:', error);
+        });
+}
+
 
     const opcoesNavbar = {
         professor: [
@@ -107,11 +134,13 @@ function NavbarLateral(props) {
                 </a>
 
                 <Box className="navbar-lateral-cards">
-                
                     { 
                         opcoesNavbar[tipoUsuario].map((card) => (
                             <NavbarLateralCard key={`opcao-navbar-${card.titulo}`} href={card.href} titulo={card.titulo} icon={card.icon} active={card.active} hover={active} />
                         ))
+                    }
+                    {
+                        tipoUsuario === "administrador" ? <Button onClick={downloadCSV} color="primary" className="button-export"> <ExportIcon className={`export-logo `} /> <h4 className={`export-logo ${!active ? "hidden" : ""}`} > Exportação dados prof.</h4> </Button> : ""
                     }
                 </Box>
             </Box>
