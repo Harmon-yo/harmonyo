@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './style.css';
 import { Button, Box, Typography, Modal, TextField, Autocomplete } from '@mui/material';
 import { ModalClose, ModalDialog } from '@mui/joy';
-import PianoIcon from '@mui/icons-material/Piano';
+import IconeInstrumento from '../../../Global/IconeInstrumento/index.jsx';
 import api from '../../../../api';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -79,9 +79,7 @@ function ModalAula(props) {
             });
     }
 
-    function alterarIcone() {
-
-    }
+    const [instrumentoIcon, setInstrumentoIcon] = useState("");
 
     return (
         <Box className="modal">
@@ -119,12 +117,14 @@ function ModalAula(props) {
                                             disablePortal
                                             id="combo-box-demo"
                                             options={instrumentos.map((option) => option.nome)}
+                                            onChange={(event, value) => setInstrumentoIcon(value)}
                                             renderInput={(params) => <TextField name="instrumento" className="modal-input" {...params} label="Instrumento" />}
                                         /> :
                                         <Autocomplete
                                             disablePortal
                                             id="combo-box-demo"
                                             options={instrumentos.map((option) => option.nome)}
+                                            onChange={(event, value) => setInstrumentoIcon(value)}
                                             renderInput={(params) => <TextField name="instrumento" className="modal-input" {...params} label="Instrumento" />}
                                         />
                                     }
@@ -138,7 +138,10 @@ function ModalAula(props) {
                                 </Box>
                             </Box>
                             <Box className="modal-icone">
-                                <PianoIcon sx={{ fontSize: 120 }} />
+                                {aula.id === "" ?
+                                    <IconeInstrumento instrumentoState={instrumentoIcon} tamanhoIcone={"120px"} /> :
+                                    <IconeInstrumento instrumentoState={aula.instrumento.nome} tamanhoIcone={"120px"} />
+                                }
                             </Box>
                         </Box>
                         <Box className="modal-bottom">

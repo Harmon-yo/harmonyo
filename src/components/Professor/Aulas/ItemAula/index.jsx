@@ -1,11 +1,11 @@
 import React from "react";
 import "./style.css";
 import { Box, Typography, Button, Modal } from "@mui/material";
-import PianoIcon from '@mui/icons-material/Piano';
 import ModalAula from "../ModalAula/index.jsx";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import api from "../../../../api";
 import { ModalClose, ModalDialog } from "@mui/joy";
+import IconeInstrumento from "../../../Global/IconeInstrumento/index.jsx";
 
 function ItemAula(props) {
 
@@ -38,10 +38,10 @@ function ItemAula(props) {
         <>
             <Box className="item-aula">
                 <Box className="box-button-deletar">
-                    <DeleteForeverIcon sx={{ color: 'lightred', cursor: 'pointer' }} onClick={handleOpen} />
+                    <DeleteForeverIcon sx={{ color: '#ff7272', cursor: 'pointer' }} onClick={handleOpen} />
                 </Box>
                 <Box className="item-conteudo">
-                    <PianoIcon sx={{ fontSize: 80 }} />
+                    <IconeInstrumento instrumentoState={aula.instrumento.nome} tamanhoIcone={"100px"}/>
                     <Typography className="instrumento">{aula.instrumento.nome}</Typography>
                     <Typography className="preco">R${aula.valor.toFixed(2)}</Typography>
                 </Box>
