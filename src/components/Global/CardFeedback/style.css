@@ -1,0 +1,42 @@
+.avatar-usuario{
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.container-feedback{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    height: fit-content;
+    justify-content: space-between;
+}
+
+.box-ft-avaliador{
+    display: flex;
+    width: auto;
+    height: auto;
+}
+
+.box-info-avaliacao{
+    display: flex;
+    width: 91%;
+    height: fit-content;
+    
+    flex-direction: column;
+}
+.txt-nome-avaliador{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.box-avaliacao-data{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.txt-avaliacao{
+    font-size: 18px;
+}

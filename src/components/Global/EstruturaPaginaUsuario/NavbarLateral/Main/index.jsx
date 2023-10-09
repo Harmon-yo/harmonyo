@@ -79,6 +79,12 @@ function NavbarLateral(props) {
                 icon: ClassIcon,
                 active: props.tela === "aulas" ? true : false,
                 href: `/aulas`
+            },
+            {
+                titulo: "Feedbacks",
+                icon: FeedbackIcon,
+                active: props.tela === "feedbacks" ? true : false,
+                href: `/feedbacks`
             }
         ],
         aluno: [

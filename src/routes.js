@@ -20,6 +20,7 @@ const PerfilUsuario =   lazy(() => import("./pages/Global/PerfilUsuario"));
 const Agenda =  lazy(() => import("./pages/Global/Agenda/index"));
 const ListarPedidos =   lazy(() => import("./pages/Global/ListarPedidos"));
 const PerfilExibicaoUsuario =   lazy(() => import("./pages/Global/PerfilExibicaoUsuario"));
+const TelaFeedbacks = lazy(() => import("./pages/Global/TelaFeedbacks"))
 
 /* Admin */
 const DashboardAdmin =  lazy(() => import("./pages/Admin/Dashboard/Dashboard"));
@@ -37,7 +38,7 @@ function Rotas() {
             <Route path="encontrar-professor" element={<EncontrarProfessor />} />
             <Route path="dashboard-administrador" element={<DashboardAdmin />} />
             <Route path="dashboard-professor" element={<DashboardProfessor />} />
-            <Route path="feedbacks" element={<></>} />
+            <Route path="feedbacks" element={<TelaFeedbacks />} />
             <Route path="chat" element={<Chat />} />
             <Route path="pedidos" element={<ListarPedidos />} />
             <Route path="perfil" element={<PerfilUsuario />} />
