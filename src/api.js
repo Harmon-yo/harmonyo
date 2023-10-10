@@ -6,7 +6,7 @@ const ENV_DESENVOLVIMENTO = "localhost"
 
 
 const api = axios.create({
-  baseURL: `http://${ENV_DESENVOLVIMENTO}:8080`
+  baseURL: `http://${ENV_PRODUCAO}:8080`
 });
 
 
