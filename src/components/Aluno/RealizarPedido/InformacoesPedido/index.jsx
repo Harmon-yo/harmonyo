@@ -48,14 +48,13 @@ function InformacoesPedido(props) {
     const adicionarErro = props.adicionarErro
     const navigate = useNavigate();
 
-    const [diaEscolhido, setDiaEscolhido] = useState(obterDataValida());
-
-    const [horarioEscolhido, setHorarioEscolhido] = useState(dayjs(diaEscolhido));
+    const [diaEHoraEscolhidos, setDiaEHoraEscolhidos] = useState(obterDataValida)
 
     const [instrumentosDisponiveis, setInstrumentosDisponiveis] = useState([]);
     const [diasIndisponiveis, setDiasIndisponiveis] = useState([]);
+    const [erroHorario, setErroHorario] = useState(false);
 
-    const validarData = (data, horario) => {
+    const validarData = (data) => {
         let minutos = data.minute().toString();
         if (minutos.length !== 1) minutos = minutos[1];
 
@@ -67,15 +66,14 @@ function InformacoesPedido(props) {
     /* Funções */
 
     const handleClickDia = (dia) => {
-        setDiaEscolhido(dia);
-        setHorarioEscolhido(dia);
+        setDiaEHoraEscolhidos(dia);
     };
 
     const handleClickHorario = (horario) => {
         horario = horario.second(0).millisecond(0);
-        horario = horario.day(diaEscolhido.day()).month(diaEscolhido.month()).year(diaEscolhido.year());
-        setDiaEscolhido(horario);
-        setHorarioEscolhido(horario);
+        horario = horario.day(diaEHoraEscolhidos.day()).month(diaEHoraEscolhidos.month()).year(diaEHoraEscolhidos.year());
+
+        setDiaEHoraEscolhidos(horario);
     };
 
     const enviarPedido = () => {
@@ -83,7 +81,7 @@ function InformacoesPedido(props) {
             alunoId: sessionStorage.getItem("ID"),
             professorId: new URLSearchParams(window.location.search).get("id"),
             aulaId: instrumento.id,
-            dataAula: diaEscolhido.format("YYYY-MM-DD HH:mm:ss")
+            dataAula: diaEHoraEscolhidos.format("YYYY-MM-DD HH:mm:ss")
         }).then(() => {
             /* alert("Pedido enviado!"); */
             setStep(3);
@@ -95,8 +93,8 @@ function InformacoesPedido(props) {
 
     const handleClickContinuar = () => {
         if (step === 0) {
-            validarData(diaEscolhido, horarioEscolhido);
-            setStep(step + 1);
+            validarData(diaEHoraEscolhidos);
+            if (!erroHorario) setStep(step + 1);
         } else if (step === 1) {
             if (instrumento === null) {
                 adicionarErro("Escolha um instrumento!");
@@ -206,8 +204,10 @@ function InformacoesPedido(props) {
                                     handleClickDia,
                                     handleClickHorario
                                 }}
-                                diaEHoraEscolhidos={{ diaEscolhido, horarioEscolhido }}
+                                diaEHoraEscolhidosState={{ diaEHoraEscolhidos, setDiaEHoraEscolhidos }}
+                                errorHorarioState={{ erroHorario, setErroHorario }}
                                 diasIndisponiveis={diasIndisponiveis}
+                                obterDataValida={obterDataValida}
                             />
                         }
                         {
