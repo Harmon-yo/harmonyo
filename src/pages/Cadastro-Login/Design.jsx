@@ -1,16 +1,60 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
     Box,
     Typography,
-    Alert
+    Alert,
+    IconButton
 } from "@mui/material";
 import Card from "../../components/Global/Card/index.jsx"
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Logo from "../../components/Global/Logo/index.jsx";
 
+import { Close as CloseIcon } from "@mui/icons-material";
+
+
+function selectAviso(aviso, setAvisosState, avisos, index) {
+    let ComponenteAviso;
+  
+    switch (aviso.tipo) {
+      case "erro":
+        ComponenteAviso = Alert;
+        break;
+    }
+  
+    return (<ComponenteAviso
+      key={index}
+      severity="error"
+      action={
+        <IconButton
+          aria-label="close"
+          color="inherit"
+          size="small"
+          onClick={() => setAvisosState(avisos.filter((_, i) => i !== index))}
+        >
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
+      }
+      sx={{
+        zIndex: 1000,
+      }}
+    >
+      {aviso.mensagem}
+    </ComponenteAviso>)
+  }
+
 function Design(props) {
     const classes = props.styles;
+
+    const [avisos, setAvisos] = useState([]);
+
+    const avisosState = props.avisosState;
+
+    useEffect(() => {
+        if (avisosState) {
+            setAvisos(avisosState.avisos);
+        }
+    }, [avisosState]);
 
     return (
         <Box sx={classes.background} onKeyDown={props.onKeyDown}>
@@ -19,19 +63,10 @@ function Design(props) {
             </Box>
             <Box sx={classes.erroContainer}>
                 {
-                    props.errosServidor.map((mensagem, index) => {
-                        return (
-                            <Alert key={index} severity="error" onClose={() => {
-                                props.setErrosServidor((errosServidor) => {
-                                    let erros = [...errosServidor];
-                                    erros.splice(index, 1);
-                                    return erros;
-                                })
-                            }}>
-                                {mensagem}
-                            </Alert>
-                        )
-                    })
+                    avisos &&
+                        avisos.map((erro, index) => {
+                          return selectAviso(erro, avisosState.setAvisos, avisosState.avisos, index);
+                        })
                 }
             </Box>
             <Card className="" sx={classes.formCard}>

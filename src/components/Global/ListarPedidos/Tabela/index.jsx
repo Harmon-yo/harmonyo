@@ -17,7 +17,7 @@ import ModalAvaliacao from "../../ModalAvaliacao/index.jsx";
 
 function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
-  const { erros, setErros } = props.errosState;
+  const adicionaAviso = props.adicionaAviso;
 
   let filtroArray = props.filtroState.filtro;
 
@@ -85,6 +85,12 @@ function Tabela(props) {
         } else {
           setDadosPedidos([]);
         }
+      }).catch((error) => {
+        console.log(error);
+        adicionaAviso({
+          conteudo: "Erro ao obter pedidos",
+          tipo: "erro",
+        })
       });
   }, [filtroArray])
 
@@ -151,7 +157,7 @@ function Tabela(props) {
           }
         </TableBody>
       </Table>
-      <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} errosState={{ erros, setErros }} />
+      <ModalDetalhes open={open} onClose={handleClose} pedido={pedido} adicionaAviso={adicionaAviso} />
     </TableContainer >
   );
 }

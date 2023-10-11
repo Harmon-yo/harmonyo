@@ -104,6 +104,8 @@ function UsuariosCadastradosSemana(props) {
     const [alunosCadastradados, setAlunosCadastradados] = useState([]);
     const [professoresCadastradados, setProfessoresCadastradados] = useState([]);
 
+    const adicionaAviso = props.adicionaAviso;
+
     const data = {
         labels: diasSemanaResumido,
         datasets: [
@@ -132,7 +134,10 @@ function UsuariosCadastradosSemana(props) {
                 setProfessoresCadastradados(valoresResponseProfessores);
             }
         ).catch((err) => {
-            props.adicionaErro("Erro ao carregar usuários cadastrados na semana");
+            adicionaAviso({
+                mensagem: "Erro ao carregar usuários cadastrados na semana",
+                tipo: "erro"
+            });
         });
     }, []);
 

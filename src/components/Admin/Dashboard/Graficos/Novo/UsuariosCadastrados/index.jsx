@@ -63,6 +63,8 @@ function UsuariosCadastrados(props) {
     const [usuariosMesAtual, setUsuariosMesAtual] = useState([]);
     const [usuariosMesAnterior, setUsuariosMesAnterior] = useState([]);
 
+    const adicionaAviso = props.adicionaAviso;
+
     const data = {
         labels: labels,
         datasets: [
@@ -102,7 +104,10 @@ function UsuariosCadastrados(props) {
                 setQuantidadeTotalUsuarios(valores.reduce((a, b) => a + b, 0));
             }
         ).catch(() => {
-            props.adicionaErro("Erro ao carregar usuários cadastrados no mês");
+            adicionaAviso({
+                mensagem: "Erro ao carregar usuários cadastrados no mês.",
+                tipo: "erro"
+            });
         });
 
         requisicaoGet("/usuarios/quantidade-cadastrados-mes-anterior").then(
@@ -114,7 +119,10 @@ function UsuariosCadastrados(props) {
                 setUsuariosMesAnterior(valores);
             }
         ).catch(() => {
-            props.adicionaErro("Erro ao carregar usuários cadastrados no mês anterior");
+            adicionaAviso({
+                mensagem: "Erro ao carregar usuários cadastrados no mês anterior.",
+                tipo: "erro"
+            });
         });
 
     }, []);

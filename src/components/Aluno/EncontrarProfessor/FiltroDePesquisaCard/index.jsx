@@ -46,7 +46,10 @@ function FiltroDePesquisaCard(props) {
 
                 adicionarCarregamento(true);
             }).catch(() => {
-                props.exibirErro("Erro ao carregar valores do filtro.");
+                props.exibirAviso({
+                    mensagem: "Erro ao carregar valores do filtro.",
+                    tipo: "erro"
+                })
                 adicionarCarregamento(false);
             });
         }, []);

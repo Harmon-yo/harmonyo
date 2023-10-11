@@ -37,7 +37,13 @@ function Login() {
         senha: ""
     });
 
-    function validarCampos() {
+    const [avisos, setAvisos] = useState([]);
+
+    const adicionaAviso = (aviso) => {
+        setAvisos([...avisos, aviso]);
+    }
+
+    const validarCampos = () => {
 
         let camposOK = true;
         let email = formData.email;
@@ -61,7 +67,7 @@ function Login() {
 
     }
 
-    async function login() {
+    const login = async () => {
         if (!validarCampos()) return;
 
         let dadosLogin = {
@@ -84,7 +90,13 @@ function Login() {
             .catch((error) => {
                 let response = error.response;
 
-                if (response.status === 403) {
+                if (error.code === "ERR_NETWORK") {
+                    console.log("Mensagem add")
+                    adicionaAviso({
+                        mensagem: "Erro ao entrar em contato com o servidor.",
+                        tipo: "erro"
+                    })
+                } else if (response.status === 403) {
                     console.log(response.data.message)
 
                     setError({
@@ -96,7 +108,7 @@ function Login() {
                         email: response.data.message + '!',
                         senha: response.data.message + '!'
                     });
-                }
+                } 
             });
     }
 
@@ -109,8 +121,8 @@ function Login() {
 
     return (
         <>
-            <ModalCriarConta open={visibilidade} closeModal={fecharModalCriarConta} onClickInTelaLogin={() => window.location.reload()} />
-            <Design errosServidor={[]} titulo="Entrar na conta" styles={classes} onKeyDown={verificarEnter}>
+            <ModalCriarConta visibilidade={visibilidade} closeModal={fecharModalCriarConta} onClickInTelaLogin={() => window.location.reload()}/>
+            <Design errosServidor={[]} titulo="Entrar na conta" styles={classes} onKeyDown={verificarEnter} avisosState={{avisos, setAvisos}}>
 
                 <Box sx={classes.formInputContainer}>
                     <TextField id="ipt-email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} label="Email" variant="outlined" error={error.email} helperText={helperText.email} value={formData.email} />

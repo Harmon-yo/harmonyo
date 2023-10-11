@@ -101,11 +101,12 @@ const criarDataset = (label, data, cor) => {
 
 function AulaSemana(props) {
 
-    const adicionaErro = props.adicionaErro;
 
     const [aulasRealizadas, setAulasRealizadas] = useState([]);
     const [aulasPendentes, setAulasPendentes] = useState([]);
     const [aulasCanceladas, setAulasCanceladas] = useState([]);
+
+    const adicionaAviso = props.adicionaAviso;
 
     const data = {
         labels: diasSemanaResumido,
@@ -137,7 +138,11 @@ function AulaSemana(props) {
                 setAulasCanceladas(canceladas);
             }
         ).catch((erro) => {
-            adicionaErro(erro);
+            console.log(erro)
+            adicionaAviso({
+                mensagem: "Erro ao carregar aulas da semana.",
+                tipo: "erro"
+            })
         });
     }, []);
 
