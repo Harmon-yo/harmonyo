@@ -135,7 +135,7 @@ function Tabela(props) {
                 <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
                 <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
                 <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
-                <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.aula.valorAula).toFixed(2)}</TableCell>
+                <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.valorAula).toFixed(2)}</TableCell>
                 <TableCell className="bodyCelula" align="center">
                   {row.status.descricao === "Concluído" ?
                     <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>

@@ -56,7 +56,7 @@ function ItemAula(props) {
                         <Typography className="modal-text">Tem certeza que deseja excluir sua aula?</Typography>
                         <Box>
                             <Button onClick={handleClose} className="modal-button-cancelar">Cancelar</Button>
-                            <Button onClick={desativarAula} className="modal-button-deletar">Confimar</Button>
+                            <Button onClick={desativarAula} className="modal-button-deletar">Excluir</Button>
                         </Box>
                     </Box>
                     <ModalClose onClick={handleClose} />
