@@ -6,6 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  CircularProgress
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import "./style.css";
@@ -18,6 +19,8 @@ import ModalAvaliacao from "../../ModalAvaliacao/index.jsx";
 function Tabela(props) {
   const [dadosPedidos, setDadosPedidos] = useState([]);
   const adicionaAviso = props.adicionaAviso;
+
+  const [requisicaoFinalizada, setRequisicaoFinalizada] = useState(false);
 
   let filtroArray = props.filtroState.filtro;
 
@@ -82,6 +85,7 @@ function Tabela(props) {
 
           setDadosPedidos(pedidos);
           console.log(pedidos);
+          setRequisicaoFinalizada(true);
         } else {
           setDadosPedidos([]);
         }
@@ -126,34 +130,38 @@ function Tabela(props) {
           </TableRow>
         </TableHead>
         <TableBody className="conteudoTabela">
-          {dadosPedidos.length !== 0 ?
-            dadosPedidos.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell className="bodyCelula" align="left">
+          {
+            requisicaoFinalizada ?
+              dadosPedidos.length !== 0 ?
+                dadosPedidos.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell className="bodyCelula" align="left">
 
-                  <PerfilUsuario
-                    id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id}
-                    nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
-                </TableCell>
-                <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
-                <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
-                <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
-                <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.valorAula).toFixed(2)}</TableCell>
-                <TableCell className="bodyCelula" align="center">
-                  {row.status.descricao === "Concluído" ?
-                    <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>
-                    :
-                    <Button variant="outlined" className="botao" onClick={() => { handleOpen(row) }}> Detalhes</Button>
-                  }
-                </TableCell>
+                      <PerfilUsuario
+                        id={sessionStorage.CATEGORIA === "Professor" ? row.aluno.id : row.professor.id}
+                        nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
+                    </TableCell>
+                    <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
+                    <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
+                    <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
+                    <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.valorAula).toFixed(2)}</TableCell>
+                    <TableCell className="bodyCelula" align="center">
+                      {row.status.descricao === "Concluído" ?
+                        <ModalAvaliacao stateUsuario={row}></ModalAvaliacao>
+                        :
+                        <Button variant="outlined" className="botao" onClick={() => { handleOpen(row) }}> Detalhes</Button>
+                      }
+                    </TableCell>
+                  </TableRow>
+                )) : <TableRow>
+                  <TableCell colSpan={6} className="bodyCelula" align="center">Nenhum pedido encontrado</TableCell>
+                </TableRow> :
+              <TableRow>
+                <TableCell colSpan={6} className="bodyCelula" align="center"><CircularProgress color="success"/></TableCell>
               </TableRow>
-            )) :
-            <TableRow>
-              <TableCell colSpan={6} className="bodyCelula" align="center">Nenhum pedido encontrado</TableCell>
-            </TableRow>
           }
         </TableBody>
       </Table>
