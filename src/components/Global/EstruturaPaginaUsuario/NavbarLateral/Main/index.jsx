@@ -45,6 +45,30 @@ function NavbarLateral(props) {
         .catch((error) => {
           console.error('Erro:', error);
         });
+
+        const email =  sessionStorage.EMAIL;
+        const metodo = 'downloadCSV';
+        
+        const requestData = {
+        };
+
+        const url = `http://localhost:8080/upload-log/${email}/${metodo}`;
+        const token = sessionStorage.TOKEN;
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        
+        api.post(url, requestData, config)
+          .then(response => {
+            console.log('Resposta do servidor:', response.data);
+          })
+          .catch(error => {
+            console.error('Erro na solicitação:', error);
+          });
+
+
 }
 
 
