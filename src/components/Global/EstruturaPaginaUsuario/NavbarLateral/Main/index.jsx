@@ -23,6 +23,12 @@ function NavbarLateral(props) {
     const tipoUsuario =  sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
 
     function downloadCSV() {
+        const email =  sessionStorage.EMAIL;
+        const metodo = 'downloadCSV';
+        
+        const requestData = {
+        };
+
         fetch('http://localhost:8080/professores/download-csv', {
             method: 'GET',
             responseType: 'blob',
@@ -46,12 +52,7 @@ function NavbarLateral(props) {
           console.error('Erro:', error);
         });
 
-        const email =  sessionStorage.EMAIL;
-        const metodo = 'downloadCSV';
-        
-        const requestData = {
-        };
-
+        //envio do log para S3
         const url = `http://localhost:8080/upload-log/${email}/${metodo}`;
         const token = sessionStorage.TOKEN;
         const config = {
