@@ -38,28 +38,40 @@ function ModalDetalhes(props) {
   const pedido = props.pedido;
   const [historico, setHistorico] = React.useState([]);
 
-  const erros = props.errosState.erros;
+  const adicionaAviso = props.adicionaAviso;
 
-  const adicionaErro = (erro) => {
-    props.errosState.setErros([...erros, erro]);
-  };
 
   const errosResponse = (error, acao) => {
     switch (error.response.status) {
       case 400:
-        adicionaErro(`Erro ao ${acao} pedido!`);
+        adicionaAviso({
+          mensagem: `Erro ao ${acao} pedido!`,
+          tipo: "erro",
+        })
         break;
       case 401:
-        adicionaErro(`Você não tem permissão para ${acao} este pedido!`);
+        adicionaAviso({
+          mensagem: `Você não tem permissão para ${acao} este pedido!`,
+          tipo: "erro",
+        })
         break;
       case 404:
-        adicionaErro("Pedido não encontrado!");
+        adicionaAviso({
+          mensagem: `Pedido não encontrado!`,
+          tipo: "erro",
+        })
         break;
       case 409:
-        adicionaErro("Você não pode realizar essa ação");
+        adicionaAviso({
+          mensagem: "Você não pode realizar essa ação",
+          tipo: "erro",
+        })
         break;
       default:
-        adicionaErro("Erro desconhecido!");
+        adicionaAviso({
+          mensagem: "Erro desconhecido!",
+          tipo: "erro",
+        })
         break;
     }
   };
@@ -91,7 +103,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido confirmado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido confirmado com sucesso!",
+            tipo: "sucesso",
+          })
           navigate(0);
         }
       })
@@ -110,7 +125,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido cancelado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido cancelado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -129,7 +147,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido recusado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido recusado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -148,7 +169,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido confirmado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido confirmado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -167,7 +191,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pagamento realizado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pagamento realizado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })

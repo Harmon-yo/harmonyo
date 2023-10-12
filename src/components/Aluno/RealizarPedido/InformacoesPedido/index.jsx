@@ -162,7 +162,7 @@ function InformacoesPedido(props) {
 
     useEffect(() => {
         Promise.all([
-            requisicaoGet(`/aulas/${props.idProfessor}`),
+            requisicaoGet(`/aulas/ativas/${props.idProfessor}`),
             requisicaoGet(`pedidos/usuario/${props.idProfessor}/confirmado`),
         ]).then(
             ([responseAulas, responsePedidos]) => {

@@ -68,6 +68,11 @@ function Cadastro() {
     });
     const [errosServidor, setErrosServidor] = useState([]);
 
+    const [avisos, setAvisos] = useState([]);
+
+    const adicionaAviso = (aviso) => {
+        setAvisos([...avisos, aviso]);
+    }
 
     useEffect(() => {
         if (categoria.current !== "Aluno" && categoria.current !== "Professor") {
@@ -156,10 +161,13 @@ function Cadastro() {
             },
         };
 
-        function errorCatch(error) {
+        const errorCatch = (error) => {
             let erros = [];
 
-            if (error.code === "ERR_NETWORK") erros.push("Erro de conexão!")
+            if (error.code === "ERR_NETWORK") adicionaAviso({
+                mensagem: "Erro ao entrar em contato com o servidor.",
+                tipo: "erro"
+            });
             else {
                 if (error.response.status === 409) {
                     switch (error.response.data.message.toUpperCase()) {
@@ -216,7 +224,7 @@ function Cadastro() {
     }
 
     return (
-        <Design titulo="Criar uma conta" errosServidor={errosServidor} setErrosServidor={setErrosServidor} styles={classes}>
+        <Design titulo="Criar uma conta" errosServidor={errosServidor} setErrosServidor={setErrosServidor} styles={classes} avisosState={{avisos, setAvisos}}>
             <Box sx={classeForm.formInputContainer}>
                 {
                     etapa === 1 ? <EtapaUm formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null

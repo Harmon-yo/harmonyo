@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Box, Tabs, Tab } from "@mui/material";
 import "./style.css";
-/* ================= Icone ==================== */
-
-import violaoIcon from "../../../imgs/violao.png";
 
 /* ================= Componentes =================== */
 
@@ -14,7 +11,6 @@ import TabelaMinhasAulas from "../../../components/Professor/Dashboard/TabelaMin
 import HistoricoAulasGraficoDonut from "../../../components/Professor/Dashboard/GraficoDonut/index.jsx";
 import GraficoBarraEmpilhada from "../../../components/Professor/Dashboard/GraficoBarraEmpilhada/index.jsx";
 /* ================= Utils ================= */
-import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 import { useNavigate } from "react-router-dom";
 

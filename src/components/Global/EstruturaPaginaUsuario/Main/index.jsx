@@ -10,17 +10,20 @@ import "./style.css";
 /* =================== Navbar ======================== */
 
 function selectAviso(aviso, setAvisosState, avisos, index) {
-  let ComponenteAviso;
+  let tipoAviso;
 
   switch (aviso.tipo) {
+    case "sucesso":
+      tipoAviso = "success";
+      break;
     case "erro":
-      ComponenteAviso = Alert;
+      tipoAviso = "error";
       break;
   }
 
-  return (<ComponenteAviso
+  return (<Alert
     key={index}
-    severity="error"
+    severity={tipoAviso}
     action={
       <IconButton
         aria-label="close"
@@ -36,7 +39,7 @@ function selectAviso(aviso, setAvisosState, avisos, index) {
     }}
   >
     {aviso.mensagem}
-  </ComponenteAviso>)
+  </Alert>)
 }
 
 function EstruturaPaginaUsuario(props) {
@@ -47,7 +50,7 @@ function EstruturaPaginaUsuario(props) {
   const recarregarTodasImgs = props.recarregarTodasImgs;
 
 
-  const [carregarPagina, setCarregarPagina] = useState(false);
+  const [carregarPagina, setCarregarPagina] = useState(true);
   const carregarPaginaForcado = props.carregarPaginaForcado;
 
   useEffect(() => {
@@ -61,14 +64,6 @@ function EstruturaPaginaUsuario(props) {
       setRecarregarImgPagina(recarregarTodasImgs);
     }
   }, [recarregarTodasImgs]);
-
-  useEffect(() => {
-    if (carregarPaginaForcado) {
-      setCarregarPagina(carregarPaginaForcado);
-    } else {
-      setCarregarPagina(true);
-    }
-  }, [carregarPaginaForcado]);
 
 
   return (

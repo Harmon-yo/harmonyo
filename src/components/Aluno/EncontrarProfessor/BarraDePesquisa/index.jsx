@@ -36,7 +36,10 @@ function BarraDePesquisa(props) {
                 props.adicionarCarregamento(false);
             }
         }).catch(() => {
-            props.exibirErro("Erro ao carregar cidades cadastradas.");
+            props.exibirAviso({
+                mensagem: "Erro ao carregar cidades cadastradas.",
+                tipo: "erro"
+            });
             props.adicionarCarregamento(false);
         });
     }, []);
@@ -47,8 +50,8 @@ function BarraDePesquisa(props) {
     };
     const verificarEnter = (event) => {
         event.preventDefault();
-        
-        if (event.key === "Enter") {
+
+        if (event.key === "Enter" && textoDeBusca !== "") {
             const textoAProcurar = textoDeBusca.replace("*", "").replace("~", "")
             const parametros = `nome~*${textoAProcurar}*,instrumentos~*${textoAProcurar}*,cidade:${cidade}`;
             props.requisicaoGet(`/professores/busca?params=${parametros}`).then(
