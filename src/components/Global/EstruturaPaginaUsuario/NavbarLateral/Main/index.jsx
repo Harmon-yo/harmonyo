@@ -67,6 +67,7 @@ function NavbarLateral(props) {
         console.error("Erro na solicitação:", error);
       });
   }
+
   function importTxt(e) {
     var arq = e.target.files[0] 
     const formData = new FormData()
@@ -86,6 +87,61 @@ function NavbarLateral(props) {
 
 
   }
+
+  function downloadTXTProfessor() {
+    fetch("http://localhost:8080/usuarios/download-txt-professor", {
+      method: "GET",
+      responseType: "blob",
+      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    })
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "data-professor.txt";
+
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Erro:", error);
+      });
+
+
+  }
+
+  function downloadTXTAluno() {
+    fetch("http://localhost:8080/usuarios/download-txt-aluno", {
+      method: "GET",
+      responseType: "blob",
+      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    })
+      .then((response) => {
+        return response.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "data-aluno.txt";
+
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("Erro:", error);
+      });
+
+
+  }
+
 
   const opcoesNavbar = {
     professor: [
@@ -210,7 +266,7 @@ function NavbarLateral(props) {
               <ExportIcon className={`export-logo `} />{" "}
               <h4 className={`export-logo ${!active ? "hidden" : ""}`}>
                 {" "}
-                Exportação dados prof.
+                Exportação dados PROF. - CSV.
               </h4>{" "}
             </Button>
           ) : (
@@ -231,9 +287,44 @@ function NavbarLateral(props) {
               <input  type="file"
                         hidden accept=".txt" onChange={(e) => importTxt(e)} /> 
             </Button>
+
           ) : (
             ""
           )}
+           {tipoUsuario === "administrador" ? (
+            <Button
+              onClick={downloadTXTProfessor}
+              color="primary"
+              className="button-export"
+            >
+              {" "}
+              <ExportIcon className={`export-logo `} />{" "}
+              <h4 className={`export-logo ${!active ? "hidden" : ""}`}>
+                {" "}
+                Exportação dados PROF - TXT.
+              </h4>{" "}
+            </Button>
+          ) : (
+            ""
+          )}
+           {tipoUsuario === "administrador" ? (
+            <Button
+              onClick={downloadTXTAluno}
+              color="primary"
+              className="button-export"
+            >
+              {" "}
+              <ExportIcon className={`export-logo `} />{" "}
+              <h4 className={`export-logo ${!active ? "hidden" : ""}`}>
+                {" "}
+                Exportação dados ALUNO - TXT.
+              </h4>{" "}
+            </Button>
+          ) : (
+            ""
+          )}
+
+
         </Box>
       </Box>
     </Box>
