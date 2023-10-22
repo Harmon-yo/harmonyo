@@ -9,7 +9,6 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 import "dayjs/locale/pt-br"
 import { useEffect } from "react";
-import ModalFila from "../ModalFila/index.jsx";
 
 var isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
 var isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
@@ -107,7 +106,6 @@ function EtapaUm(props) {
                         shouldDisableTime={shouldDisableTime}
                     />
                 </LocalizationProvider>
-                <ModalFila />
             </Box>
         </>
     );

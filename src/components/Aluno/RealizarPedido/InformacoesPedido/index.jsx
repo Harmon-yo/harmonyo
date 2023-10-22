@@ -13,8 +13,10 @@ import EtapaDois from "../EtapaDois/index.jsx";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-
+import React from "react";
 import api from "../../../../api";
+import { verificarToken } from "../../../../utils";
+import ModalFila from "../ModalFila/index.jsx";
 
 const requisicaoGet = (url) => {
     return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
@@ -54,16 +56,54 @@ function InformacoesPedido(props) {
     const [diasIndisponiveis, setDiasIndisponiveis] = useState([]);
     const [erroHorario, setErroHorario] = useState(false);
 
-    const validarData = (data) => {
-        let minutos = data.minute().toString();
-        if (minutos.length !== 1) minutos = minutos[1];
+    const [modal, setModal] = useState(false);
 
-        if (!(minutos.includes(0) || minutos.includes(5))) {
-            adicionarErro("O horário escolhido não está disponível, o horário foi alterado para o mais próximo possível");
-        }
+    const abrirModal = (valor) => {
+        setModal(valor);
     }
 
+    const [fila, setFila] = useState(false);
+
     /* Funções */
+
+    function validarData(data) {
+
+        let dataFormatada = data.format("YYYY-MM-DDTHH:mm:ss");
+        console.log(dataFormatada);
+
+        api.get(`/pedidos/usuario/${props.idProfessor}`,
+            { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+                let pedidos = response.data;
+                let validacao = true;
+                for (let i = 0; i < pedidos.length; i++) {
+                    console.log(pedidos[i].dataAula);
+                    if (pedidos[i].dataAula === dataFormatada) {
+                        validacao = false;
+                        console.log("Aula já marcada");
+                        abrirModal(true);
+                    }
+                }
+
+                if (validacao) {
+                    let minutos = data.minute().toString();
+                    if (minutos.length !== 1) minutos = minutos[1];
+
+                    if (!(minutos.includes(0) || minutos.includes(5))) {
+                        adicionarErro("O horário escolhido não está disponível, o horário foi alterado para o mais próximo possível");
+                    }
+
+                    if (!erroHorario) setStep(step + 1)
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        if (fila) {
+            setStep(1);
+        }
+    }, [fila])
 
     const handleClickDia = (dia) => {
         setDiaEHoraEscolhidos(dia);
@@ -84,6 +124,18 @@ function InformacoesPedido(props) {
             dataAula: diaEHoraEscolhidos.format("YYYY-MM-DD HH:mm:ss")
         }).then(() => {
             /* alert("Pedido enviado!"); */
+            setTimeout(() => {
+                if (fila) {
+                    requisicaoPost(`/pedidos/fila-espera/
+                    ${sessionStorage.getItem("ID")}?data=${diaEHoraEscolhidos.format("YYYY-MM-DD HH:mm:ss")}`, {
+                    }).then(() => {
+                        console.log("Fila adicionada!");
+                    }).catch((error) => {
+                        console.log(error);
+                        adicionarErro("Erro ao enviar pedido!");
+                    });
+                }
+            }, 5000);
             setStep(3);
         }).catch((error) => {
             console.log(error);
@@ -94,12 +146,12 @@ function InformacoesPedido(props) {
     const handleClickContinuar = () => {
         if (step === 0) {
             validarData(diaEHoraEscolhidos);
-            if (!erroHorario) setStep(step + 1);
         } else if (step === 1) {
             if (instrumento === null) {
                 adicionarErro("Escolha um instrumento!");
                 return;
             } else {
+                setModal(false);
                 setStep(step + 1);
 
                 enviarPedido();
@@ -109,7 +161,6 @@ function InformacoesPedido(props) {
         } else if (step !== 1) {
             setStep(step + 1);
         }
-
     }
 
     const definirTextoBotao = (step) => {
@@ -129,7 +180,7 @@ function InformacoesPedido(props) {
 
         for (let i = 0; i < aulas.length; i++) {
             aula = aulas[i];
-            
+
             ltAulas.push({
                 id: aula.id,
                 nome: aula.instrumento.nome,
@@ -225,6 +276,7 @@ function InformacoesPedido(props) {
                 </>
                 : <CircularProgress />
         }
+        {modal === true ? <ModalFila filaState={{ fila, setFila }} /> : null}
     </Card>);
 }
 

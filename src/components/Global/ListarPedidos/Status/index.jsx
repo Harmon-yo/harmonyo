@@ -10,7 +10,9 @@ function Status(props) {
     return <Box className="status confirmado">{props.status}</Box>;
   } else if (props.status === "Pendente" || props.status === "Aguardando Pagamento"){
     return <Box className="status pendente">{props.status}</Box>;
-  }else{
+  } else if (props.status === "Em Fila"){
+    return <Box className="status emfila">{props.status}</Box>;
+  } else {
     return <Box className="status concluido">{props.status}</Box>;
   }
 }
