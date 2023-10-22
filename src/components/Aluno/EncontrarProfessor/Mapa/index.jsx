@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, Box, Typography } from '@mui/material';
 import MapIcon from '@mui/icons-material/Map';
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import userIcon from '../../../../imgs/user-map-marker.png';
 import "./style.css";

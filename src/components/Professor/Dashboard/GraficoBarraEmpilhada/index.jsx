@@ -45,17 +45,12 @@ function GraficoBarraEmpilhada() {
         config
       )
       .then((response) => {
-        const newLabels = [];
-        const newAulasCanceladas = [];
-        const newAulasRecusadas = [];
-        const newAulasConcluidas = [];
+        let dadosResposta = response.data;
 
-        response.data.map((item) => {
-          newLabels.push(item.mes);
-          newAulasCanceladas.push(item.aulasCanceladas);
-          newAulasConcluidas.push(item.aulasConcluidas);
-          newAulasRecusadas.push(item.aulasRecusadas);
-        });
+        const newLabels = dadosResposta.map((item) => item.mes);
+        const newAulasConcluidas = dadosResposta.map((item) => item.aulasConcluidas);
+        const newAulasCanceladas = dadosResposta.map((item) => item.aulasCanceladas);
+        const newAulasRecusadas = dadosResposta.map((item) => item.aulasRecusadas);
 
         setLabels(newLabels);
         setAulasCanceladasDados(newAulasCanceladas);

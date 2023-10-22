@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Card from "../../../Global/Card/index.jsx";
-import { CircularProgress, LinearProgress, Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import api from "../../../../api.js";
 import { useState } from "react";
 import "./style.css";
@@ -28,100 +28,111 @@ function KpiDashboard(props) {
 
   function getRendimentoTotal() {
     var periodo = "";
-    if (props.periodo === 0) {
-      periodo = "mes-atual";
-    } else if (props.periodo === 1) {
-      periodo = "ano-atual";
-    } else{
-      periodo = "total";
+
+    switch (props.periodo) {
+      case 0:
+        periodo = "mes-atual";
+        break;
+      case 1:
+        periodo = "ano-atual";
+        break;
+      default:
+        periodo = "total";
+        break;
     }
 
-    var url =
-      `/professores/dashboard/${periodo}/rendimento/` + sessionStorage.ID;
+    var url = `/professores/dashboard/${periodo}/rendimento/${sessionStorage.ID}`;
     api.get(url, config).then((response) => {
       console.log(url);
       setCarregando(false);
       setValor("R$ " + response.data);
     });
   }
+
   function getQuantidadeAlunos() {
     var periodo = "";
-    if (props.periodo === 0) {
-      periodo = "mes-atual";
-    } else if (props.periodo === 1) {
-      periodo = "ano-atual";
-    } else{
-      periodo = "total";
+
+    switch (props.periodo) {
+      case 0:
+        periodo = "mes-atual";
+        break;
+      case 1:
+        periodo = "ano-atual";
+        break;
+      default:
+        periodo = "total";
+        break;
     }
 
     var url =
-      `/professores/dashboard/${periodo}/qtd-alunos/` + sessionStorage.ID;
+      `/professores/dashboard/${periodo}/qtd-alunos/${sessionStorage.ID}`;
     api.get(url, config).then((response) => {
       setCarregando(false);
       setValor(response.data);
     });
   }
   function getQuantidadeAulas() {
-    var periodo = "";
-    if (props.periodo === 0) {
-      periodo = "mes-atual";
-    } else if (props.periodo === 1) {
-      periodo = "ano-atual";
-    } else{
-      periodo = "total";
+    let periodo = "";
+
+    switch (props.periodo) {
+      case 0:
+        periodo = "mes-atual";
+        break;
+      case 1:
+        periodo = "ano-atual";
+        break;
+      default:
+        periodo = "total";
+        break;
     }
-    var url =
-      `/professores/dashboard/${periodo}/qtd-aulas/` + sessionStorage.ID;
+
+    var url = `/professores/dashboard/${periodo}/qtd-aulas/${sessionStorage.ID}`;
     api.get(url, config).then((response) => {
       setCarregando(false);
       setValor(response.data);
     });
   }
   function getTempoResposta() {
-    var periodo = "";
-    if (props.periodo === 0) {
-      periodo = "mes-atual";
-    } else if (props.periodo === 1) {
-      periodo = "ano-atual";
-    } else{
-      periodo = "total";
+    let periodo = "";
+
+    switch (props.periodo) {
+      case 0:
+        periodo = "mes-atual";
+        break;
+      case 1:
+        periodo = "ano-atual";
+        break;
+      default:
+        periodo = "total";
+        break;
     }
-    var url =
-      `/professores/dashboard/${periodo}/media-tempo-resposta/` +
-      sessionStorage.ID;
+
+    let url = `/professores/dashboard/${periodo}/media-tempo-resposta/${sessionStorage.ID}`;
     api.get(url, config).then((response) => {
       if(response.data === 0){
         setValor("Sem dados");
         setCarregando(false);
         return;
       }
-      var minutos = response.data;
-      var horas = Math.floor(minutos / 60);
-      var minutos = minutos % 60;
-      var dias = Math.floor(horas / 24);
-      var horas = horas % 24;
-      var texto = "";
-      if (dias > 0) {
-        if (dias == 1) {
-          texto += dias + " dia ";
-        } else {
-          texto += dias + " dias ";
-        }
-      }
-      if (horas > 0) {
-        if (horas == 1) {
-          texto += horas + " hora ";
-        } else {
-          texto += horas + " horas ";
-        }
-      }
-      if (minutos > 0) {
-        if (minutos == 1) {
-          texto += minutos + " minuto ";
-        } else {
-          texto += minutos + " minutos ";
-        }
-      }
+
+      let tempo = response.data;
+
+      let horas = Math.floor(tempo / 60);
+      let minutos = tempo % 60;
+      let dias = Math.floor(horas / 24);
+
+      horas = horas % 24;
+
+      let texto = "";
+
+      if (dias === 1) texto += " dia ";
+      else if (dias > 0) texto += " dias ";
+
+      if (horas === 1) texto += " hora ";
+      else if (horas > 0) texto += " horas ";
+      
+      if (minutos === 1) texto += " minuto ";
+      else if (minutos > 0) texto += " minutos ";
 
       setCarregando(false);
       setValor(texto);

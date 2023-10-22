@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Slider, FormGroup, FormControlLabel, Checkbox, Rating } from "@mui/material";
+import { Box, Typography, Slider, Rating } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import Card from "../../../Global/Card";
 import "./style.css";

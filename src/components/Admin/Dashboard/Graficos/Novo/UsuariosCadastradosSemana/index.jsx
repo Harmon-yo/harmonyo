@@ -28,15 +28,15 @@ ChartJS.register(
     BarElement
 );
 
-const diasSemanaResumido = ["S", "T", "Q", "Q", "S", "S", "D"]
+const diasSemanaResumido = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]
 const diasSemanaTraduzido = {
-    "S": "Segunda",
-    "T": "Terça",
-    "Q": "Quarta",
-    "Q": "Quinta",
-    "S": "Sexta",
-    "S": "Sábado",
-    "D": "Domingo"
+    "Seg": "Segunda",
+    "Ter": "Terça",
+    "Qua": "Quarta",
+    "Qui": "Quinta",
+    "Sex": "Sexta",
+    "Sab": "Sábado",
+    "Dom": "Domingo"
 }
 
 const options = {

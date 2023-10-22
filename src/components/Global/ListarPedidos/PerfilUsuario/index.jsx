@@ -7,10 +7,8 @@ import { useNavigate } from "react-router-dom";
 function PerfilUsuario(props) {
 
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   
   const handleClose = () => {
-      setAnchorEl(null);
       navigate("/exibicao-perfil?id=" + props.id);
   }  
 

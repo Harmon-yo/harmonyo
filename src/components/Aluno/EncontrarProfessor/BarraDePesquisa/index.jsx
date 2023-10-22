@@ -31,7 +31,7 @@ function BarraDePesquisa(props) {
                 setCidade(cidadesCadastradas[0]);
                 adicionarParametro("cidade", cidadesCadastradas[0], ":");
                 props.adicionarCarregamento(true);
-            } else if (cidadesCadastradas.length == 0) {
+            } else if (cidadesCadastradas.length === 0) {
                 setCidade("?");
                 props.adicionarCarregamento(false);
             }

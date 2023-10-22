@@ -14,17 +14,23 @@ import { Close as CloseIcon } from "@mui/icons-material";
 
 
 function selectAviso(aviso, setAvisosState, avisos, index) {
-    let ComponenteAviso;
+  let tipoAviso;
+
+  switch (aviso.tipo) {
+    case "sucesso":
+      tipoAviso = "success";
+      break;
+    case "erro":
+      tipoAviso = "error";
+      break;
+    default:
+      tipoAviso = "info";
+      break;
+  }
   
-    switch (aviso.tipo) {
-      case "erro":
-        ComponenteAviso = Alert;
-        break;
-    }
-  
-    return (<ComponenteAviso
+    return (<Alert
       key={index}
-      severity="error"
+      severity={tipoAviso}
       action={
         <IconButton
           aria-label="close"
@@ -40,7 +46,7 @@ function selectAviso(aviso, setAvisosState, avisos, index) {
       }}
     >
       {aviso.mensagem}
-    </ComponenteAviso>)
+    </Alert>)
   }
 
 function Design(props) {

@@ -1,6 +1,4 @@
-import React from "react";
 import { useState } from "react";
-import { useEffect } from "react";
 import {Box, Button, Typography, Modal, TextField, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import "./style.css";
@@ -20,7 +18,7 @@ function ModalExperiencias(props) {
 
         let url = '';
 
-        if (experiencia.id == undefined && props.isNovaExp) {
+        if (experiencia.id === undefined && props.isNovaExp) {
             url = '/experiencias'
 
             let dadosExp = { titulo: experiencia.titulo, descricao: experiencia.descricao, idProfessor: sessionStorage.getItem("ID")}
