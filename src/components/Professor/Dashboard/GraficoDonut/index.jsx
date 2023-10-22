@@ -69,7 +69,7 @@ function GraficoDonut() {
   };
 
   const chartOptionsDoughnut = {
-    responsive: true,
+ 
     plugins: {
       legend: {
         display: true,

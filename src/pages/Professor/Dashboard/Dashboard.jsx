@@ -36,7 +36,7 @@ function DashboardProfessor() {
       navigate(-1);
     }
   }, []);
-  var visao = `Visão Geral - ${new Date().getFullYear()}`;
+  var visao = `Visão Anual - ${new Date().getFullYear()}`;
   return (
     <EstruturaPaginaUsuario tela="dashboard">
       <Tabs
@@ -47,9 +47,12 @@ function DashboardProfessor() {
       >
         <Tab label="Visão Mensal" className="tab_dash" {...getTabProps(0)} />
         <Tab label={visao} className="tab_dash" {...getTabProps(1)} />
+        <Tab label="Visão Total" className="tab_dash" {...getTabProps(2)} />
+
       </Tabs>
       <Box className="pagina-container-dash">
-        {value === 0 ? (
+        {
+        value === 0 ? (
           <>
             <Box className="kpi-container">
               <KpiDashboard titulo="Rendimento total" periodo={value}/>
@@ -60,6 +63,19 @@ function DashboardProfessor() {
             <Box className="charts-container">
               <HistoricoAulasGraficoDonut />
               <TabelaMinhasAulas periodo={value} />
+            </Box>
+          </>
+        ) : value == 1 ? (
+          <>
+            <Box className="kpi-container">
+              <KpiDashboard titulo="Rendimento total" periodo={value}/>
+              <KpiDashboard titulo="Quantidade de alunos" periodo={value}/>
+              <KpiDashboard titulo="Quantidade de aulas" periodo={value}/>
+              <KpiDashboard titulo="Tempo de resposta" periodo={value}/>
+            </Box>
+            <Box className="charts-container">
+              <GraficoBarraEmpilhada />
+              <TabelaMinhasAulas periodo={value}/>
             </Box>
           </>
         ) : (
@@ -74,6 +90,7 @@ function DashboardProfessor() {
               <GraficoBarraEmpilhada />
               <TabelaMinhasAulas periodo={value}/>
             </Box>
+      
           </>
         )}
       </Box>
