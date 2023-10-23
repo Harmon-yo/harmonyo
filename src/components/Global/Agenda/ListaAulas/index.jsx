@@ -5,7 +5,6 @@ import "./style.css";
 import api from "../../../../api";
 import { useEffect } from "react";
 import { useState } from "react";
-import { fromDateToFormatDate } from "../../../../utils/utils";
 
 function ListaAulas(props) {
   const { dia } = props;
@@ -13,12 +12,12 @@ function ListaAulas(props) {
   const [aulas, setAulas] = useState();
 
   function getAulas() {
-    var data = dia["$d"].getDate() < 10 ? "0" + dia["$d"].getDate() : dia["$d"].getDate();
-    var mes =
+    let data = dia["$d"].getDate() < 10 ? "0" + dia["$d"].getDate() : dia["$d"].getDate();
+    let mes =
       dia["$d"].getMonth() < 10
         ? "0" + (dia["$d"].getMonth() + 1)
         : dia["$d"].getMonth() + 1;
-    var data = dia["$d"].getFullYear() + "-" + mes + "-" + data;
+     data = dia["$d"].getFullYear() + "-" + mes + "-" + data;
 
     api
       .get(
@@ -27,16 +26,18 @@ function ListaAulas(props) {
       )
 
       .then((response) => {
-        let aulas = []
-        var resposta = response.data
-        console.log(fkUsuario)
-        resposta.map((aula) => {
-          aulas.push({
+        let resposta = response.data
+        let aulas = resposta.map((aula) => {
+          return {
             id: aula.id,
-            nome: sessionStorage.CATEGORIA == "Professor"? aula.aluno.nome:aula.professor.nome,
+            nome: sessionStorage.CATEGORIA === "Professor"? aula.aluno.nome:aula.professor.nome,
             instrumento: aula.aula.instrumento.nome,
-            horario: getHorario(aula.dataAula)})
-        })
+            horario: getHorario(aula.dataAula)
+          }
+        });
+
+        console.log(fkUsuario)
+
         setAulas(aulas);
       })
       .catch((error) => {
@@ -45,10 +46,12 @@ function ListaAulas(props) {
   }
 
   function getHorario(data){
-    var data = new Date(data)
-    var hora = data.getHours() < 10 ? "0" + data.getHours() : data.getHours()
-    var min = data.getMinutes() < 10 ? "0" + data.getMinutes() : data.getMinutes()
-    var horario = hora + ":" + min
+    let dataObj = new Date(data)
+
+    let hora = dataObj.getHours() < 10 ? "0" + dataObj.getHours() : dataObj.getHours()
+    let min = dataObj.getMinutes() < 10 ? "0" + dataObj.getMinutes() : dataObj.getMinutes()
+    let horario = hora + ":" + min
+
     return horario
   }
   useEffect(() => {

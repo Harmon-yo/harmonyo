@@ -65,7 +65,7 @@ function DashboardProfessor() {
               <TabelaMinhasAulas periodo={value} />
             </Box>
           </>
-        ) : value == 1 ? (
+        ) : value === 1 ? (
           <>
             <Box className="kpi-container">
               <KpiDashboard titulo="Rendimento total" periodo={value}/>
@@ -87,7 +87,7 @@ function DashboardProfessor() {
               <KpiDashboard titulo="Tempo de resposta" />
             </Box>
             <Box className="charts-container">
-              <GraficoBarraEmpilhada />
+              <GraficoBarraEmpilhada periodo={value} />
               <TabelaMinhasAulas periodo={value}/>
             </Box>
       

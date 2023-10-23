@@ -8,7 +8,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 import "dayjs/locale/pt-br"
-import { useEffect } from "react";
 
 var isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
 var isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
@@ -31,6 +30,8 @@ const modificarNomeDia = (nome) => {
             return "Sab";
         case "Do":
             return "Dom";
+        default:
+            return nome;
     }
 }
 
@@ -46,7 +47,6 @@ function EtapaUm(props) {
     } = props.diaEHoraEscolhidosState;
 
     const {
-        erroHorario,
         setErroHorario
     } = props.errorHorarioState;
 

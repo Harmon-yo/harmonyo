@@ -1,7 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box, Button, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import "./style.css";
 import Calendario from "../../../components/Global/Agenda/Calendario"
 import ContainerAulas from "../../../components/Global/Agenda/ContainerAulas";

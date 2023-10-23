@@ -18,11 +18,6 @@ function TelaFeedbacks() {
     })
 
     useEffect(() => {
-        getDadosUsuario();
-    }, [])
-
-    function getDadosUsuario() {
-
         api.get(`/usuarios/${dadosUsuario.id}/avaliacoes-recebidas`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
             .then(response => {
                 let dados = response.data;
@@ -36,7 +31,9 @@ function TelaFeedbacks() {
             .catch(err => {
                 console.log(err)
             })
-    }
+    }, [])
+
+    
     return (
         <>
             <EstruturaPaginaUsuario>

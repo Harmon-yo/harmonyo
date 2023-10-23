@@ -23,7 +23,7 @@ const PerfilExibicaoUsuario =   lazy(() => import("./pages/Global/PerfilExibicao
 const TelaFeedbacks = lazy(() => import("./pages/Global/TelaFeedbacks"))
 
 /* Admin */
-const DashboardAdmin =  lazy(() => import("./pages/Admin/Dashboard/Dashboard"));
+const DashboardAdmin =  lazy(() => import("./pages/Admin/Dashboard2/Dashboard"));
 
 function Rotas() {
   return (

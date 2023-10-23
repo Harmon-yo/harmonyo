@@ -19,6 +19,9 @@ function selectAviso(aviso, setAvisosState, avisos, index) {
     case "erro":
       tipoAviso = "error";
       break;
+    default:
+      tipoAviso = "info";
+      break;
   }
 
   return (<Alert

@@ -1,13 +1,12 @@
 import React from "react";
 import "./style.css";
 import FeedbackIcon from '@mui/icons-material/Feedback';
-import { Box, Typography, Button, Modal, Stack } from "@mui/material";
+import { Box, Typography, Button, Modal } from "@mui/material";
 import { ModalClose, ModalDialog } from "@mui/joy";
 
 function ModalFila(props) {
 
     const [open, setOpen] = React.useState(true);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const colocarFila = (resposta) => () => {
