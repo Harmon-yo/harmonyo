@@ -145,7 +145,7 @@ function Tabela(props) {
                         nome={sessionStorage.CATEGORIA === "Professor" ? row.aluno.nome : row.professor.nome} />
                     </TableCell>
                     <TableCell className="bodyCelula" align="center">{row.aula.instrumento.nome}</TableCell>
-                    <TableCell className="bodyCelula" align="center"><Status status={row.status.descricao} /></TableCell>
+                    <TableCell className="bodyCelula" align="center"><Status pedidoState={row} status={row.status.descricao} /></TableCell>
                     <TableCell className="bodyCelula" align="center">{handleData(row.dataAula)}</TableCell>
                     <TableCell className="bodyCelula" style={{ fontWeight: "bold" }} align="left">R$ {(row.valorAula).toFixed(2)}</TableCell>
                     <TableCell className="bodyCelula" align="center">
