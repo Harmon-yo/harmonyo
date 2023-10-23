@@ -87,7 +87,7 @@ function DashboardProfessor() {
               <KpiDashboard titulo="Tempo de resposta" />
             </Box>
             <Box className="charts-container">
-              <GraficoBarraEmpilhada />
+              <GraficoBarraEmpilhada periodo={value} />
               <TabelaMinhasAulas periodo={value}/>
             </Box>
       

@@ -14,7 +14,7 @@ import "./style.css";
 import Card from "../../../Global/Card";
 import api from "../../../../api";
 
-function GraficoBarraEmpilhada() {
+function GraficoBarraEmpilhada(props) {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -32,21 +32,28 @@ function GraficoBarraEmpilhada() {
 
   useEffect(() => {
     getDados();
-  }, []);
+  }, [props.periodo]);
 
   const config = {
     headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
   };
 
   function getDados() {
+
+    setLabels("");
+    setAulasCanceladasDados([]);
+    setAulasConcluidasDados([]);
+    setAulasRecusadasDados([]);
+    setCarregando(true);
+    console.log(props.periodo)
     api
       .get(
-        "/professores/dashboard/dados-aulas-anual/" + sessionStorage.ID,
+        `/professores/dashboard/dados-aulas-${props.periodo == 2 ? "total" : "anual" }/` + sessionStorage.ID,
         config
       )
       .then((response) => {
         let dadosResposta = response.data;
-
+        console.log(response)
         const newLabels = dadosResposta.map((item) => item.mes);
         const newAulasConcluidas = dadosResposta.map((item) => item.aulasConcluidas);
         const newAulasCanceladas = dadosResposta.map((item) => item.aulasCanceladas);
