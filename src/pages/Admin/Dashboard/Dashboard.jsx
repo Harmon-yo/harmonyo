@@ -5,8 +5,8 @@ import { verificarToken } from "../../../utils/index.js";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
-import UsuariosRetidos from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidos/index.jsx";
-import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastrados/index.jsx";
+import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/AulasMes/index.jsx';
+import UsuariosCadastradosMes from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosMes/index.jsx";
 import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
 import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
 import api from '../../../api.js';
@@ -49,7 +49,7 @@ function DashboardAdmin(props) {
         },
         {
             id: 4,
-            nome: "Avaliações",
+            nome: "Rendimento dos Professores",
             endpoint: "",
             valor: 0,
         }
@@ -80,7 +80,6 @@ function DashboardAdmin(props) {
         if (verificarToken()) navigate("/login");
 
         metricas.forEach(metrica => {
-            if (metrica.id !== 4) {
                 requisicaoGet(metrica.endpoint).then((resposta) => {
                     setMetricas(metricas => metricas.map(metricaAntiga => {
                         if (metricaAntiga.id === metrica.id) {
@@ -92,23 +91,20 @@ function DashboardAdmin(props) {
                 mensagem: `Erro ao obter quantidade de ${metrica.nome}`,
                 tipo: "erro"
             }));
-            }
         });
 
         valorAulas.forEach(valorAula => {
-            if (valorAula.id !== 4) {
-                requisicaoGet(valorAula.endpoint).then((resposta) => {
-                    setValorAulas(valorAulas => [...valorAulas.map(valorAulaAntigo => {
-                        if (valorAulaAntigo.id === valorAula.id) {
-                            valorAulaAntigo.valor = resposta.data;
-                        }
-                        return valorAulaAntigo;
-                    })])
-                }).catch(() => adicionaAviso({
-                    mensagem: `Erro ao obter quantidade de ${valorAula.nome}`,
-                    tipo: "erro"
-                }));
-            }
+            requisicaoGet(valorAula.endpoint).then((resposta) => {
+                setValorAulas(valorAulas => [...valorAulas.map(valorAulaAntigo => {
+                    if (valorAulaAntigo.id === valorAula.id) {
+                        valorAulaAntigo.valor = resposta.data;
+                    }
+                    return valorAulaAntigo;
+                })])
+            }).catch(() => adicionaAviso({
+                mensagem: `Erro ao obter quantidade de ${valorAula.nome}`,
+                tipo: "erro"
+            }));
         });
     }, []);
 
@@ -117,8 +113,8 @@ function DashboardAdmin(props) {
             <Box className="pagina-container">
                 <Metricas metricas={metricas} />
                 <Box className="secao secao-usuarios-retidos-cadastrados">
-                    <UsuariosRetidos />
-                    <UsuariosCadastrados adicionaAviso={adicionaAviso} />
+                    {/* <AulasMes/> */}
+                    <UsuariosCadastradosMes adicionaAviso={adicionaAviso} />
                     <UsuariosCadastradosSemana adicionaAviso={adicionaAviso} />
 
                 </Box>

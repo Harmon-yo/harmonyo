@@ -1,13 +1,8 @@
-.metricas-container {
-    width: 100%;
-    height: auto;
+.intervalo-tempo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 16px;
+    float: right;
     margin-bottom: calc(var(--espaco-padrao) * 2);
-    gap: 24px;
-}
-
-.card-metrica {
-    width: 100%;
 }
