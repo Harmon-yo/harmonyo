@@ -11,3 +11,13 @@
 .card-metrica {
     width: 100%;
 }
+
+.card-valor {
+    font-weight: 400 !important;
+    font-size: var(--fonte-h5) !important;
+}
+
+.card-valor-adicional-usuario {
+    font-size: var(--fonte-h6) !important;
+    margin-right: calc(var(--espaco-padrao) * 2);
+}

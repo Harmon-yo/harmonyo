@@ -5,10 +5,10 @@ import { verificarToken } from "../../../utils/index.js";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
-import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/AulasMes/index.jsx';
-import UsuariosCadastradosMes from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosMes/index.jsx";
+import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosMes/index.jsx";
 import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
 import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
+import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/AulasMes/index.jsx';
 import api from '../../../api.js';
 
 /* import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx"; */
@@ -50,7 +50,7 @@ function DashboardAdmin(props) {
         {
             id: 4,
             nome: "Rendimento dos Professores",
-            endpoint: "",
+            endpoint: "/professores/dashboard/rendimentoTotal",
             valor: 0,
         }
     ]);
@@ -80,6 +80,7 @@ function DashboardAdmin(props) {
         if (verificarToken()) navigate("/login");
 
         metricas.forEach(metrica => {
+            if (metrica.id !== 4) {
                 requisicaoGet(metrica.endpoint).then((resposta) => {
                     setMetricas(metricas => metricas.map(metricaAntiga => {
                         if (metricaAntiga.id === metrica.id) {
@@ -91,20 +92,23 @@ function DashboardAdmin(props) {
                 mensagem: `Erro ao obter quantidade de ${metrica.nome}`,
                 tipo: "erro"
             }));
+            }
         });
 
         valorAulas.forEach(valorAula => {
-            requisicaoGet(valorAula.endpoint).then((resposta) => {
-                setValorAulas(valorAulas => [...valorAulas.map(valorAulaAntigo => {
-                    if (valorAulaAntigo.id === valorAula.id) {
-                        valorAulaAntigo.valor = resposta.data;
-                    }
-                    return valorAulaAntigo;
-                })])
-            }).catch(() => adicionaAviso({
-                mensagem: `Erro ao obter quantidade de ${valorAula.nome}`,
-                tipo: "erro"
-            }));
+            if (valorAula.id !== 4) {
+                requisicaoGet(valorAula.endpoint).then((resposta) => {
+                    setValorAulas(valorAulas => [...valorAulas.map(valorAulaAntigo => {
+                        if (valorAulaAntigo.id === valorAula.id) {
+                            valorAulaAntigo.valor = resposta.data;
+                        }
+                        return valorAulaAntigo;
+                    })])
+                }).catch(() => adicionaAviso({
+                    mensagem: `Erro ao obter quantidade de ${valorAula.nome}`,
+                    tipo: "erro"
+                }));
+            }
         });
     }, []);
 
@@ -113,18 +117,12 @@ function DashboardAdmin(props) {
             <Box className="pagina-container">
                 <Metricas metricas={metricas} />
                 <Box className="secao secao-usuarios-retidos-cadastrados">
-                    {/* <AulasMes/> */}
-                    <UsuariosCadastradosMes adicionaAviso={adicionaAviso} />
+                    <AulasMes />
+                    <UsuariosCadastrados adicionaAviso={adicionaAviso} />
                     <UsuariosCadastradosSemana adicionaAviso={adicionaAviso} />
-
                 </Box>
                 <Box className="secao secao-aulas">
-                    <Box sx={{
-                        width: "30%",
-                        height: "100%",
-                    }}>
-                        <AulasSemana adicionaAviso={adicionaAviso}/>
-                    </Box>
+                <AulasSemana adicionaAviso={adicionaAviso}/>
                     <AulasInfo className="realizadas" titulo="Aulas Realizadas na semana" valor={valorAulas[0].valor} />
                     <AulasInfo className="pendentes" titulo="Aulas Pendentes na semana" valor={valorAulas[1].valor} />
                     <AulasInfo className="canceladas" titulo="Aulas Canceladas na semana" valor={valorAulas[2].valor} />
