@@ -38,8 +38,11 @@ function ModalDetalhes(props) {
   const pedido = props.pedido;
   const [historico, setHistorico] = React.useState([]);
 
-  const adicionaAviso = props.adicionaAviso;
+  const [pedidoPai, setPedidoPai] = React.useState([]);
 
+  const [posicaoFila, setPosicaoFila] = React.useState([]);
+
+  const adicionaAviso = props.adicionaAviso;
 
   const errosResponse = (error, acao) => {
     switch (error.response.status) {
@@ -81,15 +84,41 @@ function ModalDetalhes(props) {
       setHistorico([
         {
           id: 1,
-          desc: `${pedido.aluno.nome} fez uma proposta de ${
-            pedido.aula.instrumento.nome
-          } para ${pedido.professor.nome} no dia ${new Date(
-            pedido.dataAula
-          ).toLocaleDateString()}`,
+          desc: `${pedido.aluno.nome} fez uma proposta de ${pedido.aula.instrumento.nome
+            } para ${pedido.professor.nome} no dia ${new Date(
+              pedido.dataAula
+            ).toLocaleDateString()}`,
         },
       ]);
+
+      filaEspera();
     }
   }, [pedido]);
+
+  const filaEspera = () => {
+
+    api.get(`/pedidos/fila-espera/pai/${pedido.id}`, {
+      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    }).then((response) => {
+      console.log(response.data);
+      setPedidoPai({
+        nomeAluno: response.data.aluno.nome,
+        instrumento: response.data.aula.instrumento.nome,
+        dataAula: response.data.dataAula,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    api.get(`/pedidos/fila-espera/posicao/${pedido.id}`, {
+      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    }).then((response) => {
+      console.log(response.data);
+      setPosicaoFila(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   const navigate = useNavigate();
 
@@ -220,7 +249,6 @@ function ModalDetalhes(props) {
         case "Confirmado":
           if (new Date() > new Date(pedido.dataAula)) {
             return criarBotao("Concluir Pedido", concluirPedido, "aceitar");
-          } else {
           }
         default:
           return null;
@@ -335,11 +363,23 @@ function ModalDetalhes(props) {
                 })}
               </Box>
             </Box>
+            {sessionStorage.CATEGORIA === "Professor" && pedido.status.descricao === "Em Fila" ?
+              <Box className="filaModal">
+                <Typography className="tituloModal">Fila</Typography>
+                <Typography>Este pedido está na posição: <b>{posicaoFila}</b></Typography>
+                <Typography>Pedido que está no topo da fila:</Typography>
+                <Box className="fila-lista">
+                  <Typography><b>Aluno:</b> {pedidoPai.nomeAluno}</Typography>
+                  <Typography><b>Instrumento:</b> {pedidoPai.instrumento}</Typography>
+                  <Typography><b>Data:</b> {new Date(pedidoPai.dataAula).toLocaleDateString()}</Typography>
+                </Box>
+              </Box>
+              : null}
           </Box>
           <Box className="footerModal">
             {pedido.status.descricao === "Aguardando Pagamento" ||
-            pedido.status.descricao === "Pendente" ||
-            pedido.status.descricao === "Confirmado" ? (
+              pedido.status.descricao === "Pendente" ||
+              pedido.status.descricao === "Confirmado" ? (
               <Button className="msgChat" onClick={criarChat}>
                 <MessageIcon className="icon-color msg-icon" />
                 <Typography className="txtChat">Mandar mensagem</Typography>
