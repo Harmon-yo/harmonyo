@@ -24,27 +24,27 @@ const requisicaoGet = (url) => {
 function DashboardAdmin(props) {
     const [avisos, setAvisos] = useState([]);
 
-    const adicionaAviso = (avisos) => {
-        setAvisos([...avisos, avisos]);
+    const adicionaAviso = (novoAviso) => {
+        setAvisos([...avisos, novoAviso]);
     }
 
     const [metricas, setMetricas] = useState([
         {
             id: 1,
             nome: "Usuários",
-            endpoint: "/usuarios/quantidade",
+            endpoint: "/usuarios/quantidade-cadastrados-mes-soma",
             valor: 0,
         },
         {
             id: 2,
             nome: "Aulas por aluno",
-            endpoint: "/aulas/quantidade-por-aluno",
+            endpoint: "/aulas/quantidade-por-aluno-mes",
             valor: 0,
         },
         {
             id: 3,
             nome: "Aulas",
-            endpoint: "/aulas/quantidade",
+            endpoint: "/aulas/quantidade-mes",
             valor: 0,
         },
         {
