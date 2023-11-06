@@ -28,9 +28,9 @@ function Notificacao(props) {
 
     const [paginaAtual, setPaginaAtual] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(0);
-    
+
     const [notificacoes, setNotificacoes] = useState([]);
-    const qtdNotificacao = notificacoes.filter((notificacao) => !notificacao.lida).length;
+    const [qtdNotificacoes, setQtdNotificacoes] = useState(0);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = !!anchorEl;
@@ -48,12 +48,12 @@ function Notificacao(props) {
 
         setPaginaAtual(novaPagina + 1);
     }
-        
+
     // =================== WEBSOCKET ===================
 
     const onConnect = () => {
         sockClient.subscribe(`/user/${idUsuario}/notificacao`, (message) => handleMessageSocket(message))
-        
+
         sockClient.send("/app/envia-notificacoes", {}, JSON.stringify({
             idUsuario: sessionStorage.getItem("ID"),
             pagina: paginaAtual - 1,
@@ -63,6 +63,7 @@ function Notificacao(props) {
     const handleMessageSocket = (msg) => {
         const corpo = JSON.parse(msg.body);
         const notificacoes = corpo.notificacoes;
+        if (corpo.qtdNotificacoesNaoLidas !== undefined) setQtdNotificacoes(corpo.qtdNotificacoesNaoLidas);
 
         switch (corpo.tipo) {
             case "INIT":
@@ -158,7 +159,7 @@ function Notificacao(props) {
     return (
         <div>
             <Badge id="notificacao-botao" className="container-usuario-notificacao"
-                color="primary" badgeContent={qtdNotificacao}
+                color="primary" badgeContent={qtdNotificacoes}
                 aria-controls={open ? 'notificacao-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
@@ -171,33 +172,39 @@ function Notificacao(props) {
                 <Box className="notificacao-menu-container-title">
                     <Typography className="notificacao-menu-title">Notificações</Typography>
                     {
-                        qtdNotificacao > 0 ? <Typography className="notificacao-menu-lido" onClick={marcarTodosComoLido}>Marcar como visto</Typography>
+                        qtdNotificacoes > 0 ? <Typography className="notificacao-menu-lido" onClick={marcarTodosComoLido}>Marcar como visto</Typography>
                             : ""
                     }
                 </Box>
-                {
-                    notificacoes.map(
-                        (notificacao) => (
-                            <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={() => {
-                                handleClickNotificacao(notificacao.id);
-                            }}
-                                sx={{
-                                    backgroundColor: !notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
-                                }}>
-                                <Box className="notificacao-menu-item-info-container">
-                                    <img src={notificacao.src} className="notificacao-menu-item-img" alt="" />
-                                    <Typography className="notificacao-menu-item-titulo">{notificacao.titulo}</Typography>
-                                </Box>
-                                <Box className="notificacao-menu-item-container-tempo">
-                                    <Typography className="notificacao-menu-item-tempo">{notificacao.tempo}</Typography>
-                                </Box>
-                            </MenuItem>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px !important'
+                }}>
+                    {
+                        notificacoes.map(
+                            (notificacao) => (
+                                <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={() => {
+                                    handleClickNotificacao(notificacao.id);
+                                }}
+                                    sx={{
+                                        backgroundColor: !notificacao.lida ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
+                                    }}>
+                                    <Box className="notificacao-menu-item-info-container">
+                                        <img src={notificacao.src} className="notificacao-menu-item-img" alt="" />
+                                        <Typography className="notificacao-menu-item-titulo">{notificacao.titulo}</Typography>
+                                    </Box>
+                                    <Box className="notificacao-menu-item-container-tempo">
+                                        <Typography className="notificacao-menu-item-tempo">{notificacao.tempo}</Typography>
+                                    </Box>
+                                </MenuItem>
+                            )
                         )
-                    )
-                }
+                    }
+                </Box>
 
                 <Box className="paginacao-container">
-                    <Pagination count={totalPaginas} size="small" page={paginaAtual} onChange={mudarPagina}/>
+                    <Pagination count={totalPaginas} size="small" page={paginaAtual} onChange={mudarPagina} />
                 </Box>
             </Popup>
         </div>
