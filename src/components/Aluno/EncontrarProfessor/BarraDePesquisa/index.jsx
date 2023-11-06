@@ -19,8 +19,10 @@ function BarraDePesquisa(props) {
     const [textoDeBusca, setTextoDeBusca] = React.useState("");
 
     const mudarCidade = (event) => {
-        setCidade(event.target.value);
-        adicionarParametro("cidade", event.target.value, ":");
+        let cidadeEscolhida = event.target.value;
+        
+        setCidade(cidadeEscolhida);
+        adicionarParametro("cidade", cidadeEscolhida, ":");
     };
 
     useEffect(() => {
@@ -98,7 +100,7 @@ function BarraDePesquisa(props) {
                         {
                             cidades.map(
                                 (cidade) => (
-                                    <MenuItem value={cidade}>{cidade}</MenuItem>
+                                    <MenuItem key={cidade} value={cidade}>{cidade}</MenuItem>
                                 ))
                         }
                     </Select>

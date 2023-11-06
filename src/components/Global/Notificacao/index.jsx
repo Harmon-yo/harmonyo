@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Badge, Box, MenuItem, Typography } from "@mui/material";
+import { Badge, Box, MenuItem, Typography, Pagination } from "@mui/material";
 import PropostaIcon from "../../../imgs/business-proposal.png";
 import Popup from "../Popup/index.jsx";
 import "./style.css";
 import moment from "moment";
 import "moment/locale/pt-br";
+
+import { over } from "stompjs";
+import SockJS from "sockjs-client";
 
 import api from "../../../api.js";
 
@@ -17,24 +20,103 @@ const requisicaoPut = (url, body) => {
     return api.put(url, body, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
 }
 
-function Notificacao(props) {
+const wsUrl = "http://localhost:8080/ws";
+let sockClient = null;
 
+function Notificacao(props) {
     const idUsuario = sessionStorage.getItem("ID");
 
-    const [qtdPaginas, setQtdPaginas] = useState(0);
+    const [paginaAtual, setPaginaAtual] = useState(1);
+    const [totalPaginas, setTotalPaginas] = useState(0);
+    
     const [notificacoes, setNotificacoes] = useState([]);
-    const [qtdNotificacao, setQtdNotificacao] = useState(0);
+    const qtdNotificacao = notificacoes.filter((notificacao) => !notificacao.lida).length;
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = !!anchorEl;
 
-    const abrirNotificacoes = (event) => {
-        setAnchorEl(event.currentTarget);
+    // =================== PAGINACAO ===================
+
+    const mudarPagina = (event, value) => {
+        const novaPagina = value - 1;
+
+        setNotificacoes([]);
+        sockClient.send("/app/envia-notificacoes", {}, JSON.stringify({
+            idUsuario: sessionStorage.getItem("ID"),
+            pagina: novaPagina,
+        }));
+
+        setPaginaAtual(novaPagina + 1);
+    }
+        
+    // =================== WEBSOCKET ===================
+
+    const onConnect = () => {
+        sockClient.subscribe(`/user/${idUsuario}/notificacao`, (message) => handleMessageSocket(message))
+        
+        sockClient.send("/app/envia-notificacoes", {}, JSON.stringify({
+            idUsuario: sessionStorage.getItem("ID"),
+            pagina: paginaAtual - 1,
+        }));
     }
 
-    const fecharNotificacoes = () => {
-        setAnchorEl(null);
+    const handleMessageSocket = (msg) => {
+        const corpo = JSON.parse(msg.body);
+        const notificacoes = corpo.notificacoes;
+
+        switch (corpo.tipo) {
+            case "INIT":
+                adicionarNotificacoes(notificacoes);
+                break;
+            case "ADD":
+                adicionarNotificacao(notificacoes);
+                break;
+        }
     }
+
+    const onError = () => {
+        console.log("Erro ao conectar ao websocket. Tentando novamente em 5 segundos!");
+        setTimeout(openConnection, 5000);
+    }
+
+    const openConnection = () => {
+        sockClient = over(new SockJS(wsUrl));
+        sockClient.connect({}, onConnect, onError)
+
+    }
+
+    // =================== AUXILIARES ===================
+
+    const adicionarNotificacoes = (pagina) => {
+        const notificacoes = pagina.content;
+
+        notificacoes.forEach((notificacao) => {
+            notificacao.tempo = moment(notificacao.data).fromNow();
+            notificacao.src = PropostaIcon;
+        });
+
+        setTotalPaginas(pagina.totalPages);
+        setNotificacoes(notificacoes);
+    }
+
+    const adicionarNotificacao = (notificacao) => {
+        if (paginaAtual !== 1) return;
+
+        notificacao.tempo = moment(notificacao.data).fromNow();
+        notificacao.src = PropostaIcon;
+
+        if (notificacoes.length === 5) {
+            notificacoes.pop();
+        }
+
+        notificacoes.unshift(notificacao);
+    }
+
+    const abrirNotificacoes = (event) => setAnchorEl(event.currentTarget);
+
+    const fecharNotificacoes = () => setAnchorEl(null);
+
+    // =================== HANDLERS ===================
 
     const handleClickNotificacao = (idNotificacao) => {
         requisicaoPut(`/notificacoes/lida/${idNotificacao}`, {}).then((resposta) => {
@@ -46,9 +128,6 @@ function Notificacao(props) {
                     }
                 });
                 setNotificacoes(notificacoes);
-                if (qtdNotificacao > 0) {
-                    setQtdNotificacao(qtdNotificacao - 1);
-                }
             }
         }
         ).catch((erro) => {
@@ -63,7 +142,6 @@ function Notificacao(props) {
                     notificacao.lida = true;
                 });
                 setNotificacoes(notificacoes);
-                setQtdNotificacao(0);
             }
         }
         ).catch((erro) => {
@@ -71,36 +149,11 @@ function Notificacao(props) {
         });
     }
 
-    const obterNotificacoes = () => {
-        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
-            const respostaPagina = resposta.data;
-
-            const notificacoes = respostaPagina.content;
-            console.log("Recebi a notificacao: ");
-            console.log(notificacoes);
-            if (resposta.status === 204) {
-                setNotificacoes([]);
-                return;
-            }
-
-            notificacoes.forEach((notificacao) => {
-                notificacao.tempo = moment(notificacao.data).fromNow();
-                notificacao.src = PropostaIcon;
-            });
-
-            setQtdPaginas(respostaPagina.totalPages);
-                
-            setNotificacoes(notificacoes);
-            setQtdNotificacao(notificacoes.filter((notificacao) => !notificacao.lida).length);
-        }).catch((erro) => {
-            console.log(erro);
-        });
-    }
+    // =================== USE EFFECT ===================
 
     useEffect(() => {
-        obterNotificacoes();
+        openConnection();
     }, []);
-
 
     return (
         <div>
@@ -128,9 +181,9 @@ function Notificacao(props) {
                             <MenuItem key={notificacao.id} className="notificacao-menu-item" onClick={() => {
                                 handleClickNotificacao(notificacao.id);
                             }}
-                            sx={{
-                                backgroundColor: !notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
-                            }}>
+                                sx={{
+                                    backgroundColor: !notificacao.lido ? "var(--notificacao-lida)" : "var(--notificacao-nao-lida)"
+                                }}>
                                 <Box className="notificacao-menu-item-info-container">
                                     <img src={notificacao.src} className="notificacao-menu-item-img" alt="" />
                                     <Typography className="notificacao-menu-item-titulo">{notificacao.titulo}</Typography>
@@ -143,21 +196,39 @@ function Notificacao(props) {
                     )
                 }
 
-                {
-                    qtdPaginas > 1 ? (<Box sx={{
-                        width: "100%",
-                        height: "fit-content",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}>
-                        <Typography className="notificacao-menu-lido" >Mostrar Todos</Typography>
-    
-                    </Box>) : ""
-                }
+                <Box className="paginacao-container">
+                    <Pagination count={totalPaginas} size="small" page={paginaAtual} onChange={mudarPagina}/>
+                </Box>
             </Popup>
         </div>
     );
 }
+
+/* 
+const obterNotificacoes = () => {
+        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
+            const respostaPagina = resposta.data;
+
+            const notificacoes = respostaPagina.content;
+            console.log("Recebi a notificacao: ");
+            console.log(notificacoes);
+            if (resposta.status === 204) {
+                setNotificacoes([]);
+                return;
+            }
+
+            notificacoes.forEach((notificacao) => {
+                notificacao.tempo = moment(notificacao.data).fromNow();
+                notificacao.src = PropostaIcon;
+            });
+
+            setQtdPaginas(respostaPagina.totalPages);
+
+            setNotificacoes(notificacoes);
+        }).catch((erro) => {
+            console.log(erro);
+        });
+    }
+*/
 
 export default Notificacao;
