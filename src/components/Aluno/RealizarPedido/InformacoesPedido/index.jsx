@@ -69,14 +69,12 @@ function InformacoesPedido(props) {
     function validarData(data) {
 
         let dataFormatada = data.format("YYYY-MM-DDTHH:mm:ss");
-        console.log(dataFormatada);
 
         api.get(`/pedidos/usuario/${props.idProfessor}`,
             { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
                 let pedidos = response.data;
                 let validacao = true;
                 for (let i = 0; i < pedidos.length; i++) {
-                    console.log(pedidos[i].dataAula);
                     if (pedidos[i].dataAula === dataFormatada) {
                         validacao = false;
                         console.log("Aula já marcada");
@@ -101,7 +99,7 @@ function InformacoesPedido(props) {
 
     useEffect(() => {
         if (fila) {
-            setStep(1);
+            setStep(step + 1);
         }
     }, [fila])
 

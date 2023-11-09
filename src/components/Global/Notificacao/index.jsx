@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { Badge, Box, MenuItem, Typography, Pagination } from "@mui/material";
 import PropostaIcon from "../../../imgs/business-proposal.png";
@@ -21,12 +21,14 @@ const requisicaoPut = (url, body) => {
 }
 
 const wsUrl = "http://localhost:8080/ws";
-let sockClient = null;
+let ws = null;
 
 function Notificacao(props) {
     const idUsuario = sessionStorage.getItem("ID");
 
-    const [paginaAtual, setPaginaAtual] = useState(1);
+    const paginaAtualRef = useRef(1);
+    const pagAtual = paginaAtualRef.current;
+
     const [totalPaginas, setTotalPaginas] = useState(0);
 
     const [notificacoes, setNotificacoes] = useState([]);
@@ -35,83 +37,19 @@ function Notificacao(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = !!anchorEl;
 
+    const [primeiraRequisicao, setPrimeiraRequisicao] = useState(true);
+
+
     // =================== PAGINACAO ===================
 
     const mudarPagina = (event, value) => {
-        const novaPagina = value - 1;
-
         setNotificacoes([]);
-        sockClient.send("/app/envia-notificacoes", {}, JSON.stringify({
-            idUsuario: sessionStorage.getItem("ID"),
-            pagina: novaPagina,
-        }));
-
-        setPaginaAtual(novaPagina + 1);
+        paginaAtualRef.current = value;
     }
 
     // =================== WEBSOCKET ===================
 
-    const onConnect = () => {
-        sockClient.subscribe(`/user/${idUsuario}/notificacao`, (message) => handleMessageSocket(message))
-
-        sockClient.send("/app/envia-notificacoes", {}, JSON.stringify({
-            idUsuario: sessionStorage.getItem("ID"),
-            pagina: paginaAtual - 1,
-        }));
-    }
-
-    const handleMessageSocket = (msg) => {
-        const corpo = JSON.parse(msg.body);
-        const notificacoes = corpo.notificacoes;
-        if (corpo.qtdNotificacoesNaoLidas !== undefined) setQtdNotificacoes(corpo.qtdNotificacoesNaoLidas);
-
-        switch (corpo.tipo) {
-            case "INIT":
-                adicionarNotificacoes(notificacoes);
-                break;
-            case "ADD":
-                adicionarNotificacao(notificacoes);
-                break;
-        }
-    }
-
-    const onError = () => {
-        console.log("Erro ao conectar ao websocket. Tentando novamente em 5 segundos!");
-        setTimeout(openConnection, 5000);
-    }
-
-    const openConnection = () => {
-        sockClient = over(new SockJS(wsUrl));
-        sockClient.connect({}, onConnect, onError)
-
-    }
-
     // =================== AUXILIARES ===================
-
-    const adicionarNotificacoes = (pagina) => {
-        const notificacoes = pagina.content;
-
-        notificacoes.forEach((notificacao) => {
-            notificacao.tempo = moment(notificacao.data).fromNow();
-            notificacao.src = PropostaIcon;
-        });
-
-        setTotalPaginas(pagina.totalPages);
-        setNotificacoes(notificacoes);
-    }
-
-    const adicionarNotificacao = (notificacao) => {
-        if (paginaAtual !== 1) return;
-
-        notificacao.tempo = moment(notificacao.data).fromNow();
-        notificacao.src = PropostaIcon;
-
-        if (notificacoes.length === 5) {
-            notificacoes.pop();
-        }
-
-        notificacoes.unshift(notificacao);
-    }
 
     const abrirNotificacoes = (event) => setAnchorEl(event.currentTarget);
 
@@ -153,8 +91,79 @@ function Notificacao(props) {
     // =================== USE EFFECT ===================
 
     useEffect(() => {
-        openConnection();
+        ws = over(new SockJS(wsUrl));
+
+        ws.connect({}, () => {
+            ws.subscribe(`/user/${idUsuario}/notificacao`, (msg) => {
+                handleMessageSocket(msg);
+            });
+
+            ws.send("/app/envia-notificacoes", {}, JSON.stringify({
+                idUsuario: sessionStorage.getItem("ID"),
+                pagina: pagAtual - 1,
+            }));
+        }, () => {
+            console.log("Erro ao conectar no websocket");
+        })
+
+        const handleMessageSocket = (msg) => {
+            const corpo = JSON.parse(msg.body);
+            if (corpo.qtdNotificacoesNaoLidas !== undefined) setQtdNotificacoes(prev => corpo.qtdNotificacoesNaoLidas);
+    
+            switch (corpo.tipo) {
+                case "INIT": 
+                
+                    setTotalPaginas(corpo.notificacoes.totalPages);
+                    adicionarNotificacoes(corpo.notificacoes)
+                    break;
+
+                case "ADD": 
+                
+                    setTotalPaginas(corpo.totalPaginas);
+                    adicionarNotificacao(corpo.notificacao)
+                    break;
+            }
+        }
+
+        const adicionarNotificacoes = (pagina) => {
+            const notificacoesObtidas = pagina.content.map((notificacao) => {
+                notificacao.tempo = moment(notificacao.data).fromNow();
+                notificacao.src = PropostaIcon;
+                return notificacao;
+            });
+    
+            setNotificacoes(prevNotificacoes => [...prevNotificacoes, ...notificacoesObtidas]);
+        }
+    
+        const adicionarNotificacao = (notificacao) => {
+            if (paginaAtualRef.current !== 1) return;
+
+            notificacao.tempo = moment(notificacao.data).fromNow();
+            notificacao.src = PropostaIcon;
+
+            setNotificacoes(prevNotificacoes => {
+                if (prevNotificacoes.length === 5) prevNotificacoes.pop();
+                return [notificacao, ...prevNotificacoes];
+            });
+        }
     }, []);
+
+    useEffect(() => {
+        console.log("Mudando de página");
+        console.log(paginaAtualRef.current);
+    }, [paginaAtualRef.current]);
+
+    useEffect(() => {
+        if (primeiraRequisicao) {
+            setPrimeiraRequisicao(false);
+            return;
+        }
+
+        ws.send("/app/envia-notificacoes", {}, JSON.stringify({
+            idUsuario: sessionStorage.getItem("ID"),
+            pagina: paginaAtualRef.current - 1,
+        }));
+    }, [paginaAtualRef.current]);
 
     return (
         <div>
@@ -204,7 +213,7 @@ function Notificacao(props) {
                 </Box>
 
                 <Box className="paginacao-container">
-                    <Pagination count={totalPaginas} size="small" page={paginaAtual} onChange={mudarPagina} />
+                    <Pagination count={totalPaginas} size="small" page={pagAtual} onChange={mudarPagina} />
                 </Box>
             </Popup>
         </div>
