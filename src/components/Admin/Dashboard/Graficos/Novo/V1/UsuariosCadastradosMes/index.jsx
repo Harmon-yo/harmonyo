@@ -9,10 +9,10 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import Card from '../../../CardComTitulo/index.jsx';
+import Card from '../../../../CardComTitulo/index.jsx';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import api from '../../../../../../api.js';
+import api from '../../../../../../../api.js';
 import './style.css';
 
 ChartJS.register(

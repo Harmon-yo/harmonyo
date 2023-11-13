@@ -10,9 +10,9 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import Card from '../../../CardComTitulo/index.jsx';
+import Card from '../../../../CardComTitulo/index.jsx';
 
-import api from '../../../../../../api.js';
+import api from '../../../../../../../api.js';
 
 ChartJS.register(
     CategoryScale,

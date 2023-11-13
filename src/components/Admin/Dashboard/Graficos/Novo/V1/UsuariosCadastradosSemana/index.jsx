@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../../../../../../api.js";
+import api from "../../../../../../../api.js";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -12,7 +12,7 @@ import {
     BarElement
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import Card from "../../../CardComTitulo/index.jsx";
+import Card from "../../../../CardComTitulo/index.jsx";
 import "./style.css";
 import { Box } from "@mui/material";
 import InformacaoAdicionalGrafico from "./InformacaoAdicionalGrafico/index.jsx";

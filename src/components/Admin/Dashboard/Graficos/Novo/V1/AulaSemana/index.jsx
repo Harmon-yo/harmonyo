@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../../../../../../api";
+import api from "../../../../../../../api";
 import "./style.css";
 import {
     Chart as ChartJS,
@@ -13,7 +13,7 @@ import {
     BarElement
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import Card from "../../../CardComTitulo/index.jsx";
+import Card from "../../../../CardComTitulo/index.jsx";
 
 ChartJS.register(
     CategoryScale,

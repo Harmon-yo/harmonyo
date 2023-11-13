@@ -93,6 +93,7 @@ function Dashboard(props) {
                 </LocalizationProvider>
             </Box>
             <Metricas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso}/>
+            
         </EstruturaPaginaUsuario>
     );
 }

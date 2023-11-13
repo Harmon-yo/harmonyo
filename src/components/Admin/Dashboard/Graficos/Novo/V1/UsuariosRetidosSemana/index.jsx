@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FrequenciaSemanal from "./FrequenciaSemanal/index.jsx"
-import api from "../../../../../../api";
+import api from "../../../../../../../api.js";
 
 const frequencias = [
     {

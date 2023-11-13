@@ -1,5 +1,5 @@
 import BarraVertical from './BarraVertical';
-import Card from '../../../../CardComTitulo/index.jsx';
+import Card from '../../../../../CardComTitulo/index.jsx';
 import { Box } from '@mui/material';
 import './style.css';
 

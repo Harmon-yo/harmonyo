@@ -5,17 +5,17 @@ import { verificarToken } from "../../../utils/index.js";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
-import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosMes/index.jsx";
-import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
+import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/V1/UsuariosCadastradosMes/index.jsx";
+import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/V1/AulaSemana/index.jsx';
 import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
-import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/AulasMes/index.jsx';
+import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/V1/AulasMes/index.jsx';
+import UsuariosCadastradosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/V1/UsuariosCadastradosSemana/index.jsx';
 import api from '../../../api.js';
 
 /* import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx"; */
 /* Css */
 import "./style.css";
 import { useNavigate } from 'react-router-dom';
-import UsuariosCadastradosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosSemana/index.jsx';
 
 const requisicaoGet = (url) => {
     return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
@@ -50,7 +50,7 @@ function DashboardAdmin(props) {
         {
             id: 4,
             nome: "Rendimento dos Professores",
-            endpoint: "/professores/dashboard/rendimentoTotal",
+            endpoint: "/professores/dashboard/rendimento-total",
             valor: 0,
         }
     ]);
