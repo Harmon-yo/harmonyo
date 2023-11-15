@@ -19,7 +19,6 @@ import { useState } from "react";
 import "./style.css";
 
 
-
 function TabelaMinhasAulas(props) {
   const [carregando, setCarregando] = useState(true);
   const config = {
