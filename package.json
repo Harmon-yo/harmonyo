@@ -2,7 +2,6 @@
   "name": "harmonyo",
   "version": "0.1.0",
   "private": true,
-  "build": "CI=false react-scripts build",
   "dependencies": {
     "@djpfs/react-vlibras": "^2.0.2",
     "@emotion/react": "^11.11.1",
@@ -36,7 +35,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
