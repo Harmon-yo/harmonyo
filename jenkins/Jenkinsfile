@@ -1,0 +1,37 @@
+pipeline {
+    agent {
+        docker {
+            image 'node:lts-buster-slim'
+            args '-p 8001:8001'
+        }
+    }
+    environment {
+        CI = 'true'
+    }
+    stages {
+         stage('Verificando e matando caso processo esteja em execução') {
+            steps {
+                echo 'Kill process'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+        stage('Instalando Dependências') {
+            steps {
+                sh 'npm install'
+                sh 'npm install -g serve'
+            }
+        }
+        stage('Buildando') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Rodando build') {
+            steps {
+                sh './jenkins/scripts/build.sh'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                sh './jenkins/scripts/kill.sh'
+            }
+        }
+    }
+}
