@@ -19,38 +19,35 @@ import api from "../../../../../api";
 function NavbarLateral(props) {
   const [active, setActive] = React.useState(false);
   const tipoUsuario = sessionStorage.getItem("CATEGORIA").toLocaleLowerCase();
+  const currentUrl = new URL(window.location.href);
+
 
   function downloadCSV() {
-    const email = sessionStorage.EMAIL;
-    const metodo = "downloadCSV";
-
+    const config2 = { responseType: 'blob', headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } };
     const requestData = {};
 
-    fetch("http://localhost:8080/professores/download-csv", {
-      method: "GET",
-      responseType: "blob",
-      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+  
+    api.get(`/professores/download-csv`, config2)
+    .then((response) => {
+      const blob = response.data;
+  
+      const url = window.URL.createObjectURL(blob);
+  
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data-professor.csv";
+  
+      a.click();
+  
+      window.URL.revokeObjectURL(url);
     })
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
+    .catch((error) => {
+      console.error("Erro:", error);
+    });
 
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "data.csv";
-
-        a.click();
-
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Erro:", error);
-      });
 
     //envio do log para S3
-    const url = `http://localhost:8080/upload-log/${email}/${metodo}`;
+    /*const url = `http://localhost:8080/upload-log/${email}/${metodo}`;
     const token = sessionStorage.TOKEN;
     const config = {
       headers: {
@@ -65,7 +62,7 @@ function NavbarLateral(props) {
       })
       .catch((error) => {
         console.error("Erro na solicitação:", error);
-      });
+      });*/
   }
 
   function importTxt(e) {
@@ -73,7 +70,7 @@ function NavbarLateral(props) {
     const formData = new FormData()
     console.log("entrou no import txt")
     formData.append('file', arq)
-    api.post('http://localhost:8080/usuarios/importacao-dados-txt', formData, {
+    api.post(`/usuarios/importacao-dados-txt`, formData, {
         headers: {
              Authorization: `Bearer ${sessionStorage.TOKEN}`,
             'Content-Type': 'multipart/form-data'
@@ -89,55 +86,54 @@ function NavbarLateral(props) {
   }
 
   function downloadTXTProfessor() {
-    fetch("http://localhost:8080/usuarios/download-txt-professor", {
-      method: "GET",
-      responseType: "blob",
-      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    const config2 = { responseType: 'blob', headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } };
+    const requestData = {};
+
+  
+    api.get(`/usuarios/download-txt-professor`, config2)
+    .then((response) => {
+      const blob = response.data;
+  
+      const url = window.URL.createObjectURL(blob);
+  
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data-professor.txt";
+  
+      a.click();
+  
+      window.URL.revokeObjectURL(url);
     })
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "data-professor.txt";
-
-        a.click();
-
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Erro:", error);
-      });
-
+    .catch((error) => {
+      console.error("Erro:", error);
+    });
 
   }
 
   function downloadTXTAluno() {
-    fetch("http://localhost:8080/usuarios/download-txt-aluno", {
-      method: "GET",
-      responseType: "blob",
-      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    const email = sessionStorage.EMAIL;
+    const metodo = "downloadCSV";
+    const config2 = { responseType: 'blob', headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } };
+    const requestData = {};
+
+  
+    api.get(`/usuarios/download-txt-aluno`, config2)
+    .then((response) => {
+      const blob = response.data;
+  
+      const url = window.URL.createObjectURL(blob);
+  
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data-aluno.txt";
+  
+      a.click();
+  
+      window.URL.revokeObjectURL(url);
     })
-      .then((response) => {
-        return response.blob();
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "data-aluno.txt";
-
-        a.click();
-
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error("Erro:", error);
-      });
+    .catch((error) => {
+      console.error("Erro:", error);
+    });
 
 
   }
