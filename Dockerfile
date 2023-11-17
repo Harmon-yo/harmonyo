@@ -7,5 +7,7 @@ COPY src/ /src
 COPY package.json /
 
 RUN npm install
-EXPOSE 3000
-CMD ["npm", "start"]
+RUN npm run build
+RUN npm install -g serve
+EXPOSE 8001
+CMD ["serve", "-s", "build", "-l", "8001"]
