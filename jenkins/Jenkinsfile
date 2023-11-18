@@ -1,34 +1,40 @@
 pipeline {
     agent {
-        docker {
-            image 'node:lts-buster-slim'
-            args '-p 8001:8001'
-        }
+        label 'Front-1'
     }
-    environment {
-        CI = 'true'
-    }
+
     stages {
-         stage('Verificando e matando caso processo esteja em execução') {
+        stage('Check and Remove Existing Container') {
             steps {
-                echo 'Kill process'
-                sh './jenkins/scripts/kill.sh'
+                script {
+                    sh 'sudo docker ps -a | grep harmonyo_front && sudo docker rm -f harmonyo_front || true'
+                }
             }
         }
-        stage('Instalando Dependências') {
+        stage('Clean docker with prune') {
             steps {
-                sh 'npm install'
-                sh 'npm install -g serve'
+                script {
+                    sh 'sudo docker system prune -fa'
+                }
             }
         }
-        stage('Buildando') {
+        stage('Cloning git repository') {
             steps {
-                sh 'npm run build'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GITHUB_TOKEN', url: 'https://github.com/Harmon-yo/harmonyo']])
             }
         }
-        stage('Rodando build') {
+        stage('Build docker image') {
             steps {
-                sh './jenkins/scripts/build.sh'
+                script {
+                    sh 'sudo docker build -t harmonyo_front:latest .'
+                }
+            }
+        }
+        stage('Deploy application') {
+            steps {
+                script {
+                    sh 'sudo docker run -dp 3000:3000 --dns 8.8.8.8 --dns 8.8.4.4 --name harmonyo_front harmonyo_front:latest'
+                }
             }
         }
     }
