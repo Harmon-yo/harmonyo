@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
+import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
+import Pedidos from "../../../components/Admin/Dashboard/Graficos/Pedidos/index.jsx";
+import TiposPedidos from "../../../components/Admin/Dashboard/Graficos/TiposPedidos/index.jsx";
+import IntrumentosMaisUsados from "../../../components/Admin/Dashboard/Graficos/InstrumentosMaisUsados/index.jsx";
+import RegioesMaisAulas from "../../../components/Admin/Dashboard/Graficos/RegioesMaisAulas/index.jsx";
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+
 import dayjs from 'dayjs';
 import "dayjs/locale/pt-br"
 
-import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
 
 import api from "../../../api.js";
 import "./style.css";
@@ -40,6 +44,7 @@ const modificarNomeDia = (nome) => {
     }
 }
 
+
 function Dashboard(props) {
     const [avisos, setAvisos] = useState([]);
 
@@ -58,10 +63,10 @@ function Dashboard(props) {
                     height: "10% !important",
                 }} adapterLocale="pt-br">
                     <DatePicker
-                        minDate={dayjs(new Date()).subtract(12, "month")}
+                        minDate={dataComeco}
                         maxDate={dayjs(new Date())}
-                        onChange={mudarDataComeco}
-                        value={dataComeco}
+                        onChange={mudarDataFim}
+                        value={dataFim}
                         slotProps={{
                             textField: {
                                 size: 'small',
@@ -77,10 +82,10 @@ function Dashboard(props) {
                     height: "10% !important",
                 }} adapterLocale="pt-br">
                     <DatePicker
-                        minDate={dataComeco}
+                        minDate={dayjs(new Date()).subtract(12, "month")}
                         maxDate={dayjs(new Date())}
-                        onChange={mudarDataFim}
-                        value={dataFim}
+                        onChange={mudarDataComeco}
+                        value={dataComeco}
                         slotProps={{
                             textField: {
                                 size: 'small',
@@ -92,8 +97,15 @@ function Dashboard(props) {
                     />
                 </LocalizationProvider>
             </Box>
-            <Metricas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso}/>
-            
+            <Metricas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
+            <Box className="container-pedidos">
+                <Pedidos dataComeco={dataComeco} dataFim={dataFim} />
+                <TiposPedidos dataComeco={dataComeco} dataFim={dataFim} />
+            </Box>
+            <Box className="container-instrumentos">
+                <IntrumentosMaisUsados dataComeco={dataComeco} dataFim={dataFim}/>
+                <RegioesMaisAulas dataComeco={dataComeco} dataFim={dataFim}/>
+            </Box>
         </EstruturaPaginaUsuario>
     );
 }
