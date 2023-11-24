@@ -44,6 +44,17 @@ const options = {
             type: 'linear',
             display: true,
             position: 'left',
+        },
+
+    },
+    plugins: {
+        legend: {
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+                usePointStyle: true
+            }
         }
     },
     maintainAspectRatio: false,
@@ -51,16 +62,28 @@ const options = {
 }
 
 function Pedidos(props) {
-    const [labels, setLabels] = useState(["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"]);
-
     const data = {
-        labels: labels,
+        labels: props.labelsHist,
         datasets: [
             {
                 type: 'line',
                 label: 'Aulas Realizadas',
-                backgroundColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgb(75, 192, 192)',
                 data: [1, 2, 3, 2, 5, 6, 7],
+                tension: 0.4,
+            },
+            {
+                type: 'line',
+                label: 'Aulas Confirmadas',
+                backgroundColor: 'rgb(255, 159, 64)',
+                data: [1, 2, 3, 2, 5, 6, 7],
+                tension: 0.4,
+            },
+            {
+                type: 'line',
+                label: 'Aulas Pendentes',
+                backgroundColor: 'rgb(255, 205, 86)',
+                data: [10, 11, 0, 13, 14, 15, 16],
                 tension: 0.4,
             },
             {
@@ -73,17 +96,10 @@ function Pedidos(props) {
             {
                 type: 'line',
                 label: 'Aulas Recusadas',
-                backgroundColor: 'rgb(255, 205, 86)',
+                backgroundColor: 'rgb(128, 47, 73)',
                 data: [7, 8, 9, 6, 11, 12, 13],
                 tension: 0.4,
             },
-            {
-                type: 'line',
-                label: 'Aulas Pendentes',
-                backgroundColor: 'rgb(75, 192, 192)',
-                data: [10, 11, 0, 13, 14, 15, 16],
-                tension: 0.4,
-            }
         ]
     }
 
@@ -133,8 +149,6 @@ function Pedidos(props) {
                     default:
                         break;
                 }
-
-                adicionarLabels(resp);
             }).catch((error) => {
                 props.adicionaAviso({
                     mensagem: `Erro ao obter valores do gráfico`,
@@ -143,19 +157,6 @@ function Pedidos(props) {
                 console.log(error)
             });
         })
-    }
-
-    const adicionarLabels = (resp) => {
-        let labelsToSet = [];
-
-        if (labels.length === 0) {
-            if (diferencaMes > 0) labelsToSet = resp.map((aulas) => aulas.mes);
-        } else {
-            let diasDiff = props.dataFim.diff(props.dataComeco, "day");
-            for (let i = 0; i <= diasDiff; i++) labelsToSet.push(props.dataComeco.add(i, "day").format("DD/MM/YYYY"));
-        }
-
-        setLabels(labels);
     }
 
     useEffect(() => {

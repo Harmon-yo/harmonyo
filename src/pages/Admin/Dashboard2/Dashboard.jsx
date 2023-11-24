@@ -5,6 +5,7 @@ import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUs
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
 import Pedidos from "../../../components/Admin/Dashboard/Graficos/Pedidos/index.jsx";
 import TiposPedidos from "../../../components/Admin/Dashboard/Graficos/TiposPedidos/index.jsx";
+import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/UsuariosCadastradosMes/index.jsx";
 import IntrumentosMaisUsados from "../../../components/Admin/Dashboard/Graficos/InstrumentosMaisUsados/index.jsx";
 import RegioesMaisAulas from "../../../components/Admin/Dashboard/Graficos/RegioesMaisAulas/index.jsx";
 
@@ -56,28 +57,28 @@ function Dashboard(props) {
     const mudarDataComeco = (data) => setDataComeco(data);
     const mudarDataFim = (data) => setDataFim(data);
 
+    const [labelsHist, setLabelsHist] = useState([]);
+
+    useEffect(() => {
+        setLabelsHist([]);
+
+        let labels = [];
+        
+        const diferencaMeses = -(dataComeco.diff(dataFim, "month"));
+        const diferencaDias = -(dataComeco.diff(dataFim, "date"));
+
+        if (diferencaMeses > 1) {
+            for (let i = 0; i <= diferencaMeses; i++) labels.push(dayjs(dataComeco).subtract(i, "month").locale("pt-br").format("MMMM"));
+        } else {
+            for (let i = 0; i <= diferencaDias; i++) labels.push(dayjs(dataComeco).subtract(i, "date").format("DD/MM"));
+        }
+
+        setLabelsHist(labels);
+    }, [dataComeco, dataFim]);
+
     return (
         <EstruturaPaginaUsuario tela="dashboard" avisosState={{ avisos, setAvisos }}>
             <Box className="intervalo-tempo-container">
-                <LocalizationProvider dateAdapter={AdapterDayjs} sx={{
-                    height: "10% !important",
-                }} adapterLocale="pt-br">
-                    <DatePicker
-                        minDate={dataComeco}
-                        maxDate={dayjs(new Date())}
-                        onChange={mudarDataFim}
-                        value={dataFim}
-                        slotProps={{
-                            textField: {
-                                size: 'small',
-                            }
-                        }}
-                        dayOfWeekFormatter={
-                            date => `${modificarNomeDia(date)}`
-                        }
-                    />
-                </LocalizationProvider>
-                <Typography>Até</Typography>
                 <LocalizationProvider dateAdapter={AdapterDayjs} sx={{
                     height: "10% !important",
                 }} adapterLocale="pt-br">
@@ -96,15 +97,36 @@ function Dashboard(props) {
                         }
                     />
                 </LocalizationProvider>
+
+                <Typography>Até</Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs} sx={{
+                    height: "10% !important",
+                }} adapterLocale="pt-br">
+                    <DatePicker
+                        minDate={dataComeco}
+                        maxDate={dayjs(new Date())}
+                        onChange={mudarDataFim}
+                        value={dataFim}
+                        slotProps={{
+                            textField: {
+                                size: 'small',
+                            }
+                        }}
+                        dayOfWeekFormatter={
+                            date => `${modificarNomeDia(date)}`
+                        }
+                    />
+                </LocalizationProvider>
             </Box>
             <Metricas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
             <Box className="container-pedidos">
-                <Pedidos dataComeco={dataComeco} dataFim={dataFim} />
-                <TiposPedidos dataComeco={dataComeco} dataFim={dataFim} />
+                <Pedidos dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
+                <TiposPedidos dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
             </Box>
             <Box className="container-instrumentos">
-                <IntrumentosMaisUsados dataComeco={dataComeco} dataFim={dataFim}/>
-                <RegioesMaisAulas dataComeco={dataComeco} dataFim={dataFim}/>
+                <UsuariosCadastrados dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
+                <IntrumentosMaisUsados dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
+                <RegioesMaisAulas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
             </Box>
         </EstruturaPaginaUsuario>
     );

@@ -12,7 +12,12 @@ var tipoValor = 0, tipoCor = 'black';
 const options = {
     plugins: {
         legend: {
-            display: false
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+                usePointStyle: true
+            }
         },
     },
     maintainAspectRatio: false,
@@ -43,37 +48,31 @@ const textCenter = {
 
 function TiposPedidos(props) {
     const labels = [
-        "Pendente",
-        "Confirmado",
-        "Cancelado",
-        "Concluído",
-        "Recusado",
-        "Concluído",
-        "Aguardando Pagamento",
-        "Em fila"
+        "Concluídas",
+        "Confirmadas",
+        "Pendentes",
+        "Canceladas",
+        "Recusadas",
     ];
 
     const color = [
-        'rgb(255, 99, 132)',
+        'rgb(75, 192, 192)',
         'rgb(255, 159, 64)',
         'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)',
-        'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)',
-        'rgb(0, 0, 0)'
+        'rgb(255, 99, 132)',
+        'rgb(128, 47, 73)',
     ];
 
     const data = {
         labels: labels,
         datasets: [{
             label: "Quantidade de Pedidos",
-            data: [12, 19],
+            data: [12, 19, 30, 40, 0],
             backgroundColor: color,
             borderColor: color,
-            borderWidth: 2.5,
             cutout: '90%',
             borderRadius: 30,
+            barThickness: 10,
             /* circumference: (ctx) => {
                 const dataPoints = ctx.chart.data.datasets.map(
                     (dataset) => dataset.data[0]
