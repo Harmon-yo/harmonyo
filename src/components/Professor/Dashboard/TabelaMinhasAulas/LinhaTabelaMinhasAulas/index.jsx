@@ -1,5 +1,5 @@
 import { TableCell, TableRow, Typography, Tooltip as TooltipMaterial } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import "../../../../../pages/Professor/Dashboard/style.css";
 
 function LinhaTabelaMinhasAulas(props) {

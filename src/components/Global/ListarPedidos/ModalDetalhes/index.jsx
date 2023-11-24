@@ -38,28 +38,43 @@ function ModalDetalhes(props) {
   const pedido = props.pedido;
   const [historico, setHistorico] = React.useState([]);
 
-  const erros = props.errosState.erros;
+  const [pedidoPai, setPedidoPai] = React.useState([]);
 
-  const adicionaErro = (erro) => {
-    props.errosState.setErros([...erros, erro]);
-  };
+  const [posicaoFila, setPosicaoFila] = React.useState([]);
+
+  const adicionaAviso = props.adicionaAviso;
 
   const errosResponse = (error, acao) => {
     switch (error.response.status) {
       case 400:
-        adicionaErro(`Erro ao ${acao} pedido!`);
+        adicionaAviso({
+          mensagem: `Erro ao ${acao} pedido!`,
+          tipo: "erro",
+        })
         break;
       case 401:
-        adicionaErro(`Você não tem permissão para ${acao} este pedido!`);
+        adicionaAviso({
+          mensagem: `Você não tem permissão para ${acao} este pedido!`,
+          tipo: "erro",
+        })
         break;
       case 404:
-        adicionaErro("Pedido não encontrado!");
+        adicionaAviso({
+          mensagem: `Pedido não encontrado!`,
+          tipo: "erro",
+        })
         break;
       case 409:
-        adicionaErro("Você não pode realizar essa ação");
+        adicionaAviso({
+          mensagem: "Você não pode realizar essa ação",
+          tipo: "erro",
+        })
         break;
       default:
-        adicionaErro("Erro desconhecido!");
+        adicionaAviso({
+          mensagem: "Erro desconhecido!",
+          tipo: "erro",
+        })
         break;
     }
   };
@@ -69,15 +84,41 @@ function ModalDetalhes(props) {
       setHistorico([
         {
           id: 1,
-          desc: `${pedido.aluno.nome} fez uma proposta de ${
-            pedido.aula.instrumento.nome
-          } para ${pedido.professor.nome} no dia ${new Date(
-            pedido.dataAula
-          ).toLocaleDateString()}`,
+          desc: `${pedido.aluno.nome} fez uma proposta de ${pedido.aula.instrumento.nome
+            } para ${pedido.professor.nome} no dia ${new Date(
+              pedido.dataAula
+            ).toLocaleDateString()}`,
         },
       ]);
+
+      filaEspera();
     }
   }, [pedido]);
+
+  const filaEspera = () => {
+
+    api.get(`/pedidos/fila-espera/pai/${pedido.id}`, {
+      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    }).then((response) => {
+      console.log(response.data);
+      setPedidoPai({
+        nomeAluno: response.data.aluno.nome,
+        instrumento: response.data.aula.instrumento.nome,
+        dataAula: response.data.dataAula,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    api.get(`/pedidos/fila-espera/posicao/${pedido.id}`, {
+      headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
+    }).then((response) => {
+      console.log(response.data);
+      setPosicaoFila(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   const navigate = useNavigate();
 
@@ -91,7 +132,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido confirmado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido confirmado com sucesso!",
+            tipo: "sucesso",
+          })
           navigate(0);
         }
       })
@@ -110,7 +154,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido cancelado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido cancelado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -129,7 +176,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido recusado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido recusado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -148,7 +198,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pedido confirmado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pedido confirmado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -167,7 +220,10 @@ function ModalDetalhes(props) {
         let status = response.status;
 
         if (status === 200) {
-          adicionaErro("Pagamento realizado com sucesso!");
+          adicionaAviso({
+            mensagem: "Pagamento realizado com sucesso!",
+            tipo: "sucesso",
+          });
           navigate(0);
         }
       })
@@ -193,7 +249,6 @@ function ModalDetalhes(props) {
         case "Confirmado":
           if (new Date() > new Date(pedido.dataAula)) {
             return criarBotao("Concluir Pedido", concluirPedido, "aceitar");
-          } else {
           }
         default:
           return null;
@@ -308,11 +363,23 @@ function ModalDetalhes(props) {
                 })}
               </Box>
             </Box>
+            {sessionStorage.CATEGORIA === "Professor" && pedido.status.descricao === "Em Fila" ?
+              <Box className="filaModal">
+                <Typography className="tituloModal">Fila</Typography>
+                <Typography>Este pedido está na posição: <b>{posicaoFila}</b></Typography>
+                <Typography>Pedido que está no topo da fila:</Typography>
+                <Box className="fila-lista">
+                  <Typography><b>Aluno:</b> {pedidoPai.nomeAluno}</Typography>
+                  <Typography><b>Instrumento:</b> {pedidoPai.instrumento}</Typography>
+                  <Typography><b>Data:</b> {new Date(pedidoPai.dataAula).toLocaleDateString()}</Typography>
+                </Box>
+              </Box>
+              : null}
           </Box>
           <Box className="footerModal">
             {pedido.status.descricao === "Aguardando Pagamento" ||
-            pedido.status.descricao === "Pendente" ||
-            pedido.status.descricao === "Confirmado" ? (
+              pedido.status.descricao === "Pendente" ||
+              pedido.status.descricao === "Confirmado" ? (
               <Button className="msgChat" onClick={criarChat}>
                 <MessageIcon className="icon-color msg-icon" />
                 <Typography className="txtChat">Mandar mensagem</Typography>

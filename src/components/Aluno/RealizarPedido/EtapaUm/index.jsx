@@ -8,7 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 import "dayjs/locale/pt-br"
-import { useEffect } from "react";
+
 var isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
 var isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
 dayjs.extend(isSameOrAfter);
@@ -30,6 +30,8 @@ const modificarNomeDia = (nome) => {
             return "Sab";
         case "Do":
             return "Dom";
+        default:
+            return nome;
     }
 }
 
@@ -39,28 +41,19 @@ function EtapaUm(props) {
         handleClickHorario
     } = props.handleClicks;
 
+    const {
+        diaEHoraEscolhidos,
+        setDiaEHoraEscolhidos
+    } = props.diaEHoraEscolhidosState;
 
     const {
-        diaEscolhido,
-        horarioEscolhido
-    } = props.diaEHoraEscolhidos;
+        setErroHorario
+    } = props.errorHorarioState;
 
     const diasIndisponiveis = props.diasIndisponiveis;
 
-    const shouldDisableDate = (date) => {
-        return diasIndisponiveis.some(diaIndisponivel => dayjs(date.$d).isSame(dayjs(diaIndisponivel.inicio)))
-    }
-
     const shouldDisableTime = (time) => {
-        return diasIndisponiveis.some(
-            diaIndisponivel => {
-                return diaEscolhido.isSame(dayjs(diaIndisponivel.inicio), "day") && (time.isSameOrAfter(dayjs(diaIndisponivel.inicio)) && time.isBefore(dayjs(diaIndisponivel.fim)))
-            }
-        )
-    }
-
-    const dataSemelhante = () => {
-        return diaEscolhido.isSame(dayjs(), "day")
+        return diaEHoraEscolhidos.date() === dayjs().date() && diaEHoraEscolhidos.month() === dayjs().month() && time.hour() < dayjs().hour()
     }
 
     return (
@@ -75,8 +68,10 @@ function EtapaUm(props) {
                     <DatePicker
                         minDate={dayjs(new Date())}
                         maxDate={dayjs(new Date().setMonth(new Date().getMonth() + 1))}
-                        onChange={handleClickDia}
-                        value={diaEscolhido}
+                        onChange={(dia) => {
+                            handleClickDia(dia);
+                        }}
+                        value={diaEHoraEscolhidos}
                         slotProps={{
                             textField: {
                                 size: 'small',
@@ -85,7 +80,6 @@ function EtapaUm(props) {
                         dayOfWeekFormatter={
                             date => `${modificarNomeDia(date)}`
                         }
-                        shouldDisableDate={shouldDisableDate}
                     />
                 </LocalizationProvider>
             </Box>
@@ -97,14 +91,19 @@ function EtapaUm(props) {
                     <TimePicker
                         minTime={dayjs().hour(8).minute(0).second(0)}
                         maxTime={dayjs().hour(22).minute(0).second(0)}
-                        defaultValue={dayjs()}
                         slotProps={{ textField: { size: 'small' } }}
-                        onChange={handleClickHorario}
-                        value={horarioEscolhido}
+                        onChange={(value) => {
+                            handleClickHorario(value);
+                        }}
+                        value={diaEHoraEscolhidos}
                         ampm={false}
-                        shouldDisableTime={shouldDisableTime}
                         skipDisabled={true}
-                        disablePast={dataSemelhante}
+                        disablePast={false}
+                        onError={() => {
+                            setDiaEHoraEscolhidos(props.obterDataValida(diaEHoraEscolhidos));
+                            setErroHorario(true);
+                        }}
+                        shouldDisableTime={shouldDisableTime}
                     />
                 </LocalizationProvider>
             </Box>

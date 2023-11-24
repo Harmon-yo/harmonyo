@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Typography
@@ -5,6 +6,15 @@ import {
 import "./style.css";
 
 function InformacaoAdicionalGrafico(props) {
+
+    const [porcentagem, setPorcentagem] = useState(0);
+
+    useEffect(() => {
+        if (props.valor > 0 && props.total > 0) {
+            setPorcentagem(((props.valor * 100) / props.total).toFixed(2));
+        }
+    }, [props.valor, props.total]);
+
     return (
         <Box className="taxa-container">
             <Typography className="quantidade-usuario-titulo">
@@ -13,7 +23,7 @@ function InformacaoAdicionalGrafico(props) {
                 }} /> */}
                 {props.nome}
             </Typography>
-            <Typography className="quantidade-usuario-valor">{props.valor} ({(props.valor / props.valorTotal) * 100}%)</Typography>
+            <Typography className="quantidade-usuario-valor">{props.valor} ({porcentagem}%)</Typography>
         </Box>
     );
 }

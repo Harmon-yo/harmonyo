@@ -17,6 +17,8 @@ import api from "../../../../api.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import "./style.css";
+
+
 function TabelaMinhasAulas(props) {
   const [carregando, setCarregando] = useState(true);
   const config = {
@@ -44,10 +46,24 @@ function TabelaMinhasAulas(props) {
         .catch((err) => {
           console.log(err);
         });
-    } else {
+    } else if (props.periodo === 1) {
       api
         .get(
           "/professores/dashboard/minhas-aulas-ano/" + sessionStorage.ID,
+          config
+        )
+        .then((response) => {
+          console.log(response.data);
+          setCarregando(false);
+          setDados(response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }else{
+      api
+        .get(
+          "/professores/dashboard/minhas-aulas-total/" + sessionStorage.ID,
           config
         )
         .then((response) => {

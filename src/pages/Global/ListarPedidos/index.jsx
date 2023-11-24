@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
 import { Box } from "@mui/material";
 import "./style.css";
@@ -8,15 +8,20 @@ import { verificarToken } from "../../../utils";
 import { useNavigate } from "react-router-dom";
 
 function ListarPedidos() {
-  const [erros, setErros] = React.useState([]);
+  const [avisos, setAvisos] = useState([]);
 
   const navigate = useNavigate();
+
+  const adicionaAviso = (aviso) => {
+    setAvisos([...avisos, aviso]);
+  }
+
 
   useEffect(() => {
     if (verificarToken()) navigate(-1);
   }, []);
 
-  const [filtro, setFiltro] = React.useState({
+  const [filtro, setFiltro] = useState({
     status: "Sem Filtro",
     dataInicio: null,
     dataFim: null,
@@ -24,12 +29,12 @@ function ListarPedidos() {
   });
 
   return (
-    <EstruturaPaginaUsuario tela="pedidos" errosState={{erros, setErros}}>
+    <EstruturaPaginaUsuario tela="pedidos" avisosState={{avisos, setAvisos}}>
       <Box className="pagina-container">
         <Box className="pagina-conteudo">
           <CabecalhoPagina filtroState={{filtro, setFiltro}}/>
           <Box className="divider"/>
-          <Tabela errosState={{erros, setErros}} filtroState={{filtro, setFiltro}}/>
+          <Tabela adicionaAviso={adicionaAviso} filtroState={{filtro, setFiltro}}/>
         </Box>
       </Box>
      

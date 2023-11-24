@@ -13,8 +13,10 @@ import EtapaDois from "../EtapaDois/index.jsx";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-
+import React from "react";
 import api from "../../../../api";
+import { verificarToken } from "../../../../utils";
+import ModalFila from "../ModalFila/index.jsx";
 
 const requisicaoGet = (url) => {
     return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
@@ -48,34 +50,68 @@ function InformacoesPedido(props) {
     const adicionarErro = props.adicionarErro
     const navigate = useNavigate();
 
-    const [diaEscolhido, setDiaEscolhido] = useState(obterDataValida());
-
-    const [horarioEscolhido, setHorarioEscolhido] = useState(dayjs(diaEscolhido));
+    const [diaEHoraEscolhidos, setDiaEHoraEscolhidos] = useState(obterDataValida)
 
     const [instrumentosDisponiveis, setInstrumentosDisponiveis] = useState([]);
     const [diasIndisponiveis, setDiasIndisponiveis] = useState([]);
+    const [erroHorario, setErroHorario] = useState(false);
 
-    const validarData = (data, horario) => {
-        let minutos = data.minute().toString();
-        if (minutos.length !== 1) minutos = minutos[1];
+    const [modal, setModal] = useState(false);
 
-        if (!(minutos.includes(0) || minutos.includes(5))) {
-            adicionarErro("O horário escolhido não está disponível, o horário foi alterado para o mais próximo possível");
-        }
+    const abrirModal = (valor) => {
+        setModal(valor);
     }
+
+    const [fila, setFila] = useState(false);
 
     /* Funções */
 
+    function validarData(data) {
+
+        let dataFormatada = data.format("YYYY-MM-DDTHH:mm:ss");
+
+        api.get(`/pedidos/usuario/${props.idProfessor}`,
+            { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }).then((response) => {
+                let pedidos = response.data;
+                let validacao = true;
+                for (let i = 0; i < pedidos.length; i++) {
+                    if (pedidos[i].dataAula === dataFormatada) {
+                        validacao = false;
+                        console.log("Aula já marcada");
+                        abrirModal(true);
+                    }
+                }
+
+                if (validacao) {
+                    let minutos = data.minute().toString();
+                    if (minutos.length !== 1) minutos = minutos[1];
+
+                    if (!(minutos.includes(0) || minutos.includes(5))) {
+                        adicionarErro("O horário escolhido não está disponível, o horário foi alterado para o mais próximo possível");
+                    }
+
+                    if (!erroHorario) setStep(step + 1)
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        if (fila) {
+            setStep(step + 1);
+        }
+    }, [fila])
+
     const handleClickDia = (dia) => {
-        setDiaEscolhido(dia);
-        setHorarioEscolhido(dia);
+        setDiaEHoraEscolhidos(dia);
     };
 
     const handleClickHorario = (horario) => {
         horario = horario.second(0).millisecond(0);
-        horario = horario.day(diaEscolhido.day()).month(diaEscolhido.month()).year(diaEscolhido.year());
-        setDiaEscolhido(horario);
-        setHorarioEscolhido(horario);
+        horario = horario.day(diaEHoraEscolhidos.day()).month(diaEHoraEscolhidos.month()).year(diaEHoraEscolhidos.year());
+
+        setDiaEHoraEscolhidos(horario);
     };
 
     const enviarPedido = () => {
@@ -83,9 +119,21 @@ function InformacoesPedido(props) {
             alunoId: sessionStorage.getItem("ID"),
             professorId: new URLSearchParams(window.location.search).get("id"),
             aulaId: instrumento.id,
-            dataAula: diaEscolhido.format("YYYY-MM-DD HH:mm:ss")
+            dataAula: diaEHoraEscolhidos.format("YYYY-MM-DD HH:mm:ss")
         }).then(() => {
             /* alert("Pedido enviado!"); */
+            setTimeout(() => {
+                if (fila) {
+                    requisicaoPost(`/pedidos/fila-espera/
+                    ${sessionStorage.getItem("ID")}?data=${diaEHoraEscolhidos.format("YYYY-MM-DD HH:mm:ss")}`, {
+                    }).then(() => {
+                        console.log("Fila adicionada!");
+                    }).catch((error) => {
+                        console.log(error);
+                        adicionarErro("Erro ao enviar pedido!");
+                    });
+                }
+            }, 5000);
             setStep(3);
         }).catch((error) => {
             console.log(error);
@@ -95,13 +143,13 @@ function InformacoesPedido(props) {
 
     const handleClickContinuar = () => {
         if (step === 0) {
-            validarData(diaEscolhido, horarioEscolhido);
-            setStep(step + 1);
+            validarData(diaEHoraEscolhidos);
         } else if (step === 1) {
             if (instrumento === null) {
                 adicionarErro("Escolha um instrumento!");
                 return;
             } else {
+                setModal(false);
                 setStep(step + 1);
 
                 enviarPedido();
@@ -111,7 +159,6 @@ function InformacoesPedido(props) {
         } else if (step !== 1) {
             setStep(step + 1);
         }
-
     }
 
     const definirTextoBotao = (step) => {
@@ -131,7 +178,7 @@ function InformacoesPedido(props) {
 
         for (let i = 0; i < aulas.length; i++) {
             aula = aulas[i];
-            
+
             ltAulas.push({
                 id: aula.id,
                 nome: aula.instrumento.nome,
@@ -164,7 +211,7 @@ function InformacoesPedido(props) {
 
     useEffect(() => {
         Promise.all([
-            requisicaoGet(`/aulas/${props.idProfessor}`),
+            requisicaoGet(`/aulas/ativas/${props.idProfessor}`),
             requisicaoGet(`pedidos/usuario/${props.idProfessor}/confirmado`),
         ]).then(
             ([responseAulas, responsePedidos]) => {
@@ -206,8 +253,10 @@ function InformacoesPedido(props) {
                                     handleClickDia,
                                     handleClickHorario
                                 }}
-                                diaEHoraEscolhidos={{ diaEscolhido, horarioEscolhido }}
+                                diaEHoraEscolhidosState={{ diaEHoraEscolhidos, setDiaEHoraEscolhidos }}
+                                errorHorarioState={{ erroHorario, setErroHorario }}
                                 diasIndisponiveis={diasIndisponiveis}
+                                obterDataValida={obterDataValida}
                             />
                         }
                         {
@@ -225,6 +274,7 @@ function InformacoesPedido(props) {
                 </>
                 : <CircularProgress />
         }
+        {modal === true ? <ModalFila filaState={{ fila, setFila }} /> : null}
     </Card>);
 }
 

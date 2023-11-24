@@ -19,8 +19,10 @@ function BarraDePesquisa(props) {
     const [textoDeBusca, setTextoDeBusca] = React.useState("");
 
     const mudarCidade = (event) => {
-        setCidade(event.target.value);
-        adicionarParametro("cidade", event.target.value, ":");
+        let cidadeEscolhida = event.target.value;
+        
+        setCidade(cidadeEscolhida);
+        adicionarParametro("cidade", cidadeEscolhida, ":");
     };
 
     useEffect(() => {
@@ -31,12 +33,15 @@ function BarraDePesquisa(props) {
                 setCidade(cidadesCadastradas[0]);
                 adicionarParametro("cidade", cidadesCadastradas[0], ":");
                 props.adicionarCarregamento(true);
-            } else if (cidadesCadastradas.length == 0) {
+            } else if (cidadesCadastradas.length === 0) {
                 setCidade("?");
                 props.adicionarCarregamento(false);
             }
         }).catch(() => {
-            props.exibirErro("Erro ao carregar cidades cadastradas.");
+            props.exibirAviso({
+                mensagem: "Erro ao carregar cidades cadastradas.",
+                tipo: "erro"
+            });
             props.adicionarCarregamento(false);
         });
     }, []);
@@ -47,8 +52,8 @@ function BarraDePesquisa(props) {
     };
     const verificarEnter = (event) => {
         event.preventDefault();
-        
-        if (event.key === "Enter") {
+
+        if (event.key === "Enter" && textoDeBusca !== "") {
             const textoAProcurar = textoDeBusca.replace("*", "").replace("~", "")
             const parametros = `nome~*${textoAProcurar}*,instrumentos~*${textoAProcurar}*,cidade:${cidade}`;
             props.requisicaoGet(`/professores/busca?params=${parametros}`).then(
@@ -95,7 +100,7 @@ function BarraDePesquisa(props) {
                         {
                             cidades.map(
                                 (cidade) => (
-                                    <MenuItem value={cidade}>{cidade}</MenuItem>
+                                    <MenuItem key={cidade} value={cidade}>{cidade}</MenuItem>
                                 ))
                         }
                     </Select>

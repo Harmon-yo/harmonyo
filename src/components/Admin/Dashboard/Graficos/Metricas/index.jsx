@@ -12,7 +12,11 @@ function Metricas(props) {
             {
                 props.metricas.map((metrica) =>
                     (<Card key={metrica.id} className="card-metrica" titulo={metrica.nome}>
-                        <Typography className="card-valor">{metrica.valor}</Typography>
+                        {
+                            metrica.id === 4 ?
+                                (<Typography className="card-valor">R$ {metrica.valor}</Typography>)
+                                : <Typography className="card-valor">{metrica.valor}</Typography>
+                        }
                     </Card>))
             }
         </Box>

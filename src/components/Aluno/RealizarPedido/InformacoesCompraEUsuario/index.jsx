@@ -17,7 +17,7 @@ const requisicaoGet = (url) => {
 function InformacoesCompraEUsuario(props) {
 
     const idProfessor = props.idProfessor;
-    const [nomeProfessor, setNomeProfessor] = useState("Professor");
+    const [nomeProfessor, setNomeProfessor] = useState("");
     const instrumento = props.instrumento;
     const valor = instrumento === null ? "00,00" : (
         instrumento.valor.length === 2 ?
@@ -31,7 +31,11 @@ function InformacoesCompraEUsuario(props) {
                 const professor = respostaProfessor.data;
                 setNomeProfessor(professor.nome);
             }
-        )
+        ).catch(
+            () => {
+                console.log("Erro ao obter professor");
+            }
+        );
     }, []);
 
     return (<Card className="card-usuario-info">

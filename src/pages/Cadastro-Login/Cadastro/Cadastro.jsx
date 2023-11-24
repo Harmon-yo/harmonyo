@@ -66,8 +66,12 @@ function Cadastro() {
         confirmarSenha: '',
         cep: '',
     });
-    const [errosServidor, setErrosServidor] = useState([]);
 
+    const [avisos, setAvisos] = useState([]);
+
+    const adicionaAviso = (aviso) => {
+        setAvisos([...avisos, aviso]);
+    }
 
     useEffect(() => {
         if (categoria.current !== "Aluno" && categoria.current !== "Professor") {
@@ -156,10 +160,13 @@ function Cadastro() {
             },
         };
 
-        function errorCatch(error) {
+        const errorCatch = (error) => {
             let erros = [];
 
-            if (error.code === "ERR_NETWORK") erros.push("Erro de conexão!")
+            if (error.code === "ERR_NETWORK") adicionaAviso({
+                mensagem: "Erro ao entrar em contato com o servidor.",
+                tipo: "erro"
+            });
             else {
                 if (error.response.status === 409) {
                     switch (error.response.data.message.toUpperCase()) {
@@ -170,32 +177,48 @@ function Cadastro() {
                         case "CPF":
                             erros.push("CPF já em uso!");
                             break;
+                        
+                        default:
+                            erros.push("Erro ao cadastrar!");
+                            break;
                     }
                 } else if (error.response.status === 400) {
                     let listaErros = error.response.data.errors;
 
                     let msg;
                     for (let erro of listaErros) {
-                        if (erro.codes[1] === "Size.nome") {
-                            msg = "Deve conter pelo menos 4 caractéres!";
-                        } else if (erro.code === "Email") {
-                            msg = "Email inválido !";
-                        } else if (erro.code[1] === "Size.senha") {
-                            msg = "Deve conter pelo menos 3 caractéres!";
-                        } else if (erro.code === "CPF") {
-                            msg = "CPF inválido !";
-                        } else if (erro.code === "CEP") {
-                            msg = "CEP inválido !";
-                        } else if (erro.code === "genero") {
-                            msg = "Gênero Inválido! Selecione Uma Opção!";
+
+                        if (erro.code[1] === "Size.nome") erro.code = "Nome";
+                        else if (erro.code[1] === "Size.senha") erro.code = "Senha";
+
+                        switch (erro.code) {
+                            case "Nome":
+                                msg = "Deve conter pelo menos 4 caractéres!";
+                                break;
+                            case "Email":
+                                msg = "Email inválido !";
+                                break;
+                            case "Senha":
+                                msg = "Deve conter pelo menos 3 caractéres!";
+                                break;
+                            case "CPF":
+                                msg = "CPF inválido !";
+                                break;
+                            case "CEP":
+                                msg = "CEP inválido !";
+                                break;
+                            case "genero":
+                                msg = "Gênero Inválido! Selecione Uma Opção!";
+                                break;
+                            default:
+                                msg = "Erro ao cadastrar!";
+                                break;
                         }
 
                         if (msg) {
                             erros.push(msg);
                         }
                     }
-
-                    setErrosServidor(erros);
                 }
             }
 
@@ -203,7 +226,10 @@ function Cadastro() {
             console.log("Erros:")
             console.log(erros);
 
-            for (let i = 0; i < erros.length; i++) setErrosServidor((errosServidor) => [...errosServidor, erros[i]]);
+            for (let i = 0; i < erros.length; i++) adicionaAviso({
+                mensagem: erros[i],
+                tipo: "erro"
+            });
         }
         const url = categoria.current.toLowerCase() === "professor" ? "professores": "alunos"
         api.post(`/${url}/cadastro`, dadosUsuario)
@@ -216,7 +242,7 @@ function Cadastro() {
     }
 
     return (
-        <Design titulo="Criar uma conta" errosServidor={errosServidor} setErrosServidor={setErrosServidor} styles={classes}>
+        <Design titulo="Criar uma conta" styles={classes} avisosState={{avisos, setAvisos}}>
             <Box sx={classeForm.formInputContainer}>
                 {
                     etapa === 1 ? <EtapaUm formData={{ formData, setFormData }} error={error} helperText={helperText} /> : null

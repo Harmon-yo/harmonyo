@@ -44,3 +44,15 @@
 .hidden {
     display: none;
 }
+
+.button-export{
+    text-decoration: none;
+    color: white;
+    overflow: hidden;
+
+}
+
+.export-logo{
+
+    margin-right: calc(var(--espaco-padrao) * 2);
+}

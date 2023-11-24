@@ -10,10 +10,7 @@ import {
     BarElement
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import {
-    Box,
-    Typography
-} from "@mui/material";
+import { Box } from "@mui/material";
 import Card from "../../../CardComTitulo/index.jsx";
 import InformacaoAdicionalGrafico from "../UsuariosCadastradosSemana/InformacaoAdicionalGrafico/index.jsx";
 import "./style.css";

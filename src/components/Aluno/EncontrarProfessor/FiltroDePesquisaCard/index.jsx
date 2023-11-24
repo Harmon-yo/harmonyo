@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Slider, FormGroup, FormControlLabel, Checkbox, Rating } from "@mui/material";
+import { Box, Typography, Slider, Rating } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import Card from "../../../Global/Card";
 import "./style.css";
@@ -46,7 +46,10 @@ function FiltroDePesquisaCard(props) {
 
                 adicionarCarregamento(true);
             }).catch(() => {
-                props.exibirErro("Erro ao carregar valores do filtro.");
+                props.exibirAviso({
+                    mensagem: "Erro ao carregar valores do filtro.",
+                    tipo: "erro"
+                })
                 adicionarCarregamento(false);
             });
         }, []);

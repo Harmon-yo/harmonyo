@@ -96,6 +96,8 @@
     justify-content: space-between;
     align-items: center;
     min-height: 40%;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .botao-passar-etapa {

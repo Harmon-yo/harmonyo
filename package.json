@@ -19,6 +19,7 @@
     "axios": "^1.3.5",
     "chart.js": "^4.3.0",
     "dayjs": "^1.11.9",
+    "eslint": "^8.51.0",
     "firebase": "^10.1.0",
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",
@@ -30,6 +31,8 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-text-mask": "^5.5.0",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

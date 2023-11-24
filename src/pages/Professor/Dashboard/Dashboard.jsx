@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Box, Tabs, Tab } from "@mui/material";
 import "./style.css";
-/* ================= Icone ==================== */
-
-import violaoIcon from "../../../imgs/violao.png";
 
 /* ================= Componentes =================== */
 
@@ -14,7 +11,6 @@ import TabelaMinhasAulas from "../../../components/Professor/Dashboard/TabelaMin
 import HistoricoAulasGraficoDonut from "../../../components/Professor/Dashboard/GraficoDonut/index.jsx";
 import GraficoBarraEmpilhada from "../../../components/Professor/Dashboard/GraficoBarraEmpilhada/index.jsx";
 /* ================= Utils ================= */
-import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 import { useNavigate } from "react-router-dom";
 
@@ -40,7 +36,7 @@ function DashboardProfessor() {
       navigate(-1);
     }
   }, []);
-  var visao = `Visão Geral - ${new Date().getFullYear()}`;
+  var visao = `Visão Anual - ${new Date().getFullYear()}`;
   return (
     <EstruturaPaginaUsuario tela="dashboard">
       <Tabs
@@ -51,9 +47,12 @@ function DashboardProfessor() {
       >
         <Tab label="Visão Mensal" className="tab_dash" {...getTabProps(0)} />
         <Tab label={visao} className="tab_dash" {...getTabProps(1)} />
+        <Tab label="Visão Total" className="tab_dash" {...getTabProps(2)} />
+
       </Tabs>
       <Box className="pagina-container-dash">
-        {value === 0 ? (
+        {
+        value === 0 ? (
           <>
             <Box className="kpi-container">
               <KpiDashboard titulo="Rendimento total" periodo={value}/>
@@ -66,6 +65,19 @@ function DashboardProfessor() {
               <TabelaMinhasAulas periodo={value} />
             </Box>
           </>
+        ) : value === 1 ? (
+          <>
+            <Box className="kpi-container">
+              <KpiDashboard titulo="Rendimento total" periodo={value}/>
+              <KpiDashboard titulo="Quantidade de alunos" periodo={value}/>
+              <KpiDashboard titulo="Quantidade de aulas" periodo={value}/>
+              <KpiDashboard titulo="Tempo de resposta" periodo={value}/>
+            </Box>
+            <Box className="charts-container">
+              <GraficoBarraEmpilhada />
+              <TabelaMinhasAulas periodo={value}/>
+            </Box>
+          </>
         ) : (
           <>
             <Box className="kpi-container">
@@ -75,9 +87,10 @@ function DashboardProfessor() {
               <KpiDashboard titulo="Tempo de resposta" />
             </Box>
             <Box className="charts-container">
-              <GraficoBarraEmpilhada />
+              <GraficoBarraEmpilhada periodo={value} />
               <TabelaMinhasAulas periodo={value}/>
             </Box>
+      
           </>
         )}
       </Box>

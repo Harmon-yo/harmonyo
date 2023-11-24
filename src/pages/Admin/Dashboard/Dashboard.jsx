@@ -5,10 +5,10 @@ import { verificarToken } from "../../../utils/index.js";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
-import UsuariosRetidos from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosRetidos/index.jsx";
-import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastrados/index.jsx";
+import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/UsuariosCadastradosMes/index.jsx";
 import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/AulaSemana/index.jsx';
 import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
+import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/AulasMes/index.jsx';
 import api from '../../../api.js';
 
 /* import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx"; */
@@ -22,35 +22,35 @@ const requisicaoGet = (url) => {
 }
 
 function DashboardAdmin(props) {
-    const [erros, setErros] = useState([]);
+    const [avisos, setAvisos] = useState([]);
 
-    const adicionaErro = (erro) => {
-        setErros([...erros, erro]);
+    const adicionaAviso = (novoAviso) => {
+        setAvisos([...avisos, novoAviso]);
     }
 
     const [metricas, setMetricas] = useState([
         {
             id: 1,
             nome: "Usuários",
-            endpoint: "/usuarios/quantidade",
+            endpoint: "/usuarios/quantidade-cadastrados-mes-soma",
             valor: 0,
         },
         {
             id: 2,
             nome: "Aulas por aluno",
-            endpoint: "/aulas/quantidade-por-aluno",
+            endpoint: "/aulas/quantidade-por-aluno-mes",
             valor: 0,
         },
         {
             id: 3,
             nome: "Aulas",
-            endpoint: "/aulas/quantidade",
+            endpoint: "/aulas/quantidade-mes",
             valor: 0,
         },
         {
             id: 4,
-            nome: "Avaliações",
-            endpoint: "",
+            nome: "Rendimento dos Professores",
+            endpoint: "/professores/dashboard/rendimentoTotal",
             valor: 0,
         }
     ]);
@@ -88,7 +88,10 @@ function DashboardAdmin(props) {
                         }
                         return metricaAntiga;
                     }));
-            }).catch(() => adicionaErro(`Erro ao obter quantidade de ${metrica.nome}`));
+            }).catch(() => adicionaAviso({
+                mensagem: `Erro ao obter quantidade de ${metrica.nome}`,
+                tipo: "erro"
+            }));
             }
         });
 
@@ -101,28 +104,25 @@ function DashboardAdmin(props) {
                         }
                         return valorAulaAntigo;
                     })])
-                }).catch(() => adicionaErro(`Erro ao obter quantidade de ${valorAula.nome}`));
+                }).catch(() => adicionaAviso({
+                    mensagem: `Erro ao obter quantidade de ${valorAula.nome}`,
+                    tipo: "erro"
+                }));
             }
         });
     }, []);
 
     return (
-        <EstruturaPaginaUsuario tela="dashboard" errosState={{ erros, setErros }}>
+        <EstruturaPaginaUsuario tela="dashboard" avisosState={{ avisos, setAvisos }}>
             <Box className="pagina-container">
                 <Metricas metricas={metricas} />
                 <Box className="secao secao-usuarios-retidos-cadastrados">
-                    <UsuariosRetidos />
-                    <UsuariosCadastrados adicionaErro={adicionaErro} />
-                    <UsuariosCadastradosSemana adicionaErro={adicionaErro} />
-
+                    <AulasMes />
+                    <UsuariosCadastrados adicionaAviso={adicionaAviso} />
+                    <UsuariosCadastradosSemana adicionaAviso={adicionaAviso} />
                 </Box>
                 <Box className="secao secao-aulas">
-                    <Box sx={{
-                        width: "30%",
-                        height: "100%",
-                    }}>
-                        <AulasSemana adicionaErro={adicionaErro}/>
-                    </Box>
+                <AulasSemana adicionaAviso={adicionaAviso}/>
                     <AulasInfo className="realizadas" titulo="Aulas Realizadas na semana" valor={valorAulas[0].valor} />
                     <AulasInfo className="pendentes" titulo="Aulas Pendentes na semana" valor={valorAulas[1].valor} />
                     <AulasInfo className="canceladas" titulo="Aulas Canceladas na semana" valor={valorAulas[2].valor} />
