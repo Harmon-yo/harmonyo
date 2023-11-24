@@ -9,6 +9,7 @@ function AvatarComFoto(props, ref) {
     const nomeUsuario = props.nome;
 
     const [imgPerfilURL, setImgPerfilURL] = useState("");
+    const [carregarImagem, setCarregarImagem] = useState(false);
     const [erroAoCarregar, setErroAoCarregar] = useState(false);
 
     useImperativeHandle(ref, () =>  { return {
@@ -21,6 +22,7 @@ function AvatarComFoto(props, ref) {
         storage.ref(urlImg).getDownloadURL()
             .then(url => {
                 setImgPerfilURL(url)
+                setCarregarImagem(true);
             }).catch(() => {
                 setErroAoCarregar(true);
             });

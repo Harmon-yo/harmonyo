@@ -134,7 +134,3 @@
 .msg-icon {
     margin-right: calc(var(--espaco-padrao) * 2) !important;
 }
-
-.fila-lista{
-    text-indent: 5px;
-}

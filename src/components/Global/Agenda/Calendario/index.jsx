@@ -50,9 +50,7 @@ function Agenda(props) {
   const { data, setData } = props.stateData;
   const [diasComAulas, setDiasComAulas] = useState([]);
 
-  const adicionaAviso = props.adicionaAviso;
-
-  const getAulas = () => {
+  function getAulas() {
     var data = transformarData(props.stateData.data);
 
     api
@@ -69,11 +67,7 @@ function Agenda(props) {
         setDiasComAulas(novosDiasComAulas);
       })
       .catch((error) => {
-        console.log(error)
-        adicionaAviso({
-          conteudo: "Erro ao obter aulas",
-          tipo: "erro",
-        });
+       
       });
   }
 

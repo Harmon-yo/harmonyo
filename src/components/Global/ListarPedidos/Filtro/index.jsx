@@ -24,10 +24,9 @@ function Filtro(props) {
         recusado: false,
         concluido: false,
         aguardando: false,
-        emFila: false,
     });
 
-    const { semFilto, pendente, confirmado, cancelado, recusado, concluido, aguardando, emFila } = state;
+    const { semFilto, pendente, confirmado, cancelado, recusado, concluido, aguardando } = state;
 
     function aplicarfiltro(valor) {
         switch (valor) {
@@ -40,7 +39,6 @@ function Filtro(props) {
                     recusado: false,
                     concluido: false,
                     aguardando: false,
-                    emFila: false,
                 });
                 return valor;
             case "Pendente":
@@ -52,7 +50,6 @@ function Filtro(props) {
                     recusado: false,
                     concluido: false,
                     aguardando: false,
-                    emFila: false,
                 });
                 return valor;
             case "Confirmado":
@@ -64,7 +61,6 @@ function Filtro(props) {
                     recusado: false,
                     concluido: false,
                     aguardando: false,
-                    emFila: false,
                 });
                 return valor;
             case "Cancelado":
@@ -76,7 +72,6 @@ function Filtro(props) {
                     recusado: false,
                     concluido: false,
                     aguardando: false,
-                    emFila: false,
                 });
                 return valor;
             case "Recusado":
@@ -88,7 +83,6 @@ function Filtro(props) {
                     recusado: true,
                     concluido: false,
                     aguardando: false,
-                    emFila: false,
                 });
                 return valor;
             case "Concluído":
@@ -100,7 +94,6 @@ function Filtro(props) {
                     recusado: false,
                     concluido: true,
                     aguardando: false,
-                    emFila: false,
                 });
                 return valor;
             case "Aguardando":
@@ -112,19 +105,6 @@ function Filtro(props) {
                     recusado: false,
                     concluido: false,
                     aguardando: true,
-                    emFila: false,
-                });
-                return valor;
-            case "Em Fila":
-                setState({
-                    semFilto: false,
-                    pendente: false,
-                    confirmado: false,
-                    cancelado: false,
-                    recusado: false,
-                    concluido: false,
-                    aguardando: false,
-                    emFila: true,
                 });
                 return valor;
             default:
@@ -183,11 +163,6 @@ function Filtro(props) {
                                 <Radio color="success" checked={aguardando}
                                     onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Aguardando") }) }} />
                                 <Typography className="filtro-popup-text">Aguardando</Typography>
-                            </Box>
-                            <Box className="filtro-popup-item">
-                                <Radio color="success" checked={emFila}
-                                    onChange={() => { setFiltro({ ...filtro, status: aplicarfiltro("Em Fila") }) }} />
-                                <Typography className="filtro-popup-text">Em Fila</Typography>
                             </Box>
                         </Box>
                     </ClickAwayListener>

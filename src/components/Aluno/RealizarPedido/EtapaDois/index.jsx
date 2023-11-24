@@ -23,7 +23,7 @@ function EtapaDois(props) {
 
     return (
         <FormControl sx={{
-            width: "80%",
+            width: "50% ",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",

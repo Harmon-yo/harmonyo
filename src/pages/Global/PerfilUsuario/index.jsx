@@ -1,5 +1,5 @@
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main";
-import { Box, Typography, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
+import { Box, Typography, Rating, TextField, InputLabel, MenuItem, FormControl, Select, Tooltip} from "@mui/material";
 import "./style.css";
 import EditIcon from "../../../imgs/edit-24px.png"
 import SaveIcon from "../../../imgs/checked-24px.png"

@@ -2,7 +2,8 @@ import { Box, Button, InputBase, Typography } from "@mui/material";
 import React from "react";
 import "./style.css";
 import Lupa from "../../../../imgs/search.png";
-import ListaAulas from "../ListaAulas/index.jsx";
+import ItemAula from "../ItemAula";
+import ListaAulas from "../ListaAulas";
 function ContainerAulas(props) {
   const { data, setData } = props.stateData;
 

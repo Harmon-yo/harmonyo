@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import BoxWithContainer from "../../BoxWithContainer";
 import Logo from "../../../Global/Logo";
 import {
@@ -38,6 +39,10 @@ const pages = [
 ]
 
 function Navbar(props) {
+
+    const [open, setOpen] = useState(false);
+    const abrirModalCriarConta = () => setOpen(true);
+    const fecharModalCriarConta = () => setOpen(false);
 
     return (
         <>

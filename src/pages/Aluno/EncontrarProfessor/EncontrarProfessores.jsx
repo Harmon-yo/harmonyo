@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import "./style.css";
@@ -8,6 +8,7 @@ import "./style.css";
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import ProfessoresPopulares from "../../../components/Aluno/EncontrarProfessor/ListaProfessoresPopulares/Main/index.jsx";
 import ListaProfessores from "../../../components/Aluno/EncontrarProfessor/ListaProfessores/Main/index.jsx";
+import Mapa from "../../../components/Aluno/EncontrarProfessor/Mapa/index.jsx";
 import FiltroDePesquisaCard from "../../../components/Aluno/EncontrarProfessor/FiltroDePesquisaCard/index.jsx";
 import BarraDePesquisa from "../../../components/Aluno/EncontrarProfessor/BarraDePesquisa/index.jsx";
 
@@ -16,10 +17,10 @@ import api from "../../../api.js";
 import { verificarToken } from "../../../utils/index.js";
 
 function EncontrarProfessor(props) {
-    const [avisos, setAvisos] = useState([]);
+    const [erros, setErros] = useState([]);
 
     const [parametros, setParametros] = useState({});
-    const parametrosStr = Object.keys(parametros).length > 1 ? transformarParametros(parametros) : "";
+    const parametrosStr = useMemo(() => [transformarParametros(parametros)], [parametros]);
 
     const [professoresPopulares, setProfessoresPopulares] = useState([]);
     const [professoresFiltrados, setProfessoresFiltrados] = useState([]);
@@ -63,10 +64,7 @@ function EncontrarProfessor(props) {
         return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
     }
 
-    const exibirAviso = (aviso) => {
-        console.log("Aviso adicionado")
-        setAvisos((avisos) => [...avisos, aviso])
-    };
+    const exibirErro = (erro) => setErros((erros) => [...erros, erro]);
 
     useEffect(() => {
         if (verificarToken()) {
@@ -75,7 +73,7 @@ function EncontrarProfessor(props) {
     }, []);
 
     useEffect(() => {
-        if (parametrosStr.length === 0 || parametrosStr === null) return;
+        if (parametrosStr.length === 0) return;
 
         console.log("Pesquisando professores...")
         obterProfessores();
@@ -93,70 +91,48 @@ function EncontrarProfessor(props) {
             requisicaoGet("/professores/populares")
         ]).then(
             (responses) => {
-                console.log("Responses Professores Data:")
-                console.log(responses[0].data);
-                console.log("Professores Populares Data:")
-                console.log(responses[1].data);
+                console.log("Responses Professores:")
+                console.log(responses);
 
                 let professoresFiltrados = responses[0].data;
                 let professoresPopulares = responses[1].data;
 
-                if (professoresFiltrados == null) exibirAviso({
-                    mensagem: "Erro ao carregar professores filtrados.",
-                    tipo: "erro"
-                })
-                else if (professoresPopulares == null) exibirAviso({
-                    mensagem: "Erro ao carregar professores populares.",
-                    tipo: "erro"
-                })
+                if (professoresFiltrados == null) exibirErro("Erro ao carregar professores filtrados.");
+                else if (professoresPopulares == null) exibirErro("Erro ao carregar professores populares.");
                 else {
                     if (responses[0].status === 204) {
-                        
-                        exibirAviso({
-                            mensagem: "Nenhum professor encontrado.",
-                            tipo: "erro"
-                        })
-                        
+                        exibirErro("Nenhum professor encontrado.");
                         setProfessoresFiltrados([]);
                     } else {
                         setProfessoresFiltrados(professoresFiltrados);
                     }
 
                     if (responses[1].status === 204) {
-                        exibirAviso({
-                            mensagem: "Nenhum professor encontrado.",
-                            tipo: "erro"
-                        })
-                        
+                        exibirErro("Nenhum professor encontrado.");
                         setProfessoresPopulares([]);
                     } else {
                         setProfessoresPopulares(professoresPopulares);
                     }
                 }
-            }).catch((err) => {
-                console.log(err);
-                exibirAviso({
-                    mensagem: "Erro ao carregar professores.",
-                    tipo: "erro"
-                })
             });
     };
 
     const handleClickProfessor = (professor) => {
+        console.log("Testado")
         navigate(`/exibicao-perfil?id=${professor.id}`);
     }
 
 
     return (
-        <EstruturaPaginaUsuario tela="encontrar" avisosState={{ avisos, setAvisos }}>
+        <EstruturaPaginaUsuario tela="encontrar" errosState={{ erros, setErros }}>
             <Box className="pagina-container">
                 <FiltroDePesquisaCard isCarregando={isCarregando} requisicaoGet={requisicaoGet}
                     iniciarPesquisaState={{ iniciarPesquisa, setIniciarPesquisa }} adicionarCarregamento={adicionarCarregamento}
-                    adicionarParametro={adicionarParametro} exibirAviso={exibirAviso}/> 
+                    adicionarParametro={adicionarParametro} exibirErro={exibirErro}/> 
                 <Box className="encontrar-professor-conteudo">
                     <BarraDePesquisa requisicaoGet={requisicaoGet} isCarregando={isCarregando} 
                     iniciarPesquisaState={{ setIniciarPesquisa }} adicionarCarregamento={adicionarCarregamento}
-                    adicionarParametro={adicionarParametro} exibirAviso={exibirAviso} setProfessoresFiltrados={setProfessoresFiltrados}/>
+                    adicionarParametro={adicionarParametro} exibirErro={exibirErro} setProfessoresFiltrados={setProfessoresFiltrados}/>
                     <ProfessoresPopulares professores={professoresPopulares} isCarregando={isCarregando} onClick={handleClickProfessor}/>
                     <ListaProfessores professores={professoresFiltrados} isCarregando={isCarregando} onClick={handleClickProfessor}/>
                 </Box>

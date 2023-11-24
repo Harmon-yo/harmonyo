@@ -28,15 +28,15 @@ ChartJS.register(
     BarElement
 );
 
-const diasSemanaResumido = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]
+const diasSemanaResumido = ["S", "T", "Q", "Q", "S", "S", "D"]
 const diasSemanaTraduzido = {
-    "Seg": "Segunda",
-    "Ter": "Terça",
-    "Qua": "Quarta",
-    "Qui": "Quinta",
-    "Sex": "Sexta",
-    "Sab": "Sábado",
-    "Dom": "Domingo"
+    "S": "Segunda",
+    "T": "Terça",
+    "Q": "Quarta",
+    "Q": "Quinta",
+    "S": "Sexta",
+    "S": "Sábado",
+    "D": "Domingo"
 }
 
 const options = {
@@ -101,16 +101,14 @@ const criarDataset = (label, data, cor) => {
 
 function UsuariosCadastradosSemana(props) {
 
-    const [alunosCadastrados, setAlunosCadastrados] = useState([]);
-    const [professoresCadastrados, setProfessoresCadastrados] = useState([]);
-
-    const adicionaAviso = props.adicionaAviso;
+    const [alunosCadastradados, setAlunosCadastradados] = useState([]);
+    const [professoresCadastradados, setProfessoresCadastradados] = useState([]);
 
     const data = {
         labels: diasSemanaResumido,
         datasets: [
-            criarDataset("Alunos Cadastrados", alunosCadastrados, "#FF6384"),
-            criarDataset("Professores Cadastrados", professoresCadastrados, "#36A2EB"),
+            criarDataset("Alunos Cadastrados", alunosCadastradados, "#FF6384"),
+            criarDataset("Professores Cadastrados", professoresCadastradados, "#36A2EB"),
             /* criarDataset("Alunos Cadastrados na semana passada", alunosCadastradados, "#FF6384"),
             criarDataset("Professores Cadastrados na semana passada", professoresCadastradados, "#36A2EB"), */
         ]
@@ -130,29 +128,23 @@ function UsuariosCadastradosSemana(props) {
                 console.log("Professores cadastrados na semana: ")
                 console.log(valoresResponseProfessores);
 
-                setAlunosCadastrados(valoresResponseAlunos);
-                setProfessoresCadastrados(valoresResponseProfessores);
+                setAlunosCadastradados(valoresResponseAlunos);
+                setProfessoresCadastradados(valoresResponseProfessores);
             }
         ).catch((err) => {
-            adicionaAviso({
-                mensagem: "Erro ao carregar usuários cadastrados na semana",
-                tipo: "erro"
-            });
+            props.adicionaErro("Erro ao carregar usuários cadastrados na semana");
         });
     }, []);
 
-
-    const qtdTotalAlunosCadastrados = alunosCadastrados.reduce((a, b) => a + b, 0);
-    const qtdTotalprofessoresCadastrados = professoresCadastrados.reduce((a, b) => a + b, 0);
-    const qtdTotalUsuarios = qtdTotalAlunosCadastrados + qtdTotalprofessoresCadastrados;
+    const valorTotalUsuarios = alunosCadastradados.reduce((a, b) => a + b, 0) + professoresCadastradados.reduce((a, b) => a + b, 0);
 
     return (
         <Card className="card-cadastro-usuario-semana" titulo="Usuários cadastrados na semana">
             <Bar data={data} options={options}/>
 
             <Box className="informacao-adicional-container">
-            <InformacaoAdicionalGrafico nome="Alunos cadastrados:" valor={qtdTotalAlunosCadastrados} valorTotal={qtdTotalUsuarios}/>
-            <InformacaoAdicionalGrafico nome="Professores cadastrados:" valor={qtdTotalprofessoresCadastrados} valorTotal={qtdTotalUsuarios}/>
+            <InformacaoAdicionalGrafico nome="Alunos cadastrados:" valor={alunosCadastradados.reduce((a, b) => a + b, 0)} valorTotal={valorTotalUsuarios}/>
+            <InformacaoAdicionalGrafico nome="Professores cadastrados:" valor={professoresCadastradados.reduce((a, b) => a + b, 0)} valorTotal={valorTotalUsuarios}/>
             </Box>
         </Card>
     );

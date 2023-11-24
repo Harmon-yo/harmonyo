@@ -1,8 +1,9 @@
-import React from "react";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import React, { useEffect, useState, useRef } from "react";
+import { Box, Typography, Pagination, Skeleton, CircularProgress } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorPopular from "../ProfessorPopularCard/index.jsx";
 import "./style.css";
+import api from "../../../../../api.js";
 
 const carregando = () => {
   return (<CircularProgress color="success" />);

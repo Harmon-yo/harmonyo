@@ -61,7 +61,6 @@
 .professor-preco-texto {
     font-weight: 700 !important;
     color: var(--dark-font);
-    white-space: nowrap;
 }
 
 
@@ -95,10 +94,10 @@
 
 .professor-instrumentos-container {
     width: fit-content;
-    display: flex;
+    display: grid;
     align-items: center;
+    grid-template-columns: repeat(10, auto);
     column-gap: calc(var(--espaco-padrao) * 1);
-    flex-wrap: wrap;
 }
 
 .professor-instrumentos-card {

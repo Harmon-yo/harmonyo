@@ -4,6 +4,8 @@ import { Box, Rating, Button, Typography } from "@mui/material";
 import Card from "../../../components/Global/Card";
 import "./style.css";
 import api from "../../../api.js";
+import { storage } from "../../../utils/firebase";
+import ModalAvaiacao from "../../../components/Global/ModalAvaliacao";
 import { useNavigate } from "react-router-dom";
 import AvatarComFoto from "../../../components/Global/AvatarComFoto";
 
@@ -28,6 +30,7 @@ function PerfilExibicaoUsuario() {
     instrumentos: [],
   });
 
+  const [imgPerfilURL, setImgPerfilURL] = useState("")
 
   const [formTimeResponse, setFormTimeResponse] = useState({
     tempoMedio: "",
@@ -42,6 +45,7 @@ function PerfilExibicaoUsuario() {
 
       obterDadosUsuario();
       obterAvaliacoesUsuario();
+      obterImgPerfil();
       obterInstrumentos();
       obterTempoMedioDeResposta();
 
@@ -86,11 +90,27 @@ function PerfilExibicaoUsuario() {
           })
       }
 
+      function obterImgPerfil() {
+
+        let urlImg = `/imgs-perfil-usuario/${idUsuario}_ft_perfil`
+
+        // Obtendo a URL da imagem de perfil
+        storage.ref(urlImg).getDownloadURL()
+          .then(url => {
+            console.log(url)
+            setImgPerfilURL(url)
+          })
+          .catch(err => {
+            console.log(err)
+          });
+
+      }
+
       function obterInstrumentos() {
 
         let categoria = "";
 
-        if (formData.categoria === "Professor") {
+        if (formData.categoria = "Professor") {
           categoria = "professores";
         } else {
           categoria = "alunos";
@@ -115,25 +135,36 @@ function PerfilExibicaoUsuario() {
 
         api.get(`/professores/dashboard/mes-atual/media-tempo-resposta/${idUsuario}`, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } })
           .then(response => {
-            let tempo = response.data;
 
-            let horas = Math.floor(tempo / 60);
-            let minutos = tempo % 60;
-            let dias = Math.floor(horas / 24);
+            var minutos = response.data;
+            var horas = Math.floor(minutos / 60);
+            var minutos = minutos % 60;
+            var dias = Math.floor(horas / 24);
+            var horas = horas % 24;
+            var texto = "";
+            if (dias > 0) {
+              if (dias == 1) {
+                texto += dias + " dia ";
+              } else {
+                texto += dias + " dias ";
+              }
+            }
+            if (horas > 0) {
+              if (horas == 1) {
+                texto += horas + " hora ";
+              } else {
+                texto += horas + " horas ";
+              }
+            }
+            if (minutos > 0) {
+              if (minutos == 1) {
+                texto += minutos + " minuto ";
+              } else {
+                texto += minutos + " minutos ";
+              }
+            }
 
-            horas = horas % 24;
 
-            let texto = "";
-
-            if (dias === 1) texto += " dia ";
-            else if (dias > 0) texto += " dias ";
-
-            if (horas === 1) texto += " hora ";
-            else if (horas > 0) texto += " horas ";
-
-            if (minutos === 1) texto += " minuto ";
-            else if (minutos > 0) texto += " minutos "; 
-            
             setFormTimeResponse({
               ...formTimeResponse,
               tempoMedio: texto,

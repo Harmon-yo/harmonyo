@@ -26,15 +26,15 @@ ChartJS.register(
     BarElement
 );
 
-const diasSemanaResumido = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]
+const diasSemanaResumido = ["S", "T", "Q", "Q", "S", "S", "D"]
 const diasSemanaTraduzido = {
-    "Seg": "Segunda",
-    "Ter": "Terça",
-    "Qua": "Quarta",
-    "Qui": "Quinta",
-    "Sex": "Sexta",
-    "Sab": "Sábado",
-    "Dom": "Domingo"
+    "S": "Segunda",
+    "T": "Terça",
+    "Q": "Quarta",
+    "Q": "Quinta",
+    "S": "Sexta",
+    "S": "Sábado",
+    "D": "Domingo"
 }
 
 const options = {
@@ -101,12 +101,11 @@ const criarDataset = (label, data, cor) => {
 
 function AulaSemana(props) {
 
+    const adicionaErro = props.adicionaErro;
 
     const [aulasRealizadas, setAulasRealizadas] = useState([]);
     const [aulasPendentes, setAulasPendentes] = useState([]);
     const [aulasCanceladas, setAulasCanceladas] = useState([]);
-
-    const adicionaAviso = props.adicionaAviso;
 
     const data = {
         labels: diasSemanaResumido,
@@ -138,11 +137,7 @@ function AulaSemana(props) {
                 setAulasCanceladas(canceladas);
             }
         ).catch((erro) => {
-            console.log(erro)
-            adicionaAviso({
-                mensagem: "Erro ao carregar aulas da semana.",
-                tipo: "erro"
-            })
+            adicionaErro(erro);
         });
     }, []);
 

@@ -1,7 +1,9 @@
 import React from "react";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { Box, Typography, Skeleton, CircularProgress } from "@mui/material";
 import Card from "../../../../Global/Card/index.jsx";
 import ProfessorResumidoCard from "../ProfessorResumidoCard/index.jsx";
+import api from "../../../../../api.js";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 const carregando = () => {
@@ -9,6 +11,7 @@ const carregando = () => {
 }
 
 function ListaProfessores(props) {
+    const navigate = useNavigate();
 
     return (
         <Box>

@@ -25,7 +25,7 @@ function ModalCriarConta(props) {
 
     useEffect(
         () => {
-            if (naoEhPrimeiraRenderizacao.current) navigate(`/cadastro?categoria=${categoria}`);
+            if (naoEhPrimeiraRenderizacao.current) navigate(`cadastro?categoria=${categoria}`);
             else naoEhPrimeiraRenderizacao.current = true;
         },
         [categoria]

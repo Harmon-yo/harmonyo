@@ -30,10 +30,8 @@ function KpiDashboard(props) {
     var periodo = "";
     if (props.periodo === 0) {
       periodo = "mes-atual";
-    } else if (props.periodo === 1) {
+    } else {
       periodo = "ano-atual";
-    } else{
-      periodo = "total";
     }
 
     var url =
@@ -48,10 +46,8 @@ function KpiDashboard(props) {
     var periodo = "";
     if (props.periodo === 0) {
       periodo = "mes-atual";
-    } else if (props.periodo === 1) {
+    } else {
       periodo = "ano-atual";
-    } else{
-      periodo = "total";
     }
 
     var url =
@@ -65,10 +61,8 @@ function KpiDashboard(props) {
     var periodo = "";
     if (props.periodo === 0) {
       periodo = "mes-atual";
-    } else if (props.periodo === 1) {
+    } else {
       periodo = "ano-atual";
-    } else{
-      periodo = "total";
     }
     var url =
       `/professores/dashboard/${periodo}/qtd-aulas/` + sessionStorage.ID;
@@ -81,10 +75,8 @@ function KpiDashboard(props) {
     var periodo = "";
     if (props.periodo === 0) {
       periodo = "mes-atual";
-    } else if (props.periodo === 1) {
+    } else {
       periodo = "ano-atual";
-    } else{
-      periodo = "total";
     }
     var url =
       `/professores/dashboard/${periodo}/media-tempo-resposta/` +
