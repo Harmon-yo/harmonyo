@@ -45,6 +45,18 @@ const modificarNomeDia = (nome) => {
     }
 }
 
+const obterLabelData = (dataComeco, dataFim) => {
+    let labels = [];
+
+    const diferencaMeses = -(dataComeco.diff(dataFim, "month"));
+    const diferencaDias = -(dataComeco.diff(dataFim, "date"));
+
+    if (diferencaMeses > 1) for (let i = 0; i <= diferencaMeses; i++) labels.push(dayjs(dataComeco).subtract(i, "month").locale("pt-br").format("MMMM"));
+    else for (let i = 0; i <= diferencaDias; i++) labels.push(dayjs(dataComeco).subtract(i, "date").format("DD/MM"));
+
+    return labels;
+}
+
 
 function Dashboard(props) {
     const [avisos, setAvisos] = useState([]);
@@ -62,18 +74,7 @@ function Dashboard(props) {
     useEffect(() => {
         setLabelsHist([]);
 
-        let labels = [];
-        
-        const diferencaMeses = -(dataComeco.diff(dataFim, "month"));
-        const diferencaDias = -(dataComeco.diff(dataFim, "date"));
-
-        if (diferencaMeses > 1) {
-            for (let i = 0; i <= diferencaMeses; i++) labels.push(dayjs(dataComeco).subtract(i, "month").locale("pt-br").format("MMMM"));
-        } else {
-            for (let i = 0; i <= diferencaDias; i++) labels.push(dayjs(dataComeco).subtract(i, "date").format("DD/MM"));
-        }
-
-        setLabelsHist(labels);
+        setLabelsHist(obterLabelData(dataComeco, dataFim));
     }, [dataComeco, dataFim]);
 
     return (
