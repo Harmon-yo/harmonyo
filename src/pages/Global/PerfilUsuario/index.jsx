@@ -116,7 +116,7 @@ function PerfilUsuario() {
     if (verificarToken()) navigate("/login");
 
     obterDadosPerfil();
-  })
+  }, [])
 
   useEffect(() => {
     if (formData.cep !== undefined && !formData.cep.includes('_') && formData.cep !== '' && formData.cep.length === 9) {

@@ -13,7 +13,7 @@ function Aulas() {
 
     useEffect(() => {
         if (verificarToken()) navigate(-1);
-    });
+    }, []);
 
     return (
         <EstruturaPaginaUsuario>
