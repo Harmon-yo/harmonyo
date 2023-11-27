@@ -117,7 +117,7 @@ function Notificacao(props) {
 
     // =================== USE EFFECT ===================
 
-    /* useEffect(() => {
+    useEffect(() => {
         ws = over(new SockJS(wsUrl));
 
         ws.connect({}, () => {
@@ -173,9 +173,9 @@ function Notificacao(props) {
                 return [notificacao, ...prevNotificacoes];
             });
         }
-    }, []); */
+    }, []);
 
-    /* useEffect(() => {
+    useEffect(() => {
         if (primeiraRequisicao) {
             setPrimeiraRequisicao(false);
             return;
@@ -185,11 +185,11 @@ function Notificacao(props) {
             idUsuario: sessionStorage.getItem("ID"),
             pagina: paginaAtualRef.current - 1,
         }));
-    }, [paginaAtualRef.current]); */
+    }, [paginaAtualRef.current]);
 
-    useEffect(() => {
-        obterNotificacoes();
-    }, []);
+    // useEffect(() => {
+    //     obterNotificacoes();
+    // }, []);
 
     return (
         <div>

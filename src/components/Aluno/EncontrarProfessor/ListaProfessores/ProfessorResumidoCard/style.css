@@ -104,7 +104,7 @@
 .professor-instrumentos-card {
     width: fit-content !important;
     height: fit-content !important;
-    background-color: white !important;
+    background-color: rgb(245, 245, 245) !important;
     padding: 2px 8px 2px 8px !important;
 }
 

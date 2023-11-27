@@ -47,11 +47,12 @@ function Tabela() {
 
     return (
         <Box className="tabela-conteudo">
-            {dadosAulas.map((aula) => {
+            {dadosAulas.length > 0 ? dadosAulas.map((aula) => {
                 return (
                     <ItemAula key={aula.id} aulaState={aula} instrumentoState={instrumentos} reloadState={[reloadPage, setReloadPage]}/>
                 );
-            }, [])}
+            }, [])
+        : null}
             <ModalAula aulaState={novaAula} instrumentoState={instrumentos} reloadState={{reloadPage, setReloadPage}}/>
         </Box>
     );
