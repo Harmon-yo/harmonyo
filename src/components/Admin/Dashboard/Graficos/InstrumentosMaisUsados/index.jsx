@@ -68,12 +68,15 @@ const obterDados = async (dataInicial, dataFinal, adicionaAviso) => {
     const endpoints = [
         `/pedidos/instrumentos-mais-pedidos?${params}`
     ]
-
     const promessas = Promise.all(endpoints.map((endpoint) => requisicaoGet(endpoint)));
 
     return await promessas.then(([instrumentosMaisPedidosResponse]) => {
         const instrumentosMaisPedidos = instrumentosMaisPedidosResponse.data;
 
+        console.log("Resposta: ")
+        console.log(instrumentosMaisPedidos)
+
+        
         const instrumentos = Object.keys(instrumentosMaisPedidos).map((instrumento) => {
             return {
                 instrumento: instrumento,

@@ -1,6 +1,6 @@
 .professores-cards {
     width: 100%;
     height: auto;
-    background-color: white;
+    background-color: transparent !important;
     padding: 0;
 }

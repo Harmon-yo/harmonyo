@@ -128,7 +128,7 @@ function RegioesMaisAulas(props) {
     }, [dataInicial, dataFinal]);
 
     return (
-        <CardComTitulo titulo="Regiões com mais aulas" className="card-regioes-mais-aulas">
+        <CardComTitulo titulo="Regiões com mais pedidos" className="card-regioes-mais-aulas">
             <Bar options={options} data={data} />
         </CardComTitulo>
     )

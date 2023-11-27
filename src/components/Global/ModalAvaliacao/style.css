@@ -1,4 +1,4 @@
-.modal .modal-button-open{
+.modal-button-open{
     font-size: 20px;
     font-family: "Nunito";
     color: #777;
@@ -10,7 +10,7 @@
     border-radius: 10px;
 }
 
-.modal .modal-button-open:hover{
+.modal-button-open:hover{
     background-color: #f4f4f4;
 }
 

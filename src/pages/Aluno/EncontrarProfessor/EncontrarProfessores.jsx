@@ -87,59 +87,55 @@ function EncontrarProfessor(props) {
     const obterProfessores = () => {
         setProfessoresFiltrados([]);
         setProfessoresPopulares([]);
+        const endpoints = [
+            `/professores/busca${parametrosStr ? `?params=${parametrosStr}` : ""}`,
+            "/professores/populares"
+        ];
 
-        Promise.all([
-            requisicaoGet(`/professores/busca${parametrosStr ? `?params=${parametrosStr}` : ""}`),
-            requisicaoGet("/professores/populares")
-        ]).then(
-            (responses) => {
-                console.log("Responses Professores Data:")
-                console.log(responses[0].data);
-                console.log("Professores Populares Data:")
-                console.log(responses[1].data);
+        const promessas = Promise.all(endpoints.map((endpoint) => requisicaoGet(endpoint)));
 
-                let professoresFiltrados = responses[0].data;
-                let professoresPopulares = responses[1].data;
+        promessas.then(([professoresFiltradosResponse, professoresPopularesResponse]) => {
+            const professoresFiltrados = professoresFiltradosResponse.data;
+            const professoresPopulares = professoresPopularesResponse.data;
 
-                if (professoresFiltrados == null) exibirAviso({
-                    mensagem: "Erro ao carregar professores filtrados.",
-                    tipo: "erro"
-                })
-                else if (professoresPopulares == null) exibirAviso({
-                    mensagem: "Erro ao carregar professores populares.",
-                    tipo: "erro"
-                })
-                else {
-                    if (responses[0].status === 204) {
-                        
-                        exibirAviso({
-                            mensagem: "Nenhum professor encontrado.",
-                            tipo: "erro"
-                        })
-                        
-                        setProfessoresFiltrados([]);
-                    } else {
-                        setProfessoresFiltrados(professoresFiltrados);
-                    }
-
-                    if (responses[1].status === 204) {
-                        exibirAviso({
-                            mensagem: "Nenhum professor encontrado.",
-                            tipo: "erro"
-                        })
-                        
-                        setProfessoresPopulares([]);
-                    } else {
-                        setProfessoresPopulares(professoresPopulares);
-                    }
+            if (professoresFiltrados == null) exibirAviso({
+                mensagem: "Erro ao carregar professores filtrados.",
+                tipo: "erro"
+            })
+            else if (professoresPopulares == null) exibirAviso({
+                mensagem: "Erro ao carregar professores populares.",
+                tipo: "erro"
+            })
+            else {
+                if (professoresFiltradosResponse.status === 204) {
+                    exibirAviso({
+                        mensagem: "Nenhum professor encontrado.",
+                        tipo: "erro"
+                    })
+                    
+                    setProfessoresFiltrados([]);
+                } else {
+                    setProfessoresFiltrados(professoresFiltrados);
                 }
-            }).catch((err) => {
-                console.log(err);
-                exibirAviso({
-                    mensagem: "Erro ao carregar professores.",
-                    tipo: "erro"
-                })
-            });
+
+                if (professoresPopularesResponse.status === 204) {
+                    exibirAviso({
+                        mensagem: "Nenhum professor encontrado.",
+                        tipo: "erro"
+                    })
+                    
+                    setProfessoresPopulares([]);
+                } else {
+                    setProfessoresPopulares(professoresPopulares);
+                }
+            }
+        }).catch((err) => {
+            exibirAviso({
+                mensagem: "Erro ao carregar professores.",
+                tipo: "erro"
+            })
+            console.log(err)
+        });
     };
 
     const handleClickProfessor = (professor) => {
