@@ -31,7 +31,7 @@ function TelaFeedbacks() {
             .catch(err => {
                 console.log(err)
             })
-    })
+    }, [])
 
     
     return (

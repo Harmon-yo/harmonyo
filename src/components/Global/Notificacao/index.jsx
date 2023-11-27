@@ -6,7 +6,7 @@ import Popup from "../Popup/index.jsx";
 import "./style.css";
 import moment from "moment";
 import "moment/locale/pt-br";
- 
+
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 
@@ -22,8 +22,6 @@ const requisicaoPut = (url, body) => {
 
 const wsUrl = "http://3.222.182.26:80/ws";
 let ws = null;
-
-
 
 function Notificacao(props) {
     const idUsuario = sessionStorage.getItem("ID");
@@ -50,31 +48,6 @@ function Notificacao(props) {
     }
 
     // =================== WEBSOCKET ===================
-
-    const obterNotificacoes = () => {
-        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
-            const respostaPagina = resposta.data;
-            const notificacoes = respostaPagina.content;
-
-            console.log("Recebi a notificacao: ");
-            console.log(notificacoes);
-            if (resposta.status === 204) {
-                setNotificacoes([]);
-                return;
-            }
-
-            notificacoes.forEach((notificacao) => {
-                notificacao.tempo = moment(notificacao.data).fromNow();
-                notificacao.src = PropostaIcon;
-            });
-
-            setTotalPaginas(respostaPagina.totalPages);
-
-            setNotificacoes(notificacoes);
-        }).catch((erro) => {
-            console.log(erro);
-        });
-    }
 
     // =================== AUXILIARES ===================
 
@@ -187,10 +160,6 @@ function Notificacao(props) {
         }));
     }, [paginaAtualRef.current]);
 
-    // useEffect(() => {
-    //     obterNotificacoes();
-    // }, []);
-
     return (
         <div>
             <Badge id="notificacao-botao" className="container-usuario-notificacao"
@@ -245,4 +214,32 @@ function Notificacao(props) {
         </div>
     );
 }
+
+/* 
+const obterNotificacoes = () => {
+        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
+            const respostaPagina = resposta.data;
+
+            const notificacoes = respostaPagina.content;
+            console.log("Recebi a notificacao: ");
+            console.log(notificacoes);
+            if (resposta.status === 204) {
+                setNotificacoes([]);
+                return;
+            }
+
+            notificacoes.forEach((notificacao) => {
+                notificacao.tempo = moment(notificacao.data).fromNow();
+                notificacao.src = PropostaIcon;
+            });
+
+            setQtdPaginas(respostaPagina.totalPages);
+
+            setNotificacoes(notificacoes);
+        }).catch((erro) => {
+            console.log(erro);
+        });
+    }
+*/
+
 export default Notificacao;
