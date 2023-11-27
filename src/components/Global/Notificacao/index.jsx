@@ -20,7 +20,7 @@ const requisicaoPut = (url, body) => {
     return api.put(url, body, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
 }
 
-const wsUrl = "http://localhost:8080/ws";
+const wsUrl = "http://3.222.182.26:80/ws";
 let ws = null;
 
 
