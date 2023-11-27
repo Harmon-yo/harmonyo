@@ -20,7 +20,7 @@ const requisicaoPut = (url, body) => {
     return api.put(url, body, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
 }
 
-const wsUrl = "http://localhost:8080/ws";
+const wsUrl = "http://54.81.42.147:80/ws";
 let ws = null;
 
 function Notificacao(props) {
