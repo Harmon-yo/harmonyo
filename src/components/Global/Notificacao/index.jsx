@@ -6,10 +6,10 @@ import Popup from "../Popup/index.jsx";
 import "./style.css";
 import moment from "moment";
 import "moment/locale/pt-br";
-/* 
+ 
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
- */
+
 import api from "../../../api.js";
 
 const requisicaoGet = (url) => {
