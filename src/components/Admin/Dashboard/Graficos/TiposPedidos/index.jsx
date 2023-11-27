@@ -4,10 +4,11 @@ import { Box } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import "./style.css";
+import { useEffect, useState } from "react";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-var tipoValor = 0, tipoCor = 'black';
+var tipoValor = 0, tipoCor = "";
 
 const options = {
     plugins: {
@@ -30,20 +31,51 @@ const options = {
     }
 }
 
-
-
 const textCenter = {
     id: 'textCenter',
     beforeDatasetsDraw(chart, args, options) {
-        const { ctx, data } = chart;
+        const { ctx } = chart;
 
-        ctx.save();
-        ctx.font = 'bolder 30px Arial';
-        ctx.fillStyle = tipoCor;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(`${tipoValor}`, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
+        if (tipoCor !== "" && chart.getDatasetMeta(0).data.length > 0) {
+            ctx.save();
+            ctx.font = 'bolder 30px Arial';
+            ctx.fillStyle = tipoCor;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`${tipoValor}`, chart.getDatasetMeta(0).data[0].x, chart.getDatasetMeta(0).data[0].y);
+        }
     }
+}
+
+
+const obterValores = (valoresProps) => {
+    const valores = [];
+
+    for (let metrica in valoresProps) {
+        valores.push(valoresProps[metrica].reduce((a, b) => a + b, 0));
+    }
+
+    return valores
+}
+
+const criarDataset = (label, data) => {
+    const color = [
+        'rgb(75, 192, 192)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(255, 99, 132)',
+        'rgb(128, 47, 73)',
+    ];
+
+    return {
+        label: label,
+        data: data,
+        backgroundColor: color,
+        borderColor: color,
+        cutout: '90%',
+        borderRadius: 30,
+        barThickness: 10,
+    };
 }
 
 function TiposPedidos(props) {
@@ -55,34 +87,24 @@ function TiposPedidos(props) {
         "Recusadas",
     ];
 
-    const color = [
-        'rgb(75, 192, 192)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(255, 99, 132)',
-        'rgb(128, 47, 73)',
-    ];
+    const [valores, setValores] = useState([]);
+
+    useEffect(() => {
+        setValores(obterValores(props.valores));
+    }, [props.valores]);
+
+    useEffect(() => {
+        tipoValor = 0;
+        tipoCor = "";
+    }, [valores]);
 
     const data = {
         labels: labels,
-        datasets: [{
-            label: "Quantidade de Pedidos",
-            data: [12, 19, 30, 40, 0],
-            backgroundColor: color,
-            borderColor: color,
-            cutout: '90%',
-            borderRadius: 30,
-            barThickness: 10,
-            /* circumference: (ctx) => {
-                const dataPoints = ctx.chart.data.datasets.map(
-                    (dataset) => dataset.data[0]
-                )
-
-                max = Math.max(...dataPoints);	
-                return ctx.dataset.data / max * 270;
-            } */
-        }]
+        datasets: [
+            criarDataset("Pedidos", valores)
+        ]
     }
+
 
     return (
         <CardComTitulo titulo="Pedidos" className="card-tipos-pedidos">

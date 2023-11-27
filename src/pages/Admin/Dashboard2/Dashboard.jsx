@@ -3,8 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
-import Pedidos from "../../../components/Admin/Dashboard/Graficos/Pedidos/index.jsx";
-import TiposPedidos from "../../../components/Admin/Dashboard/Graficos/TiposPedidos/index.jsx";
+import PedidosCont from "../../../components/Admin/Dashboard/Graficos/PedidosCont/index.jsx";
 import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/UsuariosCadastradosMes/index.jsx";
 import IntrumentosMaisUsados from "../../../components/Admin/Dashboard/Graficos/InstrumentosMaisUsados/index.jsx";
 import RegioesMaisAulas from "../../../components/Admin/Dashboard/Graficos/RegioesMaisAulas/index.jsx";
@@ -16,13 +15,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import "dayjs/locale/pt-br"
 
-
-import api from "../../../api.js";
 import "./style.css";
-
-const requisicaoGet = (url) => {
-    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
-}
 
 const modificarNomeDia = (nome) => {
     switch (nome) {
@@ -49,33 +42,33 @@ const obterLabelData = (dataComeco, dataFim) => {
     let labels = [];
 
     const diferencaMeses = -(dataComeco.diff(dataFim, "month"));
-    const diferencaDias = -(dataComeco.diff(dataFim, "date"));
+    const diferencaDias = -(dataComeco.diff(dataFim, "day"));
 
-    if (diferencaMeses > 1) for (let i = 0; i <= diferencaMeses; i++) labels.push(dayjs(dataComeco).subtract(i, "month").locale("pt-br").format("MMMM"));
-    else for (let i = 0; i <= diferencaDias; i++) labels.push(dayjs(dataComeco).subtract(i, "date").format("DD/MM"));
+    if (diferencaMeses >= 1) for (let i = 0; i <= diferencaMeses; i++) labels.push(dayjs(dataFim).subtract(i, "month").locale("pt-br").format("MMMM"));
+    else for (let i = 0; i <= diferencaDias; i++) labels.push(dayjs(dataFim).subtract(i, "day").format("DD/MM"));
 
-    return labels;
+    return labels.reverse();
 }
 
 
 function Dashboard(props) {
     const [avisos, setAvisos] = useState([]);
 
-    const adicionaAviso = (avisos) => setAvisos([...avisos, avisos]);
+    const adicionaAviso = (novoAviso) => setAvisos([...avisos, novoAviso]);
 
-    const [dataComeco, setDataComeco] = useState(dayjs(new Date()).subtract(12, "month"));
-    const [dataFim, setDataFim] = useState(dayjs(new Date()));
+    const [dataInicial, setdataInicial] = useState(dayjs(new Date()).subtract(12, "month"));
+    const [dataFinal, setdataFinal] = useState(dayjs(new Date()));
 
-    const mudarDataComeco = (data) => setDataComeco(data);
-    const mudarDataFim = (data) => setDataFim(data);
+    const mudarDataInicial = (data) => setdataInicial(data);
+    const mudarDataFinal = (data) => setdataFinal(data);
 
     const [labelsHist, setLabelsHist] = useState([]);
 
     useEffect(() => {
         setLabelsHist([]);
 
-        setLabelsHist(obterLabelData(dataComeco, dataFim));
-    }, [dataComeco, dataFim]);
+        setLabelsHist(obterLabelData(dataInicial, dataFinal));
+    }, [dataInicial, dataFinal]);
 
     return (
         <EstruturaPaginaUsuario tela="dashboard" avisosState={{ avisos, setAvisos }}>
@@ -86,8 +79,8 @@ function Dashboard(props) {
                     <DatePicker
                         minDate={dayjs(new Date()).subtract(12, "month")}
                         maxDate={dayjs(new Date())}
-                        onChange={mudarDataComeco}
-                        value={dataComeco}
+                        onChange={mudarDataInicial}
+                        value={dataInicial}
                         slotProps={{
                             textField: {
                                 size: 'small',
@@ -104,10 +97,10 @@ function Dashboard(props) {
                     height: "10% !important",
                 }} adapterLocale="pt-br">
                     <DatePicker
-                        minDate={dataComeco}
+                        minDate={dataInicial}
                         maxDate={dayjs(new Date())}
-                        onChange={mudarDataFim}
-                        value={dataFim}
+                        onChange={mudarDataFinal}
+                        value={dataFinal}
                         slotProps={{
                             textField: {
                                 size: 'small',
@@ -119,15 +112,12 @@ function Dashboard(props) {
                     />
                 </LocalizationProvider>
             </Box>
-            <Metricas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
-            <Box className="container-pedidos">
-                <Pedidos dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
-                <TiposPedidos dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
-            </Box>
+            <Metricas dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} />
+            <PedidosCont dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
             <Box className="container-instrumentos">
-                <UsuariosCadastrados dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
-                <IntrumentosMaisUsados dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
-                <RegioesMaisAulas dataComeco={dataComeco} dataFim={dataFim} adicionaAviso={adicionaAviso} />
+                <UsuariosCadastrados dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
+                <IntrumentosMaisUsados dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} />
+                <RegioesMaisAulas dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} />
             </Box>
         </EstruturaPaginaUsuario>
     );

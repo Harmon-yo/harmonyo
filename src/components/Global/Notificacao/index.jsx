@@ -149,11 +149,6 @@ function Notificacao(props) {
     }, []);
 
     useEffect(() => {
-        console.log("Mudando de página");
-        console.log(paginaAtualRef.current);
-    }, [paginaAtualRef.current]);
-
-    useEffect(() => {
         if (primeiraRequisicao) {
             setPrimeiraRequisicao(false);
             return;

@@ -7,10 +7,10 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import Card from '../../CardComTitulo/index.jsx';
-import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import api from '../../../../../api.js';
 import './style.css';
@@ -22,7 +22,8 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
 );
 
 const options = {
@@ -34,10 +35,10 @@ const options = {
                 borderWidth: 0
 
             },
+            
         },
         y: {
-            grid: {
-            }
+            beginAtZero: true,
         }
     },
     responsive: true,
@@ -57,84 +58,74 @@ const requisicaoGet = (url) => {
     return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
 }
 
+const obterDados = async (dataInicial, dataFinal, adicionaAviso) => {
+    const params = `dataInicial=${dataInicial}&dataFinal=${dataFinal}`;
+    const endpoints = [
+        // 
+        `/usuarios/quantidade-cadastrados-hist?${params}&tipo=Aluno`,
+        `/usuarios/quantidade-cadastrados-hist?${params}&tipo=Professor`
+    ];
+
+    const promessas = Promise.all(endpoints.map((endpoint) => requisicaoGet(endpoint)));
+
+    return await promessas
+        .then(([alunos, professores]) => {
+            return {
+                alunos: alunos.data,
+                professores: professores.data
+            };
+        }).catch((err) => {
+            adicionaAviso({
+                tipo: "erro",
+                mensagem: "Erro ao obter dados dos usuários cadastrados"
+            });
+            console.log(err)
+            return [{
+                alunos: [],
+                professores: []
+            }];
+        });
+}
+
+const criarDataset = (label, data, backColor, borderColor) => {
+    return {
+        label: label,
+        data: data,
+        fill: true,
+        backgroundColor: backColor,
+        borderColor: borderColor,
+        pointRadius: 1.5,
+        tension: 0.4,
+    };
+}
+
 function UsuariosCadastrados(props) {
-    const [quantidadeTotalUsuarios, setQuantidadeTotalUsuarios] = useState(0);
-    const [usuariosMesAtual, setUsuariosMesAtual] = useState([]);
-    const [usuariosMesAnterior, setUsuariosMesAnterior] = useState([]);
+    const [alunosCadastrados, setAlunosCadastrados] = useState([]);
+    const [professoresCadastrados, setProfessoresCadastrados] = useState([]);
 
     const adicionaAviso = props.adicionaAviso;
+    const dataInicial = props.dataInicial.format("YYYY-MM-DD");
+    const dataFinal = props.dataFinal.format("YYYY-MM-DD");
 
     const data = {
         labels: props.labelsHist,
         datasets: [
-            {
-                label: 'Mês Atual',
-                data: usuariosMesAtual,
-                fill: false,
-                backgroundColor: 'rgb(54, 162, 235)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                pointRadius: 1.5,
-    
-            },
-            {
-                label: 'Mês Anterior',
-                data: usuariosMesAnterior,
-                fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                pointRadius: 1.5,
-            },
-    ]};
+            criarDataset("Professores", professoresCadastrados, 'rgb(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)'),
+            criarDataset("Alunos", alunosCadastrados, 'rgb(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)'),
+        ]
+    };
 
-    /* useEffect(() => {
-        requisicaoGet("/usuarios/quantidade-cadastrados-mes").then(
-            (response) => {
-                const valores = response.data;
-                console.log("Usuários cadastrados no mês: ")
-                console.log(valores);
-
-                const dias = [];
-                for (let i = 1; i <= valores.length; i++) {
-                    dias.push(i);
-                }
-
-                setLabels(dias);
-                setUsuariosMesAtual(valores);
-                setQuantidadeTotalUsuarios(valores.reduce((a, b) => a + b, 0));
-            }
-        ).catch(() => {
-            adicionaAviso({
-                mensagem: "Erro ao carregar usuários cadastrados no mês.",
-                tipo: "erro"
+    useEffect(() => {
+        obterDados(dataInicial, dataFinal, adicionaAviso)
+            .then((valores) => {
+                setAlunosCadastrados(valores.alunos);
+                setProfessoresCadastrados(valores.professores);
             });
-        });
-
-        requisicaoGet("/usuarios/quantidade-cadastrados-mes-anterior").then(
-            (response) => {
-                const valores = response.data;
-                console.log("Usuários cadastrados no mês anterior: ")
-                console.log(valores);
-
-                setUsuariosMesAnterior(valores);
-            }
-        ).catch(() => {
-            adicionaAviso({
-                mensagem: "Erro ao carregar usuários cadastrados no mês anterior.",
-                tipo: "erro"
-            });
-        });
-
-    }, []); */
-
+    }, [dataInicial, dataFinal]);
 
     return (
         <Card className="card-cadastro-usuario" titulo="Usuários cadastrados">
             <Line data={data} options={options} />
-
-            {/* <Box className="cadastro-mensal-container">
-                <Typography className="cadastro-mensal-valor">{quantidadeTotalUsuarios}</Typography>
-                <Typography className="cadastro-mensal-titulo">Usuários cadastrados nesse mês</Typography>
-            </Box> */}
         </Card>
     );
 }

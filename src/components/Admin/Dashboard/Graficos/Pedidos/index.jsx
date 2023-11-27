@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import CardComTitulo from "../../CardComTitulo/index.jsx";
 
 import {
@@ -16,10 +15,10 @@ import {
     Tooltip,
     LineController,
     BarController,
+    Filler
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 
-import api from "../../../../../api.js";
 import "./style.css";
 
 ChartJS.register(
@@ -31,12 +30,9 @@ ChartJS.register(
     Legend,
     Tooltip,
     LineController,
-    BarController
+    BarController,
+    Filler
 );
-
-const requisicaoGet = (url) => {
-    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
-}
 
 const options = {
     scales: {
@@ -44,6 +40,7 @@ const options = {
             type: 'linear',
             display: true,
             position: 'left',
+            beginAtZero: true,
         },
 
     },
@@ -61,107 +58,31 @@ const options = {
     responsive: true
 }
 
+const criarDataset = (label, backColor, bordColor, data) => {
+    return {
+        type: 'line',
+        label: label,
+        backgroundColor: backColor,
+        borderColor: bordColor,
+        data: data,
+        tension: 0.4,
+        fill: '1'
+    }
+}
+
 function Pedidos(props) {
+    const valores = props.valores;
+
     const data = {
         labels: props.labelsHist,
         datasets: [
-            {
-                type: 'line',
-                label: 'Aulas Realizadas',
-                backgroundColor: 'rgb(75, 192, 192)',
-                data: [1, 2, 3, 2, 5, 6, 7],
-                tension: 0.4,
-            },
-            {
-                type: 'line',
-                label: 'Aulas Confirmadas',
-                backgroundColor: 'rgb(255, 159, 64)',
-                data: [1, 2, 3, 2, 5, 6, 7],
-                tension: 0.4,
-            },
-            {
-                type: 'line',
-                label: 'Aulas Pendentes',
-                backgroundColor: 'rgb(255, 205, 86)',
-                data: [10, 11, 0, 13, 14, 15, 16],
-                tension: 0.4,
-            },
-            {
-                type: 'line',
-                label: 'Aulas Canceladas',
-                backgroundColor: 'rgb(255, 99, 132)',
-                data: [4, 5, 6, 3, 8, 9, 10],
-                tension: 0.4,
-            },
-            {
-                type: 'line',
-                label: 'Aulas Recusadas',
-                backgroundColor: 'rgb(128, 47, 73)',
-                data: [7, 8, 9, 6, 11, 12, 13],
-                tension: 0.4,
-            },
+            criarDataset("Aulas Realizadas", 'rgb(75, 192, 192, 0.2)', 'rgb(75, 192, 192)', valores.aulasRealizadas),
+            criarDataset("Aulas Confirmadas", 'rgb(255, 159, 64, 0.2)', 'rgb(255, 159, 64)', valores.aulasConfirmadas),
+            criarDataset("Aulas Pendentes", 'rgb(255, 205, 86, 0.2)', 'rgb(255, 205, 86)', valores.aulasPendentes),
+            criarDataset("Aulas Canceladas", 'rgb(255, 99, 132, 0.2)', 'rgb(255, 99, 132)', valores.aulasCanceladas),
+            criarDataset("Aulas Recusadas", 'rgb(128, 47, 73, 0.2)', 'rgb(128, 47, 73)', valores.aulasRecusadas),
         ]
     }
-
-    const dataComeco = props.dataComeco.format("YYYY-MM-DD");
-    const dataFim = props.dataFim.format("YYYY-MM-DD");
-    const diferencaMes = props.dataFim.diff(props.dataComeco, "month");
-
-    const obterValoresGrafico = () => {
-        const endpoints = [
-            {
-                metrica: "Rendimento dos meses",
-                endpoint: diferencaMes > 0 ? `/professores/rendimento-meses-periodo?dataComeco=${dataComeco}&dataFim=${dataFim}` :
-                    `/professores/rendimento-mes-periodo?dataComeco=${dataComeco}&dataFim=${dataFim}`
-            },
-            {
-                metrica: "Aulas Realizadas",
-                endpoint: diferencaMes > 0 ? `/pedidos/aulas-realizadas-meses-periodo?dataComeco=${dataComeco}&dataFim=${dataFim}` :
-                    `/pedidos/aulas-realizadas-mes-periodo?dataComeco=${dataComeco}&dataFim=${dataFim}`
-            },
-            {
-                metrica: "Usuários Cadastrados",
-                endpoint: diferencaMes > 0 ? `/usuarios/quantidade-cadastrados-meses-periodo?dataComeco=${dataComeco}&dataFim=${dataFim}` :
-                    `/usuarios/quantidade-cadastrados-mes-periodo?dataComeco=${dataComeco}&dataFim=${dataFim}`
-            }
-        ]
-
-        console.log("Data começo: " + dataComeco);
-        console.log("Data fim: " + dataFim);
-
-        endpoints.forEach((endpoint) => {
-            requisicaoGet(endpoint.endpoint).then((resposta) => {
-                let resp = resposta.data;
-                console.log("Resposta da métrica " + endpoint.metrica + ":");
-                console.log(resp);
-
-                switch (endpoint.metrica) {
-                    case "Rendimento dos meses":
-
-                        //setLtRendimentoProfessor(resp.map((rendimento) => rendimento.valor));
-                        break;
-                    case "Aulas Realizadas":
-                        //setLtAulasRealizadas(resp.map((aulas) => aulas.valor));
-                        break;
-                    case "Usuários Cadastrados":
-                        //setLtUsuariosCadastrados(resp.map((usuarios) => usuarios.valor));
-                        break;
-                    default:
-                        break;
-                }
-            }).catch((error) => {
-                props.adicionaAviso({
-                    mensagem: `Erro ao obter valores do gráfico`,
-                    tipo: "erro"
-                });
-                console.log(error)
-            });
-        })
-    }
-
-    useEffect(() => {
-        obterValoresGrafico();
-    }, [dataComeco, dataFim]);
 
     return (
         <CardComTitulo titulo="Pedidos" className="card-pedidos">

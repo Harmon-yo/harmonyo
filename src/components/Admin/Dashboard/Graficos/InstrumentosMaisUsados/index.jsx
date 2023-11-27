@@ -12,6 +12,8 @@ import {
 import { Bar } from 'react-chartjs-2';
 
 import "./style.css";
+import api from "../../../../../api.js";
+import { useEffect } from "react";
 
 ChartJS.register(
     CategoryScale,
@@ -31,6 +33,11 @@ const options = {
     },
     responsive: true,
     scales: {
+        x: {
+            ticks: {
+                stepSize: 1
+            }
+        },
         y: {
             grid: {
                 display: false,
@@ -50,29 +57,74 @@ const options = {
             }
         }
     }
-  };
+};
+
+const requisicaoGet = (url) => {
+    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
+}
+
+const obterDados = async (dataInicial, dataFinal, adicionaAviso) => {
+    const params = `dataInicial=${dataInicial}&dataFinal=${dataFinal}`;
+    const endpoints = [
+        `/pedidos/instrumentos-mais-pedidos?${params}`
+    ]
+
+    const promessas = Promise.all(endpoints.map((endpoint) => requisicaoGet(endpoint)));
+
+    return await promessas.then(([instrumentosMaisPedidosResponse]) => {
+        const instrumentosMaisPedidos = instrumentosMaisPedidosResponse.data;
+
+        const instrumentos = Object.keys(instrumentosMaisPedidos).map((instrumento) => {
+            return {
+                instrumento: instrumento,
+                quantidade: instrumentosMaisPedidos[instrumento]
+            }
+        }).sort((a, b) => {
+            return b.quantidade - a.quantidade;
+        });
+
+        return {
+            instrumentosMaisPedidos: instrumentos.slice(0, 5),
+        };
+    }).catch((err) => {
+        adicionaAviso({
+            tipo: "erro",
+            mensagem: "Erro ao obter dados dos gráficos"
+        })
+        console.log(err)
+    });
+} 
 
 function IntrumentosMaisUsados(props) {
 
-    const [labels, setLabels] = useState(["Violão", "Guitarra", "Baixo", "Bateria", "Teclado"]);
+    const [labels, setLabels] = useState([]);
+    const [valores, setValores] = useState([]);
 
     const data = {
         labels: labels,
         datasets: [
             {
-                label: 'Aulas',
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: [
-                    '#36A2EB'
-                ],
-                borderColor: [
-                    '#36A2EB'
-                ],
+                label: 'Pedidos',
+                data: valores,
+                backgroundColor: '#36A2EB',
+                borderColor: '#36A2EB',
                 borderRadius: 30,
                 barThickness: 10,
             },
         ],
     };
+
+    const dataInicial = props.dataInicial.format("YYYY-MM-DD");
+    const dataFinal = props.dataFinal.format("YYYY-MM-DD");
+    const adicionaAviso = props.adicionaAviso;
+
+    useEffect(() => {
+        obterDados(dataInicial, dataFinal, adicionaAviso)
+            .then((dados) => {
+                setLabels(dados.instrumentosMaisPedidos.map((instrumento) => instrumento.instrumento));
+                setValores(dados.instrumentosMaisPedidos.map((instrumento) => instrumento.quantidade));
+            });
+    }, [dataInicial, dataFinal]);
 
     return (
         <CardComTitulo titulo="Instrumentos mais usados" className="card-instrumentos-mais-usados">
