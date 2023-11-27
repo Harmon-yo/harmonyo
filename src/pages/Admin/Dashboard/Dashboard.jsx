@@ -1,135 +1,126 @@
-import { useState, useEffect } from 'react';
-import { verificarToken } from "../../../utils/index.js";
+import { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 
-/* Componentes */
 import EstruturaPaginaUsuario from "../../../components/Global/EstruturaPaginaUsuario/Main/index.jsx";
-import { Box } from "@mui/material";
 import Metricas from "../../../components/Admin/Dashboard/Graficos/Metricas/index.jsx";
-import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/Novo/V1/UsuariosCadastradosMes/index.jsx";
-import AulasSemana from '../../../components/Admin/Dashboard/Graficos/Novo/V1/AulaSemana/index.jsx';
-import AulasInfo from '../../../components/Admin/Dashboard/Graficos/AulasInfo/index.jsx';
-import AulasMes from '../../../components/Admin/Dashboard/Graficos/Novo/V1/AulasMes/index.jsx';
-import UsuariosCadastradosSemana from '../../../components/Admin/Dashboard/Graficos/Novo/V1/UsuariosCadastradosSemana/index.jsx';
-import api from '../../../api.js';
+import PedidosCont from "../../../components/Admin/Dashboard/Graficos/PedidosCont/index.jsx";
+import UsuariosCadastrados from "../../../components/Admin/Dashboard/Graficos/UsuariosCadastradosMes/index.jsx";
+import IntrumentosMaisUsados from "../../../components/Admin/Dashboard/Graficos/InstrumentosMaisUsados/index.jsx";
+import RegioesMaisAulas from "../../../components/Admin/Dashboard/Graficos/RegioesMaisAulas/index.jsx";
 
-/* import Mapa from "../../../components/Admin/Dashboard/MapaBrasil/index.jsx"; */
-/* Css */
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+import dayjs from 'dayjs';
+import "dayjs/locale/pt-br"
+
 import "./style.css";
-import { useNavigate } from 'react-router-dom';
 
-const requisicaoGet = (url) => {
-    return api.get(url, { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } });
+const modificarNomeDia = (nome) => {
+    switch (nome) {
+        case "2ª":
+            return "Seg";
+        case "3ª":
+            return "Ter";
+        case "4ª":
+            return "Qua";
+        case "5ª":
+            return "Qui";
+        case "6ª":
+            return "Sex";
+        case "Sá":
+            return "Sab";
+        case "Do":
+            return "Dom";
+        default:
+            return nome;
+    }
 }
 
-function DashboardAdmin(props) {
+const obterLabelData = (dataComeco, dataFim) => {
+    let labels = [];
+
+    const diferencaMeses = -(dataComeco.diff(dataFim, "month"));
+    const diferencaDias = -(dataComeco.diff(dataFim, "day"));
+
+    if (diferencaMeses >= 1) for (let i = 0; i <= diferencaMeses; i++) labels.push(dayjs(dataFim).subtract(i, "month").locale("pt-br").format("MMMM"));
+    else for (let i = 0; i <= diferencaDias; i++) labels.push(dayjs(dataFim).subtract(i, "day").format("DD/MM"));
+
+    return labels.reverse();
+}
+
+
+function Dashboard(props) {
     const [avisos, setAvisos] = useState([]);
 
-    const adicionaAviso = (novoAviso) => {
-        setAvisos([...avisos, novoAviso]);
-    }
+    const adicionaAviso = (novoAviso) => setAvisos([...avisos, novoAviso]);
 
-    const [metricas, setMetricas] = useState([
-        {
-            id: 1,
-            nome: "Usuários",
-            endpoint: "/usuarios/quantidade-cadastrados-mes-soma",
-            valor: 0,
-        },
-        {
-            id: 2,
-            nome: "Aulas por aluno",
-            endpoint: "/aulas/quantidade-por-aluno-mes",
-            valor: 0,
-        },
-        {
-            id: 3,
-            nome: "Aulas",
-            endpoint: "/aulas/quantidade-mes",
-            valor: 0,
-        },
-        {
-            id: 4,
-            nome: "Rendimento dos Professores",
-            endpoint: "/professores/dashboard/rendimento-total",
-            valor: 0,
-        }
-    ]);
+    const [dataInicial, setdataInicial] = useState(dayjs(new Date()).subtract(12, "month"));
+    const [dataFinal, setdataFinal] = useState(dayjs(new Date()));
 
-    const [valorAulas, setValorAulas] = useState([
-        {
-            id: 1,
-            nome: "Aulas Realizadas",
-            endpoint: "/pedidos/quantidade-realizadas-semana-total",
-            valor: 0,
-        }, {
-            id: 2,
-            nome: "Aulas Pendentes",
-            endpoint: "/pedidos/quantidade-pendentes-semana-total",
-            valor: 0,
-        }, {
-            id: 3,
-            nome: "Aulas Canceladas",
-            endpoint: "/pedidos/quantidade-canceladas-semana-total",
-            valor: 0,
-        }
-    ]);
+    const mudarDataInicial = (data) => setdataInicial(data);
+    const mudarDataFinal = (data) => setdataFinal(data);
 
-    const navigate = useNavigate();
+    const [labelsHist, setLabelsHist] = useState([]);
 
     useEffect(() => {
-        if (verificarToken()) navigate("/login");
+        setLabelsHist([]);
 
-        metricas.forEach(metrica => {
-            if (metrica.id !== 4) {
-                requisicaoGet(metrica.endpoint).then((resposta) => {
-                    setMetricas(metricas => metricas.map(metricaAntiga => {
-                        if (metricaAntiga.id === metrica.id) {
-                            metricaAntiga.valor = resposta.data;
-                        }
-                        return metricaAntiga;
-                    }));
-            }).catch(() => adicionaAviso({
-                mensagem: `Erro ao obter quantidade de ${metrica.nome}`,
-                tipo: "erro"
-            }));
-            }
-        });
-
-        valorAulas.forEach(valorAula => {
-            if (valorAula.id !== 4) {
-                requisicaoGet(valorAula.endpoint).then((resposta) => {
-                    setValorAulas(valorAulas => [...valorAulas.map(valorAulaAntigo => {
-                        if (valorAulaAntigo.id === valorAula.id) {
-                            valorAulaAntigo.valor = resposta.data;
-                        }
-                        return valorAulaAntigo;
-                    })])
-                }).catch(() => adicionaAviso({
-                    mensagem: `Erro ao obter quantidade de ${valorAula.nome}`,
-                    tipo: "erro"
-                }));
-            }
-        });
-    }, []);
+        setLabelsHist(obterLabelData(dataInicial, dataFinal));
+    }, [dataInicial, dataFinal]);
 
     return (
         <EstruturaPaginaUsuario tela="dashboard" avisosState={{ avisos, setAvisos }}>
-            <Box className="pagina-container">
-                <Metricas metricas={metricas} />
-                <Box className="secao secao-usuarios-retidos-cadastrados">
-                    <AulasMes />
-                    <UsuariosCadastrados adicionaAviso={adicionaAviso} />
-                    <UsuariosCadastradosSemana adicionaAviso={adicionaAviso} />
-                </Box>
-                <Box className="secao secao-aulas">
-                <AulasSemana adicionaAviso={adicionaAviso}/>
-                    <AulasInfo className="realizadas" titulo="Aulas Realizadas na semana" valor={valorAulas[0].valor} />
-                    <AulasInfo className="pendentes" titulo="Aulas Pendentes na semana" valor={valorAulas[1].valor} />
-                    <AulasInfo className="canceladas" titulo="Aulas Canceladas na semana" valor={valorAulas[2].valor} />
-                </Box>
+            <Box className="intervalo-tempo-container">
+                <LocalizationProvider dateAdapter={AdapterDayjs} sx={{
+                    height: "10% !important",
+                }} adapterLocale="pt-br">
+                    <DatePicker
+                        minDate={dayjs(new Date()).subtract(12, "month")}
+                        maxDate={dayjs(new Date())}
+                        onChange={mudarDataInicial}
+                        value={dataInicial}
+                        slotProps={{
+                            textField: {
+                                size: 'small',
+                            }
+                        }}
+                        dayOfWeekFormatter={
+                            date => `${modificarNomeDia(date)}`
+                        }
+                    />
+                </LocalizationProvider>
+
+                <Typography>Até</Typography>
+                <LocalizationProvider dateAdapter={AdapterDayjs} sx={{
+                    height: "10% !important",
+                }} adapterLocale="pt-br">
+                    <DatePicker
+                        minDate={dataInicial}
+                        maxDate={dayjs(new Date())}
+                        onChange={mudarDataFinal}
+                        value={dataFinal}
+                        slotProps={{
+                            textField: {
+                                size: 'small',
+                            }
+                        }}
+                        dayOfWeekFormatter={
+                            date => `${modificarNomeDia(date)}`
+                        }
+                    />
+                </LocalizationProvider>
+            </Box>
+            <Metricas dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} />
+            <PedidosCont dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
+            <Box className="container-instrumentos">
+                <UsuariosCadastrados dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} labelsHist={labelsHist} />
+                <IntrumentosMaisUsados dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} />
+                <RegioesMaisAulas dataInicial={dataInicial} dataFinal={dataFinal} adicionaAviso={adicionaAviso} />
             </Box>
         </EstruturaPaginaUsuario>
     );
 }
 
-export default DashboardAdmin; 
+export default Dashboard;
