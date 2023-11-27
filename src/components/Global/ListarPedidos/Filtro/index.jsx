@@ -135,7 +135,7 @@ function Filtro(props) {
 
     return (
         <>
-            <Box className="modal">
+            <Box>
                 <Button
                     className="button"
                     id="basic-button"

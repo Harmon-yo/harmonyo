@@ -17,8 +17,6 @@ import api from "../../../../api.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import "./style.css";
-
-
 function TabelaMinhasAulas(props) {
   const [carregando, setCarregando] = useState(true);
   const config = {

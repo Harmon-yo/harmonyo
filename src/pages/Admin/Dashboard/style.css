@@ -1,152 +1,15 @@
-/* Página padrão e Geral */
-
-.pagina-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-/* Métricas */
-
-.metricas-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-}
-
-/* Seção Padrão */
-
-.secao {
-    width: 100%;
-    height: 40%;
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
-}
-
-.secao-usuarios-retidos-cadastrados {
-    height: 70% !important;
-}
-
-.card-usuario-retido, .card-usuarios-cadastrados {
-    width: 35%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-/*
-
-.taxa-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.mapa-info-regiao {
-    font-weight: 600 !important;
-    font-size: var(--fonte-h6) !important;
+.intervalo-tempo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 16px;
+    float: right;
+    margin-bottom: calc(var(--espaco-padrao) * 2);
 }
 
-.mapa-info-valor {
-    font-weight: 400 !important;
-    font-size: var(--fonte-pequena) !important;
-}
-
-.informacoes-adicionais-container {
-    min-width: 100%;
-    display: flex;
-    gap: 24px;
-    height: 40%;
-}
-
-.card-usuario-retido {
-    width: 40%;
-    padding: calc(var(--espaco-padrao) * 2);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.card-grafico-doughnut-container {
-    width: 45%;
-    padding: calc(var(--espaco-padrao) * 2);
-}
-
-.grafico-doughnut-container {
-    width: 35%;
-}
-
-
-.card-titulo {
-    margin-bottom: calc(var(--espaco-padrao) * 2) !important;
-}
-
-.graficos-container {
-    width: 100%;
-}
-
-.metricas-adicionais-container {
-    height: 100%;
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 24px;
-}
-
-.metrica-adicional-card {
-    width: 100%;
-    padding: calc(var(--espaco-padrao) * 2);
-}
-
-.mapa-card {
-    width: 70%;
-    height: 100%;
-}
-
-.secao-mapa-container {
-    width: 100%;
-    height: 400px;
-}
-
-.mapa-container {
-    width: 100%;
+.container-pedidos, .container-instrumentos {
     display: flex;
     flex-direction: row;
+    gap: 16px;
+    margin-bottom: calc(var(--espaco-padrao) * 2);
 }
-
-.mapa-info-container {
-    width: 50%;
-}
-
-.svg-container {
-    width: 45%;
-}
-
-
-.secao-cadastro-usuario-mensal {
-    display: flex;
-    flex-direction: row;    
-    gap: 24px;
-}
-
-.mini-metricas-mensal-container {
-    width: 55%;
-    display: flex;
-    gap: 24px;
-}
-.mini-metricas-mensal {
-    width: 100%;
-    display: flex;
-    gap: 24px;
-}
-*/

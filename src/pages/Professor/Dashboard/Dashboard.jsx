@@ -35,7 +35,7 @@ function DashboardProfessor() {
     if (verificarToken()) {
       navigate(-1);
     }
-  }, []);
+  });
   var visao = `Visão Anual - ${new Date().getFullYear()}`;
   return (
     <EstruturaPaginaUsuario tela="dashboard">

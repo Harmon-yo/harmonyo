@@ -29,6 +29,11 @@ const requisicaoPost = (url, body) => {
 const obterDataValida = () => {
     let data = dayjs(new Date());
 
+    if (data.hour() >= 22 || data.hour() < 8) {
+        data = data.add(1, "day");
+        data = data.hour(8).minute(0).second(0).millisecond(0);
+    }
+
     let minutos = data.minute().toString();
     if (minutos.length !== 1) minutos = minutos[1];
 
@@ -79,6 +84,7 @@ function InformacoesPedido(props) {
                         validacao = false;
                         console.log("Aula já marcada");
                         abrirModal(true);
+                        console.log("TESTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE1")
                     }
                 }
 

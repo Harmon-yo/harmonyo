@@ -6,10 +6,10 @@ import Popup from "../Popup/index.jsx";
 import "./style.css";
 import moment from "moment";
 import "moment/locale/pt-br";
-/* 
+
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
- */
+
 import api from "../../../api.js";
 
 const requisicaoGet = (url) => {
@@ -22,8 +22,6 @@ const requisicaoPut = (url, body) => {
 
 const wsUrl = "http://localhost:8080/ws";
 let ws = null;
-
-
 
 function Notificacao(props) {
     const idUsuario = sessionStorage.getItem("ID");
@@ -50,31 +48,6 @@ function Notificacao(props) {
     }
 
     // =================== WEBSOCKET ===================
-
-    const obterNotificacoes = () => {
-        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
-            const respostaPagina = resposta.data;
-            const notificacoes = respostaPagina.content;
-
-            console.log("Recebi a notificacao: ");
-            console.log(notificacoes);
-            if (resposta.status === 204) {
-                setNotificacoes([]);
-                return;
-            }
-
-            notificacoes.forEach((notificacao) => {
-                notificacao.tempo = moment(notificacao.data).fromNow();
-                notificacao.src = PropostaIcon;
-            });
-
-            setTotalPaginas(respostaPagina.totalPages);
-
-            setNotificacoes(notificacoes);
-        }).catch((erro) => {
-            console.log(erro);
-        });
-    }
 
     // =================== AUXILIARES ===================
 
@@ -117,7 +90,7 @@ function Notificacao(props) {
 
     // =================== USE EFFECT ===================
 
-    /* useEffect(() => {
+    useEffect(() => {
         ws = over(new SockJS(wsUrl));
 
         ws.connect({}, () => {
@@ -173,9 +146,9 @@ function Notificacao(props) {
                 return [notificacao, ...prevNotificacoes];
             });
         }
-    }, []); */
+    }, []);
 
-    /* useEffect(() => {
+    useEffect(() => {
         if (primeiraRequisicao) {
             setPrimeiraRequisicao(false);
             return;
@@ -185,11 +158,7 @@ function Notificacao(props) {
             idUsuario: sessionStorage.getItem("ID"),
             pagina: paginaAtualRef.current - 1,
         }));
-    }, [paginaAtualRef.current]); */
-
-    useEffect(() => {
-        obterNotificacoes();
-    }, []);
+    }, [paginaAtualRef.current]);
 
     return (
         <div>
@@ -245,4 +214,32 @@ function Notificacao(props) {
         </div>
     );
 }
+
+/* 
+const obterNotificacoes = () => {
+        requisicaoGet(`/notificacoes/usuario/${sessionStorage.ID}`).then((resposta) => {
+            const respostaPagina = resposta.data;
+
+            const notificacoes = respostaPagina.content;
+            console.log("Recebi a notificacao: ");
+            console.log(notificacoes);
+            if (resposta.status === 204) {
+                setNotificacoes([]);
+                return;
+            }
+
+            notificacoes.forEach((notificacao) => {
+                notificacao.tempo = moment(notificacao.data).fromNow();
+                notificacao.src = PropostaIcon;
+            });
+
+            setQtdPaginas(respostaPagina.totalPages);
+
+            setNotificacoes(notificacoes);
+        }).catch((erro) => {
+            console.log(erro);
+        });
+    }
+*/
+
 export default Notificacao;

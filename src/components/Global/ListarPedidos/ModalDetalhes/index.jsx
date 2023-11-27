@@ -325,9 +325,9 @@ function ModalDetalhes(props) {
               </Button>
             </Box>
             {sessionStorage.CATEGORIA === "Aluno" ? (
-              <PerfilUsuario nome={pedido.professor.nome} />
+              <PerfilUsuario id={pedido.professor.id} nome={pedido.professor.nome} />
             ) : (
-              <PerfilUsuario nome={pedido.aluno.nome} />
+              <PerfilUsuario id={pedido.aluno.id} nome={pedido.aluno.nome} />
             )}
 
             <Box className="tudoConteudo">

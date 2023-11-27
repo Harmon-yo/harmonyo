@@ -76,8 +76,10 @@ function ModalAvaliacao(props) {
     const nomeUsuario = sessionStorage.CATEGORIA === "Professor" ? usuario.aluno.nome.charAt(0) : usuario.professor.nome.charAt(0);
     if (!pedidoAvaliado) {
         return (
-            <Box className="modal">
+
+            <Box >
                 <Button className="modal-button-open" onClick={handleOpen}>Avaliar Aula</Button>
+
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -91,10 +93,10 @@ function ModalAvaliacao(props) {
                                     id={idUsuario}
                                     nome={nomeUsuario}
                                     sx={{
-                                        width: 90, 
-                                        height: 90, 
+                                        width: 90,
+                                        height: 90,
                                         fontSize: 35
-                                    }}/>
+                                    }} />
                                 <Box className="modal-usuario">
                                     <Typography id="modal-modal-title" variant="h8" component="h2">
                                         {sessionStorage.CATEGORIA === "Professor" ?
@@ -141,13 +143,9 @@ function ModalAvaliacao(props) {
         );
     } else {
         return (
-            <>
-                <Box className="modal">
-                    <Box className="avaliado">
-                        <Box className="box-avaliado">Avaliado</Box>
-                    </Box>
-                </Box>
-            </>
+            <Box className="avaliado">
+                <Box className="box-avaliado">Avaliado</Box>
+            </Box>
         );
     }
 }
